@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="../Schema/Keyboards.rng" type="xml"?>
+<Map id="EE" type="user" rev="$Rev: 203 $" xmlns:xi="http://www.w3.org/2001/XInclude" >
+	<Keys default_color="Blue">
+		<!-- Row 1 -->
+        <Key location="t11">
+            <Macro>
+                <MacroKey><Modifier id="Right Shift" /><Usage id="Keyboard t and T" /></MacroKey>
+                <MacroKey><Usage id="Keyboard y and Y" /></MacroKey>
+                <MacroKey><Usage id="Keyboard p and P" /></MacroKey>
+                <MacroKey><Usage id="Keyboard e and E" /></MacroKey>
+                <MacroKey><Modifier id="Right Shift" /><Usage id="Keyboard m and M" /></MacroKey>
+                <MacroKey><Usage id="Keyboard a and A" /></MacroKey>
+                <MacroKey><Usage id="Keyboard t and T" /></MacroKey>
+                <MacroKey><Usage id="Keyboard r and R" /></MacroKey>
+                <MacroKey><Usage id="Keyboard i and I" /></MacroKey>
+                <MacroKey><Usage id="Keyboard x and X" /></MacroKey>
+                <MacroKey><Usage id="Keyboard Spacebar" /></MacroKey>
+                <MacroKey><Usage id="Keyboard 2 and @" /></MacroKey>
+                <MacroKey><Usage id="Keyboard 0 and )" /></MacroKey>
+                <MacroKey><Usage id="Keyboard 3 and #" /></MacroKey>
+                <MacroKey><Usage id="Keyboard 0 and )" /></MacroKey>
+                <MacroKey><Usage id="Keyboard Spacebar" /></MacroKey>
+                <MacroKey><Modifier id="Right Shift" /><Usage id="Keyboard p and P" /></MacroKey>
+                <MacroKey><Usage id="Keyboard r and R" /></MacroKey>
+                <MacroKey><Usage id="Keyboard o and O" /></MacroKey>
+                <MacroKey><Usage id="Keyboard f and F" /></MacroKey>
+                <MacroKey><Usage id="Keyboard e and E" /></MacroKey>
+                <MacroKey><Usage id="Keyboard s and S" /></MacroKey>
+                <MacroKey><Usage id="Keyboard s and S" /></MacroKey>
+                <MacroKey><Usage id="Keyboard i and I" /></MacroKey>
+                <MacroKey><Usage id="Keyboard o and O" /></MacroKey>
+                <MacroKey><Usage id="Keyboard n and N" /></MacroKey>
+                <MacroKey><Usage id="Keyboard a and A" /></MacroKey>
+                <MacroKey><Usage id="Keyboard l and L" /></MacroKey>
+            </Macro>
+        </Key>
+	</Keys>
+</Map>
