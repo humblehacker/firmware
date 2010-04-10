@@ -15,8 +15,7 @@ class KbParser
       filename = newname
     end
     puts "Parsing #{filename}" if options[:debug]
-    kbdParser = XML::SaxParser.new
-    kbdParser.filename = filename
+    kbdParser = XML::SaxParser.file(filename)
     handler = KeyboardCH.new(filename, options, hid, includes)
     kbdParser.callbacks = handler
     kbdParser.parse
@@ -64,9 +63,8 @@ class KeyboardCH
       filename = newname
     end
     puts "#{' '*@level}Parsing #{filename}" if @options[:debug]
-    parser = XML::SaxParser.new
+    parser = XML::SaxParser.file(filename)
     parser.callbacks = self
-    parser.filename = filename
     @filenames.push(filename)
     @level += 1
     parser.parse
@@ -116,6 +114,7 @@ class KeyboardCH
 
     # Get the Usage ID
     usageID = attr_hash['id']
+    usageID.gsub!("&#38;", "&")  # FIXME: where is conversion from & to $#38; happening?
     if ! @hid.usagesByName.has_key? usageID
       raise "ERROR: Key #{location} while looking up '#{usageID}'"
     end

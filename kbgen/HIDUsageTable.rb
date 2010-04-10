@@ -39,8 +39,7 @@ class HIDUsageTable
       end
       filename = newname
     end
-    hidParser = XML::SaxParser.new
-    hidParser.filename = filename
+    hidParser = XML::SaxParser.file(filename)
     hidParser.callbacks = HidHandler.new
     hidParser.parse
     @usagePagesByName = hidParser.callbacks.usagePagesByName
@@ -129,7 +128,7 @@ class HidHandler
       when "UsagePage"
         if @usagePagesByName.has_key? @currentUsagePage.name == true
           raise "Error: Duplicate name: #{@currentUsagePage.name} for #{@currentUsagePage.id} and #{@usagePagesByName[@currentUsagePage.name]}"
-        end
+        end 
         @usagePagesByName[@currentUsagePage.name] = @currentUsagePage
         @usagePages.push @currentUsagePage
         @currentUsagePage = nil

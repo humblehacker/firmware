@@ -1,0 +1,151 @@
+--- # Map
+id: "US"
+base: "map_common.yaml"
+default: true
+keys:
+  # -------- row 2 --------
+  -
+    location: t21
+    mapping: "Keyboard Grave Accent and Tilde"
+  -
+    location: t22
+    mapping: "Keyboard 1 and !"
+  -
+    location: t23
+    mapping: "Keyboard 2 and @"
+  -
+    location: t24
+    mapping: "Keyboard 3 and #"
+  -
+    location: t25
+    mapping: "Keyboard 4 and $"
+  -
+    location: t26
+    mapping: "Keyboard 5 and %"
+  -
+    location: t28
+    mapping: "Keyboard 6 and ^"
+  -
+    location: t29
+    mapping: "Keyboard 7 and &amp;"
+  -
+    location: t2a
+    mapping: "Keyboard 8 and *"
+  -
+    location: t2b
+    mapping: "Keyboard 9 and ("
+  -
+    location: t2c
+    mapping: "Keyboard 0 and )"
+  -
+    location: t2d
+    mapping: "Keyboard - and _"
+  -
+    location: t2e
+    mapping: "Keyboard = and +"
+  # -------- row 3 --------
+  -
+    location: t32
+     mapping: "Keyboard q and Q"
+  -
+     location: t33
+     mapping: "Keyboard w and W"
+  -
+     location: t34
+     mapping: "Keyboard e and E"
+  -
+     location: t35
+     mapping: "Keyboard r and R"
+  -
+     location: t36
+     mapping: "Keyboard t and T"
+  -
+     location: t38
+     mapping: "Keyboard y and Y"
+  -
+     location: t39
+     mapping: "Keyboard u and U"
+  -
+     location: t3a
+     mapping: "Keyboard i and I"
+  -
+     location: t3b
+     mapping: "Keyboard o and O"
+  -
+     location: t3c
+     mapping: "Keyboard p and P"
+  -
+     location: t3d
+     mapping: "Keyboard [ and {"
+  -
+     location: t3e
+     mapping: "Keyboard ] and }"
+  -
+  # -------- row 4 --------
+     location: t42
+  -
+     mapping: "Keyboard a and A"
+     location: t43
+  -
+     mapping: "Keyboard s and S"
+     location: t44
+  -
+     mapping: "Keyboard d and D"
+     location: t45
+  -
+     mapping: "Keyboard f and F"
+     location: t46
+  -
+     mapping: "Keyboard g and G"
+     location: t48
+  -
+     mapping: "Keyboard h and H"
+     location: t49
+  -
+     mapping: "Keyboard j and J"
+     location: t4a
+  -
+     mapping: "Keyboard k and K"
+     location: t4b
+  -
+     mapping: "Keyboard l and L"
+     location: t4c
+  -
+     mapping: "Keyboard ; and :"
+     location: t4d
+  -
+     mapping: "Keyboard &apos; and &quot;"
+  # -------- row 5 --------
+  -
+     location: t52
+     mapping: "Keyboard z and Z"
+  -
+     location: t53
+     mapping: "Keyboard x and X"
+  -
+     location: t54
+     mapping: "Keyboard c and C"
+  -
+     location: t55
+     mapping: "Keyboard v and V"
+  -
+     location: t56
+     mapping: "Keyboard b and B"
+  -
+     location: t58
+     mapping: "Keyboard n and N"
+  -
+     location: t59
+     mapping: "Keyboard m and M"
+  -
+     location: t5a
+     mapping: "Keyboard , and &lt;"
+  -
+     location: t5b
+     mapping: "Keyboard . and &gt;"
+  -
+     location: t5c
+     mapping: "Keyboard / and ?"
+  -
+     location: t5d
+     mapping: "Keyboard \ and |"

@@ -122,7 +122,7 @@ SRCDIR = ../src
 VPATH = ..
 
 # Path to the LUFA library
-LUFA_PATH = ../lufa-090401
+LUFA_PATH = ../lufa/trunk
 
 # Generated files directory
 GENERATED = $(OBJDIR)/generated
