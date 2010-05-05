@@ -32,8 +32,8 @@
   Mouse demonstration application, written by Dean Camera.
 
              LUFA Library
-     Copyright (C) Dean Camera, 2009.
-
+     Copyright (C) Dean Camera, 2010.
+              
   dean [at] fourwalledcubicle [dot] com
       www.fourwalledcubicle.com
   --------------------------------------------------------------------
@@ -50,6 +50,7 @@
 	/* Includes: */
 		#include <avr/io.h>
 		#include <avr/wdt.h>
+		#include <avr/interrupt.h>
 		#include <avr/power.h>
 		#include <stdbool.h>
 		#include <string.h>
@@ -57,33 +58,13 @@
 		#include "Descriptors.h"
 
 		#include <LUFA/Version.h>
-		#include <LUFA/Drivers/USB/USB.h>
 		#include <LUFA/Drivers/Board/Joystick.h>
-		#include <LUFA/Drivers/Board/Buttons.h>
 		#include <LUFA/Drivers/Board/LEDs.h>
+		#include <LUFA/Drivers/Board/Buttons.h>
+		#include <LUFA/Drivers/USB/USB.h>
+		#include <LUFA/Drivers/USB/Class/HID.h>
 
 	/* Macros: */
-		/** Idle period indicating that reports should be sent only when the inputs have changed */
-		#define HID_IDLE_CHANGESONLY      0
-
-		/** HID Class specific request to get the next HID report from the device. */
-		#define REQ_GetReport             0x01
-
-		/** HID Class specific request to get the idle timeout period of the device. */
-		#define REQ_GetIdle               0x02
-
-		/** HID Class specific request to send the next HID report to the device. */
-		#define REQ_SetReport             0x09
-
-		/** HID Class specific request to set the idle timeout period of the device. */
-		#define REQ_SetIdle               0x0A
-
-		/** HID Class specific request to get the current HID protocol in use, either report or boot. */
-		#define REQ_GetProtocol           0x03
-
-		/** HID Class specific request to set the current HID protocol in use, either report or boot. */
-		#define REQ_SetProtocol           0x0B
-
 		/** LED mask for the library LED driver, to indicate that the USB interface is not ready. */
 		#define LEDMASK_USB_NOTREADY      LEDS_LED1
 
@@ -95,21 +76,9 @@
 
 		/** LED mask for the library LED driver, to indicate that an error has occurred in the USB interface. */
 		#define LEDMASK_USB_ERROR        (LEDS_LED1 | LEDS_LED3)
-
-	/* Type Defines: */
-		/** Type define for the keyboard HID report structure, for creating and sending HID reports to the host PC.
-		 *  This mirrors the layout described to the host in the HID report descriptor, in Descriptors.c.
-		 */
-		typedef struct
-		{
-			uint8_t Modifier; /**< Modifier mask byte, containing a mask of modifier keys set (such as shift or CTRL) */
-			uint8_t Reserved; /**< Reserved, always set as 0x00 */
-			uint8_t KeyCode[6]; /**< Array of up to six simultaneous key codes of pressed keys */
-		} USB_KeyboardReport_Data_t;
-
+		
 	/* Function Prototypes: */
 		void SetupHardware(void);
-		void HID_Task(void);
 
 		void EVENT_USB_Device_Connect(void);
 		void EVENT_USB_Device_Disconnect(void);
@@ -117,9 +86,9 @@
 		void EVENT_USB_Device_UnhandledControlRequest(void);
 		void EVENT_USB_Device_StartOfFrame(void);
 
-		void CreateKeyboardReport(USB_KeyboardReport_Data_t* ReportData);
-		void ProcessLEDReport(uint8_t LEDReport);
-		void SendNextReport(void);
-		void ReceiveNextReport(void);
+		bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo, uint8_t* const ReportID,
+                                                 const uint8_t ReportType, void* ReportData, uint16_t* ReportSize);
+		void CALLBACK_HID_Device_ProcessHIDReport(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo, const uint8_t ReportID, 
+		                                          const void* ReportData, const uint16_t ReportSize);
 
 #endif

@@ -1,0 +1,67 @@
+   1               		.file	"USBTask.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               		.section	.text.USB_USBTask,"ax",@progbits
+  17               	.global	USB_USBTask
+  19               	USB_USBTask:
+  20               	.LFB28:
+  21               	.LSM0:
+  22 0000 1F93      		push r17
+  23               	/* prologue: function */
+  24               	/* frame size = 0 */
+  25               	.LBB5:
+  26               	.LBB6:
+  27               	.LSM1:
+  28 0002 8091 0000 		lds r24,USB_DeviceState
+  29 0006 8823      		tst r24
+  30 0008 01F0      		breq .L4
+  31               	.LBB7:
+  32               	.LSM2:
+  33 000a 1091 E900 		lds r17,233
+  34               	.LSM3:
+  35 000e 1092 E900 		sts 233,__zero_reg__
+  36               	.LSM4:
+  37 0012 8091 E800 		lds r24,232
+  38 0016 83FF      		sbrs r24,3
+  39 0018 00C0      		rjmp .L3
+  40               	.LSM5:
+  41 001a 0E94 0000 		call USB_Device_ProcessControlRequest
+  42               	.L3:
+  43               	.LSM6:
+  44 001e 1770      		andi r17,lo8(7)
+  45               	.LSM7:
+  46 0020 1093 E900 		sts 233,r17
+  47               	.L4:
+  48               	/* epilogue start */
+  49               	.LBE7:
+  50               	.LBE6:
+  51               	.LBE5:
+  52               	.LSM8:
+  53 0024 1F91      		pop r17
+  54 0026 0895      		ret
+  55               	.LFE28:
+  57               		.comm USB_IsInitialized,1,1
+  58               		.comm USB_ControlRequest,8,1
+  59               		.comm USB_DeviceState,1,1
+  84               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 USBTask.c
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccrZWdPd.s:2      *ABS*:0000003f __SREG__
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccrZWdPd.s:3      *ABS*:0000003e __SP_H__
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccrZWdPd.s:4      *ABS*:0000003d __SP_L__
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccrZWdPd.s:5      *ABS*:00000034 __CCP__
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccrZWdPd.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccrZWdPd.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccrZWdPd.s:19     .text.USB_USBTask:00000000 USB_USBTask
+                            *COM*:00000001 USB_DeviceState
+                            *COM*:00000001 USB_IsInitialized
+                            *COM*:00000008 USB_ControlRequest
+
+UNDEFINED SYMBOLS
+USB_Device_ProcessControlRequest
+__do_clear_bss

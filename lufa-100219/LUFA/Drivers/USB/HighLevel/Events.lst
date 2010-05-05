@@ -1,0 +1,55 @@
+   1               		.file	"Events.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               		.section	.text.USB_Event_Stub,"ax",@progbits
+  17               	.global	USB_Event_Stub
+  19               	USB_Event_Stub:
+  20               	.LFB6:
+  21               	.LSM0:
+  22               	/* prologue: function */
+  23               	/* frame size = 0 */
+  24               	/* epilogue start */
+  25               	.LSM1:
+  26 0000 0895      		ret
+  27               	.LFE6:
+  29               		.weak	EVENT_USB_Device_Connect
+  30               		.set	EVENT_USB_Device_Connect,USB_Event_Stub
+  31               		.weak	EVENT_USB_Device_Disconnect
+  32               		.set	EVENT_USB_Device_Disconnect,USB_Event_Stub
+  33               		.weak	EVENT_USB_Device_UnhandledControlRequest
+  34               		.set	EVENT_USB_Device_UnhandledControlRequest,USB_Event_Stub
+  35               		.weak	EVENT_USB_Device_ConfigurationChanged
+  36               		.set	EVENT_USB_Device_ConfigurationChanged,USB_Event_Stub
+  37               		.weak	EVENT_USB_Device_Suspend
+  38               		.set	EVENT_USB_Device_Suspend,USB_Event_Stub
+  39               		.weak	EVENT_USB_Device_WakeUp
+  40               		.set	EVENT_USB_Device_WakeUp,USB_Event_Stub
+  41               		.weak	EVENT_USB_Device_Reset
+  42               		.set	EVENT_USB_Device_Reset,USB_Event_Stub
+  43               		.weak	EVENT_USB_Device_StartOfFrame
+  44               		.set	EVENT_USB_Device_StartOfFrame,USB_Event_Stub
+  69               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 Events.c
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:2      *ABS*:0000003f __SREG__
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:3      *ABS*:0000003e __SP_H__
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:4      *ABS*:0000003d __SP_L__
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:5      *ABS*:00000034 __CCP__
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:6      *ABS*:00000000 __tmp_reg__
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:7      *ABS*:00000001 __zero_reg__
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:19     .text.USB_Event_Stub:00000000 USB_Event_Stub
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:19     .text.USB_Event_Stub:00000000 EVENT_USB_Device_Connect
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:19     .text.USB_Event_Stub:00000000 EVENT_USB_Device_Disconnect
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:19     .text.USB_Event_Stub:00000000 EVENT_USB_Device_UnhandledControlRequest
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:19     .text.USB_Event_Stub:00000000 EVENT_USB_Device_ConfigurationChanged
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:19     .text.USB_Event_Stub:00000000 EVENT_USB_Device_Suspend
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:19     .text.USB_Event_Stub:00000000 EVENT_USB_Device_WakeUp
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:19     .text.USB_Event_Stub:00000000 EVENT_USB_Device_Reset
+/var/folders/KW/KWwoW47UH6m3Y+J-oxx+lE+++TI/-Tmp-//ccVjrh0p.s:19     .text.USB_Event_Stub:00000000 EVENT_USB_Device_StartOfFrame
+
+NO UNDEFINED SYMBOLS

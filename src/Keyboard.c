@@ -32,8 +32,8 @@
   Mouse demonstration application, written by Dean Camera.
 
              LUFA Library
-     Copyright (C) Dean Camera, 2009.
-
+     Copyright (C) Dean Camera, 2010.
+              
   dean [at] fourwalledcubicle [dot] com
       www.fourwalledcubicle.com
   --------------------------------------------------------------------
@@ -62,40 +62,27 @@ typedef enum
   R_GUI = (1<<7),
 } ModKey;
 
-/* Project Tags, for reading out using the ButtLoad project */
-// BUTTLOADTAG(ProjName,     FIRMWARE_ID);
-// BUTTLOADTAG(BuildTime,    __TIME__);
-// BUTTLOADTAG(BuildDate,    __DATE__);
-// BUTTLOADTAG(LUFAVersion, "LUFA V" LUFA_VERSION_STRING);
+/** Buffer to hold the previously generated Keyboard HID report, for comparison purposes inside the HID class driver. */
+uint8_t PrevKeyboardHIDReportBuffer[sizeof(USB_KeyboardReport_Data_t)];
 
-/* Scheduler Task List */
-TASK_LIST
-{
-	#if !defined(INTERRUPT_CONTROL_ENDPOINT)
-	{ Task: USB_USBTask          , TaskStatus: TASK_STOP },
-	#endif
-
-	#if !defined(INTERRUPT_DATA_ENDPOINT)
-	{ Task: USB_Keyboard_Report  , TaskStatus: TASK_STOP },
-	#endif
-};
-
-/* Global Variables */
-/** Indicates what report mode the host has requested, true for normal HID reporting mode, false for special boot
- *  protocol reporting mode.
+/** LUFA HID Class driver interface configuration and state information. This structure is
+ *  passed to all HID Class driver functions, so that multiple instances of the same class
+ *  within a device can be differentiated from one another.
  */
-bool UsingReportProtocol = true;
+USB_ClassInfo_HID_Device_t Keyboard_HID_Interface =
+ 	{
+		.Config =
+			{
+				.InterfaceNumber              = 0,
 
-/** Current Idle period. This is set by the host via a Set Idle HID class request to silence the device's reports
- *  for either the entire idle duration, or until the report status changes (e.g. the user moves the mouse).
- */
-uint8_t IdleCount = 0;
+				.ReportINEndpointNumber       = KEYBOARD_EPNUM,
+				.ReportINEndpointSize         = KEYBOARD_EPSIZE,
+				.ReportINEndpointDoubleBank   = false,
 
-/** Current Idle period remaining. When the IdleCount value is set, this tracks the remaining number of idle
- *  milliseconds. This is seperate to the IdleCount timer and is incremented and compared as the host may request
- *  the current idle period via a Get Idle HID class request, thus its value must be preserved.
- */
-uint16_t IdleMSRemaining = 0;
+				.PrevReportINBuffer           = PrevKeyboardHIDReportBuffer,
+				.PrevReportINBufferSize       = sizeof(PrevKeyboardHIDReportBuffer),
+			},
+    };
 
 uint8_t g_num_lock, g_caps_lock, g_scrl_lock;
 
@@ -105,12 +92,12 @@ uint8_t g_num_lock, g_caps_lock, g_scrl_lock;
 static MatrixMap s_current_kb_map;
 static MatrixMap s_temp_kb_map;
 static MatrixMap s_prev_kb_map[NUM_MODE_KEYS];
-static       uint32_t s_row_data[NUM_ROWS];
-static       uint16_t s_timeout;
-// static        uint8_t s_idleDuration[3];
+static uint32_t s_row_data[NUM_ROWS];
+static uint16_t s_timeout;
+// static uint8_t s_idleDuration[3];
 
 // -- EEPROM Data --
-static        uint8_t  EEMEM ee_persistent_map;
+static uint8_t  EEMEM ee_persistent_map;
 
 /* Local functions */
 static     void get_keyboard_state(void);
@@ -123,8 +110,8 @@ static   ModKey get_modifier(Usage usage);
 static     void process_keyboard_endpoint(void);
 static     void process_led_endpoint(void);
 
-/** Main program entry point. This routine configures the hardware required by the application, then
- *  enters a loop to run the application tasks in sequence.
+/** Main program entry point. This routine contains the overall program flow, including initial
+ *  setup of all components and the main program loop.
  */
 int main(void)
 {
@@ -134,13 +121,13 @@ int main(void)
 
 	for (;;)
 	{
-		HID_Task();
+		HID_Device_USBTask(&Keyboard_HID_Interface);
 		USB_USBTask();
 	}
 }
 
 /** Configures the board hardware and chip peripherals for the demo's functionality. */
-void SetupHardware(void)
+void SetupHardware()
 {
 	/* Disable watchdog if enabled by bootloader/fuses */
 	MCUSR &= ~(1 << WDRF);
@@ -152,22 +139,8 @@ void SetupHardware(void)
 	/* Hardware Initialization */
 // Joystick_Init();
 // LEDs_Init();
-
-	/* Millisecond timer initialization, with output compare interrupt enabled for the idle timing */
-	OCR0A  = 0x7D;
-	TCCR0A = (1 << WGM01);
-	TCCR0B = ((1 << CS01) | (1 << CS00));
-	TIMSK0 = (1 << OCIE0A);
-
-	/* Indicate USB not ready */
-	UpdateStatus(Status_USBNotReady);
-
-	/* Initialize Scheduler so that it can be used */
-	Scheduler_Init();
-
-	/* Initialize USB Subsystem */
-	USB_Init();
 	Buttons_Init();
+	USB_Init();
 
   /* Task init */
   init_cols();
@@ -192,308 +165,114 @@ void SetupHardware(void)
 #endif
 }
 
-/** Event handler for the USB_Connect event. This indicates that the device is enumerating via the status LEDs and
- *  starts the library USB task to begin the enumeration and USB management process.
- */
+/** Event handler for the library USB Connection event. */
 void EVENT_USB_Device_Connect(void)
 {
-	/* Indicate USB enumerating */
 	LEDs_SetAllLEDs(LEDMASK_USB_ENUMERATING);
-
-	/* Default to report protocol on connect */
-	UsingReportProtocol = true;
 }
 
-/** Event handler for the USB_Disconnect event. This indicates that the device is no longer connected to a host via
- *  the status LEDs.
- */
+/** Event handler for the library USB Disconnection event. */
 void EVENT_USB_Device_Disconnect(void)
 {
-	/* Indicate USB not ready */
 	LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
 }
 
-/** Event handler for the USB_ConfigurationChanged event. This is fired when the host sets the current configuration
- *  of the USB device after enumeration, and configures the keyboard device endpoints.
- */
+/** Event handler for the library USB Configuration Changed event. */
 void EVENT_USB_Device_ConfigurationChanged(void)
 {
-	/* Indicate USB connected and ready */
 	LEDs_SetAllLEDs(LEDMASK_USB_READY);
 
-	/* Setup Keyboard Keycode Report Endpoint */
-	if (!(Endpoint_ConfigureEndpoint(KEYBOARD_EPNUM, EP_TYPE_INTERRUPT,
-		                             ENDPOINT_DIR_IN, KEYBOARD_EPSIZE,
-	                                 ENDPOINT_BANK_SINGLE)))
-	{
-		LEDs_SetAllLEDs(LEDMASK_USB_ERROR);
-	}
-
-	/* Setup Keyboard LED Report Endpoint */
-	if (!(Endpoint_ConfigureEndpoint(KEYBOARD_LEDS_EPNUM, EP_TYPE_INTERRUPT,
-		                             ENDPOINT_DIR_OUT, KEYBOARD_EPSIZE,
-	                                 ENDPOINT_BANK_SINGLE)))
-	{
-		LEDs_SetAllLEDs(LEDMASK_USB_ERROR);
-	}
+	if (!(HID_Device_ConfigureEndpoints(&Keyboard_HID_Interface)))
+	  LEDs_SetAllLEDs(LEDMASK_USB_ERROR);
 
 	USB_Device_EnableSOFEvents();
 }
 
-/** Event handler for the USB_UnhandledControlRequest event. This is used to catch standard and class specific
- *  control requests that are not handled internally by the USB library (including the HID commands, which are
- *  all issued via the control endpoint), so that they can be handled appropriately for the application.
- */
+/** Event handler for the library USB Unhandled Control Request event. */
 void EVENT_USB_Device_UnhandledControlRequest(void)
-{
-	/* Handle HID Class specific requests */
-	switch (USB_ControlRequest.bRequest)
-	{
-		case REQ_GetReport:
-			if (USB_ControlRequest.bmRequestType == (REQDIR_DEVICETOHOST | REQTYPE_CLASS | REQREC_INTERFACE))
 			{
-				USB_KeyboardReport_Data_t KeyboardReportData;
-
-				Endpoint_ClearSETUP();
-
-				/* Create the next keyboard report for transmission to the host */
-				CreateKeyboardReport(&KeyboardReportData);
-
-				/* Write the report data to the control endpoint */
-				Endpoint_Write_Control_Stream_LE(&KeyboardReportData, sizeof(KeyboardReportData));
-
-				/* Finalize the stream transfer to send the last packet or clear the host abort */
-				Endpoint_ClearOUT();
-			}
-
-			break;
-		case REQ_SetReport:
-			if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE))
-			{
-				Endpoint_ClearSETUP();
-
-				/* Wait until the LED report has been sent by the host */
-				while (!(Endpoint_IsOUTReceived()))
-				{
-					if (USB_DeviceState == DEVICE_STATE_Unattached)
-					  return;
-				}
-
-				/* Read in the LED report from the host */
-				uint8_t LEDStatus = Endpoint_Read_Byte();
-
-				/* Process the incoming LED report */
-				ProcessLEDReport(LEDStatus);
-
-				/* Clear the endpoint data */
-				Endpoint_ClearOUT();
-
-				Endpoint_ClearStatusStage();
-			}
-
-			break;
-		case REQ_GetProtocol:
-			if (USB_ControlRequest.bmRequestType == (REQDIR_DEVICETOHOST | REQTYPE_CLASS | REQREC_INTERFACE))
-			{
-				Endpoint_ClearSETUP();
-
-				/* Write the current protocol flag to the host */
-				Endpoint_Write_Byte(UsingReportProtocol);
-
-				/* Send the flag to the host */
-				Endpoint_ClearIN();
-
-				Endpoint_ClearStatusStage();
-			}
-
-			break;
-		case REQ_SetProtocol:
-			if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE))
-			{
-				Endpoint_ClearSETUP();
-
-				/* Set or clear the flag depending on what the host indicates that the current Protocol should be */
-				UsingReportProtocol = (USB_ControlRequest.wValue != 0);
-
-				Endpoint_ClearStatusStage();
-			}
-
-			break;
-		case REQ_SetIdle:
-			if (USB_ControlRequest.bmRequestType == (REQDIR_HOSTTODEVICE | REQTYPE_CLASS | REQREC_INTERFACE))
-			{
-				Endpoint_ClearSETUP();
-
-				/* Get idle period in MSB, IdleCount must be multiplied by 4 to get number of milliseconds */
-				IdleCount = ((USB_ControlRequest.wValue & 0xFF00) >> 6);
-
-				Endpoint_ClearStatusStage();
-			}
-
-			break;
-		case REQ_GetIdle:
-			if (USB_ControlRequest.bmRequestType == (REQDIR_DEVICETOHOST | REQTYPE_CLASS | REQREC_INTERFACE))
-			{
-				Endpoint_ClearSETUP();
-
-				/* Write the current idle duration to the host, must be divided by 4 before sent to host */
-				Endpoint_Write_Byte(IdleCount >> 2);
-
-				/* Send the flag to the host */
-				Endpoint_ClearIN();
-
-				Endpoint_ClearStatusStage();
-			}
-
-			break;
-	}
+	HID_Device_ProcessControlRequest(&Keyboard_HID_Interface);
 }
 
 /** Event handler for the USB device Start Of Frame event. */
 void EVENT_USB_Device_StartOfFrame(void)
 {
-	/* One millisecond has elapsed, decrement the idle time remaining counter if it has not already elapsed */
-	if (IdleMSRemaining)
-	  IdleMSRemaining--;
+	HID_Device_MillisecondElapsed(&Keyboard_HID_Interface);
 }
 
-/** Fills the given HID report data structure with the next HID report to send to the host.
+/** HID class driver callback function for the creation of HID reports to the host.
  *
- *  \param[out] ReportData  Pointer to a HID report data structure to be filled
+ *  \param[in] HIDInterfaceInfo  Pointer to the HID class interface configuration structure being referenced
+ *  \param[in,out] ReportID  Report ID requested by the host if non-zero, otherwise callback should set to the generated report ID
+ *  \param[in] ReportType  Type of the report to create, either REPORT_ITEM_TYPE_In or REPORT_ITEM_TYPE_Feature
+ *  \param[out] ReportData  Pointer to a buffer where the created report should be stored
+ *  \param[out] ReportSize  Number of bytes written in the report (or zero if no report is to be sent
+ *
+ *  \return Boolean true to force the sending of the report, false to let the library determine if it needs to be sent
  */
-void CreateKeyboardReport(USB_KeyboardReport_Data_t* ReportData)
+bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo, uint8_t* const ReportID,
+                                         const uint8_t ReportType, void* ReportData, uint16_t* ReportSize)
 {
+	USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
+	
 	uint8_t JoyStatus_LCL     = Joystick_GetStatus();
 	uint8_t ButtonStatus_LCL  = Buttons_GetStatus();
 
 	uint8_t UsedKeyCodes      = 0;
-
-	/* Clear the report contents */
-	memset(ReportData, 0, sizeof(USB_KeyboardReport_Data_t));
+	
+	KeyboardReport->Modifier = HID_KEYBOARD_MODIFER_LEFTSHIFT;
 
 	if (JoyStatus_LCL & JOY_UP)
-	  ReportData->KeyCode[UsedKeyCodes++] = 0x04; // A
+	  KeyboardReport->KeyCode[UsedKeyCodes++] = 0x04; // A
 	else if (JoyStatus_LCL & JOY_DOWN)
-	  ReportData->KeyCode[UsedKeyCodes++] = 0x05; // B
+	  KeyboardReport->KeyCode[UsedKeyCodes++] = 0x05; // B
 
 	if (JoyStatus_LCL & JOY_LEFT)
-	  ReportData->KeyCode[UsedKeyCodes++] = 0x06; // C
+	  KeyboardReport->KeyCode[UsedKeyCodes++] = 0x06; // C
 	else if (JoyStatus_LCL & JOY_RIGHT)
-	  ReportData->KeyCode[UsedKeyCodes++] = 0x07; // D
+	  KeyboardReport->KeyCode[UsedKeyCodes++] = 0x07; // D
 
 	if (JoyStatus_LCL & JOY_PRESS)
-	  ReportData->KeyCode[UsedKeyCodes++] = 0x08; // E
+	  KeyboardReport->KeyCode[UsedKeyCodes++] = 0x08; // E
 
 	if (ButtonStatus_LCL & BUTTONS_BUTTON1)
-	  ReportData->KeyCode[UsedKeyCodes++] = 0x09; // F
-}
+	  KeyboardReport->KeyCode[UsedKeyCodes++] = 0x09; // F
 
-/** Processes a received LED report, and updates the board LEDs states to match.
+	*ReportSize = sizeof(USB_KeyboardReport_Data_t);
+	return false;
+  }
+
+/** HID class driver callback function for the processing of HID reports from the host.
  *
- *  \param[in] LEDReport  LED status report from the host
+ *  \param[in] HIDInterfaceInfo  Pointer to the HID class interface configuration structure being referenced
+ *  \param[in] ReportID  Report ID of the received report from the host
+ *  \param[in] ReportData  Pointer to a buffer where the created report has been stored
+ *  \param[in] ReportSize  Size in bytes of the received HID report
  */
-void ProcessLEDReport(uint8_t LEDReport)
-{
+void CALLBACK_HID_Device_ProcessHIDReport(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo, const uint8_t ReportID,
+                                          const void* ReportData, const uint16_t ReportSize)
+  {
+	uint8_t  LEDMask   = LEDS_NO_LEDS;
+  uint8_t* LEDReport = (uint8_t*)ReportData;
+    if (*LEDReport & HID_KEYBOARD_LED_NUMLOCK)
+	  LEDMask |= LEDS_LED1;
+	
+	if (*LEDReport & HID_KEYBOARD_LED_CAPSLOCK)
+	  LEDMask |= LEDS_LED3;
+
+	if (*LEDReport & HID_KEYBOARD_LED_SCROLLLOCK)
+	  LEDMask |= LEDS_LED4;
+	  
+	LEDs_SetAllLEDs(LEDMask);
+#ifdef FIXME
 	g_num_lock  = (LEDReport & (1<<0));
 	g_caps_lock = (LEDReport & (1<<1));
 	g_scrl_lock = (LEDReport & (1<<2));
 
 	led_set(LED_CAPS, g_caps_lock);
 	led_set(LED_SCRL, g_scrl_lock);
-
-#if 0
-	uint8_t LEDMask = LEDS_LED2;
-
-	if (LEDReport & 0x01) // NUM Lock
-	  LEDMask |= LEDS_LED1;
-
-	if (LEDReport & 0x02) // CAPS Lock
-	  LEDMask |= LEDS_LED3;
-
-	if (LEDReport & 0x04) // SCROLL Lock
-	  LEDMask |= LEDS_LED4;
-
-	/* Set the status LEDs to the current Keyboard LED status */
-	LEDs_SetAllLEDs(LEDMask);
 #endif
-}
 
-/** Sends the next HID report to the host, via the keyboard data endpoint. */
-void SendNextReport(void)
-{
-	static USB_KeyboardReport_Data_t PrevKeyboardReportData;
-	USB_KeyboardReport_Data_t        KeyboardReportData;
-	bool                             SendReport = true;
-
-	/* Create the next keyboard report for transmission to the host */
-	CreateKeyboardReport(&KeyboardReportData);
-
-	/* Check to see if the report data has changed - if so a report MUST be sent */
-	SendReport = (memcmp(&PrevKeyboardReportData, &KeyboardReportData, sizeof(USB_KeyboardReport_Data_t)) != 0);
-
-	/* Check if the idle period is set and has elapsed */
-	if ((IdleCount != HID_IDLE_CHANGESONLY) && (!(IdleMSRemaining)))
-	{
-		/* Reset the idle time remaining counter */
-		IdleMSRemaining = IdleCount;
-
-		/* Idle period is set and has elapsed, must send a report to the host */
-		SendReport = true;
-	}
-
-	/* Select the Keyboard Report Endpoint */
-	Endpoint_SelectEndpoint(KEYBOARD_EPNUM);
-
-	/* Check if Keyboard Endpoint Ready for Read/Write and if we should send a new report */
-	if (Endpoint_IsReadWriteAllowed() && SendReport)
-	{
-		/* Save the current report data for later comparison to check for changes */
-		PrevKeyboardReportData = KeyboardReportData;
-
-		/* Write Keyboard Report Data */
-		Endpoint_Write_Stream_LE(&KeyboardReportData, sizeof(KeyboardReportData));
-
-		/* Finalize the stream transfer to send the last packet */
-		Endpoint_ClearIN();
-	}
-}
-
-/** Reads the next LED status report from the host from the LED data endpoint, if one has been sent. */
-void ReceiveNextReport(void)
-{
-	/* Select the Keyboard LED Report Endpoint */
-	Endpoint_SelectEndpoint(KEYBOARD_LEDS_EPNUM);
-
-	/* Check if Keyboard LED Endpoint contains a packet */
-	if (Endpoint_IsOUTReceived())
-	{
-		/* Check to see if the packet contains data */
-		if (Endpoint_IsReadWriteAllowed())
-		{
-			/* Read in the LED report from the host */
-			uint8_t LEDReport = Endpoint_Read_Byte();
-
-			/* Process the read LED report from the host */
-			ProcessLEDReport(LEDReport);
-		}
-
-		/* Handshake the OUT Endpoint - clear endpoint and ready for next report */
-		Endpoint_ClearOUT();
-	}
-}
-
-/** Function to manage HID report generation and transmission to the host, when in report mode. */
-void HID_Task(void)
-{
-	/* Device must be connected and configured for the task to run */
-	if (USB_DeviceState != DEVICE_STATE_Configured)
-	  return;
-
-	/* Send the next keypress report to the host */
-	SendNextReport();
-
-	/* Process the LED report sent from the host */
-	ReceiveNextReport();
 }
 
 static

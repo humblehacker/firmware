@@ -63,7 +63,7 @@
 MCU = at90usb1287
 
 
-# Target board (see library BoardTypes.h documentation, USER or blank for projects not requiring
+# Target board (see library "Board Types" documentation, NONE for projects not requiring
 # LUFA board drivers). If USER is selected, put custom board drivers in a directory called 
 # "Board" inside the application directory.
 BOARD  = USBKEY
@@ -71,28 +71,21 @@ BOARD  = USBKEY
 
 # Processor frequency.
 #     This will define a symbol, F_CPU, in all source code files equal to the 
-#     processor frequency. You can then use this symbol in your source code to 
+#     processor frequency in Hz. You can then use this symbol in your source code to 
 #     calculate timings. Do NOT tack on a 'UL' at the end, this will be done
 #     automatically to create a 32-bit value in your source code.
-#     Typical values are:
-#         F_CPU =  1000000
-#         F_CPU =  1843200
-#         F_CPU =  2000000
-#         F_CPU =  3686400
-#         F_CPU =  4000000
-#         F_CPU =  7372800
-#         F_CPU =  8000000
-#         F_CPU = 11059200
-#         F_CPU = 14745600
-#         F_CPU = 16000000
-#         F_CPU = 18432000
-#         F_CPU = 20000000
+#
+#     This will be an integer division of F_CLOCK below, as it is sourced by
+#     F_CLOCK after it has run through any CPU prescalers. Note that this value
+#     does not *change* the processor frequency - it should merely be updated to
+#     reflect the processor speed set externally so that the code can use accurate
+#     software delays.
 F_CPU = 8000000
 
 
 # Input clock frequency.
 #     This will define a symbol, F_CLOCK, in all source code files equal to the 
-#     input clock frequency (before any prescaling is performed). This value may
+#     input clock frequency (before any prescaling is performed) in Hz. This value may
 #     differ from F_CPU if prescaling is used on the latter, and is required as the
 #     raw input clock is fed directly to the PLL sections of the AVR for high speed
 #     clock generation for the USB and other AVR subsections. Do NOT tack on a 'UL'
@@ -101,7 +94,7 @@ F_CPU = 8000000
 #
 #     If no clock division is performed on the input clock inside the AVR (via the
 #     CPU clock adjust registers or the clock division fuses), this will be equal to F_CPU.
-F_CLOCK = 8000000
+F_CLOCK = $(F_CPU)
 
 
 # Output format. (can be srec, ihex, binary)
@@ -122,7 +115,14 @@ SRCDIR = ../src
 VPATH = ..
 
 # Path to the LUFA library
-LUFA_PATH = ../lufa/trunk
+LUFA_PATH = ../lufa
+
+# LUFA library compile-time options
+LUFA_OPTS  = -D USB_DEVICE_ONLY
+LUFA_OPTS += -D FIXED_CONTROL_ENDPOINT_SIZE=8
+LUFA_OPTS += -D FIXED_NUM_CONFIGURATIONS=1
+LUFA_OPTS += -D USE_FLASH_DESCRIPTORS
+LUFA_OPTS += -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)"
 
 # Generated files directory
 GENERATED = $(OBJDIR)/generated
@@ -135,18 +135,23 @@ LAYOUT_FILE = $(LAYOUTS)/Keyboard.xml
 
 # List C source files here. (C dependencies are automatically generated.)
 SRC = $(SRCDIR)/Keyboard.c                                        \
-      $(SRCDIR)/Descriptors.c                                     \
+	$(SRCDIR)/Descriptors.c                                     \
       $(SRCDIR)/keyboard_state.c                                  \
       $(GENERATED)/ModeKeys.c                                     \
       $(GENERATED)/keymaps.c                                      \
-	  $(LUFA_PATH)/LUFA/Scheduler/Scheduler.c                     \
-	  $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/LowLevel.c           \
-	  $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Endpoint.c           \
-	  $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/DevChapter9.c        \
+      $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/DevChapter9.c                                     \
+      $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Endpoint.c                                  \
+      $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Host.c                                     \
+      $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/HostChapter9.c                                      \
+	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/LowLevel.c                     \
+	  $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Pipe.c           \
+	  $(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/Events.c           \
+	  $(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/USBInterrupt.c        \
 	  $(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/USBTask.c           \
-	  $(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/USBInterrupt.c      \
-	  $(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/Events.c            \
-	  $(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/StdDescriptors.c    \
+	  $(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/ConfigDescriptor.c      \
+	  $(LUFA_PATH)/LUFA/Drivers/USB/Class/Device/HID.c            \
+	  $(LUFA_PATH)/LUFA/Drivers/USB/Class/Host/HID.c              \
+	  $(LUFA_PATH)/LUFA/Drivers/USB/Class/Host/HIDParser.c    \
 
 
 # List C++ source files here. (C dependencies are automatically generated.)
@@ -193,9 +198,10 @@ CSTANDARD = -std=gnu99
 
 
 # Place -D or -U options here for C sources
-CDEFS  = -DF_CPU=$(F_CPU)UL -DF_CLOCK=$(F_CLOCK)UL -DBOARD=BOARD_$(BOARD)
-CDEFS += -DUSE_NONSTANDARD_DESCRIPTOR_NAMES -DNO_STREAM_CALLBACKS -DUSB_DEVICE_ONLY
-CDEFS += -DUSE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)"
+CDEFS  = -DF_CPU=$(F_CPU)UL -DF_CLOCK=$(F_CLOCK)UL -DBOARD=BOARD_$(BOARD) $(LUFA_OPTS)
+
+# CDEFS += -DUSE_NONSTANDARD_DESCRIPTOR_NAMES -DNO_STREAM_CALLBACKS -DUSB_DEVICE_ONLY
+# CDEFS += -DUSE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)"
 CDEFS += -DTYPEMATRIX_PROTOTYPE_2
 
 # Place -D or -U options here for ASM sources
@@ -222,9 +228,9 @@ CFLAGS += -O$(OPT)
 CFLAGS += -funsigned-char
 CFLAGS += -funsigned-bitfields
 CFLAGS += -ffunction-sections
+CFLAGS += -fno-inline-small-functions
 CFLAGS += -fpack-struct
 CFLAGS += -fshort-enums
-CFLAGS += -finline-limit=20
 CFLAGS += -Wall
 CFLAGS += -Wstrict-prototypes
 CFLAGS += -Wundef
@@ -472,7 +478,7 @@ ALL_ASFLAGS = -mmcu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)
 
 
 # Default target.
-all: begin $(GENERATED)/keymaps.h gccversion sizebefore build checkhooks checklibmode checkboard sizeafter end
+all: begin $(GENERATED)/keymaps.h gccversion sizebefore build checkinvalidevents showliboptions showtarget sizeafter end
 
 ## Generate header files
 $(GENERATED)/keymaps.h: $(LAYOUTS)/*.xml 
@@ -520,28 +526,34 @@ sizeafter:
 	@if test -f $(TARGET).elf; then echo; echo $(MSG_SIZE_AFTER); $(ELFSIZE); \
 	2>/dev/null; echo; fi
 
-checkhooks: build
-	@echo
-	@echo ------- Unhooked LUFA Events -------
-	@$(shell) (grep -s '^Event.*LUFA/.*\\.o' $(TARGET).map | \
-	           cut -d' ' -f1 | cut -d'_' -f2- | grep ".*") || \
-			   echo "(None)"
-	@echo ------------------------------------
+$(LUFA_PATH)/LUFA/LUFA_Events.lst:
+	@make -C $(LUFA_PATH)/LUFA/ LUFA_Events.lst
 
-checklibmode:
+checkinvalidevents: $(LUFA_PATH)/LUFA/LUFA_Events.lst
 	@echo
-	@echo ----------- Library Mode -----------
-	@$(shell) ($(CC) $(ALL_CFLAGS) -E -dM - < /dev/null \
-	          | grep 'USB_\(DEVICE\|HOST\)_ONLY' | cut -d' ' -f2 | grep ".*") \
-	          || echo "No specific mode (both device and host mode allowable)."
-	@echo ------------------------------------
+	@echo Checking for invalid events...
+	@$(shell) avr-nm $(OBJ) | sed -n -e 's/^.*EVENT_/EVENT_/p' | \
+	                 grep -F -v --file=$(LUFA_PATH)/LUFA/LUFA_Events.lst > InvalidEvents.tmp || true
+	@sed -n -e 's/^/  WARNING - INVALID EVENT NAME: /p' InvalidEvents.tmp
+	@if test -s InvalidEvents.tmp; then exit 1; fi
 
-checkboard:
+showliboptions:
 	@echo
-	@echo ---------- Selected Board ----------
-	@echo Selected board model is $(BOARD).
-	@echo ------------------------------------
+	@echo ---- Compile Time Library Options ----
+	@for i in $(LUFA_OPTS:-D%=%); do \
+		echo $$i; \
+	done
+	@echo --------------------------------------
+
+showtarget:
+	@echo
+	@echo --------- Target Information ---------
+	@echo AVR Model: $(MCU)
+	@echo Board:     $(BOARD)
+	@echo Clock:     $(F_CPU)Hz CPU, $(F_CLOCK)Hz Master
+	@echo --------------------------------------
 	
+
 # Display compiler version information.
 gccversion : 
 	@$(CC) --version
@@ -563,10 +575,11 @@ dfu: $(TARGET).hex
 	dfu-programmer $(MCU) reset
 
 flip-ee: $(TARGET).hex $(TARGET).eep
-	copy $(TARGET).eep $(TARGET)eep.hex
+	$(COPY) $(TARGET).eep $(TARGET)eep.hex
 	batchisp -hardware usb -device $(MCU) -operation memory EEPROM erase
 	batchisp -hardware usb -device $(MCU) -operation memory EEPROM loadbuffer $(TARGET)eep.hex program
 	batchisp -hardware usb -device $(MCU) -operation start reset 0
+	$(REMOVE) $(TARGET)eep.hex
 
 dfu-ee: $(TARGET).hex $(TARGET).eep
 	dfu-programmer $(MCU) flash-eeprom --debug 1 --suppress-bootloader-mem $(TARGET).eep
@@ -729,6 +742,7 @@ clean_list:
 	$(REMOVE) $(SRC:.c=.s)
 	$(REMOVE) $(SRC:.c=.d)
 	$(REMOVE) $(SRC:.c=.i)
+	$(REMOVE) InvalidEvents.tmp
 	$(REMOVEDIR) .dep
 	$(REMOVEDIR) $(GENERATED)
 	$(call kill-dirs, $(OBJDIRS))
@@ -760,8 +774,8 @@ $(shell mkdir -p $(GENERATED) 2>/dev/null)
 
 
 # Listing of phony targets.
-.PHONY : all checkhooks checklibmode checkboard   \
-begin finish end sizebefore sizeafter gccversion  \
-build elf hex eep lss sym coff extcoff clean      \
-clean_list clean_binary program debug gdb-config  \
-doxygen dfu flip flip-ee dfu-ee
+.PHONY : all checkinvalidevents showliboptions    \
+showtarget begin finish end sizebefore sizeafter  \
+gccversion build elf hex eep lss sym coff extcoff \
+program dfu flip flip-ee dfu-ee clean debug       \
+clean_list clean_binary gdb-config doxygen
