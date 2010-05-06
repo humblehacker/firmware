@@ -120,6 +120,7 @@ keyboard_state__cooked_keys_have_changed()
 
   return FALSE;
 }
+
 uint8_t
 keyboard_state__mode_keys_have_changed()
 {

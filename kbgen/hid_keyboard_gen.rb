@@ -548,14 +548,14 @@ def create_modekeys_header
     output.puts '#include "matrix.h"'
     output.puts '#include "HIDUsageTables.h"'
     output.puts
-    output.puts "#define MOMENTARY 0"
-    output.puts "#define TOGGLE    1"
+    output.puts "#define MOMENTARY 0    // mode only active when mode key is pressed"
+    output.puts "#define TOGGLE    1    // mode key toggles mode on and off"
     output.puts
     output.puts "typedef struct"
     output.puts "{"
-    output.puts "  Cell cell;"
-    output.puts "  uint8_t type;"
-    output.puts "  MatrixMap selecting_map;"
+    output.puts "  Cell cell;                // location of mode key"
+    output.puts "  uint8_t type;             // type of mode key (MOMENTARY, TOGGLE)"
+    output.puts "  MatrixMap selecting_map;  // the map this mode key selects"
     output.puts "} ModeKey;"
     output.puts
     output.puts "extern const ModeKey modeKeys[];"

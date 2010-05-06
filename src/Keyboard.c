@@ -90,7 +90,7 @@ uint8_t g_num_lock, g_caps_lock, g_scrl_lock;
 
 /* each row contains data for 3 Ports */
 static MatrixMap s_current_kb_map;
-static MatrixMap s_temp_kb_map;
+static MatrixMap s_active_mode_kb_map;
 static MatrixMap s_prev_kb_map[NUM_MODE_KEYS];
 static uint32_t s_row_data[NUM_ROWS];
 static uint16_t s_timeout;
@@ -104,6 +104,7 @@ static     void get_keyboard_state(void);
 static     void process_mode_keys(void);
 static     void process_keys(void);
 static     void send_keys(void);
+static     void fill_report(USB_KeyboardReport_Data_t* report);
 static    Usage map_get_usage(MatrixMap map, uint8_t cell);
 static   ModKey get_modifier(Usage usage);
 // static     void process_consumer_control_endpoint(void);
@@ -147,10 +148,10 @@ void SetupHardware()
   init_leds();
   keyboard_state__init();
 
-  g_num_lock       = g_caps_lock = g_scrl_lock = 0;
-  s_temp_kb_map    = NULL;
-  s_current_kb_map = (MatrixMap) pgm_read_word(&kbd_map_mx_default);
-  s_timeout        = 500;
+  g_num_lock           = g_caps_lock = g_scrl_lock = 0;
+  s_active_mode_kb_map = NULL;
+  s_current_kb_map     = (MatrixMap) pgm_read_word(&kbd_map_mx_default);
+  s_timeout            = 500;
 
 #if defined(BOOTLOADER_TEST)
   uint8_t bootloader = eeprom_read_byte(&ee_bootloader);
@@ -214,33 +215,22 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
                                          const uint8_t ReportType, void* ReportData, uint16_t* ReportSize)
 {
 	USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
-	
-	uint8_t JoyStatus_LCL     = Joystick_GetStatus();
-	uint8_t ButtonStatus_LCL  = Buttons_GetStatus();
 
-	uint8_t UsedKeyCodes      = 0;
-	
-	KeyboardReport->Modifier = HID_KEYBOARD_MODIFER_LEFTSHIFT;
-
-	if (JoyStatus_LCL & JOY_UP)
-	  KeyboardReport->KeyCode[UsedKeyCodes++] = 0x04; // A
-	else if (JoyStatus_LCL & JOY_DOWN)
-	  KeyboardReport->KeyCode[UsedKeyCodes++] = 0x05; // B
-
-	if (JoyStatus_LCL & JOY_LEFT)
-	  KeyboardReport->KeyCode[UsedKeyCodes++] = 0x06; // C
-	else if (JoyStatus_LCL & JOY_RIGHT)
-	  KeyboardReport->KeyCode[UsedKeyCodes++] = 0x07; // D
-
-	if (JoyStatus_LCL & JOY_PRESS)
-	  KeyboardReport->KeyCode[UsedKeyCodes++] = 0x08; // E
-
-	if (ButtonStatus_LCL & BUTTONS_BUTTON1)
-	  KeyboardReport->KeyCode[UsedKeyCodes++] = 0x09; // F
-
-	*ReportSize = sizeof(USB_KeyboardReport_Data_t);
-	return false;
+  get_keyboard_state();
+  if (!keyboard_state__is_error())
+  {
+    s_active_mode_kb_map = s_current_kb_map;
+    process_mode_keys();
+    process_keys();
   }
+  fill_report(KeyboardReport);
+
+  // if processing macro, don't swap states until macro is complete
+  if (keyboard_state__is_processing_macro() == FALSE)
+    keyboard_state__swap_states();
+	
+	return false;
+}
 
 /** HID class driver callback function for the processing of HID reports from the host.
  *
@@ -251,7 +241,7 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
  */
 void CALLBACK_HID_Device_ProcessHIDReport(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo, const uint8_t ReportID,
                                           const void* ReportData, const uint16_t ReportSize)
-  {
+{
 	uint8_t  LEDMask   = LEDS_NO_LEDS;
   uint8_t* LEDReport = (uint8_t*)ReportData;
     if (*LEDReport & HID_KEYBOARD_LED_NUMLOCK)
@@ -298,7 +288,7 @@ process_keyboard_endpoint(void)
     {
       if (!keyboard_state__is_error())
       {
-        s_temp_kb_map = s_current_kb_map;
+        s_active_mode_kb_map = s_current_kb_map;
         process_mode_keys();
         process_keys();
       }
@@ -421,7 +411,7 @@ process_mode_keys()
        && g_current_kb_state->active_cells[i] == modeKey.cell)
       {
         g_current_kb_state->mode_keys |= (1<<mode);
-        s_temp_kb_map = modeKey.selecting_map;
+        s_active_mode_kb_map = modeKey.selecting_map;
         // TODO: modeKeys[i].leds
         break;
       }
@@ -437,7 +427,7 @@ process_mode_keys()
       if (modeKey.type != TOGGLE)
         continue;
 
-      usage = map_get_usage(s_temp_kb_map, modeKey.cell);
+      usage = map_get_usage(s_active_mode_kb_map, modeKey.cell);
 
       if (USAGE_PAGE(usage) == HID_USAGE_PAGE_CUSTOM
        && USAGE_ID(usage) == mode
@@ -473,7 +463,6 @@ static
 void
 process_keys()
 {
-  MatrixMap map = s_temp_kb_map;
   uint8_t i, modifier;
   uint8_t num_blocked_keys = 0;
   Cell raw_key;
@@ -495,7 +484,7 @@ process_keys()
       continue;
     }
 
-    usage = map_get_usage(map, raw_key);
+    usage = map_get_usage(s_active_mode_kb_map, raw_key);
 
     modifier = get_modifier(usage);
     if (modifier)
@@ -607,6 +596,49 @@ send_keys(void)
   else
     led_off(LED_GRN_1);
 #endif
+}
+
+static
+void
+fill_report(USB_KeyboardReport_Data_t* report)
+{
+  uint8_t key;
+
+  if (keyboard_state__is_error())
+  {
+    report->Modifier = g_current_kb_state->modifiers;
+    for (key = 1; key < 7; ++key)
+      report->KeyCode[key] = USAGE_ID(HID_USAGE_KEYBOARD_ERRORROLLOVER);
+    return;
+  }
+
+  if (!keyboard_state__is_processing_macro())
+  {
+    if (keyboard_state__cooked_keys_have_changed())
+    {
+      report->Modifier = g_current_kb_state->modifiers;
+
+      for (key = 0; key < g_current_kb_state->num_keys; ++key)
+        report->KeyCode[key] = g_current_kb_state->keys[key];
+    }
+  }
+  else
+  {
+    const Macro * macro = g_current_kb_state->macro;
+    MacroKey mkey;
+    mkey.mod.all = pgm_read_byte(&macro->keys[g_current_kb_state->macro_key_index].mod);
+    mkey.usage = pgm_read_word(&macro->keys[g_current_kb_state->macro_key_index].usage);
+    uint8_t num_macro_keys = pgm_read_byte(&macro->num_keys);
+    report->Modifier = g_current_kb_state->pre_macro_modifiers | mkey.mod.all;
+    report->KeyCode[0] = USAGE_ID(mkey.usage);
+    g_current_kb_state->macro_key_index++;
+    if (g_current_kb_state->macro_key_index >= num_macro_keys)
+    {
+      g_current_kb_state->macro = NULL;
+      g_current_kb_state->macro_key_index = 0;
+    }
+    return;
+  }
 }
 
 static
