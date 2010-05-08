@@ -103,13 +103,10 @@ static uint8_t  EEMEM ee_persistent_map;
 static     void get_keyboard_state(void);
 static     void process_mode_keys(void);
 static     void process_keys(void);
-static     void send_keys(void);
 static     void fill_report(USB_KeyboardReport_Data_t* report);
 static    Usage map_get_usage(MatrixMap map, uint8_t cell);
 static   ModKey get_modifier(Usage usage);
 // static     void process_consumer_control_endpoint(void);
-static     void process_keyboard_endpoint(void);
-static     void process_led_endpoint(void);
 
 /** Main program entry point. This routine contains the overall program flow, including initial
  *  setup of all components and the main program loop.
@@ -118,7 +115,7 @@ int main(void)
 {
 	SetupHardware();
 
-	LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
+//LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
 
 	for (;;)
 	{
@@ -140,7 +137,7 @@ void SetupHardware()
 	/* Hardware Initialization */
 // Joystick_Init();
 // LEDs_Init();
-	Buttons_Init();
+//Buttons_Init();
 	USB_Init();
 
   /* Task init */
@@ -152,6 +149,8 @@ void SetupHardware()
   s_active_mode_kb_map = NULL;
   s_current_kb_map     = (MatrixMap) pgm_read_word(&kbd_map_mx_default);
   s_timeout            = 500;
+
+  led_on(LED_NUM);
 
 #if defined(BOOTLOADER_TEST)
   uint8_t bootloader = eeprom_read_byte(&ee_bootloader);
@@ -169,29 +168,30 @@ void SetupHardware()
 /** Event handler for the library USB Connection event. */
 void EVENT_USB_Device_Connect(void)
 {
-	LEDs_SetAllLEDs(LEDMASK_USB_ENUMERATING);
+//LEDs_SetAllLEDs(LEDMASK_USB_ENUMERATING);
 }
 
 /** Event handler for the library USB Disconnection event. */
 void EVENT_USB_Device_Disconnect(void)
 {
-	LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
+//LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
 }
 
 /** Event handler for the library USB Configuration Changed event. */
 void EVENT_USB_Device_ConfigurationChanged(void)
 {
-	LEDs_SetAllLEDs(LEDMASK_USB_READY);
+//LEDs_SetAllLEDs(LEDMASK_USB_READY);
 
 	if (!(HID_Device_ConfigureEndpoints(&Keyboard_HID_Interface)))
-	  LEDs_SetAllLEDs(LEDMASK_USB_ERROR);
+    ;
+//  LEDs_SetAllLEDs(LEDMASK_USB_ERROR);
 
 	USB_Device_EnableSOFEvents();
 }
 
 /** Event handler for the library USB Unhandled Control Request event. */
 void EVENT_USB_Device_UnhandledControlRequest(void)
-			{
+{
 	HID_Device_ProcessControlRequest(&Keyboard_HID_Interface);
 }
 
@@ -217,7 +217,7 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
 	USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
 
   get_keyboard_state();
-  if (!keyboard_state__is_error())
+  if (keyboard_state__has_changed() && !keyboard_state__is_empty() && !keyboard_state__is_error())
   {
     s_active_mode_kb_map = s_current_kb_map;
     process_mode_keys();
@@ -229,6 +229,7 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
   if (keyboard_state__is_processing_macro() == FALSE)
     keyboard_state__swap_states();
 	
+	*ReportSize = sizeof(USB_KeyboardReport_Data_t);
 	return false;
 }
 
@@ -242,29 +243,18 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
 void CALLBACK_HID_Device_ProcessHIDReport(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo, const uint8_t ReportID,
                                           const void* ReportData, const uint16_t ReportSize)
 {
-	uint8_t  LEDMask   = LEDS_NO_LEDS;
   uint8_t* LEDReport = (uint8_t*)ReportData;
-    if (*LEDReport & HID_KEYBOARD_LED_NUMLOCK)
-	  LEDMask |= LEDS_LED1;
-	
-	if (*LEDReport & HID_KEYBOARD_LED_CAPSLOCK)
-	  LEDMask |= LEDS_LED3;
 
-	if (*LEDReport & HID_KEYBOARD_LED_SCROLLLOCK)
-	  LEDMask |= LEDS_LED4;
-	  
-	LEDs_SetAllLEDs(LEDMask);
-#ifdef FIXME
-	g_num_lock  = (LEDReport & (1<<0));
-	g_caps_lock = (LEDReport & (1<<1));
-	g_scrl_lock = (LEDReport & (1<<2));
+	g_num_lock  = (*LEDReport & (1<<0));
+	g_caps_lock = (*LEDReport & (1<<1));
+	g_scrl_lock = (*LEDReport & (1<<2));
 
 	led_set(LED_CAPS, g_caps_lock);
 	led_set(LED_SCRL, g_scrl_lock);
-#endif
-
+  led_set(LED_NUM,  g_num_lock);
 }
 
+#if 0
 static
 void
 process_keyboard_endpoint(void)
@@ -300,34 +290,14 @@ process_keyboard_endpoint(void)
       keyboard_state__swap_states();
   }
 }
-
-static
-void
-process_led_endpoint(void)
-{
-///out///Endpoint_SelectEndpoint(KEYBOARD_LEDS_EPNUM);
-///out///if (!Endpoint_ReadWriteAllowed())
-///out///return;
-
-  /* Read in the LED report from the host */
-  uint8_t LEDStatus = Endpoint_Read_Byte();
-
-  g_num_lock  = (LEDStatus & (1<<0));
-  g_caps_lock = (LEDStatus & (1<<1));
-  g_scrl_lock = (LEDStatus & (1<<2));
-
-  led_set(LED_CAPS, g_caps_lock);
-  led_set(LED_SCRL, g_scrl_lock);
-
-  /* Handshake the OUT Endpoint - clear endpoint and ready for next report */
-  Endpoint_ClearCurrentBank();
-}
+#endif
 
 static
 void
 get_keyboard_state(void)
 {
   keyboard_state__reset_current_state();
+  init_cols();
 
 	uint8_t row, col;
   for (row = 0; row < NUM_ROWS; ++row)
@@ -531,6 +501,7 @@ process_keys()
     g_num_blocked_keys = num_blocked_keys;
 }
 
+#if 0
 static
 void
 send_keys(void)
@@ -597,6 +568,7 @@ send_keys(void)
     led_off(LED_GRN_1);
 #endif
 }
+#endif
 
 static
 void

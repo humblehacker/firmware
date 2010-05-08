@@ -31,7 +31,7 @@ with The HumbleHacker Keyboard Project.  If not, see
 
 #define TARGET_BOARD USBKEY
 
-// Rows are A0-C7
+// Rows are A0-A7
 #define ROW_DDR  DDRA
 #define ROW_PORT PORTA
 #define A_ROWS 0xff
