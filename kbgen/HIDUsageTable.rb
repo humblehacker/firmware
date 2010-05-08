@@ -6,7 +6,6 @@
 require 'rubygems'
 require 'xml/libxml'
 require 'optparse'
-require 'PP'
 require 'Utils.rb'
 
 class UsagePage
