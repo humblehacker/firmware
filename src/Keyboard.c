@@ -135,9 +135,6 @@ void SetupHardware()
 	clock_prescale_set(clock_div_1);
 
 	/* Hardware Initialization */
-// Joystick_Init();
-// LEDs_Init();
-//Buttons_Init();
 	USB_Init();
 
   /* Task init */
@@ -217,19 +214,20 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
 	USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
 
   get_keyboard_state();
-  if (keyboard_state__has_changed() && !keyboard_state__is_empty() && !keyboard_state__is_error())
+
+  if (!keyboard_state__is_error())
   {
     s_active_mode_kb_map = s_current_kb_map;
     process_mode_keys();
     process_keys();
   }
   fill_report(KeyboardReport);
+  *ReportSize = sizeof(USB_KeyboardReport_Data_t);
 
   // if processing macro, don't swap states until macro is complete
   if (keyboard_state__is_processing_macro() == FALSE)
     keyboard_state__swap_states();
 	
-	*ReportSize = sizeof(USB_KeyboardReport_Data_t);
 	return false;
 }
 
@@ -297,7 +295,6 @@ void
 get_keyboard_state(void)
 {
   keyboard_state__reset_current_state();
-  init_cols();
 
 	uint8_t row, col;
   for (row = 0; row < NUM_ROWS; ++row)
@@ -586,13 +583,10 @@ fill_report(USB_KeyboardReport_Data_t* report)
 
   if (!keyboard_state__is_processing_macro())
   {
-    if (keyboard_state__cooked_keys_have_changed())
-    {
-      report->Modifier = g_current_kb_state->modifiers;
+    report->Modifier = g_current_kb_state->modifiers;
 
-      for (key = 0; key < g_current_kb_state->num_keys; ++key)
-        report->KeyCode[key] = g_current_kb_state->keys[key];
-    }
+    for (key = 0; key < g_current_kb_state->num_keys; ++key)
+      report->KeyCode[key] = g_current_kb_state->keys[key];
   }
   else
   {
