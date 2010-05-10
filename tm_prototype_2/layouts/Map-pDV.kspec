@@ -1,0 +1,83 @@
+Map:DV base:US rev:$Rev: 57 $
+
+// Row 1
+Key:t11
+  Mapping:4_and_$                                     bl:"$"  
+  <shift>Mapping:`_and_~                              tl:"~"
+Key:t12
+  Mapping:[Macro:7_and_& modifiers:left_shift]        bl:"&"  
+  <shift>Mapping:[Macro:5_and_% modifiers:left_shift] tl:"%"
+Key:t13
+  Mapping:\[_and_\{                                   bl:"["  
+  <shift>Mapping:7_and_&                              tl:"7"
+Key:t14
+  Mapping:[Macro:\[_and_\{ modifiers:left_shift]      bl:"{"  
+  <shift>Mapping:5_and_%                              tl:"5"
+Key:t15
+  Mapping:[Macro:\]_and_\} modifiers:left_shift]      bl:"}"  
+  <shift>Mapping:3_and_#                              tl:"3"
+Key:t16
+  Mapping:[Macro:9_and_( modifiers:left_shift]        bl:"("  
+  <shift>Mapping:1_and_!                              tl:"1"
+Key:t17
+  Mapping:=_and_+                                     bl:"="  
+  <shift>Mapping:9_and_(                              tl:"9"
+Key:t18
+  Mapping:[Macro:8_and_* modifiers:left_shift]        bl:"*"  
+  <shift>Mapping:0_and_)                              tl:"0"
+Key:t19
+  Mapping:[Macro:0_and_) modifiers:left_shift]        bl:")"  
+  <shift>Mapping:2_and_@                              tl:"2"
+Key:t1a
+  Mapping:[Macro:=_and_+ modifiers:left_shift]        bl:"+"  
+  <shift>Mapping:4_and_$                              tl:"4"
+Key:t1b
+  Mapping:\]_and_\}                                    bl:"]"  
+  <shift>Mapping:6_and_^                              tl:"6"
+Key:t1c
+  Mapping:[Macro:1_and_! modifiers:left_shift]        bl:"!"  
+  <shift>Mapping:8_and_*                              tl:"8"
+Key:t1d
+  Mapping:[Macro:3_and_# modifiers:left_shift]        bl:"#"  
+  <shift>Mapping:\'_and_\"                            tl:"'"
+
+// Row 2
+Key:t2d  Mapping:\[_and_\{                            tl:"{"  bl:"["
+Key:t2e  Mapping:\]_and_\}                            tl:"}"  bl:"]"
+
+// Row 3
+Key:t32  Mapping:\'_and_\"                            tl:"\"" bl:"\'"
+Key:t33  Mapping:,_and_<                              tl:"<"  bl:","
+Key:t34  Mapping:._and_>                              tl:">"  bl:"."
+Key:t35  Mapping:p_and_P                              tl:"P"
+Key:t36  Mapping:y_and_Y                              tl:"Y"
+Key:t38  Mapping:f_and_F                              tl:"F"
+Key:t39  Mapping:g_and_G                              tl:"G"
+Key:t3a  Mapping:c_and_C                              tl:"C"
+Key:t3b  Mapping:r_and_R                              tl:"R"
+Key:t3c  Mapping:l_and_L                              tl:"L"
+Key:t3d  Mapping:/_and_?                              tl:"?"  bl:"/"
+Key:t3e  Mapping:=_and_+                              tl:"+"  bl:"="
+
+// Row 4                                                 
+Key:t43  Mapping:o_and_O                              tl:"O"
+Key:t44  Mapping:e_and_E                              tl:"E"
+Key:t45  Mapping:u_and_U                              tl:"U"
+Key:t46  Mapping:i_and_I                              tl:"I"
+Key:t48  Mapping:d_and_D                              tl:"D"
+Key:t49  Mapping:h_and_H                              tl:"H"
+Key:t4a  Mapping:t_and_T                              tl:"T"
+Key:t4b  Mapping:n_and_N                              tl:"N"
+Key:t4c  Mapping:s_and_S                              tl:"S"
+Key:t4d  Mapping:-_and__                              tl:"__"  bl:"-"
+
+// Row 5                                                 
+Key:t52  Mapping:;_and_\:                             tl:":"   bl:";"
+Key:t53  Mapping:q_and_Q                              tl:"Q"
+Key:t54  Mapping:j_and_J                              tl:"J"
+Key:t55  Mapping:k_and_K                              tl:"K"
+Key:t56  Mapping:x_and_X                              tl:"X"
+Key:t58  Mapping:b_and_B                              tl:"B"
+Key:t5a  Mapping:w_and_W                              tl:"W"
+Key:t5b  Mapping:v_and_V                              tl:"V"
+Key:t5c  Mapping:z_and_Z                              tl:"Z"

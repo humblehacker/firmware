@@ -1,0 +1,9 @@
+Keyboard:TypeMatrix2030USB rev:$Rev: 63 $
+    include:Layout
+    include:Matrix
+    include:Map-US
+    include:Map-DV
+    include:Map-JP
+    include:Map-Nm
+    include:Map-Fn
+    include:Map-EEPROM

@@ -1,0 +1,55 @@
+Map:Fn base:Nm rev:"$Rev: 203 $"
+    // Row 1
+    Key:t11 Mapping:[Mode:US            type:toggle] tl:"US"
+    Key:t12 Mapping:[Mode:DV led:Dvorak type:toggle] tl:"Dvorak"
+    Key:t13 Mapping:[Mode:JP led:Scroll type:toggle] tl:"Japan"
+    Key:t15 Mapping:[Macro 
+    {
+        [Macro:t_and_T modifiers:right_shift]
+        [id:y_and_Y]
+        [id:p_and_P]
+        [id:e_and_E]
+        [Macro:m_and_M modifiers:right_shift]
+        [id:a_and_A]
+        [id:t_and_T]
+        [id:r_and_R]
+        [id:i_and_I]
+        [id:x_and_X]
+        [id:Spacebar]
+        [id:2_and_@]
+        [id:0_and_)]
+        [id:3_and_#]
+        [id:0_and_)]
+        [id:Spacebar]
+        [Macro:p_and_P modifiers:right_shift]
+        [id:r_and_R]
+        [id:o_and_O]
+        [id:f_and_F]
+        [id:e_and_E]
+        [id:s_and_S]
+        [id:s_and_S]
+        [id:i_and_I]
+        [id:o_and_O]
+        [id:n_and_N]
+        [id:a_and_A]
+        [id:l_and_L]
+    }]
+    Key:t17 Mapping:Insert                                       tl:"Insert"
+    Key:t19 Mapping:[Generic_Desktop id:System_Power_Down]       tl:"Power"
+    Key:t1a Mapping:[Generic_Desktop id:System_Sleep]            tl:"Sleep"
+    Key:t1b Mapping:[Generic_Desktop id:System_Wake_Up]          tl:"Wake"
+    Key:t1c Mapping:PrintScreen                                  tl:"Prt Sc"
+    Key:t1d Mapping:Scroll_Lock                                  tl:"Scroll"
+    Key:t1e Mapping:Pause                                        tl:"Pause"
+    Key:t1f Mapping:Keypad_Num_Lock_and_Clear                    tl:"N. Lock"
+
+    // Row 5
+    Key:t52 Mapping:id:Non-US_\_and_|                            tl:"<"
+    Key:t53 Mapping:[Macro:Non-US_\_and_| modifiers:right_shift] tl:">"
+    Key:t54 Mapping:[Macro:Non-US_\_and_| modifiers:right_alt]   tl:"¦"
+    Key:t55 Mapping:[Macro:Non-US_\_and_| modifiers:right_shift] tl:"_"
+
+    // Row 6
+    Key:t62 Mapping:Cut                                          tl:"Cut"
+    Key:t63 Mapping:Copy                                         tl:"Copy"
+    Key:t64 Mapping:Paste                                        tl:"Paste"

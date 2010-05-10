@@ -1,0 +1,47 @@
+Map:Nm rev:$Rev: 62 $
+
+  // Row 1 
+  Key:t1f [Mode:Nm led:Num type:toggle] tl:"Num" 
+  Key:t3b Mapping:Tab tl:"Tab" 
+  Key:t3c Mapping:Keypad_/ tl:"" 
+  Key:t3d Mapping:Keypad_* tl:"*" 
+  Key:t3e Mapping:Keypad_- tl:"-" 
+  Key:t3f [Macro:Tab modifiers:right_shift] tl:"b.tab" 
+
+  // Row 4
+  Key:t48 Mapping:Home tl:"Home" 
+  Key:t49 Mapping:UpArrow tl:"{up}" 
+  Key:t4a Mapping:End tl:"End" 
+  Key:t4b Mapping:Keypad_7_and_Home tl:"7" 
+  Key:t4c Mapping:Keypad_8_and_Up_Arrow tl:"8" 
+  Key:t4d Mapping:Keypad_9_and_PageUp tl:"9" 
+  Key:t4e Mapping:Keypad_+ tl:"+" 
+
+  // Row 5 
+  Key:t58 Mapping:LeftArrow tl:"{left}" 
+  Key:t59 Mapping:DownArrow tl:"{down}" 
+  Key:t5a Mapping:RightArrow tl:"{right}" 
+  Key:t5b Mapping:Keypad_4_and_Left_Arrow tl:"4" 
+  Key:t5c Mapping:Keypad_5 tl:"5" 
+  Key:t5d Mapping:Keypad_6_and_Right_Arrow tl:"6" 
+  Key:t5f Mapping:Keypad_Clear_Entry tl:"clear" 
+
+  // Row 6 
+  Key:t6b Mapping:Keypad_1_and_End tl:"1" 
+  Key:t6c Mapping:Keypad_2_and_Down_Arrow tl:"2" 
+  Key:t6d Mapping:Keypad_3_and_PageDn tl:"3" 
+  Key:t6e Mapping:Keypad_ENTER tl:"enter" 
+  Key:t6f Mapping:Backspace tl:"b.space" 
+
+  // Row 7 
+  Key:t7b Mapping:Keypad_0_and_Insert tl:"0" 
+  Key:t7c tl:"00" [Macro
+  {
+    [id:Keypad_0_and_Insert]
+    [id:Keypad_0_and_Insert]
+  }
+
+  Key:t7d Mapping:Keypad_._and_Delete tl:"."
+	
+	
+
