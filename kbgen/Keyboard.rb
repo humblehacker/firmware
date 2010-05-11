@@ -1,6 +1,6 @@
 require 'xml/libxml'
 require 'shell'
-require 'kbInternals.rb'
+require 'KbInternals.rb'
 require 'Utils.rb'
 
 class Keyboard
