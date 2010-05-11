@@ -1,0 +1,27 @@
+grammar HID
+
+  rule table
+    usage_page+ <HIDUsageTableNode>
+  end
+
+  rule usage_page
+    'UsagePage:' ident ws 'id:' hex ws usage+
+  end
+
+  rule usage
+    'Usage:' ident ws 'id:' hex ws ( 'type:' ident ws )? ( 'section:' [0-9.]+ ws )?
+  end
+
+  rule ident
+    [^ \t\n]+
+  end
+
+  rule hex
+    '0x' [0-9a-fA-F]+
+  end
+
+  rule ws
+    [ \t\n]+
+  end
+  
+end

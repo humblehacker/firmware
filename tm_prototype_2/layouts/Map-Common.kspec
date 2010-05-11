@@ -1,4 +1,4 @@
-Map:Common rev:$Rev: 203 $
+Map:Common rev:203
 
 	// Row 1
 	Key:1A Mapping:ESCAPE                                     tl:"esc"
@@ -15,15 +15,15 @@ Map:Common rev:$Rev: 203 $
 	Key:1L Mapping:F10                                        tl:"F10"
 	Key:1M Mapping:F11                                        tl:"F11"
 	Key:1N Mapping:F12                                        tl:"F12"
-	Key:1O Mapping:[Mode:Nm led:Num type:toggle]              tl:"Num"
+	Key:1O Mode:Nm led:Num type:toggle                        tl:"Num"
 
 	// Row 2
 	Key:2G Mapping:Backspace                                  tl:"Back space"
-	Key:2O Mapping:[page:Consumer_Control id:AL_Calculator]   tl:"{calc}"
+	Key:2O Mapping:AL_Calculator page:Consumer_Control        tl:"{calc}"
 
 	// Row 3
 	Key:3A Mapping:Tab                                        tl:"Tab"
-	Key:3O Mapping:[page:Consumer_Control id:AL_Email_Reader] tl:"{mail}"
+	Key:3O Mapping:AL_Email_Reader page:Consumer_Control      tl:"{mail}"
 
 	// Row 4
 	Key:4A Mapping:LeftShift                                  tl:"Shift"
@@ -32,15 +32,15 @@ Map:Common rev:$Rev: 203 $
 	Key:4O Mapping:Caps_Lock                                  tl:"Caps"
 
 	// Row 5 
-	Key:5O Mapping:[page:Consumer_Control id:AC_Home]         tl:"{web}"
+	Key:5O Mapping:AC_Home page:Consumer_Control              tl:"{web}"
 														       
 	// Row 6											       
 	Key:6A Mapping:LeftControl                                tl:"Ctrl"
-	Key:6B Mapping:[page:Consumer_Control id:Play/Pause]      tl:"Play"
+	Key:6B Mapping:Play/Pause page:Consumer_Control           tl:"Play"
 	Key:6C Mapping:Application                                tl:"App"
-	Key:6D Mapping:[Macro:Tab modifiers:left_alt]             tl:"Shuffle"
+	Key:6D Mapping:Tab<left_alt>                              tl:"Shuffle"
 	Key:6E Mapping:Spacebar							       
-	Key:6J Mapping:[Macro:d_and_D modifiers:left_gui]         tl:"Desktop"
+	Key:6J Mapping:d_and_D<left_gui>                          tl:"Desktop"
 	Key:6K Mapping:Home                                       tl:"Home"
 	Key:6L Mapping:UpArrow                                    tl:"{up}"
 	Key:6M Mapping:End                                        tl:"End"
@@ -48,7 +48,7 @@ Map:Common rev:$Rev: 203 $
 	Key:6O Mapping:PageUp                                     tl:"Pg Up"
 
 	// Row 7
-	Key:7A Mapping:[Mode:Fn led:Num type:momentary]           tl:"Fn"
+	Key:7A Mode:Fn led:Num type:momentary                     tl:"Fn"
 	Key:7B Mapping:Left_GUI                                   tl:"Start"
 	Key:7C Mapping:LeftAlt                                    tl:"Alt"
 	Key:7J Mapping:RightAlt                                   tl:"Alt"
