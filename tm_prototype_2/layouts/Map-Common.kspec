@@ -1,60 +1,60 @@
 Map:Common rev:$Rev: 203 $
 
 	// Row 1
-	Key:t11 Mapping:ESCAPE                                     tl:"esc"
-	Key:t12 Mapping:F1                                         tl:"F1"
-	Key:t13 Mapping:F2                                         tl:"F2"
-	Key:t14 Mapping:F3                                         tl:"F3"
-	Key:t15 Mapping:F4                                         tl:"F4"
-	Key:t16 Mapping:F5                                         tl:"F5"
-	Key:t17 Mapping:Delete_Forward                             tl:"Delete"
-	Key:t18 Mapping:F6                                         tl:"F6"
-	Key:t19 Mapping:F7                                         tl:"F7"
-	Key:t1a Mapping:F8                                         tl:"F8"
-	Key:t1b Mapping:F9                                         tl:"F9"
-	Key:t1c Mapping:F10                                        tl:"F10"
-	Key:t1d Mapping:F11                                        tl:"F11"
-	Key:t1e Mapping:F12                                        tl:"F12"
-	Key:t1f Mapping:[Mode:Nm led:Num type:toggle]              tl:"Num"
+	Key:1A Mapping:ESCAPE                                     tl:"esc"
+	Key:1B Mapping:F1                                         tl:"F1"
+	Key:1C Mapping:F2                                         tl:"F2"
+	Key:1D Mapping:F3                                         tl:"F3"
+	Key:1E Mapping:F4                                         tl:"F4"
+	Key:1F Mapping:F5                                         tl:"F5"
+	Key:1G Mapping:Delete_Forward                             tl:"Delete"
+	Key:1H Mapping:F6                                         tl:"F6"
+	Key:1I Mapping:F7                                         tl:"F7"
+	Key:1J Mapping:F8                                         tl:"F8"
+	Key:1K Mapping:F9                                         tl:"F9"
+	Key:1L Mapping:F10                                        tl:"F10"
+	Key:1M Mapping:F11                                        tl:"F11"
+	Key:1N Mapping:F12                                        tl:"F12"
+	Key:1O Mapping:[Mode:Nm led:Num type:toggle]              tl:"Num"
 
 	// Row 2
-	Key:t27 Mapping:Backspace                                  tl:"Back space"
-	Key:t2f Mapping:[page:Consumer_Control id:AL_Calculator]   tl:"{calc}"
+	Key:2G Mapping:Backspace                                  tl:"Back space"
+	Key:2O Mapping:[page:Consumer_Control id:AL_Calculator]   tl:"{calc}"
 
 	// Row 3
-	Key:t31 Mapping:Tab                                        tl:"Tab"
-	Key:t3f Mapping:[page:Consumer_Control id:AL_Email_Reader] tl:"{mail}"
+	Key:3A Mapping:Tab                                        tl:"Tab"
+	Key:3O Mapping:[page:Consumer_Control id:AL_Email_Reader] tl:"{mail}"
 
 	// Row 4
-	Key:t41 Mapping:LeftShift                                  tl:"Shift"
-	Key:t47 Mapping:Return_(ENTER)                             tl:"Enter"
-	Key:t4e Mapping:RightShift                                 tl:"Shift"
-	Key:t4f Mapping:Caps_Lock                                  tl:"Caps"
+	Key:4A Mapping:LeftShift                                  tl:"Shift"
+	Key:4G Mapping:Return_(ENTER)                             tl:"Enter"
+	Key:4N Mapping:RightShift                                 tl:"Shift"
+	Key:4O Mapping:Caps_Lock                                  tl:"Caps"
 
 	// Row 5 
-	Key:t5f Mapping:[page:Consumer_Control id:AC_Home]         tl:"{web}"
+	Key:5O Mapping:[page:Consumer_Control id:AC_Home]         tl:"{web}"
 														       
 	// Row 6											       
-	Key:t61 Mapping:LeftControl                                tl:"Ctrl"
-	Key:t62 Mapping:[page:Consumer_Control id:Play/Pause]      tl:"Play"
-	Key:t63 Mapping:Application                                tl:"App"
-	Key:t64 Mapping:[Macro:Tab modifiers:left_alt]             tl:"Shuffle"
-	Key:t65 Mapping:Spacebar							       
-	Key:t6a Mapping:[Macro:d_and_D modifiers:left_gui]         tl:"Desktop"
-	Key:t6b Mapping:Home                                       tl:"Home"
-	Key:t6c Mapping:UpArrow                                    tl:"{up}"
-	Key:t6d Mapping:End                                        tl:"End"
-	Key:t6e Mapping:RightControl                               tl:"Ctrl"
-	Key:t6f Mapping:PageUp                                     tl:"Pg Up"
+	Key:6A Mapping:LeftControl                                tl:"Ctrl"
+	Key:6B Mapping:[page:Consumer_Control id:Play/Pause]      tl:"Play"
+	Key:6C Mapping:Application                                tl:"App"
+	Key:6D Mapping:[Macro:Tab modifiers:left_alt]             tl:"Shuffle"
+	Key:6E Mapping:Spacebar							       
+	Key:6J Mapping:[Macro:d_and_D modifiers:left_gui]         tl:"Desktop"
+	Key:6K Mapping:Home                                       tl:"Home"
+	Key:6L Mapping:UpArrow                                    tl:"{up}"
+	Key:6M Mapping:End                                        tl:"End"
+	Key:6N Mapping:RightControl                               tl:"Ctrl"
+	Key:6O Mapping:PageUp                                     tl:"Pg Up"
 
 	// Row 7
-	Key:t71 Mapping:[Mode:Fn led:Num type:momentary]           tl:"Fn"
-	Key:t72 Mapping:Left_GUI                                   tl:"Start"
-	Key:t73 Mapping:LeftAlt                                    tl:"Alt"
-	Key:t7a Mapping:RightAlt                                   tl:"Alt"
-	Key:t7b Mapping:LeftArrow                                  tl:"{left}"
-	Key:t7c Mapping:DownArrow                                  tl:"{down}"
-	Key:t7d Mapping:RightArrow                                 tl:"{right}"
-	Key:t7f Mapping:PageDown                                   tl:"Pg Dn"
+	Key:7A Mapping:[Mode:Fn led:Num type:momentary]           tl:"Fn"
+	Key:7B Mapping:Left_GUI                                   tl:"Start"
+	Key:7C Mapping:LeftAlt                                    tl:"Alt"
+	Key:7J Mapping:RightAlt                                   tl:"Alt"
+	Key:7K Mapping:LeftArrow                                  tl:"{left}"
+	Key:7L Mapping:DownArrow                                  tl:"{down}"
+	Key:7M Mapping:RightArrow                                 tl:"{right}"
+	Key:7O Mapping:PageDown                                   tl:"Pg Dn"
 
 

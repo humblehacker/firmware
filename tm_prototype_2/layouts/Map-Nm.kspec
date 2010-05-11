@@ -1,47 +1,47 @@
 Map:Nm rev:$Rev: 62 $
 
   // Row 1 
-  Key:t1f [Mode:Nm led:Num type:toggle] tl:"Num" 
-  Key:t3b Mapping:Tab tl:"Tab" 
-  Key:t3c Mapping:Keypad_/ tl:"" 
-  Key:t3d Mapping:Keypad_* tl:"*" 
-  Key:t3e Mapping:Keypad_- tl:"-" 
-  Key:t3f [Macro:Tab modifiers:right_shift] tl:"b.tab" 
+  Key:1O [Mode:Nm led:Num type:toggle] tl:"Num" 
+  Key:3K Mapping:Tab tl:"Tab" 
+  Key:3L Mapping:Keypad_/ tl:"" 
+  Key:3M Mapping:Keypad_* tl:"*" 
+  Key:3N Mapping:Keypad_- tl:"-" 
+  Key:3O [Macro:Tab modifiers:right_shift] tl:"b.tab" 
 
   // Row 4
-  Key:t48 Mapping:Home tl:"Home" 
-  Key:t49 Mapping:UpArrow tl:"{up}" 
-  Key:t4a Mapping:End tl:"End" 
-  Key:t4b Mapping:Keypad_7_and_Home tl:"7" 
-  Key:t4c Mapping:Keypad_8_and_Up_Arrow tl:"8" 
-  Key:t4d Mapping:Keypad_9_and_PageUp tl:"9" 
-  Key:t4e Mapping:Keypad_+ tl:"+" 
+  Key:4H Mapping:Home tl:"Home" 
+  Key:4I Mapping:UpArrow tl:"{up}" 
+  Key:4J Mapping:End tl:"End" 
+  Key:4K Mapping:Keypad_7_and_Home tl:"7" 
+  Key:4L Mapping:Keypad_8_and_Up_Arrow tl:"8" 
+  Key:4M Mapping:Keypad_9_and_PageUp tl:"9" 
+  Key:4N Mapping:Keypad_+ tl:"+" 
 
   // Row 5 
-  Key:t58 Mapping:LeftArrow tl:"{left}" 
-  Key:t59 Mapping:DownArrow tl:"{down}" 
-  Key:t5a Mapping:RightArrow tl:"{right}" 
-  Key:t5b Mapping:Keypad_4_and_Left_Arrow tl:"4" 
-  Key:t5c Mapping:Keypad_5 tl:"5" 
-  Key:t5d Mapping:Keypad_6_and_Right_Arrow tl:"6" 
-  Key:t5f Mapping:Keypad_Clear_Entry tl:"clear" 
+  Key:5H Mapping:LeftArrow tl:"{left}" 
+  Key:5I Mapping:DownArrow tl:"{down}" 
+  Key:5J Mapping:RightArrow tl:"{right}" 
+  Key:5K Mapping:Keypad_4_and_Left_Arrow tl:"4" 
+  Key:5L Mapping:Keypad_5 tl:"5" 
+  Key:5M Mapping:Keypad_6_and_Right_Arrow tl:"6" 
+  Key:5O Mapping:Keypad_Clear_Entry tl:"clear" 
 
   // Row 6 
-  Key:t6b Mapping:Keypad_1_and_End tl:"1" 
-  Key:t6c Mapping:Keypad_2_and_Down_Arrow tl:"2" 
-  Key:t6d Mapping:Keypad_3_and_PageDn tl:"3" 
-  Key:t6e Mapping:Keypad_ENTER tl:"enter" 
-  Key:t6f Mapping:Backspace tl:"b.space" 
+  Key:6K Mapping:Keypad_1_and_End tl:"1" 
+  Key:6L Mapping:Keypad_2_and_Down_Arrow tl:"2" 
+  Key:6M Mapping:Keypad_3_and_PageDn tl:"3" 
+  Key:6N Mapping:Keypad_ENTER tl:"enter" 
+  Key:6O Mapping:Backspace tl:"b.space" 
 
   // Row 7 
-  Key:t7b Mapping:Keypad_0_and_Insert tl:"0" 
-  Key:t7c tl:"00" [Macro
+  Key:7K Mapping:Keypad_0_and_Insert tl:"0" 
+  Key:7L tl:"00" [Macro
   {
     [id:Keypad_0_and_Insert]
     [id:Keypad_0_and_Insert]
   }
 
-  Key:t7d Mapping:Keypad_._and_Delete tl:"."
+  Key:7M Mapping:Keypad_._and_Delete tl:"."
 	
 	
 

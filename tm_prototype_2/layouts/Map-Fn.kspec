@@ -1,9 +1,9 @@
 Map:Fn base:Nm rev:"$Rev: 203 $"
     // Row 1
-    Key:t11 Mapping:[Mode:US            type:toggle] tl:"US"
-    Key:t12 Mapping:[Mode:DV led:Dvorak type:toggle] tl:"Dvorak"
-    Key:t13 Mapping:[Mode:JP led:Scroll type:toggle] tl:"Japan"
-    Key:t15 Mapping:[Macro 
+    Key:1A Mapping:[Mode:US            type:toggle] tl:"US"
+    Key:1B Mapping:[Mode:DV led:Dvorak type:toggle] tl:"Dvorak"
+    Key:1C Mapping:[Mode:JP led:Scroll type:toggle] tl:"Japan"
+    Key:1E Mapping:[Macro 
     {
         [Macro:t_and_T modifiers:right_shift]
         [id:y_and_Y]
@@ -34,22 +34,22 @@ Map:Fn base:Nm rev:"$Rev: 203 $"
         [id:a_and_A]
         [id:l_and_L]
     }]
-    Key:t17 Mapping:Insert                                       tl:"Insert"
-    Key:t19 Mapping:[Generic_Desktop id:System_Power_Down]       tl:"Power"
-    Key:t1a Mapping:[Generic_Desktop id:System_Sleep]            tl:"Sleep"
-    Key:t1b Mapping:[Generic_Desktop id:System_Wake_Up]          tl:"Wake"
-    Key:t1c Mapping:PrintScreen                                  tl:"Prt Sc"
-    Key:t1d Mapping:Scroll_Lock                                  tl:"Scroll"
-    Key:t1e Mapping:Pause                                        tl:"Pause"
-    Key:t1f Mapping:Keypad_Num_Lock_and_Clear                    tl:"N. Lock"
+    Key:1G Mapping:Insert                                       tl:"Insert"
+    Key:1I Mapping:[Generic_Desktop id:System_Power_Down]       tl:"Power"
+    Key:1J Mapping:[Generic_Desktop id:System_Sleep]            tl:"Sleep"
+    Key:1K Mapping:[Generic_Desktop id:System_Wake_Up]          tl:"Wake"
+    Key:1L Mapping:PrintScreen                                  tl:"Prt Sc"
+    Key:1M Mapping:Scroll_Lock                                  tl:"Scroll"
+    Key:1N Mapping:Pause                                        tl:"Pause"
+    Key:1O Mapping:Keypad_Num_Lock_and_Clear                    tl:"N. Lock"
 
     // Row 5
-    Key:t52 Mapping:id:Non-US_\_and_|                            tl:"<"
-    Key:t53 Mapping:[Macro:Non-US_\_and_| modifiers:right_shift] tl:">"
-    Key:t54 Mapping:[Macro:Non-US_\_and_| modifiers:right_alt]   tl:"¦"
-    Key:t55 Mapping:[Macro:Non-US_\_and_| modifiers:right_shift] tl:"_"
+    Key:5B Mapping:id:Non-US_\_and_|                            tl:"<"
+    Key:5C Mapping:[Macro:Non-US_\_and_| modifiers:right_shift] tl:">"
+    Key:5D Mapping:[Macro:Non-US_\_and_| modifiers:right_alt]   tl:"¦"
+    Key:5E Mapping:[Macro:Non-US_\_and_| modifiers:right_shift] tl:"_"
 
     // Row 6
-    Key:t62 Mapping:Cut                                          tl:"Cut"
-    Key:t63 Mapping:Copy                                         tl:"Copy"
-    Key:t64 Mapping:Paste                                        tl:"Paste"
+    Key:6B Mapping:Cut                                          tl:"Cut"
+    Key:6C Mapping:Copy                                         tl:"Copy"
+    Key:6D Mapping:Paste                                        tl:"Paste"
