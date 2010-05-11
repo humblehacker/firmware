@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="../Schema/Keyboards.rng" type="xml"?>
+<Map id="JP" base="Map-US.xml" rev="$Rev: 57 $" xmlns:xi="http://www.w3.org/2001/XInclude">
+	<Keys>
+		<!-- Row 1 -->
+
+		<!-- Row 2 -->
+		<Key location="t21">
+			<Label>
+				<TopLeft>半角/</TopLeft>
+				<BottomLeft>全角</BottomLeft>
+			</Label>
+			<Usage id="Keyboard Grave Accent and Tilde" />
+		</Key>
+		<Key location="t22">
+			<Label>
+				<TopLeft>!</TopLeft>
+				<BottomLeft>1</BottomLeft>
+				<BottomRight>ぬ</BottomRight>
+			</Label>
+			<Usage id="Keyboard 1 and !" />
+		</Key>
+		<Key location="t23">
+			<Label>
+				<TopLeft>@</TopLeft>
+				<BottomLeft>2</BottomLeft>
+				<BottomRight>ふ</BottomRight>
+			</Label>
+			<Usage id="Keyboard 2 and @" />
+		</Key>
+		<Key location="t24">
+			<Label>
+				<TopLeft>#</TopLeft>
+				<BottomLeft>3</BottomLeft>
+				<TopRight>ぁ</TopRight>
+				<BottomRight>あ</BottomRight>
+			</Label>
+			<Usage id="Keyboard 3 and #" />
+		</Key>
+		<Key location="t25">
+			<Label>
+				<TopLeft>$</TopLeft>
+				<BottomLeft>4</BottomLeft>
+				<TopRight>ぅ</TopRight>
+				<BottomRight>ぅ</BottomRight>
+			</Label>
+			<Usage id="Keyboard 4 and $" />
+		</Key>
+		<Key location="t26">
+			<Label>
+				<TopLeft>%</TopLeft>
+				<BottomLeft>5</BottomLeft>
+				<TopRight>ぇ</TopRight>
+				<BottomRight>え</BottomRight>
+			</Label>
+			<Usage id="Keyboard 5 and %" />
+		</Key>
+		<Key location="t28">
+			<Label>
+				<TopLeft>^</TopLeft>
+				<BottomLeft>6</BottomLeft>
+				<TopRight>ぉ</TopRight>
+				<BottomRight>お</BottomRight>
+			</Label>
+			<Usage id="Keyboard 6 and ^" />
+		</Key>
+		<Key location="t29">
+			<Label>
+				<TopLeft>&amp;</TopLeft>
+				<BottomLeft>7</BottomLeft>
+				<TopRight>ゃ</TopRight>
+				<BottomRight>や</BottomRight>
+			</Label>
+			<Usage id="Keyboard 7 and &amp;" />
+		</Key>
+		<Key location="t2a">
+			<Label>
+				<TopLeft>*</TopLeft>
+				<BottomLeft>8</BottomLeft>
+				<TopRight>ゅ</TopRight>
+				<BottomRight>ゆ</BottomRight>
+			</Label>
+			<Usage id="Keyboard 8 and *" />
+		</Key>
+		<Key location="t2b">
+			<Label>
+				<TopLeft>(</TopLeft>
+				<BottomLeft>9</BottomLeft>
+				<TopRight>ょ</TopRight>
+				<BottomRight>よ</BottomRight>
+			</Label>
+			<Usage id="Keyboard 9 and (" />
+		</Key>
+		<Key location="t2c">
+			<Label>
+				<TopLeft>)</TopLeft>
+				<BottomLeft>0</BottomLeft>
+				<TopRight>を</TopRight>
+				<BottomRight>わ</BottomRight>
+			</Label>
+			<Usage id="Keyboard 0 and )" />
+		</Key>
+		<Key location="t2d">
+			<Label>
+				<TopLeft>=</TopLeft>
+				<BottomLeft>-</BottomLeft>
+				<TopRight>£</TopRight>
+				<BottomRight>ほ</BottomRight>
+			</Label>
+			<Usage id="Keyboard - and _" />
+		</Key>
+		<Key location="t2e">
+			<Label>
+				<TopLeft>__</TopLeft>
+				<BottomLeft>^</BottomLeft>
+				<TopRight>々</TopRight>
+				<BottomRight>ㇸ</BottomRight>
+			</Label>
+			<Usage id="Keyboard = and +" />
+		</Key>
+		<Key location="t2f">
+			<Label>
+				<TopLeft>¦</TopLeft>
+				<BottomLeft>¥</BottomLeft>
+				<TopRight>￢</TopRight>
+				<BottomRight>–</BottomRight>
+			</Label>
+			<Usage id="Keyboard International3" />
+		</Key>
+
+		<!-- Row 3 -->
+		<Key location="t32">
+			<Label>
+				<TopLeft>Q</TopLeft>
+				<TopRight>だ</TopRight>
+				<BottomRight>た</BottomRight>
+			</Label>
+			<Usage id="Keyboard q and Q" />
+		</Key>
+		<Key location="t33">
+			<Label>
+				<TopLeft>W</TopLeft>
+				<TopRight>で</TopRight>
+				<BottomRight>て</BottomRight>
+			</Label>
+			<Usage id="Keyboard w and W" />
+		</Key>
+		<Key location="t34">
+			<Label>
+				<TopLeft>E</TopLeft>
+				<TopRight>ぃ</TopRight>
+				<BottomRight>い</BottomRight>
+			</Label>
+			<Usage id="Keyboard e and E" />
+		</Key>
+		<Key location="t35">
+			<Label>
+				<TopLeft>R</TopLeft>
+				<TopRight>ず</TopRight>
+				<BottomRight>す</BottomRight>
+			</Label>
+			<Usage id="Keyboard r and R" />
+		</Key>
+		<Key location="t36">
+			<Label>
+				<TopLeft>T</TopLeft>
+				<TopRight>が</TopRight>
+				<BottomRight>か</BottomRight>
+			</Label>
+			<Usage id="Keyboard t and T" />
+		</Key>
+		<Key location="t38">
+			<Label>
+				<TopLeft>Y</TopLeft>
+				<BottomRight>ん</BottomRight>
+			</Label>
+			<Usage id="Keyboard y and Y" />
+		</Key>
+		<Key location="t39">
+			<Label>
+				<TopLeft>U</TopLeft>
+				<BottomRight>な</BottomRight>
+			</Label>
+			<Usage id="Keyboard u and U" />
+		</Key>
+		<Key location="t3a">
+			<Label>
+				<TopLeft>I</TopLeft>
+				<BottomRight>に</BottomRight>
+			</Label>
+			<Usage id="Keyboard i and I" />
+		</Key>
+		<Key location="t3b">
+			<Label>
+				<TopLeft>O</TopLeft>
+				<BottomRight>ら</BottomRight>
+			</Label>
+			<Usage id="Keyboard o and O" />
+		</Key>
+		<Key location="t3c">
+			<Label>
+				<TopLeft>P</TopLeft>
+				<TopRight>『</TopRight>
+				<BottomRight>せ</BottomRight>
+			</Label>
+			<Usage id="Keyboard p and P" />
+		</Key>
+		<Key location="t3d">
+			<Label>
+				<TopLeft>`</TopLeft>
+				<BottomLeft>@</BottomLeft>
+				<BottomRight>゛</BottomRight>
+			</Label>
+			<Usage id="Keyboard [ and {" />
+		</Key>
+		<Key location="t3e">
+			<Label>
+				<TopLeft>{</TopLeft>
+				<BottomLeft>[</BottomLeft>
+				<TopRight>「</TopRight>
+				<BottomRight>゜</BottomRight>
+			</Label>
+			<Usage id="Keyboard ] and }" />
+		</Key>
+		<Key location="t3f">
+			<Label>
+				<TopLeft>}</TopLeft>
+				<BottomLeft>]</BottomLeft>
+				<TopRight>」</TopRight>
+				<BottomRight>む</BottomRight>
+			</Label>
+			<Usage id="Keyboard \ and |" />
+		</Key>
+
+		<!-- Row 4 -->
+		<Key location="t42">
+			<Label>
+				<TopLeft>A</TopLeft>
+				<BottomRight>ち</BottomRight>
+			</Label>
+			<Usage id="Keyboard a and A" />
+		</Key>
+		<Key location="t43">
+			<Label>
+				<TopLeft>S</TopLeft>
+				<BottomRight>と</BottomRight>
+			</Label>
+			<Usage id="Keyboard s and S" />
+		</Key>
+		<Key location="t44">
+			<Label>
+				<TopLeft>D</TopLeft>
+				<BottomRight>し</BottomRight>
+			</Label>
+			<Usage id="Keyboard d and D" />
+		</Key>
+		<Key location="t45">
+			<Label>
+				<TopLeft>F</TopLeft>
+				<BottomRight>は</BottomRight>
+			</Label>
+			<Usage id="Keyboard f and F" />
+		</Key>
+		<Key location="t46">
+			<Label>
+				<TopLeft>G</TopLeft>
+				<BottomRight>き</BottomRight>
+			</Label>
+			<Usage id="Keyboard g and G" />
+		</Key>
+		<Key location="t48">
+			<Label>
+				<TopLeft>H</TopLeft>
+				<BottomRight>く</BottomRight>
+			</Label>
+			<Usage id="Keyboard h and H" />
+		</Key>
+		<Key location="t49">
+			<Label>
+				<TopLeft>J</TopLeft>
+				<BottomRight>ま</BottomRight>
+			</Label>
+			<Usage id="Keyboard j and J" />
+		</Key>
+		<Key location="t4a">
+			<Label>
+				<TopLeft>K</TopLeft>
+				<BottomRight>の</BottomRight>
+			</Label>
+			<Usage id="Keyboard k and K" />
+		</Key>
+		<Key location="t4b">
+			<Label>
+				<TopLeft>L</TopLeft>
+				<BottomRight>り</BottomRight>
+			</Label>
+			<Usage id="Keyboard l and L" />
+		</Key>
+		<Key location="t4c">
+			<Label>
+				<TopLeft>+</TopLeft>
+				<BottomLeft>;</BottomLeft>
+				<TopRight>』</TopRight>
+				<BottomRight>れ</BottomRight>
+			</Label>
+			<Usage id="Keyboard ; and :" />
+		</Key>
+		<Key location="t4d">
+			<Label>
+				<TopLeft>*</TopLeft>
+				<BottomLeft>:</BottomLeft>
+				<TopRight>ヶ</TopRight>
+				<BottomRight>け</BottomRight>
+			</Label>
+			<Usage id="Keyboard &apos; and &quot;" />
+		</Key>
+
+		<!-- Row 5 -->
+		<Key location="t52">
+			<Label>
+				<TopLeft>Z</TopLeft>
+				<TopRight>っ</TopRight>
+				<BottomRight>つ</BottomRight>
+			</Label>
+			<Usage id="Keyboard z and Z" />
+		</Key>
+		<Key location="t53">
+			<Label>
+				<TopLeft>X</TopLeft>
+				<BottomRight>さ</BottomRight>
+			</Label>
+			<Usage id="Keyboard x and X" />
+		</Key>
+		<Key location="t54">
+			<Label>
+				<TopLeft>C</TopLeft>
+				<BottomRight>そ</BottomRight>
+			</Label>
+			<Usage id="Keyboard c and C" />
+		</Key>
+		<Key location="t55">
+			<Label>
+				<TopLeft>V</TopLeft>
+				<BottomRight>ひ</BottomRight>
+			</Label>
+			<Usage id="Keyboard v and V" />
+		</Key>
+		<Key location="t56">
+			<Label>
+				<TopLeft>B</TopLeft>
+				<BottomRight>こ</BottomRight>
+			</Label>
+			<Usage id="Keyboard b and B" />
+		</Key>
+		<Key location="t58">
+			<Label>
+				<TopLeft>N</TopLeft>
+				<BottomRight>み</BottomRight>
+			</Label>
+			<Usage id="Keyboard n and N" />
+		</Key>
+		<Key location="t59">
+			<Label>
+				<TopLeft>M</TopLeft>
+				<BottomRight>も</BottomRight>
+			</Label>
+			<Usage id="Keyboard m and M" />
+		</Key>
+		<Key location="t5a">
+			<Label>
+				<TopLeft>&lt;</TopLeft>
+				<BottomLeft>,</BottomLeft>
+				<TopRight>、</TopRight>
+				<BottomRight>ね</BottomRight>
+			</Label>
+			<Usage id="Keyboard , and &lt;" />
+		</Key>
+		<Key location="t5b">
+			<Label>
+				<TopLeft>&gt;</TopLeft>
+				<BottomLeft>.</BottomLeft>
+				<TopRight>。</TopRight>
+				<BottomRight>る</BottomRight>
+			</Label>
+			<Usage id="Keyboard . and &gt;" />
+		</Key>
+		<Key location="t5c">
+			<Label>
+				<TopLeft>?</TopLeft>
+				<BottomLeft>/</BottomLeft>
+				<TopRight>・</TopRight>
+				<BottomRight>め</BottomRight>
+			</Label>
+			<Usage id="Keyboard / and ?" />
+		</Key>
+		<Key location="t5d">
+			<Label>
+				<TopLeft>_</TopLeft>
+				<BottomLeft>\</BottomLeft>
+				<TopRight>|</TopRight>
+				<BottomRight>ろ</BottomRight>
+			</Label>
+			<Usage id="Keyboard International1" />
+		</Key>
+
+		<!-- Row 6 -->
+		<Key location="t6a">
+			<Label>
+				<TopLeft>カタカナ ひらがな ローマ字</TopLeft>
+			</Label>
+			<Usage id="Keyboard International2" />
+		</Key>
+
+		<!-- Row 7 -->
+<!--	<Key location="t71">								-->
+<!--		<Label>											-->
+<!--			<TopLeft>Caps</TopLeft>						-->
+<!--			<BottomLeft>英数 漢字番号</BottomLeft>-->
+<!--		</Label>										-->
+<!--		<Usage id="Keyboard Caps Lock" />				-->
+<!--	</Key>												-->
+		<Key location="t73">
+			<Label>
+				<TopLeft>無変換</TopLeft>
+			</Label>
+			<Usage id="Keyboard International5" />
+		</Key>
+		<Key location="t7a">
+			<Label>
+				<TopLeft>前侯補 変換 (次侯補) 侯補</TopLeft>
+			</Label>
+			<Usage id="Keyboard International4" />
+		</Key>
+	</Keys>
+</Map>
