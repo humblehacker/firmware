@@ -1,53 +1,54 @@
-Map:Fn base:Nm rev:"$Rev: 203 $"
+KeyMap:Fn base:Nm rev:203
+
     // Row 1
-    Key:1A Mode:US            type:toggle tl:"US"
-    Key:1B Mode:DV led:Dvorak type:toggle tl:"Dvorak"
-    Key:1C Mode:JP led:Scroll type:toggle tl:"Japan"
+    Key:1A Mode:US            type:toggle                   tl:"US"
+    Key:1B Mode:DV led:Dvorak type:toggle                   tl:"Dvorak"
+    Key:1C Mode:JP led:Scroll type:toggle                   tl:"Japan"
     Key:1E Macro:
-        Mapping:t_and_T<right_shift>
-        Mapping:y_and_Y
-        Mapping:p_and_P
-        Mapping:e_and_E
-        Mapping:m_and_M<right_shift>
-        Mapping:a_and_A
-        Mapping:t_and_T
-        Mapping:r_and_R
-        Mapping:i_and_I
-        Mapping:x_and_X
-        Mapping:Spacebar
-        Mapping:2_and_@
-        Mapping:0_and_)
-        Mapping:3_and_#
-        Mapping:0_and_)
-        Mapping:Spacebar
-        Mapping:p_and_P<right_shift>
-        Mapping:r_and_R
-        Mapping:o_and_O
-        Mapping:f_and_F
-        Mapping:e_and_E
-        Mapping:s_and_S
-        Mapping:s_and_S
-        Mapping:i_and_I
-        Mapping:o_and_O
-        Mapping:n_and_N
-        Mapping:a_and_A
-        Mapping:l_and_L
-    Key:1G Mapping:Insert                                       tl:"Insert"
-    Key:1I Mapping:System_Power_Down  page:Generic_Desktop      tl:"Power"
-    Key:1J Mapping:System_Sleep       page:Generic_Desktop      tl:"Sleep"
-    Key:1K Mapping:System_Wake_Up     page:Generic_Desktop      tl:"Wake"
-    Key:1L Mapping:PrintScreen                                  tl:"Prt Sc"
-    Key:1M Mapping:Scroll_Lock                                  tl:"Scroll"
-    Key:1N Mapping:Pause                                        tl:"Pause"
-    Key:1O Mapping:Keypad_Num_Lock_and_Clear                    tl:"N. Lock"
+        Map:t_and_T <shift>
+        Map:y_and_Y
+        Map:p_and_P
+        Map:e_and_E
+        Map:m_and_M <shift>
+        Map:a_and_A
+        Map:t_and_T
+        Map:r_and_R
+        Map:i_and_I
+        Map:x_and_X
+        Map:Spacebar
+        Map:2_and_@
+        Map:0_and_)
+        Map:3_and_#
+        Map:0_and_)
+        Map:Spacebar
+        Map:p_and_P <shift>
+        Map:r_and_R
+        Map:o_and_O
+        Map:f_and_F
+        Map:e_and_E
+        Map:s_and_S
+        Map:s_and_S
+        Map:i_and_I
+        Map:o_and_O
+        Map:n_and_N
+        Map:a_and_A
+        Map:l_and_L
+    Key:1G Map:Insert                                       tl:"Insert"
+    Key:1I Map:System_Power_Down  page:Generic_Desktop      tl:"Power"
+    Key:1J Map:System_Sleep       page:Generic_Desktop      tl:"Sleep"
+    Key:1K Map:System_Wake_Up     page:Generic_Desktop      tl:"Wake"
+    Key:1L Map:PrintScreen                                  tl:"Prt Sc"
+    Key:1M Map:Scroll_Lock                                  tl:"Scroll"
+    Key:1N Map:Pause                                        tl:"Pause"
+    Key:1O Map:Keypad_Num_Lock_and_Clear                    tl:"N. Lock"
 
     // Row 5
-    Key:5B Mapping:Non-US_\_and_|                               tl:"<"
-    Key:5C Mapping:Non-US_\_and_| <right_shift>                 tl:">"
-    Key:5D Mapping:Non-US_\_and_| <right_alt>                   tl:"¦"
-    Key:5E Mapping:Non-US_\_and_| <right_shift>                 tl:"_"
+    Key:5B Map:Non-US_\_and_|                               tl:"<"
+    Key:5C Map:Non-US_\_and_| <shift>                       tl:">"
+    Key:5D Map:Non-US_\_and_| <right_alt>                   tl:"¦"
+    Key:5E Map:Non-US_\_and_| <right_alt|shift>             tl:"_"
 
     // Row 6
-    Key:6B Mapping:Cut                                          tl:"Cut"
-    Key:6C Mapping:Copy                                         tl:"Copy"
-    Key:6D Mapping:Paste                                        tl:"Paste"
+    Key:6B Map:Cut                                          tl:"Cut"
+    Key:6C Map:Copy                                         tl:"Copy"
+    Key:6D Map:Paste                                        tl:"Paste"

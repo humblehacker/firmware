@@ -7,14 +7,44 @@ require 'hid'
 class MapNode < Treetop::Runtime::SyntaxNode
 end
 
-class HIDUsageTableNode < Treetop::Runtime::SyntaxNode
+class HIDUsageTable
+  attr_accessor :pages, :usages
+  def initialize
+    @pages = []
+    @usages = []
+  end
+end
+
+class UsagePage
+  attr_reader :name, :id
+  def initialize(name, id)
+    @name = name
+    @id = id
+  end
+end
+
+class Usage
+  attr_reader :name, :id, :page
+  def initialize(name, id, page)
+    @name = name
+    @id = id
+    @page = page
+  end
 end
 
 parser = KSpecParser.new
 hidparser = HIDParser.new
+require 'PP'
 
 hidfile = File.open('HIDUsageTables.kspec')
-puts hidparser.parse(hidfile.read)
+result = hidparser.parse(hidfile.read)
+
+table = HIDUsageTable.new
+result.build_table(table)
+
+pp table
+
+exit
 
 inputfile = File.open('Map-Common.kspec').read
 puts parser.parse(inputfile)

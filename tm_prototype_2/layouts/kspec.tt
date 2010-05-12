@@ -21,7 +21,7 @@ grammar KSpec
   end
   
   rule mapping
-    modifiers? 'Mapping:' usage modifiers? ws ( 'page:' usage_page )? labels? ws
+    modifiers? 'Mapping:' usage sp? modifiers? ws ( 'page:' usage_page )? labels? ws
   end
 
   rule mode
@@ -65,6 +65,10 @@ grammar KSpec
 
   rule ws
     [ \t\n]+
+  end
+
+  rule sp
+    [ \t]+
   end
   
 end

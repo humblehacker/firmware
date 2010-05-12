@@ -1,15 +1,32 @@
 grammar HID
 
   rule table
-    usage_page+ <HIDUsageTableNode>
+    usage_page+
+    {
+      def build_table(table)
+        elements.map { |e| e.build_page(table) }
+      end
+    }
   end
 
   rule usage_page
-    'UsagePage:' ident ws 'id:' hex ws usage+
+    'UsagePage:' ident ws 'id:' hex ws usages:usage+
+    {
+      def build_page(table)
+        page = UsagePage.new(ident.text_value, hex.text_value.to_i(16))
+        table.pages << page
+        table.usages << usages.elements.map { |e| e.build_usage(page) }
+      end
+    }
   end
 
   rule usage
     'Usage:' ident ws 'id:' hex ws ( 'type:' ident ws )? ( 'section:' [0-9.]+ ws )?
+    {
+      def build_usage(page)
+        Usage.new(ident.text_value, hex.text_value.to_i(16), page)
+      end
+    }
   end
 
   rule ident
@@ -23,5 +40,5 @@ grammar HID
   rule ws
     [ \t\n]+
   end
-  
+
 end

@@ -22,8 +22,8 @@ syntax match HeadKey /Matrix/
 syntax match HeadKey /Mode/
 syntax match HeadKey /Key/
 syntax match HeadKey /KeyDef/
+syntax match HeadKey /KeyMap/
 syntax match HeadKey /NilKey/
-syntax match HeadKey /Mapping/
 syntax match HeadKey /Macro/
 syntax match HeadKey /Row/
 syntax match HeadKey /Usage/
@@ -41,6 +41,8 @@ syntax match Key /offsetX/
 syntax match Key /offsetY/
 syntax match Key /tl/
 syntax match Key /bl/
+syntax match Key /tr/
+syntax match Key /br/
 syntax match Key /modifiers/
 syntax match Key /type/
 syntax match Key /section/
