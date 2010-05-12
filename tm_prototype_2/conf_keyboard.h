@@ -44,6 +44,14 @@ with The HumbleHacker Keyboard Project.  If not, see
 #define D_COLS 0xff
 
 static
+inline void activate_row(uint8_t row)
+{
+  // Activate the current row
+  ROW_DDR  =  (1 << row);  // set row as output
+  ROW_PORT = ~(1 << row);  // row pin driven low
+}
+
+static
 inline uint32_t compress_cols(void)
 {
   return ((uint32_t)((~PINE)&E_COLS))          

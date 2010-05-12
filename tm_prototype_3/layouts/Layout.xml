@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="../Schema/Keyboards.rng" type="xml"?>
+<Layout id="USB-2030-B" rev="$Rev: 175 $" xmlns:xi="http://www.w3.org/2001/XInclude">
+		<Spacing>.1</Spacing>
+		<xi:include href="CommonColors.xml" />
+		<KeyDefs>
+
+			<!-- Row 1 -->
+			<Row>
+				<KeyDef location="t11">
+					<Height>1.25</Height>
+					<Width>2.0</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t12">
+					<Height>1.25</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t13">
+					<Height>1.25</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t14">
+					<Height>1.25</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t15">
+					<Height>1.25</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t16">
+					<Height>1.25</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t17">
+					<Height>1.8</Height>
+					<Width>2.0</Width>
+					<Background>Red</Background>
+					<Bump/>
+				</KeyDef>
+				<KeyDef location="t18">
+					<Height>1.25</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t19">
+					<Height>1.25</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t1a">
+					<Height>1.25</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t1b">
+					<Height>1.25</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t1c">
+					<Height>1.25</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t1d">
+					<Height>1.25</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t1e">
+					<Height>1.25</Height>
+					<Width>2.0</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t1f">
+					<Height>1.25</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+			</Row>
+
+			<!-- Row 2 -->
+			<Row>
+				<OffsetY>1.25</OffsetY>
+				<KeyDef location="t21">
+					<Height>1.8</Height>
+					<Width>2.0</Width>
+				</KeyDef>
+				<KeyDef location="t22">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t23">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t24">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t25">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t26">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t27">
+					<Height>3.15</Height>
+					<Width>2.0</Width>
+					<OffsetY>0.55</OffsetY>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t28">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t29">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t2a">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t2b">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t2c">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t2d">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t2e">
+					<Height>1.8</Height>
+					<Width>2.0</Width>
+				</KeyDef>
+				<KeyDef location="t2f">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+			</Row>
+
+			<!-- Row 3 -->
+			<Row>
+				<OffsetY>1.8</OffsetY>
+				<KeyDef location="t31">
+					<Height>1.8</Height>
+					<Width>2.0</Width>
+				</KeyDef>
+				<KeyDef location="t32">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t33">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t34">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t35">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t36">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t37">
+					<NullKey />
+					<Height>1.8</Height>
+					<Width>2.0</Width>
+				</KeyDef>
+				<KeyDef location="t38">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t39">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t3a">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t3b">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<!-- <Background>Grey</Background> -->
+				</KeyDef>
+				<KeyDef location="t3c">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<!-- <Background>Grey</Background> -->
+				</KeyDef>
+				<KeyDef location="t3d">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<!-- <Background>Grey</Background> -->
+				</KeyDef>
+				<KeyDef location="t3e">
+					<Height>1.8</Height>
+					<Width>2.0</Width>
+					<!-- <Background>Grey</Background> -->
+				</KeyDef>
+				<KeyDef location="t3f">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+			</Row>
+
+			<!-- Row 4 -->
+			<Row>
+				<OffsetY>1.8</OffsetY>
+				<KeyDef location="t41">
+					<Height>3.7</Height>
+					<Width>2.0</Width>
+				</KeyDef>
+				<KeyDef location="t42">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t43">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t44">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t45">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<Bump/>
+				</KeyDef>
+				<KeyDef location="t46">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t47">
+					<Height>3.7</Height>
+					<Width>2.0</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t48">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t49">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<Bump/>
+				</KeyDef>
+				<KeyDef location="t4a">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t4b">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<!-- <Background>Grey</Background> -->
+				</KeyDef>
+				<KeyDef location="t4c">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<!-- <Background>Grey</Background> -->
+				</KeyDef>
+				<KeyDef location="t4d">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<!-- <Background>Grey</Background> -->
+				</KeyDef>
+				<KeyDef location="t4e">
+					<Height>3.7</Height>
+					<Width>2.0</Width>
+					<!-- <Background>Grey</Background> -->
+				</KeyDef>
+				<KeyDef location="t4f">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+			</Row>
+
+			<!-- Row 5 -->
+         <Row>
+				<OffsetY>1.8</OffsetY>
+				<KeyDef location="t51">
+					<NullKey />
+					<Height>1.8</Height>
+					<Width>2.0</Width>
+				</KeyDef>
+				<KeyDef location="t52">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t53">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t54">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t55">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t56">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t57">
+					<NullKey />
+					<Height>1.8</Height>
+					<Width>2.0</Width>
+				</KeyDef>
+				<KeyDef location="t58">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t59">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t5a">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t5b">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<!-- <Background>Grey</Background> -->
+				</KeyDef>
+				<KeyDef location="t5c">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<!-- <Background>Grey</Background> -->
+					<Bump/>
+				</KeyDef>
+				<KeyDef location="t5d">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<!-- <Background>Grey</Background> -->
+				</KeyDef>
+				<KeyDef location="t5e">
+					<NullKey />
+					<Height>1.8</Height>
+					<Width>2.0</Width>
+				</KeyDef>
+				<KeyDef location="t5f">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<Bump/>
+				</KeyDef>
+			</Row>
+
+			<!-- Row 6 -->
+			<Row>
+				<OffsetY>1.8</OffsetY>
+				<KeyDef location="t61">
+					<Height>1.8</Height>
+					<Width>2.0</Width>
+					<Bump/>
+				</KeyDef>
+				<KeyDef location="t62">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t63">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t64">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<Bump/>
+				</KeyDef>
+				<KeyDef location="t65">
+					<Height>2.5</Height>
+					<Width>9.6</Width>
+				</KeyDef>
+				<KeyDef location="t6a">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t6b">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<!-- <Background>Grey</Background> -->
+				</KeyDef>
+				<KeyDef location="t6c">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t6d">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<!-- <Background>Grey</Background> -->
+				</KeyDef>
+				<KeyDef location="t6e">
+					<Height>3.7</Height>
+					<Width>2.0</Width>
+					<!-- <Background>Grey</Background> -->
+				</KeyDef>
+				<KeyDef location="t6f">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+			</Row>
+
+			<!-- Row 7 -->
+         <Row>
+				<OffsetY>1.8</OffsetY>
+				<KeyDef location="t71">
+					<Height>1.8</Height>
+					<Width>2.0</Width>
+				</KeyDef>
+				<KeyDef location="t72">
+					<Height>1.8</Height>
+					<Width>2.75</Width>
+				</KeyDef>
+				<KeyDef location="t73">
+					<Height>1.8</Height>
+					<Width>2.75</Width>
+				</KeyDef>
+				<KeyDef location="t74">
+					<NullKey />
+					<Height>1.8</Height>
+					<Width>9.6</Width>
+				</KeyDef>
+				<KeyDef location="t7a">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+				<KeyDef location="t7b">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t7c">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+					<Bump/>
+				</KeyDef>
+				<KeyDef location="t7d">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+					<Background>Grey</Background>
+				</KeyDef>
+				<KeyDef location="t7e">
+					<NullKey />
+					<Height>1.8</Height>
+					<Width>2.0</Width>
+				</KeyDef>
+				<KeyDef location="t7f">
+					<Height>1.8</Height>
+					<Width>1.8</Width>
+				</KeyDef>
+			</Row>
+		</KeyDefs>
+	</Layout>

@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="../Schema/Keyboards.rng" type="xml"?>
+<Map id="Common" rev="$Rev: 203 $"  xmlns:xi="http://www.w3.org/2001/XInclude">
+	<Keys>
+		<!-- Row 1 -->
+		<Key location="t11">
+			<Label>
+				<TopLeft>Esc</TopLeft>
+			</Label>
+			<Usage id="Keyboard ESCAPE" />
+		</Key>
+		<Key location="t12">
+			<Label>
+				<TopLeft>F1</TopLeft>
+			</Label>
+			<Usage id="Keyboard F1" />
+		</Key>
+		<Key location="t13">
+			<Label>
+				<TopLeft>F2</TopLeft>
+			</Label>
+			<Usage id="Keyboard F2" />
+		</Key>
+		<Key location="t14">
+			<Label>
+				<TopLeft>F3</TopLeft>
+			</Label>
+			<Usage id="Keyboard F3" />
+		</Key>
+		<Key location="t15">
+			<Label>
+				<TopLeft>F4</TopLeft>
+			</Label>
+			<Usage id="Keyboard F4" />
+		</Key>
+		<Key location="t16">
+			<Label>
+				<TopLeft>F5</TopLeft>
+			</Label>
+			<Usage id="Keyboard F5" />
+		</Key>
+		<Key location="t17">
+			<Label>
+				<TopLeft>Delete</TopLeft>
+			</Label>
+			<Usage id="Keyboard Delete Forward" />
+		</Key>
+		<Key location="t18">
+			<Label>
+				<TopLeft>F6</TopLeft>
+			</Label>
+			<Usage id="Keyboard F6" />
+		</Key>
+		<Key location="t19">
+			<Label>
+				<TopLeft>F7</TopLeft>
+			</Label>
+			<Usage id="Keyboard F7" />
+		</Key>
+		<Key location="t1a">
+			<Label>
+				<TopLeft>F8</TopLeft>
+			</Label>
+			<Usage id="Keyboard F8" />
+		</Key>
+		<Key location="t1b">
+			<Label>
+				<TopLeft>F9</TopLeft>
+			</Label>
+			<Usage id="Keyboard F9" />
+		</Key>
+		<Key location="t1c">
+			<Label>
+				<TopLeft>F10</TopLeft>
+			</Label>
+			<Usage id="Keyboard F10" />
+		</Key>
+		<Key location="t1d">
+			<Label>
+				<TopLeft>F11</TopLeft>
+			</Label>
+			<Usage id="Keyboard F11" />
+		</Key>
+		<Key location="t1e">
+			<Label>
+				<TopLeft>F12</TopLeft>
+			</Label>
+			<Usage id="Keyboard F12" />
+		</Key>
+		<Key location="t1f">
+			<Label>
+				<TopLeft>Num</TopLeft>
+			</Label>
+            <ModeKey map-id="Nm" led="Num" type="toggle">Nm</ModeKey>
+		</Key>
+
+		<!-- Row 2 -->
+		<Key location="t27">
+			<Label>
+				<TopLeft>Back space</TopLeft>
+			</Label>
+			<Usage id="Keyboard DELETE (Backspace)" />
+		</Key>
+		<Key location="t2f">
+			<Label>
+				<TopLeft>{calc}</TopLeft>
+			</Label>
+			<Usage page="Consumer Control" id="AL Calculator" />
+		</Key>
+
+		<!-- Row 3 -->
+		<Key location="t31">
+			<Label>
+				<TopLeft>Tab</TopLeft>
+			</Label>
+			<Usage id="Keyboard Tab" />
+		</Key>
+		<Key location="t3f">
+			<Label>
+				<TopLeft>{mail}</TopLeft>
+			</Label>
+			<Usage page="Consumer Control" id="AL Email Reader" />
+		</Key>
+
+		<!-- Row 4 -->
+		<Key location="t41">
+			<Label>
+				<TopLeft>Shift</TopLeft>
+			</Label>
+			<Usage id="Keyboard LeftShift" />
+		</Key>
+		<Key location="t47">
+			<Label>
+				<TopLeft>Enter</TopLeft>
+			</Label>
+			<Usage id="Keyboard Return (ENTER)" />
+		</Key>
+		<Key location="t4e">
+			<Label>
+				<TopLeft>Shift</TopLeft>
+			</Label>
+			<Usage id="Keyboard RightShift" />
+		</Key>
+		<Key location="t4f">
+			<Label>
+				<TopLeft>Caps</TopLeft>
+			</Label>
+			<Usage id="Keyboard Caps Lock" />
+		</Key>
+
+		<!-- Row 5 -->
+		<Key location="t5f">
+			<Label>
+				<TopLeft>{web}</TopLeft>
+			</Label>
+			<Usage page="Consumer Control" id="AC Home" />
+		</Key>
+
+		<!-- Row 6 -->
+		<Key location="t61">
+			<Label>
+				<TopLeft>Ctrl</TopLeft>
+			</Label>
+			<Usage id="Keyboard LeftControl" />
+		</Key>
+		<Key location="t62">
+			<Label>
+				<TopLeft>Play</TopLeft>
+			</Label>
+			<Usage page="Consumer Control" id="Play/Pause" />
+		</Key>
+		<Key location="t63">
+			<Label>
+				<TopLeft>App</TopLeft>
+			</Label>
+			<Usage id="Keyboard Application" />
+		</Key>
+		<Key location="t64">
+			<Label>
+				<TopLeft>Shuffle</TopLeft>
+			</Label>
+         <MacroKey><Modifier id="Left Alt" /><Usage id="Keyboard Tab" /></MacroKey>
+		</Key>
+		<Key location="t65">
+			<Usage id="Keyboard Spacebar" />
+		</Key>
+		<Key location="t6a">
+			<Label>
+				<TopLeft>Desktop</TopLeft>
+			</Label>
+            <MacroKey><Modifier id="Left GUI" /><Usage id="Keyboard d and D" /></MacroKey>
+		</Key>
+		<Key location="t6b">
+			<Label>
+				<TopLeft>Home</TopLeft>
+			</Label>
+			<Usage id="Keyboard Home" />
+		</Key>
+		<Key location="t6c">
+			<Label>
+				<TopLeft>{up}</TopLeft>
+			</Label>
+			<Usage id="Keyboard UpArrow" />
+		</Key>
+		<Key location="t6d">
+			<Label>
+				<TopLeft>End</TopLeft>
+			</Label>
+			<Usage id="Keyboard End" />
+		</Key>
+		<Key location="t6e">
+			<Label>
+				<TopLeft>Ctrl</TopLeft>
+			</Label>
+			<Usage id="Keyboard RightControl" />
+		</Key>
+		<Key location="t6f">
+			<Label>
+				<TopLeft>Pg Up</TopLeft>
+			</Label>
+			<Usage id="Keyboard PageUp" />
+		</Key>
+
+		<!-- Row 7 -->
+		<Key location="t71">
+			<Label>
+				<TopLeft>Fn</TopLeft>
+			</Label>
+            <ModeKey map-id="Fn" led="Num" type="momentary">Fn</ModeKey>
+		</Key>
+		<Key location="t72">
+			<Label>
+				<TopLeft>Start</TopLeft>
+			</Label>
+			<Usage id="Keyboard Left GUI" />
+		</Key>
+		<Key location="t73">
+			<Label>
+				<TopLeft>Alt</TopLeft>
+			</Label>
+			<Usage id="Keyboard LeftAlt" />
+		</Key>
+<!--	<Key location="t73">														-->
+<!--		<Label>																	-->
+<!--			<TopLeft>{tunes}</TopLeft>											-->
+<!--		</Label>																-->
+<!--		<Usage page="Consumer Control" id="AL Consumer Control Configuration" />-->
+<!--	</Key>																		-->
+		<Key location="t7a">
+			<Label>
+				<TopLeft>Alt</TopLeft>
+			</Label>
+			<Usage id="Keyboard RightAlt" />
+		</Key>
+		<Key location="t7b">
+			<Label>
+				<TopLeft>{left}</TopLeft>
+			</Label>
+			<Usage id="Keyboard LeftArrow" />
+		</Key>
+		<Key location="t7c">
+			<Label>
+				<TopLeft>{down}</TopLeft>
+			</Label>
+			<Usage id="Keyboard DownArrow" />
+		</Key>
+		<Key location="t7d">
+			<Label>
+				<TopLeft>{right}</TopLeft>
+			</Label>
+			<Usage id="Keyboard RightArrow" />
+		</Key>
+		<Key location="t7f">
+			<Label>
+				<TopLeft>Pg Dn</TopLeft>
+			</Label>
+			<Usage id="Keyboard PageDown" />
+		</Key>
+	</Keys>
+</Map>

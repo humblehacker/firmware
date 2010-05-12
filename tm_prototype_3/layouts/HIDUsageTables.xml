@@ -1,0 +1,3364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="../Schema/Keyboards.rng" type="xml"?>
+<HID>
+    <UsagePages>
+        <UsagePage>
+            <ID>0x01</ID>
+            <Name>Generic Desktop</Name>
+            <UsageIDs>
+                <UsageID>
+                    <ID>0x00</ID>
+                    <Name>Undefined</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x01</ID>
+                    <Name>Pointer</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x02</ID>
+                    <Name>Mouse</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x04</ID>
+                    <Name>Joystick</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x05</ID>
+                    <Name>Game Pad</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x06</ID>
+                    <Name>Keyboard</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x07</ID>
+                    <Name>Keypad</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x08</ID>
+                    <Name>Multi-axis Controller</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x09</ID>
+                    <Name>Tablet PC System Controls</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x30</ID>
+                    <Name>X</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x31</ID>
+                    <Name>Y</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x32</ID>
+                    <Name>Z</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x33</ID>
+                    <Name>Rx</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x34</ID>
+                    <Name>Ry</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x35</ID>
+                    <Name>Rz</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x36</ID>
+                    <Name>Slider</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x37</ID>
+                    <Name>Dial</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x38</ID>
+                    <Name>Wheel</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x39</ID>
+                    <Name>Hat switch</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x3a</ID>
+                    <Name>Counted Buffer</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x3b</ID>
+                    <Name>Byte Count</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x3c</ID>
+                    <Name>Motion Wakeup</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x3d</ID>
+                    <Name>Start</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x3e</ID>
+                    <Name>Select</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x40</ID>
+                    <Name>Vx</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x41</ID>
+                    <Name>Vy</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x42</ID>
+                    <Name>Vz</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x43</ID>
+                    <Name>Vbrx</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x44</ID>
+                    <Name>Vbry</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x45</ID>
+                    <Name>Vbrz</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x46</ID>
+                    <Name>Vno</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x47</ID>
+                    <Name>Feature Notification</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x48</ID>
+                    <Name>Resolution Multiplier</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x80</ID>
+                    <Name>System Control</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x81</ID>
+                    <Name>System Power Down</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x82</ID>
+                    <Name>System Sleep</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x83</ID>
+                    <Name>System Wake Up</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x84</ID>
+                    <Name>System Context Menu</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x85</ID>
+                    <Name>System Main Menu</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x86</ID>
+                    <Name>System App Menu</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x87</ID>
+                    <Name>System Menu Help</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x88</ID>
+                    <Name>System Menu Exit</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x89</ID>
+                    <Name>System Menu Select</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8a</ID>
+                    <Name>System Menu Right</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8b</ID>
+                    <Name>System Menu Left</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8c</ID>
+                    <Name>System Menu Up</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8d</ID>
+                    <Name>System Menu Down</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8e</ID>
+                    <Name>System Cold Restart</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8f</ID>
+                    <Name>System Warm Restart</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x90</ID>
+                    <Name>D-pad Up</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x91</ID>
+                    <Name>D-pad Down</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x92</ID>
+                    <Name>D-pad Right</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x93</ID>
+                    <Name>D-pad Left</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa0</ID>
+                    <Name>System Dock</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa1</ID>
+                    <Name>System Undock</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa2</ID>
+                    <Name>System Setup</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa3</ID>
+                    <Name>System Break</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa4</ID>
+                    <Name>System Debugger Break</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa5</ID>
+                    <Name>Application Break</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa6</ID>
+                    <Name>Application Debugger Break</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa7</ID>
+                    <Name>System Speaker Mute</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa8</ID>
+                    <Name>System Hibernate</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb0</ID>
+                    <Name>System Display Invert</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb1</ID>
+                    <Name>System Display Internal</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb2</ID>
+                    <Name>System Display External</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb3</ID>
+                    <Name>System Display Both</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb4</ID>
+                    <Name>System Display Dual</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb5</ID>
+                    <Name>System Display Toggle Int/Ext</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb6</ID>
+                    <Name>System Display Swap Primary/Secondary</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb7</ID>
+                    <Name>System Display LCD Autoscale</Name>
+                </UsageID>
+            </UsageIDs>
+        </UsagePage>
+        <UsagePage>
+            <ID>0x07</ID>
+            <Name>Keyboard and Keypad</Name>
+            <UsageIDs>
+                <UsageID>
+                    <ID>0x0</ID>
+                    <Name>Reserved (no event indicated)</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1</ID>
+                    <Name>Keyboard ErrorRollOver</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x2</ID>
+                    <Name>Keyboard POSTFail</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x3</ID>
+                    <Name>Keyboard ErrorUndefined</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x4</ID>
+                    <Name>Keyboard a and A</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x5</ID>
+                    <Name>Keyboard b and B</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x6</ID>
+                    <Name>Keyboard c and C</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x7</ID>
+                    <Name>Keyboard d and D</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8</ID>
+                    <Name>Keyboard e and E</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x9</ID>
+                    <Name>Keyboard f and F</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa</ID>
+                    <Name>Keyboard g and G</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb</ID>
+                    <Name>Keyboard h and H</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc</ID>
+                    <Name>Keyboard i and I</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xd</ID>
+                    <Name>Keyboard j and J</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe</ID>
+                    <Name>Keyboard k and K</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xf</ID>
+                    <Name>Keyboard l and L</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x10</ID>
+                    <Name>Keyboard m and M</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x11</ID>
+                    <Name>Keyboard n and N</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x12</ID>
+                    <Name>Keyboard o and O</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x13</ID>
+                    <Name>Keyboard p and P</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x14</ID>
+                    <Name>Keyboard q and Q</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x15</ID>
+                    <Name>Keyboard r and R</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x16</ID>
+                    <Name>Keyboard s and S</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x17</ID>
+                    <Name>Keyboard t and T</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x18</ID>
+                    <Name>Keyboard u and U</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x19</ID>
+                    <Name>Keyboard v and V</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1a</ID>
+                    <Name>Keyboard w and W</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1b</ID>
+                    <Name>Keyboard x and X</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1c</ID>
+                    <Name>Keyboard y and Y</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1d</ID>
+                    <Name>Keyboard z and Z</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1e</ID>
+                    <Name>Keyboard 1 and !</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1f</ID>
+                    <Name>Keyboard 2 and @</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x20</ID>
+                    <Name>Keyboard 3 and #</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x21</ID>
+                    <Name>Keyboard 4 and $</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x22</ID>
+                    <Name>Keyboard 5 and %</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x23</ID>
+                    <Name>Keyboard 6 and ^</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x24</ID>
+                    <Name>Keyboard 7 and &amp;</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x25</ID>
+                    <Name>Keyboard 8 and *</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x26</ID>
+                    <Name>Keyboard 9 and (</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x27</ID>
+                    <Name>Keyboard 0 and )</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x28</ID>
+                    <Name>Keyboard Return (ENTER)</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x29</ID>
+                    <Name>Keyboard ESCAPE</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x2a</ID>
+                    <Name>Keyboard DELETE (Backspace)</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x2b</ID>
+                    <Name>Keyboard Tab</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x2c</ID>
+                    <Name>Keyboard Spacebar</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x2d</ID>
+                    <Name>Keyboard - and _</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x2e</ID>
+                    <Name>Keyboard = and +</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x2f</ID>
+                    <Name>Keyboard [ and {</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x30</ID>
+                    <Name>Keyboard ] and }</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x31</ID>
+                    <Name>Keyboard \ and |</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x32</ID>
+                    <Name>Keyboard Non-US # and ~</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x33</ID>
+                    <Name>Keyboard ; and :</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x34</ID>
+                    <Name>Keyboard &apos; and &quot;</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x35</ID>
+                    <Name>Keyboard Grave Accent and Tilde</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x36</ID>
+                    <Name>Keyboard , and &lt;</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x37</ID>
+                    <Name>Keyboard . and &gt;</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x38</ID>
+                    <Name>Keyboard / and ?</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x39</ID>
+                    <Name>Keyboard Caps Lock</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x3a</ID>
+                    <Name>Keyboard F1</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x3b</ID>
+                    <Name>Keyboard F2</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x3c</ID>
+                    <Name>Keyboard F3</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x3d</ID>
+                    <Name>Keyboard F4</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x3e</ID>
+                    <Name>Keyboard F5</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x3f</ID>
+                    <Name>Keyboard F6</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x40</ID>
+                    <Name>Keyboard F7</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x41</ID>
+                    <Name>Keyboard F8</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x42</ID>
+                    <Name>Keyboard F9</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x43</ID>
+                    <Name>Keyboard F10</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x44</ID>
+                    <Name>Keyboard F11</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x45</ID>
+                    <Name>Keyboard F12</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x46</ID>
+                    <Name>Keyboard PrintScreen</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x47</ID>
+                    <Name>Keyboard Scroll Lock</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x48</ID>
+                    <Name>Keyboard Pause</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x49</ID>
+                    <Name>Keyboard Insert</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x4a</ID>
+                    <Name>Keyboard Home</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x4b</ID>
+                    <Name>Keyboard PageUp</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x4c</ID>
+                    <Name>Keyboard Delete Forward</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x4d</ID>
+                    <Name>Keyboard End</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x4e</ID>
+                    <Name>Keyboard PageDown</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x4f</ID>
+                    <Name>Keyboard RightArrow</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x50</ID>
+                    <Name>Keyboard LeftArrow</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x51</ID>
+                    <Name>Keyboard DownArrow</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x52</ID>
+                    <Name>Keyboard UpArrow</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x53</ID>
+                    <Name>Keypad Num Lock and Clear</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x54</ID>
+                    <Name>Keypad /</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x55</ID>
+                    <Name>Keypad *</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x56</ID>
+                    <Name>Keypad -</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x57</ID>
+                    <Name>Keypad +</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x58</ID>
+                    <Name>Keypad ENTER</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x59</ID>
+                    <Name>Keypad 1 and End</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x5a</ID>
+                    <Name>Keypad 2 and Down Arrow</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x5b</ID>
+                    <Name>Keypad 3 and PageDn</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x5c</ID>
+                    <Name>Keypad 4 and Left Arrow</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x5d</ID>
+                    <Name>Keypad 5</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x5e</ID>
+                    <Name>Keypad 6 and Right Arrow</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x5f</ID>
+                    <Name>Keypad 7 and Home</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x60</ID>
+                    <Name>Keypad 8 and Up Arrow</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x61</ID>
+                    <Name>Keypad 9 and PageUp</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x62</ID>
+                    <Name>Keypad 0 and Insert</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x63</ID>
+                    <Name>Keypad . and Delete</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x64</ID>
+                    <Name>Keyboard Non-US \ and |</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x65</ID>
+                    <Name>Keyboard Application</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x66</ID>
+                    <Name>Keyboard Power</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x67</ID>
+                    <Name>Keypad =</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x68</ID>
+                    <Name>Keyboard F13</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x69</ID>
+                    <Name>Keyboard F14</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x6a</ID>
+                    <Name>Keyboard F15</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x6b</ID>
+                    <Name>Keyboard F16</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x6c</ID>
+                    <Name>Keyboard F17</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x6d</ID>
+                    <Name>Keyboard F18</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x6e</ID>
+                    <Name>Keyboard F19</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x6f</ID>
+                    <Name>Keyboard F20</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x70</ID>
+                    <Name>Keyboard F21</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x71</ID>
+                    <Name>Keyboard F22</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x72</ID>
+                    <Name>Keyboard F23</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x73</ID>
+                    <Name>Keyboard F24</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x74</ID>
+                    <Name>Keyboard Execute</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x75</ID>
+                    <Name>Keyboard Help</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x76</ID>
+                    <Name>Keyboard Menu</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x77</ID>
+                    <Name>Keyboard Select</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x78</ID>
+                    <Name>Keyboard Stop</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x79</ID>
+                    <Name>Keyboard Again</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x7a</ID>
+                    <Name>Keyboard Undo</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x7b</ID>
+                    <Name>Keyboard Cut</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x7c</ID>
+                    <Name>Keyboard Copy</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x7d</ID>
+                    <Name>Keyboard Paste</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x7e</ID>
+                    <Name>Keyboard Find</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x7f</ID>
+                    <Name>Keyboard Mute</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x80</ID>
+                    <Name>Keyboard Volume Up</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x81</ID>
+                    <Name>Keyboard Volume Down</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x82</ID>
+                    <Name>Keyboard Locking Caps Lock</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x83</ID>
+                    <Name>Keyboard Locking Num Lock</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x84</ID>
+                    <Name>Keyboard Locking Scroll Lock</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x85</ID>
+                    <Name>Keypad Comma</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x86</ID>
+                    <Name>Keypad Equal Sign</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x87</ID>
+                    <Name>Keyboard International1</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x88</ID>
+                    <Name>Keyboard International2</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x89</ID>
+                    <Name>Keyboard International3</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8a</ID>
+                    <Name>Keyboard International4</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8b</ID>
+                    <Name>Keyboard International5</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8c</ID>
+                    <Name>Keyboard International6</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8d</ID>
+                    <Name>Keyboard International7</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8e</ID>
+                    <Name>Keyboard International8</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8f</ID>
+                    <Name>Keyboard International9</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x90</ID>
+                    <Name>Keyboard LANG1</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x91</ID>
+                    <Name>Keyboard LANG2</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x92</ID>
+                    <Name>Keyboard LANG3</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x93</ID>
+                    <Name>Keyboard LANG4</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x94</ID>
+                    <Name>Keyboard LANG5</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x95</ID>
+                    <Name>Keyboard LANG6</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x96</ID>
+                    <Name>Keyboard LANG7</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x97</ID>
+                    <Name>Keyboard LANG8</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x98</ID>
+                    <Name>Keyboard LANG9</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x99</ID>
+                    <Name>Keyboard Alternate Erase</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x9a</ID>
+                    <Name>Keyboard SysReq/Attention</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x9b</ID>
+                    <Name>Keyboard Cancel</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x9c</ID>
+                    <Name>Keyboard Clear</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x9d</ID>
+                    <Name>Keyboard Prior</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x9e</ID>
+                    <Name>Keyboard Return</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x9f</ID>
+                    <Name>Keyboard Separator</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa0</ID>
+                    <Name>Keyboard Out</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa1</ID>
+                    <Name>Keyboard Oper</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa2</ID>
+                    <Name>Keyboard Clear/Again</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa3</ID>
+                    <Name>Keyboard CrSel/Props</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa4</ID>
+                    <Name>Keyboard ExSel</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb0</ID>
+                    <Name>Keypad 00</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb1</ID>
+                    <Name>Keypad 000</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb2</ID>
+                    <Name>Thousands Separator</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb3</ID>
+                    <Name>Decimal Separator</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb4</ID>
+                    <Name>Currency Unit</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb5</ID>
+                    <Name>Currency Sub-unit</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb6</ID>
+                    <Name>Keypad (</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb7</ID>
+                    <Name>Keypad )</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb8</ID>
+                    <Name>Keypad {</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb9</ID>
+                    <Name>Keypad }</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xba</ID>
+                    <Name>Keypad Tab</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xbb</ID>
+                    <Name>Keypad Backspace</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xbc</ID>
+                    <Name>Keypad A</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xbd</ID>
+                    <Name>Keypad B</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xbe</ID>
+                    <Name>Keypad C</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xbf</ID>
+                    <Name>Keypad D</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc0</ID>
+                    <Name>Keypad E</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc1</ID>
+                    <Name>Keypad F</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc2</ID>
+                    <Name>Keypad XOR</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc3</ID>
+                    <Name>Keypad ^</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc4</ID>
+                    <Name>Keypad %</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc5</ID>
+                    <Name>Keypad &lt;</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc6</ID>
+                    <Name>Keypad &gt;</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc7</ID>
+                    <Name>Keypad &amp;</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc8</ID>
+                    <Name>Keypad &amp;&amp;</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc9</ID>
+                    <Name>Keypad |</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xca</ID>
+                    <Name>Keypad ||</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xcb</ID>
+                    <Name>Keypad :</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xcc</ID>
+                    <Name>Keypad #</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xcd</ID>
+                    <Name>Keypad Space</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xce</ID>
+                    <Name>Keypad @</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xcf</ID>
+                    <Name>Keypad !</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xd0</ID>
+                    <Name>Keypad Memory Store</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xd1</ID>
+                    <Name>Keypad Memory Recall</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xd2</ID>
+                    <Name>Keypad Memory Clear</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xd3</ID>
+                    <Name>Keypad Memory Add</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xd4</ID>
+                    <Name>Keypad Memory Subtract</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xd5</ID>
+                    <Name>Keypad Memory Multiply</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xd6</ID>
+                    <Name>Keypad Memory Divide</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xd7</ID>
+                    <Name>Keypad +/-216 d8 Keypad Clear</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xd9</ID>
+                    <Name>Keypad Clear Entry</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xda</ID>
+                    <Name>Keypad Binary</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xdb</ID>
+                    <Name>Keypad Octal</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xdc</ID>
+                    <Name>Keypad Decimal</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xdd</ID>
+                    <Name>Keypad Hexadecimal</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe0</ID>
+                    <Name>Keyboard LeftControl</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe1</ID>
+                    <Name>Keyboard LeftShift</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe2</ID>
+                    <Name>Keyboard LeftAlt</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe3</ID>
+                    <Name>Keyboard Left GUI</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe4</ID>
+                    <Name>Keyboard RightControl</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe5</ID>
+                    <Name>Keyboard RightShift</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe6</ID>
+                    <Name>Keyboard RightAlt</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe7</ID>
+                    <Name>Keyboard Right GUI</Name>
+                </UsageID>
+            </UsageIDs>
+        </UsagePage>
+        <UsagePage>
+            <ID>0x0c</ID>
+            <Name>Consumer Control</Name>
+            <UsageIDs>
+                <UsageID>
+                    <ID>0x0</ID>
+                    <Name>Unassigned</Name>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1</ID>
+                    <Name>Consumer Control</Name>
+                    <UsageType>CA</UsageType>
+                    <Section>15.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x2</ID>
+                    <Name>Numeric Key Pad</Name>
+                    <UsageType>NAry</UsageType>
+                    <Section>15.2</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x3</ID>
+                    <Name>Programmable Buttons</Name>
+                    <UsageType>NAry</UsageType>
+                    <Section>15.14</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x4</ID>
+                    <Name>Microphone</Name>
+                    <UsageType>CA</UsageType>
+                    <Section>15.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x5</ID>
+                    <Name>Headphone</Name>
+                    <UsageType>CA</UsageType>
+                    <Section>15.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x6</ID>
+                    <Name>Graphic Equalizer</Name>
+                    <UsageType>CA</UsageType>
+                    <Section>15.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x20</ID>
+                    <Name>10</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.2</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x21</ID>
+                    <Name>100</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.2</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x22</ID>
+                    <Name>AM/PM</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.2</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x30</ID>
+                    <Name>Power</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.3</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x31</ID>
+                    <Name>Reset</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.3</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x32</ID>
+                    <Name>Sleep</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.3</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x33</ID>
+                    <Name>Sleep After</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.3</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x34</ID>
+                    <Name>Sleep Mode</Name>
+                    <UsageType>RTC</UsageType>
+                    <Section>15.3</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x35</ID>
+                    <Name>Illumination</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.3</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x36</ID>
+                    <Name>Function Buttons</Name>
+                    <UsageType>NAry</UsageType>
+                    <Section>15.3</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x40</ID>
+                    <Name>Menu</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.4</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x41</ID>
+                    <Name>Menu Pick</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.4</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x42</ID>
+                    <Name>Menu Up</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.4</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x43</ID>
+                    <Name>Menu Down</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.4</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x44</ID>
+                    <Name>Menu Left</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.4</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x45</ID>
+                    <Name>Menu Right</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.4</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x46</ID>
+                    <Name>Menu Escape</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.4</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x47</ID>
+                    <Name>Menu Value Increase</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.4</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x48</ID>
+                    <Name>Menu Value Decrease</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.4</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x60</ID>
+                    <Name>Data On Screen</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.5</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x61</ID>
+                    <Name>Closed Caption</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.5</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x62</ID>
+                    <Name>Closed Caption Select</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.5</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x63</ID>
+                    <Name>VCR/TV</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.5</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x64</ID>
+                    <Name>Broadcast Mode</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.5</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x65</ID>
+                    <Name>Snapshot</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.5</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x66</ID>
+                    <Name>Still</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.5</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x80</ID>
+                    <Name>Selection</Name>
+                    <UsageType>NAry</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x81</ID>
+                    <Name>Assign Selection</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x82</ID>
+                    <Name>Mode Step</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x83</ID>
+                    <Name>Recall Last</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x84</ID>
+                    <Name>Enter Channel</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x85</ID>
+                    <Name>Order Movie</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x86</ID>
+                    <Name>Channel</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x87</ID>
+                    <Name>Media Selection</Name>
+                    <UsageType>NAry</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x88</ID>
+                    <Name>Media Select Computer</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x89</ID>
+                    <Name>Media Select TV</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8a</ID>
+                    <Name>Media Select WWW</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8b</ID>
+                    <Name>Media Select DVD</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8c</ID>
+                    <Name>Media Select Telephone</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8d</ID>
+                    <Name>Media Select Program Guide</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8e</ID>
+                    <Name>Media Select Video Phone</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x8f</ID>
+                    <Name>Media Select Games</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x90</ID>
+                    <Name>Media Select Messages</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x91</ID>
+                    <Name>Media Select CD</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x92</ID>
+                    <Name>Media Select VCR</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x93</ID>
+                    <Name>Media Select Tuner</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x94</ID>
+                    <Name>Quit</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x95</ID>
+                    <Name>Help</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x96</ID>
+                    <Name>Media Select Tape</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x97</ID>
+                    <Name>Media Select Cable</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x98</ID>
+                    <Name>Media Select Satellite</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x99</ID>
+                    <Name>Media Select Security</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x9a</ID>
+                    <Name>Media Select Home</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x9b</ID>
+                    <Name>Media Select Call</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x9c</ID>
+                    <Name>Channel Increment</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x9d</ID>
+                    <Name>Channel Decrement</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x9e</ID>
+                    <Name>Media Select SAP</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa0</ID>
+                    <Name>VCR Plus</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa1</ID>
+                    <Name>Once</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa2</ID>
+                    <Name>Daily</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa3</ID>
+                    <Name>Weekly</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xa4</ID>
+                    <Name>Monthly</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.6</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb0</ID>
+                    <Name>Play</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb1</ID>
+                    <Name>Pause</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb2</ID>
+                    <Name>Record</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb3</ID>
+                    <Name>Fast Forward</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb4</ID>
+                    <Name>Rewind</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb5</ID>
+                    <Name>Scan Next Track</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb6</ID>
+                    <Name>Scan Previous Track</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb7</ID>
+                    <Name>Stop</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb8</ID>
+                    <Name>Eject</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xb9</ID>
+                    <Name>Random Play</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xba</ID>
+                    <Name>Select Disc</Name>
+                    <UsageType>NAry</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xbb</ID>
+                    <Name>Enter Disc</Name>
+                    <UsageType>MC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xbc</ID>
+                    <Name>Repeat</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xbd</ID>
+                    <Name>Tracking</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xbe</ID>
+                    <Name>Track Normal</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xbf</ID>
+                    <Name>Slow Tracking</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc0</ID>
+                    <Name>Frame Forward</Name>
+                    <UsageType>RTC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc1</ID>
+                    <Name>Frame Back</Name>
+                    <UsageType>RTC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc2</ID>
+                    <Name>Mark</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.8</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc3</ID>
+                    <Name>Clear Mark</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.8</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc4</ID>
+                    <Name>Repeat From Mark</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.8</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc5</ID>
+                    <Name>Return To Mark</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.8</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc6</ID>
+                    <Name>Search Mark Forward</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.8</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc7</ID>
+                    <Name>Search Mark Backwards</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.8</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc8</ID>
+                    <Name>Counter Reset</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.8</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xc9</ID>
+                    <Name>Show Counter</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.8</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xca</ID>
+                    <Name>Tracking Increment</Name>
+                    <UsageType>RTC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xcb</ID>
+                    <Name>Tracking Decrement</Name>
+                    <UsageType>RTC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xcc</ID>
+                    <Name>Stop/Eject</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xcd</ID>
+                    <Name>Play/Pause</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xce</ID>
+                    <Name>Play/Skip</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.7</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe0</ID>
+                    <Name>Volume</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.9.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe1</ID>
+                    <Name>Balance</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.9.2</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe2</ID>
+                    <Name>Mute</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.9.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe3</ID>
+                    <Name>Bass</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.9.3</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe4</ID>
+                    <Name>Treble</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.9.4</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe5</ID>
+                    <Name>Bass Boost</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.9.3</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe6</ID>
+                    <Name>Surround Mode</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.9.5</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe7</ID>
+                    <Name>Loudness</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.9.5</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe8</ID>
+                    <Name>MPX</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.9.5</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xe9</ID>
+                    <Name>Volume Increment</Name>
+                    <UsageType>RTC</UsageType>
+                    <Section>15.9.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xea</ID>
+                    <Name>Volume Decrement</Name>
+                    <UsageType>RTC</UsageType>
+                    <Section>15.9.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xf0</ID>
+                    <Name>Speed Select</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xf1</ID>
+                    <Name>Playback Speed</Name>
+                    <UsageType>NAry</UsageType>
+                    <Section>15.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xf2</ID>
+                    <Name>Standard Play</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xf3</ID>
+                    <Name>Long Play</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xf4</ID>
+                    <Name>Extended Play</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0xf5</ID>
+                    <Name>Slow</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x100</ID>
+                    <Name>Fan Enable</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.11</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x101</ID>
+                    <Name>Fan Speed</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.11</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x102</ID>
+                    <Name>Light Enable</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.11</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x103</ID>
+                    <Name>Light Illumination Level</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.11</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x104</ID>
+                    <Name>Climate Control Enable</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.11</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x105</ID>
+                    <Name>Room Temperature</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.11</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x106</ID>
+                    <Name>Security Enable</Name>
+                    <UsageType>OOC</UsageType>
+                    <Section>15.11</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x107</ID>
+                    <Name>Fire Alarm</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.11</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x108</ID>
+                    <Name>Police Alarm</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.11</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x109</ID>
+                    <Name>Proximity</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.11</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x10a</ID>
+                    <Name>Motion</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.11</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x10b</ID>
+                    <Name>Duress Alarm</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.11</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x10c</ID>
+                    <Name>Holdup Alarm</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.11</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x10d</ID>
+                    <Name>Medical Alarm</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.11</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x150</ID>
+                    <Name>Balance Right</Name>
+                    <UsageType>RTC</UsageType>
+                    <Section>15.9.2</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x151</ID>
+                    <Name>Balance Left</Name>
+                    <UsageType>RTC</UsageType>
+                    <Section>15.9.2</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x152</ID>
+                    <Name>Bass Increment</Name>
+                    <UsageType>RTC</UsageType>
+                    <Section>15.9.3</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x153</ID>
+                    <Name>Bass Decrement</Name>
+                    <UsageType>RTC</UsageType>
+                    <Section>15.9.3</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x154</ID>
+                    <Name>Treble Increment</Name>
+                    <UsageType>RTC</UsageType>
+                    <Section>15.9.4</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x155</ID>
+                    <Name>Treble Decrement</Name>
+                    <UsageType>RTC</UsageType>
+                    <Section>15.9.4</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x160</ID>
+                    <Name>Speaker System</Name>
+                    <UsageType>CL</UsageType>
+                    <Section>15.12.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x161</ID>
+                    <Name>Channel Left</Name>
+                    <UsageType>CL</UsageType>
+                    <Section>15.12.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x162</ID>
+                    <Name>Channel Right</Name>
+                    <UsageType>CL</UsageType>
+                    <Section>15.12.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x163</ID>
+                    <Name>Channel Center</Name>
+                    <UsageType>CL</UsageType>
+                    <Section>15.12.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x164</ID>
+                    <Name>Channel Front</Name>
+                    <UsageType>CL</UsageType>
+                    <Section>15.12.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x165</ID>
+                    <Name>Channel Center Front</Name>
+                    <UsageType>CL</UsageType>
+                    <Section>15.12.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x166</ID>
+                    <Name>Channel Side</Name>
+                    <UsageType>CL</UsageType>
+                    <Section>15.12.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x167</ID>
+                    <Name>Channel Surround</Name>
+                    <UsageType>CL</UsageType>
+                    <Section>15.12.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x168</ID>
+                    <Name>Channel Low Frequency Enhancement</Name>
+                    <UsageType>CL</UsageType>
+                    <Section>15.12.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x169</ID>
+                    <Name>Channel Top</Name>
+                    <UsageType>CL</UsageType>
+                    <Section>15.12.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x16a</ID>
+                    <Name>Channel Unknown</Name>
+                    <UsageType>CL</UsageType>
+                    <Section>15.12.1</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x170</ID>
+                    <Name>Sub-channel</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.13</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x171</ID>
+                    <Name>Sub-channel Increment</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.13</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x172</ID>
+                    <Name>Sub-channel Decrement</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.13</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x173</ID>
+                    <Name>Alternate Audio Increment</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.13</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x174</ID>
+                    <Name>Alternate Audio Decrement</Name>
+                    <UsageType>OSC</UsageType>
+                    <Section>15.13</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x180</ID>
+                    <Name>Application Launch Buttons</Name>
+                    <UsageType>NAry</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x181</ID>
+                    <Name>AL Launch Button Configuration Tool</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x182</ID>
+                    <Name>AL Programmable Button Configuration</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x183</ID>
+                    <Name>AL Consumer Control Configuration</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x184</ID>
+                    <Name>AL Word Processor</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x185</ID>
+                    <Name>AL Text Editor</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x186</ID>
+                    <Name>AL Spreadsheet</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x187</ID>
+                    <Name>AL Graphics Editor</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x188</ID>
+                    <Name>AL Presentation App</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x189</ID>
+                    <Name>AL Database App</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x18a</ID>
+                    <Name>AL Email Reader</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x18b</ID>
+                    <Name>AL Newsreader</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x18c</ID>
+                    <Name>AL Voicemail</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x18d</ID>
+                    <Name>AL Contacts/Address Book</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x18e</ID>
+                    <Name>AL Calendar/Schedule</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x18f</ID>
+                    <Name>AL Task/Project Manager</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x190</ID>
+                    <Name>AL Log/Journal/Timecard</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x191</ID>
+                    <Name>AL Checkbook/Finance</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x192</ID>
+                    <Name>AL Calculator</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x193</ID>
+                    <Name>AL A/V Capture/Playback</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x194</ID>
+                    <Name>AL Local Machine Browser</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x195</ID>
+                    <Name>AL LAN/WAN Browser</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x196</ID>
+                    <Name>AL Internet Browser</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x197</ID>
+                    <Name>AL Remote Networking/ISP Connect</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x198</ID>
+                    <Name>AL Network Conference</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x199</ID>
+                    <Name>AL Network Chat</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x19a</ID>
+                    <Name>AL Telephony/Dialer</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x19b</ID>
+                    <Name>AL Logon</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x19c</ID>
+                    <Name>AL Logoff</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x19d</ID>
+                    <Name>AL Logon/Logoff</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x19e</ID>
+                    <Name>AL Terminal Lock/Screensaver</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x19f</ID>
+                    <Name>AL Control Panel</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1a0</ID>
+                    <Name>AL Command Line Processor/Run</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1a1</ID>
+                    <Name>AL Process/Task Manager</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1a2</ID>
+                    <Name>AL Select Task/Application</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1a3</ID>
+                    <Name>AL Next Task/Application</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1a4</ID>
+                    <Name>AL Previous Task/Application</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1a5</ID>
+                    <Name>AL Preemptive Halt Task/Application</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1a6</ID>
+                    <Name>AL Integrated Help Center</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1a7</ID>
+                    <Name>AL Documents</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1a8</ID>
+                    <Name>AL Thesaurus</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1a9</ID>
+                    <Name>AL Dictionary</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1aa</ID>
+                    <Name>AL Desktop</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1ab</ID>
+                    <Name>AL Spell Check</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1ac</ID>
+                    <Name>AL Grammar Check</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1ad</ID>
+                    <Name>AL Wireless Status</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1ae</ID>
+                    <Name>AL Keyboard Layout</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1af</ID>
+                    <Name>AL Virus Protection</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1b0</ID>
+                    <Name>AL Encryption</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1b1</ID>
+                    <Name>AL Screen Saver</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1b2</ID>
+                    <Name>AL Alarms</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1b3</ID>
+                    <Name>AL Clock</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1b4</ID>
+                    <Name>AL File Browser</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1b5</ID>
+                    <Name>AL Power Status</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1b6</ID>
+                    <Name>AL Image Browser</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1b7</ID>
+                    <Name>AL Audio Browser</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1b8</ID>
+                    <Name>AL Movie Browser</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1b9</ID>
+                    <Name>AL Digital Rights Manager</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1ba</ID>
+                    <Name>AL Digital Wallet</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1bc</ID>
+                    <Name>AL Instant Messaging</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1bd</ID>
+                    <Name>AL OEM Features/ Tips/Tutorial Browser</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1be</ID>
+                    <Name>AL OEM Help</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1bf</ID>
+                    <Name>AL Online Community</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1c0</ID>
+                    <Name>AL Entertainment Content Browser</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1c1</ID>
+                    <Name>AL Online Shopping Browser</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1c2</ID>
+                    <Name>AL SmartCard Information/Help</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1c3</ID>
+                    <Name>AL Market Monitor/Finance Browser</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1c4</ID>
+                    <Name>AL Customized Corporate News Browser</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1c5</ID>
+                    <Name>AL Online Activity Browser</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1c6</ID>
+                    <Name>AL Research/Search Browser</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x1c7</ID>
+                    <Name>AL Audio Player</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.15</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x200</ID>
+                    <Name>Generic GUI Application Controls</Name>
+                    <UsageType>Nary</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x201</ID>
+                    <Name>AC New</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x202</ID>
+                    <Name>AC Open</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x203</ID>
+                    <Name>AC Close</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x204</ID>
+                    <Name>AC Exit</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x205</ID>
+                    <Name>AC Maximize</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x206</ID>
+                    <Name>AC Minimize</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x207</ID>
+                    <Name>AC Save</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x208</ID>
+                    <Name>AC Print</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x209</ID>
+                    <Name>AC Properties</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x21a</ID>
+                    <Name>AC Undo</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x21b</ID>
+                    <Name>AC Copy</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x21c</ID>
+                    <Name>AC Cut</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x21d</ID>
+                    <Name>AC Paste</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x21e</ID>
+                    <Name>AC Select All</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x21f</ID>
+                    <Name>AC Find</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x220</ID>
+                    <Name>AC Find and Replace</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x221</ID>
+                    <Name>AC Search</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x222</ID>
+                    <Name>AC Go To</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x223</ID>
+                    <Name>AC Home</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x224</ID>
+                    <Name>AC Back</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x225</ID>
+                    <Name>AC Forward</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x226</ID>
+                    <Name>AC Stop</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x227</ID>
+                    <Name>AC Refresh</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x228</ID>
+                    <Name>AC Previous Link</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x229</ID>
+                    <Name>AC Next Link</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x22a</ID>
+                    <Name>AC Bookmarks</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x22b</ID>
+                    <Name>AC History</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x22c</ID>
+                    <Name>AC Subscriptions</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x22d</ID>
+                    <Name>AC Zoom In</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x22e</ID>
+                    <Name>AC Zoom Out</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x22f</ID>
+                    <Name>AC Zoom</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x230</ID>
+                    <Name>AC Full Screen View</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x231</ID>
+                    <Name>AC Normal View</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x232</ID>
+                    <Name>AC View Toggle</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x233</ID>
+                    <Name>AC Scroll Up</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x234</ID>
+                    <Name>AC Scroll Down</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x235</ID>
+                    <Name>AC Scroll</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x236</ID>
+                    <Name>AC Pan Left</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x237</ID>
+                    <Name>AC Pan Right</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x238</ID>
+                    <Name>AC Pan</Name>
+                    <UsageType>LC</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x239</ID>
+                    <Name>AC New Window</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x23a</ID>
+                    <Name>AC Tile Horizontally</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x23b</ID>
+                    <Name>AC Tile Vertically</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x23c</ID>
+                    <Name>AC Format</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x23d</ID>
+                    <Name>AC Edit</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.14</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x23e</ID>
+                    <Name>AC Bold</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x23f</ID>
+                    <Name>AC Italics</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x240</ID>
+                    <Name>AC Underline</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x241</ID>
+                    <Name>AC Strikethrough</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x242</ID>
+                    <Name>AC Subscript</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x243</ID>
+                    <Name>AC Superscript</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x244</ID>
+                    <Name>AC All Caps</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x245</ID>
+                    <Name>AC Rotate</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x246</ID>
+                    <Name>AC Resize</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x247</ID>
+                    <Name>AC Flip horizontal</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x248</ID>
+                    <Name>AC Flip Vertical</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x249</ID>
+                    <Name>AC Mirror Horizontal</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x24a</ID>
+                    <Name>AC Mirror Vertical</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x24b</ID>
+                    <Name>AC Font Select</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x24c</ID>
+                    <Name>AC Font Color</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x24d</ID>
+                    <Name>AC Font Size</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x24e</ID>
+                    <Name>AC Justify Left</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x24f</ID>
+                    <Name>AC Justify Center H</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x250</ID>
+                    <Name>AC Justify Right</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x251</ID>
+                    <Name>AC Justify Block H</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x252</ID>
+                    <Name>AC Justify Top</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x253</ID>
+                    <Name>AC Justify Center V</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x254</ID>
+                    <Name>AC Justify Bottom</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x255</ID>
+                    <Name>AC Justify Block V</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x256</ID>
+                    <Name>AC Indent Decrease</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x257</ID>
+                    <Name>AC Indent Increase</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x258</ID>
+                    <Name>AC Numbered List</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x259</ID>
+                    <Name>AC Restart Numbering</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x25a</ID>
+                    <Name>AC Bulleted List</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x25b</ID>
+                    <Name>AC Promote</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x25c</ID>
+                    <Name>AC Demote</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x25d</ID>
+                    <Name>AC Yes</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x25e</ID>
+                    <Name>AC No</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x25f</ID>
+                    <Name>AC Cancel</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x260</ID>
+                    <Name>AC Catalog</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x261</ID>
+                    <Name>AC Buy/Checkout</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x262</ID>
+                    <Name>AC Add to Cart</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x263</ID>
+                    <Name>AC Expand</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x264</ID>
+                    <Name>AC Expand All</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x265</ID>
+                    <Name>AC Collapse</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x266</ID>
+                    <Name>AC Collapse All</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x267</ID>
+                    <Name>AC Print Preview</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x268</ID>
+                    <Name>AC Paste Special</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x269</ID>
+                    <Name>AC Insert Mode</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x26a</ID>
+                    <Name>AC Delete</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x26b</ID>
+                    <Name>AC Lock</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x26c</ID>
+                    <Name>AC Unlock</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x26d</ID>
+                    <Name>AC Protect</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x26e</ID>
+                    <Name>AC Unprotect</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x26f</ID>
+                    <Name>AC Attach Comment</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x270</ID>
+                    <Name>AC Delete Comment</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x271</ID>
+                    <Name>AC View Comment</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x272</ID>
+                    <Name>AC Select Word</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x273</ID>
+                    <Name>AC Select Sentence</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x274</ID>
+                    <Name>AC Select Paragraph</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x275</ID>
+                    <Name>AC Select Column</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x276</ID>
+                    <Name>AC Select Row</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x277</ID>
+                    <Name>AC Select Table</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x278</ID>
+                    <Name>AC Select Object</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x279</ID>
+                    <Name>AC Redo/Repeat</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x27a</ID>
+                    <Name>AC Sort</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x27b</ID>
+                    <Name>AC Sort Ascending</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x27c</ID>
+                    <Name>AC Sort Descending</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x27d</ID>
+                    <Name>AC Filter</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x27e</ID>
+                    <Name>AC Set Clock</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x27f</ID>
+                    <Name>AC View Clock</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x280</ID>
+                    <Name>AC Select Time Zone</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x281</ID>
+                    <Name>AC Edit Time Zones</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x282</ID>
+                    <Name>AC Set Alarm</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x283</ID>
+                    <Name>AC Clear Alarm</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x284</ID>
+                    <Name>AC Snooze Alarm</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x285</ID>
+                    <Name>AC Reset Alarm</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x286</ID>
+                    <Name>AC Synchronize</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x287</ID>
+                    <Name>AC Send/Receive</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x288</ID>
+                    <Name>AC Send To</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x289</ID>
+                    <Name>AC Reply</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x28a</ID>
+                    <Name>AC Reply All</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x28b</ID>
+                    <Name>AC Forward Msg</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x28c</ID>
+                    <Name>AC Send</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x28d</ID>
+                    <Name>AC Attach File</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x28e</ID>
+                    <Name>AC Upload</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x28f</ID>
+                    <Name>AC Download (Save Target As)</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x290</ID>
+                    <Name>AC Set Borders</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x291</ID>
+                    <Name>AC Insert Row</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x292</ID>
+                    <Name>AC Insert Column</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x293</ID>
+                    <Name>AC Insert File</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x294</ID>
+                    <Name>AC Insert Picture</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x295</ID>
+                    <Name>AC Insert Object</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x296</ID>
+                    <Name>AC Insert Symbol</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x297</ID>
+                    <Name>AC Save and Close</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x298</ID>
+                    <Name>AC Rename</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x299</ID>
+                    <Name>AC Merge</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x29a</ID>
+                    <Name>AC Split</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x29b</ID>
+                    <Name>AC Disribute Horizontally</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+                <UsageID>
+                    <ID>0x29c</ID>
+                    <Name>AC Distribute Vertically</Name>
+                    <UsageType>Sel</UsageType>
+                    <Section>15.16</Section>
+                </UsageID>
+            </UsageIDs>
+        </UsagePage>
+    </UsagePages>
+</HID>

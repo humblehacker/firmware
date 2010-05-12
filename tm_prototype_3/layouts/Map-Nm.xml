@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?oxygen RNGSchema="../Schema/Keyboards.rng" type="xml"?>
+<Map id="Nm" rev="$Rev: 62 $" xmlns:xi="http://www.w3.org/2001/XInclude">
+	<Keys default_color="Blue">
+		<!-- Row 1 -->
+		<Key location="t1f">
+			<Label>
+				<TopLeft>Num</TopLeft>
+			</Label>
+            <ModeKey map-id="Nm" led="Num" type="toggle">Nm</ModeKey>
+		</Key>
+
+		<!-- Row 2 -->
+		<!-- <Key location="t22"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>F13</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keyboard F13" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t23"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>F14</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keyboard F14" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t24"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>F15</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keyboard F15" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t25"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>F16</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keyboard F16" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t26"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>F17</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keyboard F17" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t28"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>F18</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keyboard F19" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t29"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>F19</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keyboard F19" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t2a"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>F20</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keyboard F20" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t2b"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>F21</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keyboard F21" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t2c"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>F22</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keyboard F22" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t2d"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>F23</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keyboard F23" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t2e"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>F24</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keyboard F24" /> -->
+		<!-- </Key> -->
+
+		<!-- Row 3 -->
+		<!-- <Key location="t31"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>Tab</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keypad Tab" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t32"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>[</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keyboard [ and {" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t33"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>{</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keypad {" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t34"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>(</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keypad (" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t38"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>{phone}</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage page="Consumer Control" id="Media Select Telephone" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t39"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>{calc}</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage page="Consumer Control" id="AL Calculator" /> -->
+		<!-- </Key> -->
+<!-- 		<Key location="t3a"> -->
+<!-- 			<Label> -->
+<!-- 				<TopLeft>Clear</TopLeft> -->
+<!-- 			</Label> -->
+<!-- 			<Usage id="Keypad Clear Entry" /> -->
+<!-- 		</Key> -->
+		<Key location="t3b">
+			<Label>
+				<TopLeft>Tab</TopLeft>
+			</Label>
+			<Usage id="Keyboard Tab" />
+		</Key>
+		<Key location="t3c">
+			<Label>
+				<TopLeft>/</TopLeft>
+			</Label>
+			<Usage id="Keypad /" />
+		</Key>
+		<Key location="t3d">
+			<Label>
+				<TopLeft>*</TopLeft>
+			</Label>
+			<Usage id="Keypad *" />
+		</Key>
+		<Key location="t3e">
+			<Label>
+				<TopLeft>-</TopLeft>
+			</Label>
+			<Usage id="Keypad -" />
+		</Key>
+		<Key location="t3f">
+			<Label>
+				<TopLeft>b.tab</TopLeft>
+			</Label>
+			<Macro>
+                <MacroKey><Modifier id="Right Shift" /><Usage id="Keyboard Tab" /></MacroKey>
+			</Macro>
+		</Key>
+
+		<!-- Row 4 -->
+		<!-- <Key location="t42"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>]</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keyboard ] and }" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t43"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>}</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keypad }" /> -->
+		<!-- </Key> -->
+		<!-- <Key location="t44"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>)</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keypad )" /> -->
+		<!-- </Key> -->
+		<Key location="t48">
+			<Label>
+				<TopLeft>Home</TopLeft>
+			</Label>
+			<Usage id="Keyboard Home" />
+		</Key>
+		<Key location="t49">
+			<Label>
+				<TopLeft>{up}</TopLeft>
+			</Label>
+			<Usage id="Keyboard UpArrow" />
+		</Key>
+		<Key location="t4a">
+			<Label>
+				<TopLeft>End</TopLeft>
+			</Label>
+			<Usage id="Keyboard End" />
+		</Key>
+		<Key location="t4b">
+			<Label>
+				<TopLeft>7</TopLeft>
+			</Label>
+			<Usage id="Keypad 7 and Home" />
+		</Key>
+		<Key location="t4c">
+			<Label>
+				<TopLeft>8</TopLeft>
+			</Label>
+			<Usage id="Keypad 8 and Up Arrow" />
+		</Key>
+		<Key location="t4d">
+			<Label>
+				<TopLeft>9</TopLeft>
+			</Label>
+			<Usage id="Keypad 9 and PageUp" />
+		</Key>
+		<Key location="t4e">
+			<Label>
+				<TopLeft>+</TopLeft>
+			</Label>
+			<Usage id="Keypad +" />
+		</Key>
+
+		<!-- Row 5 -->
+		<!-- <Key location="t56"> -->
+		<!-- 	<Label> -->
+		<!-- 		<TopLeft>@</TopLeft> -->
+		<!-- 	</Label> -->
+		<!-- 	<Usage id="Keypad @" /> -->
+		<!-- </Key> -->
+		<Key location="t58">
+			<Label>
+				<TopLeft>{left}</TopLeft>
+			</Label>
+			<Usage id="Keyboard LeftArrow" />
+		</Key>
+		<Key location="t59">
+			<Label>
+				<TopLeft>{down}</TopLeft>
+			</Label>
+			<Usage id="Keyboard DownArrow" />
+		</Key>
+		<Key location="t5a">
+			<Label>
+				<TopLeft>{right}</TopLeft>
+			</Label>
+			<Usage id="Keyboard RightArrow" />
+		</Key>
+		<Key location="t5b">
+			<Label>
+				<TopLeft>4</TopLeft>
+			</Label>
+			<Usage id="Keypad 4 and Left Arrow" />
+		</Key>
+		<Key location="t5c">
+			<Label>
+				<TopLeft>5</TopLeft>
+			</Label>
+			<Usage id="Keypad 5" />
+		</Key>
+		<Key location="t5d">
+			<Label>
+				<TopLeft>6</TopLeft>
+			</Label>
+			<Usage id="Keypad 6 and Right Arrow" />
+		</Key>
+		<Key location="t5f">
+			<Label>
+				<TopLeft>clear</TopLeft>
+			</Label>
+			<Usage id="Keypad Clear Entry" />
+		</Key>
+
+		<!-- Row 6 -->
+		<Key location="t6b">
+			<Label>
+				<TopLeft>1</TopLeft>
+			</Label>
+			<Usage id="Keypad 1 and End" />
+		</Key>
+		<Key location="t6c">
+			<Label>
+				<TopLeft>2</TopLeft>
+			</Label>
+			<Usage id="Keypad 2 and Down Arrow" />
+		</Key>
+		<Key location="t6d">
+			<Label>
+				<TopLeft>3</TopLeft>
+			</Label>
+			<Usage id="Keypad 3 and PageDn" />
+		</Key>
+		<Key location="t6e">
+			<Label>
+				<TopLeft>
+				  enter
+				</TopLeft>
+			</Label>
+			<Usage id="Keypad ENTER" />
+		</Key>
+		<Key location="t6f">
+			<Label>
+				<TopLeft>b.space</TopLeft>
+			</Label>
+			<Usage id="Keyboard DELETE (Backspace)" />
+		</Key>
+
+		<!-- Row 7 -->
+		<Key location="t7b">
+			<Label>
+				<TopLeft>0</TopLeft>
+			</Label>
+			<Usage id="Keypad 0 and Insert" />
+		</Key>
+		<Key location="t7c">
+			<Label>
+				<TopLeft>00</TopLeft>
+			</Label>
+			<Macro>
+				<MacroKey><Usage id="Keypad 0 and Insert" /></MacroKey>
+				<MacroKey><Usage id="Keypad 0 and Insert" /></MacroKey>
+			</Macro>
+		</Key>
+		<Key location="t7d">
+			<Label>
+				<TopLeft>.</TopLeft>
+			</Label>
+			<Usage id="Keypad . and Delete" />
+		</Key>
+	</Keys>
+</Map>
