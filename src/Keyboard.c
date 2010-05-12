@@ -299,9 +299,7 @@ get_keyboard_state(void)
 	uint8_t row, col;
   for (row = 0; row < NUM_ROWS; ++row)
   {
-    // Activate the current row
-    ROW_DDR  =  (1 << row);  // set row as output
-    ROW_PORT = ~(1 << row);  // row pin driven low
+    activate_row(row);
 
     // Insert NOPs for synchronization
     micro_pause(20);

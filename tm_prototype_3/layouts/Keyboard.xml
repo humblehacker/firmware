@@ -8,5 +8,4 @@
     <xi:include href="Map-JP.xml" />
     <xi:include href="Map-Nm.xml" />
     <xi:include href="Map-Fn.xml" />
-    <xi:include href="Map-EEPROM.xml" />
 </Keyboard>
