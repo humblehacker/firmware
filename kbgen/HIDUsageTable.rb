@@ -4,31 +4,35 @@
 #  Copyright (c) 2007. All rights reserved.
 
 require 'rubygems'
-require 'xml/libxml'
 require 'optparse'
 require 'Utils.rb'
+require 'treetop'
+require 'kspec'
+require 'hid'
 
 class UsagePage
   attr_accessor :name, :id, :usages
-  def initialize
-    @name = ''
-    @id = 0
+  def initialize(name, id)
+    @name = name
+    @id = id
     @usages = []
   end
 end
 
 class Usage
-  attr_accessor :page, :id, :name
-  def initialize(usagePage)
-    @page = usagePage
-    @id   = 0
-    @name = ''
+  attr_accessor :name, :id, :page
+  def initialize(name, id, page)
+    @page = page
+    @id   = id
+    @name = name
   end
 end
 
 class HIDUsageTable
-  attr_reader :usagePages, :usagePagesByName, :usagesByName
+  attr_accessor :pages, :usages, :usagePagesByName, :usagesByName
   def initialize(filename, includes)
+    @pages = []
+    @usages = []
     @includes = includes
 
     if !File.exist? filename
@@ -38,130 +42,17 @@ class HIDUsageTable
       end
       filename = newname
     end
-    hidParser = XML::SaxParser.file(filename)
-    hidParser.callbacks = HidHandler.new
-    hidParser.parse
-    @usagePagesByName = hidParser.callbacks.usagePagesByName
-    @usagesByName     = hidParser.callbacks.usagesByName
-    @usagePages       = hidParser.callbacks.usagePages
-  end
-end
+    hidfile = File.open(filename)
+    hid_parser = HIDParser.new
+    result = hid_parser.parse(hidfile.read)
+    result.build_table(self)
 
-class HidHandler
-  
-  include XML::SaxParser::Callbacks
-  attr_reader :usagePagesByName, :usagesByName, :usagePages
-  
-  
-  def initialize
-    @currentUsage = nil
-    @currentUsagePage = nil
-    @content = nil
-    @state = [:Root]
-    
     @usagePagesByName = {}
-    @usagesByName     = {}
-    @usagePages       = []
-  end
-     
-  def on_start_element(name, attr_hash)
-    case @state.last  
-    when :Root
-      case name
-      when "HID"
-        @state.push :HID
-      end
-    when :HID
-      case name
-      when "UsagePages"
-        @state.push :UsagePages
-      end
-    when :UsagePages
-      case name
-      when "UsagePage"
-        @state.push :UsagePage
-        @currentUsagePage = UsagePage.new
-      end
-    when :UsagePage
-      case name
-      when "Name"
-        @content = lambda { |chars| @currentUsagePage.name += chars }
-      when "ID"
-        @content = lambda { |chars| @currentUsagePage.id = normalize_number(chars) }
-      when "UsageID"
-        @currentUsage = Usage.new(@currentUsagePage)
-        @state.push :UsageID
-      end
-    when :UsageID
-      case name
-      when "Name"
-        @content = lambda { |chars| @currentUsage.name += chars }
-      when "ID"
-        @content = lambda { |chars| @currentUsage.id = normalize_number(chars) }
-      end
-    end
-  end
+    @pages.each {|page| @usagePagesByName[page.name] = page}
 
-  def on_characters(chars)
-    if @content != nil
-      @content.call(chars)
-    end
+    @usagesByName = {}
+    @usages.each {|usage| @usagesByName[usage.name] = usage}
   end
-
-  def on_end_element(name)
-    case @state.last
-    when :Root
-    when :HID
-      case name
-      when "HID"
-        @state.pop
-      end
-    when :UsagePages
-      case name
-      when "UsagePages"
-        @state.pop
-        @currentUsagePage = nil
-      end
-    when :UsagePage
-      case name
-      when "UsagePage"
-        if @usagePagesByName.has_key? @currentUsagePage.name == true
-          raise "Error: Duplicate name: #{@currentUsagePage.name} for #{@currentUsagePage.id} and #{@usagePagesByName[@currentUsagePage.name]}"
-        end 
-        @usagePagesByName[@currentUsagePage.name] = @currentUsagePage
-        @usagePages.push @currentUsagePage
-        @currentUsagePage = nil
-        @state.pop
-      when "Name", "ID"
-        @content = nil
-      end
-    when :UsageID
-      case name
-      when "UsageID"
-        add_usage(@currentUsage, @currentUsagePage)
-        @content = nil
-        @state.pop
-      when "Name", "ID"
-        @content = nil
-      end
-    end
-  end
-  
-  def on_end_document
-    @usagePages.sort! { |a,b| a.id <=> b.id }
-    @usagePages.each do |usagePage|
-      usagePage.usages.sort! { |a,b| a.id <=> b.id }
-    end
-  end
-
-  def add_usage(usage, page)
-    if @usagesByName.has_key? usage.name == true
-      raise "Error: Duplicate name: #{usage.name} for #{usage.id} and #{@usagePagesByName[page.name]}"
-    end
-    @usagesByName[usage.name] = usage
-    page.usages.push usage
-  end
-
 end
 
 if __FILE__ == $0

@@ -1,6 +1,6 @@
 KeyMap:Common rev:203
 
-        // Row 1
+        /* Row 1 */
         Key:1A Map:ESCAPE                                     tl:"esc"
         Key:1B Map:F1                                         tl:"F1"
         Key:1C Map:F2                                         tl:"F2"
@@ -17,24 +17,24 @@ KeyMap:Common rev:203
         Key:1N Map:F12                                        tl:"F12"
         Key:1O Mode:Nm led:Num type:toggle                    tl:"Num"
 
-        // Row 2
+        /* Row 2 */
         Key:2G Map:Backspace                                  tl:"Back space"
         Key:2O Map:AL_Calculator page:Consumer_Control        tl:"{calc}"
 
-        // Row 3
+        /* Row 3 */
         Key:3A Map:Tab                                        tl:"Tab"
         Key:3O Map:AL_Email_Reader page:Consumer_Control      tl:"{mail}"
 
-        // Row 4
+        /* Row 4 */
         Key:4A Map:LeftShift                                  tl:"Shift"
         Key:4G Map:Return_(ENTER)                             tl:"Enter"
         Key:4N Map:RightShift                                 tl:"Shift"
         Key:4O Map:Caps_Lock                                  tl:"Caps"
 
-        // Row 5
+        /* Row 5 */
         Key:5O Map:AC_Home page:Consumer_Control              tl:"{web}"
 
-        // Row 6
+        /* Row 6 */
         Key:6A Map:LeftControl                                tl:"Ctrl"
         Key:6B Map:Play/Pause page:Consumer_Control           tl:"Play"
         Key:6C Map:Application                                tl:"App"
@@ -47,7 +47,7 @@ KeyMap:Common rev:203
         Key:6N Map:RightControl                               tl:"Ctrl"
         Key:6O Map:PageUp                                     tl:"Pg Up"
 
-        // Row 7
+        /* Row 7 */
         Key:7A Mode:Fn led:Num type:momentary                 tl:"Fn"
         Key:7B Map:Left_GUI                                   tl:"Start"
         Key:7C Map:LeftAlt                                    tl:"Alt"

@@ -1,9 +1,8 @@
-Keyboard:TypeMatrix2030USB rev:$Rev: 63 $
-    include:Layout
-    include:Matrix
-    include:Map-US
-    include:Map-DV
-    include:Map-JP
-    include:Map-Nm
-    include:Map-Fn
-    include:Map-EEPROM
+Keyboard:TypeMatrix2030USB rev:63
+
+#include "Matrix.kspec"
+#include "Map-US.kspec"
+#include "Map-DV.kspec"
+#include "Map-JP.kspec"
+#include "Map-Nm.kspec"
+#include "Map-Fn.kspec"

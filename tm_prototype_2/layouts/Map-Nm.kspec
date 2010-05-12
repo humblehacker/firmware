@@ -1,6 +1,6 @@
 KeyMap:Nm rev:62
 
-  // Row 1
+  /* Row 1 */
   Key:1O Mode:Nm led:Num type:toggle    tl:"Num"
   Key:3K Map:Tab                        tl:"Tab"
   Key:3L Map:Keypad_/                   tl:""
@@ -8,7 +8,7 @@ KeyMap:Nm rev:62
   Key:3N Map:Keypad_-                   tl:"-"
   Key:3O Map:Tab<shift>                 tl:"b.tab"
 
-  // Row 4
+  /* Row 4 */
   Key:4H Map:Home                       tl:"Home"
   Key:4I Map:UpArrow                    tl:"{up}"
   Key:4J Map:End                        tl:"End"
@@ -17,7 +17,7 @@ KeyMap:Nm rev:62
   Key:4M Map:Keypad_9_and_PageUp        tl:"9"
   Key:4N Map:Keypad_+                   tl:"+"
 
-  // Row 5
+  /* Row 5 */
   Key:5H Map:LeftArrow                  tl:"{left}"
   Key:5I Map:DownArrow                  tl:"{down}"
   Key:5J Map:RightArrow                 tl:"{right}"
@@ -26,14 +26,14 @@ KeyMap:Nm rev:62
   Key:5M Map:Keypad_6_and_Right_Arrow   tl:"6"
   Key:5O Map:Keypad_Clear_Entry         tl:"clear"
 
-  // Row 6
+  /* Row 6 */
   Key:6K Map:Keypad_1_and_End           tl:"1"
   Key:6L Map:Keypad_2_and_Down_Arrow    tl:"2"
   Key:6M Map:Keypad_3_and_PageDn        tl:"3"
   Key:6N Map:Keypad_ENTER               tl:"enter"
   Key:6O Map:Backspace                  tl:"b.space"
 
-  // Row 7
+  /* Row 7 */
   Key:7K Map:Keypad_0_and_Insert        tl:"0"
   Key:7L Macro:                         tl:"00"
     Map:Keypad_0_and_Insert

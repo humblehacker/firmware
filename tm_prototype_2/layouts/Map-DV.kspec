@@ -1,10 +1,10 @@
-KeyMap id:DV base:US rev:57
+KeyMap:DV base:US rev:57
 
-  // Row 2
+  /* Row 2 */
   Key:2M  Map:[_and_{   tl:"{"  bl:"["
   Key:2N  Map:]_and_}   tl:"}"  bl:"]"
 
-  // Row 3
+  /* Row 3 */
   Key:3B  Map:\'_and_\" tl:"\"" bl:"\'"
   Key:3C  Map:,_and_<   tl:"<"  bl:","
   Key:3D  Map:._and_>   tl:">"  bl:"."
@@ -18,7 +18,7 @@ KeyMap id:DV base:US rev:57
   Key:3M  Map:/_and_?   tl:"?"  bl:"/"
   Key:3N  Map:=_and_+   tl:"+"  bl:"="
 
-  // Row 4
+  /* Row 4 */
   Key:4C  Map:o_and_O   tl:"O"
   Key:4D  Map:e_and_E   tl:"E"
   Key:4E  Map:u_and_U   tl:"U"
@@ -30,7 +30,7 @@ KeyMap id:DV base:US rev:57
   Key:4L  Map:s_and_S   tl:"S"
   Key:4M  Map:-_and__   tl:"__"  bl:"-"
 
-  // Row 5
+  /* Row 5 */
   Key:5B  Map:;_and_\:  tl:":"   bl:";"
   Key:5C  Map:q_and_Q   tl:"Q"
   Key:5D  Map:j_and_J   tl:"J"

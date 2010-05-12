@@ -28,7 +28,7 @@ class KeyboardCH
   include XML::SaxParser::Callbacks
 
   attr_reader :keyboards, :filenames
-  
+
   Scale = 28.34627813368
 
   def initialize(filename, options, hid, includes)
@@ -39,7 +39,7 @@ class KeyboardCH
     @keyboards = []
     @hid = hid
     @filenames = [filename]
-    
+
     @content = nil
     @currentKeyDef = nil
     @currentRowDef = nil
@@ -70,6 +70,10 @@ class KeyboardCH
     parser.parse
     @filenames.pop
     @level -= 1
+  end
+
+  def get_location(location)
+    "#{location[1,1]}#{location[2,1].tr('1234567890abcdef', 'ABCDEFGHIJKLMNO')}"
   end
 
   def extract_rev(rev)
@@ -278,7 +282,7 @@ class KeyboardCH
                            @currentRowDef.offset.x = chars.to_f * Scale
                            @pos.x += @currentRowDef.offset.x }
       when "KeyDef"
-        location = attr_hash['location']
+        location = get_location(attr_hash['location'])
         @currentKeyDef = KeyDef.new(location)
         @currentKb.keyhash[location] = @currentKeyDef
         @currentKeyDef.origin = @pos.clone
@@ -328,7 +332,7 @@ class KeyboardCH
     when :Keys
       case name
       when "Key"
-        location = attr_hash['location']
+        location = get_location(attr_hash['location'])
         if !@currentKb.keyhash.has_key? location
           raise "ERROR: Key definition #{location} has not been defined"
         end

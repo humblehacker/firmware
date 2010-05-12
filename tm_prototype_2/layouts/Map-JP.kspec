@@ -1,6 +1,6 @@
 KeyMap:JP base:US rev:57
 
-  // Row 2
+  /* Row 2 */
   Key:2A Map:`_and_~        tl:"半角" bl:"全角"
   Key:2B Map:1_and_!        tl:"!"    bl:"1"             br:"ぬ"
   Key:2C Map:2_and_@        tl:"@"    bl:"2"             br:"ふ"
@@ -16,7 +16,7 @@ KeyMap:JP base:US rev:57
   Key:2N Map:=_and_+        tl:"__"   bl:"^"     tr:"々" br:"ㇸ"
   Key:2O Map:International3 tl:"¦"    bl:"¥"     tr:"￢" br:"–"
 
-  // Row 3
+  /* Row 3 */
   Key:3B Map:q_and_Q        tl:"Q"               tr:"だ" br:"た"
   Key:3C Map:w_and_W        tl:"W"               tr:"で" br:"て"
   Key:3D Map:e_and_E        tl:"E"               tr:"ぃ" br:"い"
@@ -31,7 +31,7 @@ KeyMap:JP base:US rev:57
   Key:3N Map:\]_and_\}      tl:"{"    bl:"["     tr:"「" br:"゜"
   Key:3O Map:\_and_|        tl:"}"    bl:"]"     tr:"」" br:"む"
 
-  // Row 4
+  /* Row 4 */
   Key:4B Map:a_and_A        tl:"A"                       br:"ち"
   Key:4C Map:s_and_S        tl:"S"                       br:"と"
   Key:4D Map:d_and_D        tl:"D"                       br:"し"
@@ -44,7 +44,7 @@ KeyMap:JP base:US rev:57
   Key:4L Map:;_and_\:       tl:"+"    bl:";"     tr:"』" br:"れ"
   Key:4M Map:\'_and_\"      tl:"*"    bl:":"     tr:"ヶ" br:"け"
 
-  // Row 5
+  /* Row 5 */
   Key:5B Map:z_and_Z        tl:"Z"               tr:"っ" br:"つ"
   Key:5C Map:x_and_X        tl:"X"                       br:"さ"
   Key:5D Map:c_and_C        tl:"C"                       br:"そ"
@@ -57,11 +57,11 @@ KeyMap:JP base:US rev:57
   Key:5L Map:/_and_?        tl:"?"    bl:""      tr:"・" br:"め"
   Key:5M Map:International1 tl:"_"    bl:"\\"    tr:"|"  br:"ろ"
 
-  // Row 6
+  /* Row 6 */
   Key:6J Map:International2 tl:"カタカナ ひらがな ローマ字"
 
-  // Row 7
-  // Key:7A Map:Caps_Lock   tl:"Caps/Topl" bl:"英数 漢字番号"
+  /* Row 7 */
+  /* Key:7A Map:Caps_Lock   tl:"Caps/Topl" bl:"英数 漢字番号" */
   Key:7C Map:International5 tl:"無変換"
   Key:7J Map:International4 tl:"前侯補 変換 (次侯補) 侯補"
 

@@ -52,7 +52,7 @@ end
 
 def init(filename, options)
   # Parse the HID Usage Tables
-  $hid = HIDUsageTable.new('HIDUsageTables.xml', $includes)
+  $hid = HIDUsageTable.new('HIDUsageTables.kspec', $includes)
 
   # Parse the keyboard file
   $kbp = KbParser.new($hid, $includes, options, filename)
@@ -128,7 +128,7 @@ def create_macro_header
   output = File.new("#{$options[:outdir]}/Macros.h", 'w+')
 
   output.puts include_guard(output.path, :begin)
-  output.puts 
+  output.puts
   output.puts '#include "HIDUsageTables.h"'
   output.puts
   output.puts "typedef union"
@@ -192,7 +192,7 @@ def create_macro_header
       sortedKeys.each do |loc, key|
         next if key.macro.empty?
 
-        output.puts 
+        output.puts
         output.puts "/* #{map.id} @ #{loc} */"
         output.puts "const Macro p_macro#{index} PROGMEM = "
         output.puts "{"
@@ -325,7 +325,7 @@ def create_matrix_header
   output.puts "#define COL(byte) (((uint8_t)byte)>>3)"
   output.puts "#define ROW(byte) (((uint8_t)byte)&~(0xff<<3))"
   output.puts "#define MATRIX_CELL(row,col) ((((uint8_t)(col))<<3)|((uint8_t)(row)))"
-  output.puts 
+  output.puts
   output.puts "#define NUM_ROWS #{rows}"
   output.puts "#define NUM_COLS #{cols}"
   output.puts
@@ -390,7 +390,7 @@ def create_individual_matrix_map_sourcefiles
         kbIdentifier = $keymapIDs[map.id]
         header = File.new("#{$options[:outdir]}/#{kbIdentifier}_mx.h", 'w+')
         source = File.new("#{$options[:outdir]}/#{kbIdentifier}_mx.c", 'w+')
-  
+
         if $options[:clean]
           source.close
           delete_file(source.path)
@@ -398,7 +398,7 @@ def create_individual_matrix_map_sourcefiles
           delete_file(header.path)
           next
         end
-  
+
         rows = matrix.size
         cols = matrix[0].size
 
@@ -585,7 +585,7 @@ def create_modekeys_header
 
       keyid = modeKeyNames[modeKey.name]
       output.print "  /* #{modeKey.name} @ t#{'%x'%location} */"        # comment
-      output.print " { MATRIX_CELL(#{modeKey.matrix_cell.row},"         
+      output.print " { MATRIX_CELL(#{modeKey.matrix_cell.row},"
       output.print              "#{modeKey.matrix_cell.col}),"          # matrixCell (e.g. MATRIX_CELL(5,2))
       output.print " #{modeKey.type.upcase},"                           # type       (e.g. MOMENTARY)
       output.print " kbd_map_#{$keymapIDs[modeKey.selectingMapID]}_mx }"# selectingMap

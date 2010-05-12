@@ -1,6 +1,6 @@
 KeyMap:Fn base:Nm rev:203
 
-    // Row 1
+    /* Row 1 */
     Key:1A Mode:US            type:toggle                   tl:"US"
     Key:1B Mode:DV led:Dvorak type:toggle                   tl:"Dvorak"
     Key:1C Mode:JP led:Scroll type:toggle                   tl:"Japan"
@@ -42,13 +42,13 @@ KeyMap:Fn base:Nm rev:203
     Key:1N Map:Pause                                        tl:"Pause"
     Key:1O Map:Keypad_Num_Lock_and_Clear                    tl:"N. Lock"
 
-    // Row 5
+    /* Row 5 */
     Key:5B Map:Non-US_\_and_|                               tl:"<"
     Key:5C Map:Non-US_\_and_| <shift>                       tl:">"
     Key:5D Map:Non-US_\_and_| <right_alt>                   tl:"¦"
     Key:5E Map:Non-US_\_and_| <right_alt|shift>             tl:"_"
 
-    // Row 6
+    /* Row 6 */
     Key:6B Map:Cut                                          tl:"Cut"
     Key:6C Map:Copy                                         tl:"Copy"
     Key:6D Map:Paste                                        tl:"Paste"

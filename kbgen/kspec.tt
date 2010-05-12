@@ -1,0 +1,99 @@
+grammar KSpec
+
+  rule keyboard
+    ws? 'Keyboard:' ident sp 'rev:' ident ws matrix keymap+
+  end
+
+  rule matrix
+    'Matrix:' ident ws 'rev:' ident ws row+
+  end
+
+  rule row
+    'Row:' (sp? location ',')+ sp? location ws
+  end
+
+  rule keymap
+    'KeyMap:' ident (sp 'base:' ident)? (sp 'default-map:' ('true' / 'false'))? sp 'rev:' ident ws key+ ws?
+  end
+
+  rule ident
+    [\-a-zA-Z0-9_]+
+  end
+
+  rule key
+    'Key:' location ws ( map / macro / mode )+
+  end
+
+  rule location
+    ([0-9] [A-Z]) / '--'
+  end
+
+  rule labels
+    ((sp label)+)
+  end
+
+  rule map
+    modifiers? 'Map:' usage (sp? modifiers)? (sp 'page:' usage_page )? labels? ws
+  end
+
+  rule mode
+    modifiers? 'Mode:' ident (sp 'led:' ident)? sp 'type:' ident labels? ws
+  end
+
+  rule macro
+    modifiers? 'Macro:' labels? ws map+
+  end
+
+  rule usage
+    [^ \t\n\r]+
+  end
+
+  rule usage_page
+    ident
+  end
+
+  rule modifiers
+    '<' modifier_list '>'
+  end
+
+  rule label
+    (( 't' / 'b' )? ( 'l' / 'c' / 'r' ) ':' string)
+  end
+
+  rule modifier_list
+    modifier '|' modifier_list / modifier
+  end
+
+  rule modifier
+    'shift' / 'left_shift' / 'right_shift' /
+    'control' / 'left_control' / 'right_control' /
+    'alt' / 'left_alt' / 'right_alt' /
+    'gui' / 'left_gui' / 'right_gui'
+  end
+
+  rule ws
+    ([ \t\n]+)
+  end
+
+  rule sp
+    ([ \t]+)
+  end
+
+  rule literal_char
+    !'"' .
+  end
+
+  rule coded_char
+    '\\' ('n' / '\\' / '"')
+  end
+
+  rule string
+    '"' (coded_char / literal_char)* '"'
+  end
+
+# rule string
+#   '"' (!'"' . / '\"')* '"'
+#  '"' ('\"' / [^"])* '"'
+# end
+
+end
