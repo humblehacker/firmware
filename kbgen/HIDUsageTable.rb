@@ -11,11 +11,10 @@ require 'kspec'
 require 'hid'
 
 class UsagePage
-  attr_accessor :name, :id, :usages
+  attr_accessor :name, :id
   def initialize(name, id)
     @name = name
     @id = id
-    @usages = []
   end
 end
 
@@ -29,7 +28,7 @@ class Usage
 end
 
 class HIDUsageTable
-  attr_accessor :pages, :usages, :usagePagesByName, :usagesByName
+  attr_accessor :pages, :usages, :usagePagesByName, :usagesByName, :usagesByPage
   def initialize(filename, includes)
     @pages = []
     @usages = []
@@ -48,10 +47,15 @@ class HIDUsageTable
     result.build_table(self)
 
     @usagePagesByName = {}
-    @pages.each {|page| @usagePagesByName[page.name] = page}
-
+    @usagesByPage = {}
     @usagesByName = {}
+
+    @pages.each do |page|
+      @usagePagesByName[page.name] = page
+      @usagesByPage[page] = Array.new
+    end
     @usages.each {|usage| @usagesByName[usage.name] = usage}
+    @usages.each {|usage| @usagesByPage[usage.page] << usage}
   end
 end
 

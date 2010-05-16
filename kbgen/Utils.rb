@@ -3,28 +3,28 @@
 #  Created by David Whetstone on 2007-03-28.
 #  Copyright (c) 2007. All rights reserved.
 
-                   
+
 class Point
   attr_accessor :x, :y
   def initialize(x, y)
     @x = x
     @y = y
   end
-  
+
   def offset(point)
     @x += point.x
     @y += point.y
     return self
-  end      
-  
+  end
+
   def + (point)
     return Point.new(point.x + @x, point.y + @y)
   end
-  
+
   def to_s
     "(#{@x}, #{@y})"
   end
-                      
+
   def to_a
     [@x, @y]
   end
@@ -36,11 +36,11 @@ class Size
     @width = w
     @height = h
   end
-  
+
   def to_s
     "(#{@width}, #{@height})"
   end
-  
+
   def to_a
     [@width, @height]
   end
@@ -54,20 +54,20 @@ class Includes
   def initialize
     @includes = []
   end
-  
+
   def push(path)
     @includes.push path.strip
   end
-  
+
   def find_file(filename)
     newname = nil
     @includes.each do |inc|
-      newname = "#{inc}/#{filename}" 
+      newname = "#{inc}/#{filename}"
       return newname if File.exist?(newname)
     end
     return nil
   end
-end  
+end
 
 def normalize_number( number )
   return number.to_i(16) if number =~ /^0x/
@@ -76,7 +76,7 @@ end
 
 def normalize_identifier(identifier)
   normalized = identifier.upcase
-  normalized.gsub!(/_/,  '_UNDERSCORE')
+# normalized.gsub!(/_/,  '_UNDERSCORE')
   normalized.gsub!(/!/,  '_EXCLAMATION')
   normalized.gsub!(/\?/, '_QUESTION')
   normalized.gsub!(/@/,  '_AT')
@@ -105,6 +105,7 @@ def normalize_identifier(identifier)
   normalized.gsub!(/\//, '_SLASH')
   normalized.gsub!(/\~/, '_TILDE')
   normalized.gsub!(/\|/, '_PIPE')
+  normalized.gsub!(/`/,  '_BACKTICK')
   normalized.gsub!(/'/,  '_APOSTROPHE')
   normalized.gsub!(/"/,  '_QUOTE')
   normalized.gsub!(' ',  '_')

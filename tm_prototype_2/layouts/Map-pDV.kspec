@@ -5,11 +5,11 @@ KeyMap:pDV base:US rev:57
          <shift> Map:`_and_~  <shift>    tl:"~"
   Key:1B         Map:7_and_&  <shift>    bl:"&"
          <shift> Map:5_and_%  <shift>    tl:"%"
-  Key:1C         Map:\[_and_\{           bl:"["
+  Key:1C         Map:[_and_{             bl:"["
          <shift> Map:7_and_&             tl:"7"
-  Key:1D         Map:\[_and_\{<shift>    bl:"{"
+  Key:1D         Map:[_and_{<shift>      bl:"{"
          <shift> Map:5_and_%             tl:"5"
-  Key:1E         Map:\]_and_\}<shift>    bl:"}"
+  Key:1E         Map:]_and_}<shift>      bl:"}"
          <shift> Map:3_and_#             tl:"3"
   Key:1F         Map:9_and_(  <shift>    bl:"("
          <shift> Map:1_and_!             tl:"1"
@@ -21,7 +21,7 @@ KeyMap:pDV base:US rev:57
          <shift> Map:2_and_@             tl:"2"
   Key:1J         Map:=_and_+  <shift>    bl:"+"
          <shift> Map:4_and_$             tl:"4"
-  Key:1K         Map:\]_and_\}           bl:"]"
+  Key:1K         Map:]_and_}             bl:"]"
          <shift> Map:6_and_^             tl:"6"
   Key:1L         Map:1_and_!  <shift>    bl:"!"
          <shift> Map:8_and_*             tl:"8"
@@ -29,13 +29,13 @@ KeyMap:pDV base:US rev:57
          <shift> Map:\'_and_\"           tl:"'"
 
   /* Row 2 */
-  Key:2M  Map:\[_and_\{                  tl:"{"  bl:"["
-  Key:2N  Map:\]_and_\}                  tl:"}"  bl:"]"
+  Key:2M  Map:[_and_{                    tl:"{"  bl:"["
+  Key:2N  Map:]_and_}                    tl:"}"  bl:"]"
 
   /* Row 3 */
   Key:3B  Map:\'_and_\"                  tl:"\"" bl:"\'"
-  Key:3C  Map:,_and_<                    tl:"<"  bl:","
-  Key:3D  Map:._and_>                    tl:">"  bl:"."
+  Key:3C  Map:,_and_\<                   tl:"<"  bl:","
+  Key:3D  Map:._and_\>                   tl:">"  bl:"."
   Key:3E  Map:p_and_P                    tl:"P"
   Key:3F  Map:y_and_Y                    tl:"Y"
   Key:3H  Map:f_and_F                    tl:"F"
@@ -56,7 +56,7 @@ KeyMap:pDV base:US rev:57
   Key:4J  Map:t_and_T                    tl:"T"
   Key:4K  Map:n_and_N                    tl:"N"
   Key:4L  Map:s_and_S                    tl:"S"
-  Key:4M  Map:-_and__                    tl:"__"  bl:"-"
+  Key:4M  Map:-_and_Underscore           tl:"__"  bl:"-"
 
   /* Row 5 */
   Key:5B  Map:;_and_\:                   tl:":"   bl:";"

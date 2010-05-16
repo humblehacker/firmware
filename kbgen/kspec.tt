@@ -1,19 +1,67 @@
 grammar KSpec
 
   rule keyboard
-    ws? 'Keyboard:' ident sp 'rev:' ident ws matrix keymap+
+    ws? 'Keyboard:' ident rev ws matrix keymaps:keymap+
+    {
+      def content
+        kb = Keyboard.new()
+        matrix.content(kb)
+        keymaps.elements.each { |e| e.content(kb) }
+        kb
+      end
+    }
+  end
+
+  rule rev
+    sp 'rev:' ident
   end
 
   rule matrix
-    'Matrix:' ident ws 'rev:' ident ws row+
+    'Matrix:' ident rev ws rows:matrix_row+
+    {
+      def content(kb)
+        rows.elements.each {|e| e.content(kb) }
+      end
+    }
   end
 
-  rule row
-    'Row:' (sp? location ',')+ sp? location ws
+  rule matrix_row
+    'Row:' cols:(sp? location ',')+ sp? col:location ws
+    {
+      def content(kb)
+        new_cols = Array.new
+        cols.elements.each do |e|
+          new_cols << e.location.text_value
+          kb.reverseMatrix[e.text_value] = Cell.new(e.text_value[0,1], e.text_value[1,1])
+        end
+        new_cols << col.text_value
+        kb.reverseMatrix[col.text_value] = Cell.new(col.text_value[0,1], col.text_value[1,1])
+        kb.matrix.push new_cols
+      end
+    }
   end
 
   rule keymap
-    'KeyMap:' ident (sp 'base:' ident)? (sp 'default-map:' ('true' / 'false'))? sp 'rev:' ident ws key+ ws?
+    'KeyMap:' ident base:(sp 'base:' ident)? default:(sp 'default')? rev ws keys:key+ ws?
+    {
+      def content(kb)
+
+        puts "\n\nKeymap: #{ident.text_value}"
+
+        kb.defaultMap = ident.text_value unless default.text_value.empty?
+
+        if base.text_value.empty?
+          map = KeyMap.new(ident.text_value, rev.text_value)
+        elsif kb.maps.has_key? base.ident.text_value
+          map = kb.maps[base.ident.text_value].dup
+          map.add_map(ident.text_value, rev.text_value)
+        else
+          raise "Error: base map '#{base.ident.text_value}' has not been defined"
+        end
+        kb.maps[ident.text_value] = map
+        keys.elements.each {|e| key = e.content; map.keys[key.location] = key}
+      end
+    }
   end
 
   rule ident
@@ -21,7 +69,14 @@ grammar KSpec
   end
 
   rule key
-    'Key:' location ws ( map / macro / mode )+
+    'Key:' location ws mapping:( map / macro / mode )+
+    {
+      def content
+        key = Key.new(location.text_value)
+        mapping.elements.each {|e| e.fill_key(key)}
+        key
+      end
+    }
   end
 
   rule location
@@ -29,23 +84,58 @@ grammar KSpec
   end
 
   rule labels
-    ((sp label)+)
+    ((sp label)*)
   end
 
   rule map
-    modifiers? 'Map:' usage (sp? modifiers)? (sp 'page:' usage_page )? labels? ws
+    premods:modifiers? sp? 'Map:' usage mods:(sp? modifiers)? up:(sp 'page:' usage_page )? labels? ws
+    {
+      def the_premods
+        premods.text_value.empty? ? 0 : premods.content
+      end
+      def fill_key(key)
+        key.mappings[the_premods] = content
+      end
+      def content
+        the_mods   = mods.text_value.empty? ? 0 : mods.modifiers.content
+        if !$hid.usagesByName.has_key? usage.text_value
+          raise "Cannot find usage '#{usage.text_value}'"
+        end
+        the_usage  = $hid.usagesByName[usage.text_value]
+        if !up.text_value.empty? && the_usage.page.name != up.usage_page.text_value
+          raise "Usage page mismatch for usage '#{the_usage.name}'. Expected '#{the_usage.page.name}', received '#{up.usage_page.text_value}'"
+        end
+        Map.new(the_usage, the_mods)
+      end
+    }
   end
 
   rule mode
-    modifiers? 'Mode:' ident (sp 'led:' ident)? sp 'type:' ident labels? ws
+    premods:modifiers? sp? 'Mode:' mode:ident led:(sp 'led:' ident)? sp 'type:' type:ident labels? ws
+    {
+      def fill_key(key)
+        the_premods = premods.text_value.empty? ? 0 : premods.modifiers.content
+        the_mode = Mode.new(mode.text_value, type.text_value)
+        the_mode.led = led.ident.text_value unless led.text_value.empty?
+        key.mappings[the_premods] = the_mode
+      end
+    }
   end
 
   rule macro
-    modifiers? 'Macro:' labels? ws map+
+    premods:modifiers? sp? 'Macro:' labels? ws maps:map+
+    {
+      def fill_key(key)
+        the_premods = premods.text_value.empty? ? 0 : premods.modifiers.content
+        macro = Macro.new
+        maps.elements.each {|map| macro.mappings << map.content}
+        key.mappings[the_premods] = macro
+      end
+    }
   end
 
   rule usage
-    [^ \t\n\r]+
+    (coded_char / [^ \t\n\r><])+
   end
 
   rule usage_page
@@ -54,6 +144,16 @@ grammar KSpec
 
   rule modifiers
     '<' modifier_list '>'
+    {
+      def content
+        mods = 0
+        puts "Modifiers: <#{modifier_list.text_value}>"
+        modifier_list.elements.each do |e|
+          mods |= process_modifier(e.text_value.sub("|",""))
+        end
+        mods
+      end
+    }
   end
 
   rule label
@@ -61,14 +161,14 @@ grammar KSpec
   end
 
   rule modifier_list
-    modifier '|' modifier_list / modifier
+    (modifier '|')* modifier
   end
 
   rule modifier
-    'shift' / 'left_shift' / 'right_shift' /
+    'shift'   / 'left_shift'   / 'right_shift'   /
     'control' / 'left_control' / 'right_control' /
-    'alt' / 'left_alt' / 'right_alt' /
-    'gui' / 'left_gui' / 'right_gui'
+    'alt'     / 'left_alt'     / 'right_alt'     /
+    'gui'     / 'left_gui'     / 'right_gui'
   end
 
   rule ws
@@ -84,7 +184,7 @@ grammar KSpec
   end
 
   rule coded_char
-    '\\' ('n' / '\\' / '"')
+    '\\' ([n\\"<>])
   end
 
   rule string

@@ -4,14 +4,14 @@ require 'KbInternals.rb'
 require 'Utils.rb'
 
 class Keyboard
-  attr_accessor :layout, :maps, :colors, :org, :keyhash, :max, 
+  attr_accessor :layout, :maps, :colors, :org, :keyhash, :max,
                 :copyright, :matrix, :matrixId, :reverseMatrix,
                 :defaultMap
   Scale = 28.34627813368
-  def initialize(org)
+  def initialize(org="none")
     @org = org
     @layout = nil
-    @maps   = []
+    @maps   = {}
     @keyhash = {}
     @matrix = []
     @reverseMatrix = {}
@@ -26,5 +26,5 @@ class Keyboard
     return nil if ! @keyhash.has_key? id
     return @keyhash[id]
   end
-  
+
 end

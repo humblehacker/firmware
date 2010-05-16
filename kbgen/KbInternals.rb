@@ -39,13 +39,13 @@ end
 class KeyMap
   attr_accessor :keys, :ids, :revs, :types
 
-  def initialize(id, rev, type)
+  def initialize(id, rev, type='system')
     @ids   = [id]
     @revs  = [rev]
     @types = [type]
     @keys  = {}
   end
-  
+
   def initialize_copy(other)
     @ids   = @ids.dup
     @revs  = @revs.dup
@@ -53,16 +53,16 @@ class KeyMap
     @types = @types.dup
   end
 
-  def add_map(id, rev, type)
+  def add_map(id, rev, type='system')
     @ids.push   id
     @revs.push  rev
     @types.push type
   end
-  
+
   def id
     @ids.last
   end
-  
+
   def rev
     @revs.last
   end
@@ -87,79 +87,79 @@ class KeyLabel
   def initialize
     @legends = {}
   end
-  
+
   def topLeft
     @legends[:topLeft]
   end
-  
+
   def topLeft=(val)
     @legends[:topLeft] = val
-  end 
-  
+  end
+
   def centerLeft
     @legends[:centerLeft]
   end
-  
+
   def centerLeft=(val)
     @legends[:centerLeft] = val
   end
-  
+
   def bottomLeft
     @legends[:bottomLeft]
   end
-  
+
   def bottomLeft=(val)
     @legends[:bottomLeft] = val
   end
-  
+
   def topCenter
     @legends[:topCenter]
   end
-  
+
   def topCenter=(val)
     @legends[:topCenter] = val
   end
-  
+
   def center
     @legends[:center]
   end
-  
+
   def center=(val)
     @legends[:center] = val
   end
-  
+
   def bottomCenter
     @legends[:bottomCenter]
   end
-  
+
   def bottomCenter=(val)
     @legends[:bottomCenter] = val
   end
-  
+
   def topRight
     @legends[:topRight]
   end
-  
+
   def topRight=(val)
     @legends[:topRight] = val
   end
-  
+
   def centerRight
     @legends[:centerRight]
   end
-  
+
   def centerRight=(val)
     @legends[:centerRight] = val
   end
-  
+
   def bottomRight
     @legends[:bottomRight]
   end
-  
+
   def bottomRight=(val)
     @legends[:bottomRight] = val
   end
-  
+
   def empty?
     @legends.empty?
   end
@@ -174,29 +174,30 @@ class Cell
 end
 
 class Key
-  attr_accessor :location, :label, :usage, :macro, :prevKey, :color, 
-                :mode, :modeMapID, :modeType, :modeLED
-  def initialize(location, color)
+  attr_accessor :location, :mappings
+  def initialize(location, color='black')
     @location = location
-    @label = KeyLabel.new
-    @usage = nil
-    @macro = []
-    @prevKey = nil
-    @color = color
-    @mode = ''
-    @modeMapID = ''
-    @modeType = nil
-    @modeLED = nil
+#   @label = KeyLabel.new
+#   @usage = nil
+#   @macro = []
+#   @prevKey = nil
+#   @color = color
+#   @mode = ''
+#   @modeMapID = ''
+#   @modeType = nil
+#   @modeLED = nil
+#   @modifiers = 0
+    @mappings = {}
   end
-  
+
   def empty?
-    @label.empty? && @usage == nil && @macro.empty?
+    @label.empty? && @usage == nil && @macro.empty? && @modifiers == 0
   end
-  
+
   def overridden?
     @prevKey != nil
   end
-  
+
   def usageChanged?
     key = self
     while key != nil
@@ -215,10 +216,60 @@ class Key
   end
 end
 
+class Map
+  attr_reader :usage, :modifiers
+  def initialize(usage, modifiers)
+    @usage = usage
+    @modifiers = modifiers
+  end
+end
+
+class Mode
+  attr_reader :mode, :type
+  attr_accessor :led
+  def initialize(mode, type)
+    @mode = mode
+    @type = type
+    @led  = ""
+  end
+end
+
+class Macro
+  attr_accessor :mappings
+  def initialize
+    @mappings = []
+  end
+end
+
 Modifiers =     { :L_CTRL => (1<<0), :L_SHFT => (1<<1), :L_ALT => (1<<2), :L_GUI => (1<<3),
                   :R_CTRL => (1<<4), :R_SHFT => (1<<5), :R_ALT => (1<<6), :R_GUI => (1<<7) }
 ModifierCodes = { :L_CTRL => 'LC',   :L_SHFT => 'LS',   :L_ALT => 'LA',   :L_GUI => 'LG',
                   :R_CTRL => 'RC',   :R_SHFT => 'RS',   :R_ALT => 'RA',   :R_GUI => 'RG' }
+
+def process_modifier(mod_text)
+  case mod_text
+  when "left_alt", "alt"
+    return Modifiers[:L_ALT]
+  when "left_control", "control"
+    return Modifiers[:L_CTRL]
+  when "left_shift", "shift"
+    return Modifiers[:L_SHFT]
+  when "left_gui", "gui"
+    return Modifiers[:L_GUI]
+  when "right_alt"
+    return Modifiers[:R_ALT]
+  when "right_control"
+    return Modifiers[:R_CTRL]
+  when "right_shift"
+    return Modifiers[:R_SHFT]
+  when "right_gui"
+    return Modifiers[:R_GUI]
+  when ""
+    return 0
+  else
+    raise UnknownModifierError.new(mod_text, @filenames)
+  end
+end
 
 class MacroKey
   attr_accessor :usage, :modifiers

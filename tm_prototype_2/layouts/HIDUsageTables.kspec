@@ -116,17 +116,17 @@ UsagePage:Keyboard_and_Keypad id:0x07
     Usage:Backspace id:0x2a
     Usage:Tab id:0x2b
     Usage:Spacebar id:0x2c
-    Usage:-_and__ id:0x2d
+    Usage:-_and_Underscore id:0x2d
     Usage:=_and_+ id:0x2e
-    Usage:\[_and_\{ id:0x2f
-    Usage:\]_and_\} id:0x30
+    Usage:[_and_{ id:0x2f
+    Usage:]_and_} id:0x30
     Usage:\_and_| id:0x31
     Usage:Non-US_#_and_~ id:0x32
     Usage:;_and_\: id:0x33
     Usage:\'_and_\" id:0x34
     Usage:`_and_~ id:0x35
-    Usage:,_and_< id:0x36
-    Usage:._and_> id:0x37
+    Usage:,_and_\< id:0x36
+    Usage:._and_\> id:0x37
     Usage:/_and_? id:0x38
     Usage:Caps_Lock id:0x39
     Usage:F1 id:0x3a
@@ -143,7 +143,7 @@ UsagePage:Keyboard_and_Keypad id:0x07
     Usage:F12 id:0x45
     Usage:PrintScreen id:0x46
     Usage:Scroll_Lock id:0x47
-    Usage:Pause id:0x48
+    Usage:Keyboard_Pause id:0x48
     Usage:Insert id:0x49
     Usage:Home id:0x4a
     Usage:PageUp id:0x4b
@@ -173,7 +173,7 @@ UsagePage:Keyboard_and_Keypad id:0x07
     Usage:Keypad_._and_Delete id:0x63
     Usage:Non-US_\_and_| id:0x64
     Usage:Application id:0x65
-    Usage:Power id:0x66
+    Usage:Keyboard_Power id:0x66
     Usage:Keypad_= id:0x67
     Usage:F13 id:0x68
     Usage:F14 id:0x69
@@ -187,18 +187,18 @@ UsagePage:Keyboard_and_Keypad id:0x07
     Usage:F22 id:0x71
     Usage:F23 id:0x72
     Usage:F24 id:0x73
-    Usage:Execute id:0x74
-    Usage:Help id:0x75
-    Usage:Menu id:0x76
-    Usage:Select id:0x77
-    Usage:Stop id:0x78
-    Usage:Again id:0x79
-    Usage:Undo id:0x7a
-    Usage:Cut id:0x7b
-    Usage:Copy id:0x7c
-    Usage:Paste id:0x7d
-    Usage:Find id:0x7e
-    Usage:Mute id:0x7f
+    Usage:Keyboard_Execute id:0x74
+    Usage:Keyboard_Help id:0x75
+    Usage:Keyboard_Menu id:0x76
+    Usage:Keyboard_Select id:0x77
+    Usage:Keyboard_Stop id:0x78
+    Usage:Keyboard_Again id:0x79
+    Usage:Keyboard_Undo id:0x7a
+    Usage:Keyboard_Cut id:0x7b
+    Usage:Keyboard_Copy id:0x7c
+    Usage:Keyboard_Paste id:0x7d
+    Usage:Keyboard_Find id:0x7e
+    Usage:Keyboard_Mute id:0x7f
     Usage:Volume_Up id:0x80
     Usage:Volume_Down id:0x81
     Usage:Locking_Caps_Lock id:0x82

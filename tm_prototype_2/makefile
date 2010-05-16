@@ -129,7 +129,7 @@ GENERATED = $(OBJDIR)/generated
 LAYOUTS = ./layouts
 
 # TODO: hardware dependent
-LAYOUT_FILE = $(LAYOUTS)/Keyboard.xml
+LAYOUT_FILE = $(LAYOUTS)/Keyboard.kspec
 
 
 
@@ -418,6 +418,7 @@ DEBUG_HOST = localhost
 # Define programs and commands.
 SHELL = sh
 CC = avr-gcc
+CPP = cpp
 OBJCOPY = avr-objcopy
 OBJDUMP = avr-objdump
 SIZE = avr-size
@@ -428,7 +429,8 @@ REMOVE = rm -f
 REMOVEDIR = rm -rf
 COPY = cp
 WINSHELL = cmd
-HIDGEN = ruby -I../kbgen ../kbgen/hid_keyboard_gen.rb -O$(GENERATED)
+KBGEN_DIR = ../kbgen
+HIDGEN = ruby -I$(KBGEN_DIR) $(KBGEN_DIR)/hid_keyboard_gen.rb -O$(GENERATED)
 
 # Define Messages
 # English
@@ -480,9 +482,20 @@ ALL_ASFLAGS = -mmcu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)
 # Default target.
 all: begin $(GENERATED)/keymaps.h gccversion sizebefore build checkinvalidevents showliboptions showtarget sizeafter end
 
-## Generate header files
-$(GENERATED)/keymaps.h: $(LAYOUTS)/*.xml 
-	$(HIDGEN) $(LAYOUT_FILE) -I$(LAYOUTS) -O$(GENERATED)
+# Build kspec parser
+$(KBGEN_DIR)/kspec.rb : $(KBGEN_DIR)/kspec.tt
+	@echo Building kspec parser
+	@cd $(KBGEN_DIR); tt kspec.tt
+
+# Generate header files
+$(GENERATED)/keymaps.h: $(KBGEN_DIR)/kspec.rb $(KBGEN_DIR)/kb.kspec
+	@echo Generating code
+	@$(HIDGEN) $(KBGEN_DIR)/kb.kspec -I$(LAYOUTS) -O$(GENERATED)
+
+# Generate combined kspec file
+$(KBGEN_DIR)/kb.kspec : $(LAYOUTS)/*.kspec
+	@echo Preprocessing keyboard layouts
+	@$(CPP) -P $(LAYOUT_FILE) $(KBGEN_DIR)/kb.kspec
 
 
 # Change the build target to build a HEX file or a library.
@@ -747,6 +760,7 @@ clean_list:
 	$(REMOVE) $(SRC:.c=.d)
 	$(REMOVE) $(SRC:.c=.i)
 	$(REMOVE) InvalidEvents.tmp
+	$(REMOVE) $(KBGEN_DIR)/kspec.rb $(KBGEN_DIR)/kb.kspec
 	$(REMOVEDIR) .dep
 	$(REMOVEDIR) $(GENERATED)
 	$(call kill-dirs, $(OBJDIRS))

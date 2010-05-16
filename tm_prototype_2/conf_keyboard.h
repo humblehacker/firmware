@@ -4,21 +4,21 @@
                     Copyright © 2008, David Whetstone
                david DOT whetstone AT humblehacker DOT com
 
-This file is a part of The HumbleHacker Keyboard Project.  
+This file is a part of The HumbleHacker Keyboard Project.
 
-The HumbleHacker Keyboard Project is free software: you can redistribute 
-it and/or modify it under the terms of the GNU General Public License as 
-published by the Free Software Foundation, either version 3 of the 
-License, or (at your option) any later version.  
+The HumbleHacker Keyboard Project is free software: you can redistribute
+it and/or modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-The HumbleHacker Keyboard Project is distributed in the hope that it will 
-be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General 
-Public License for more details.  
+The HumbleHacker Keyboard Project is distributed in the hope that it will
+be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+Public License for more details.
 
-You should have received a copy of the GNU General Public License along 
-with The HumbleHacker Keyboard Project.  If not, see 
-<http://www.gnu.org/licenses/>.  
+You should have received a copy of the GNU General Public License along
+with The HumbleHacker Keyboard Project.  If not, see
+<http://www.gnu.org/licenses/>.
 
 */
 
@@ -52,24 +52,24 @@ inline void activate_row(uint8_t row)
 }
 
 static
-inline uint32_t compress_cols(void)
+inline uint32_t read_cols(void)
 {
-  return ((uint32_t)((~PINE)&E_COLS))          
-       | ((uint32_t)((~PINC)&C_COLS)<<( E_BITS        )) 
+  return ((uint32_t)((~PINE)&E_COLS))
+       | ((uint32_t)((~PINC)&C_COLS)<<( E_BITS        ))
        | ((uint32_t)((~PIND)&D_COLS)<<( E_BITS+C_BITS ));
 }
 
 static
 inline void init_cols(void)
 {
-  /* Columns are inputs */                 
-  DDRE &= ~E_COLS;                         
-  DDRC  = 0;                               					 
-  DDRD  = 0;                               
-                                           
-  /* Enable pull-up resistors on inputs */ 
-  PORTE  |= E_COLS;                         
-  PORTC   = C_COLS;                         
+  /* Columns are inputs */
+  DDRE &= ~E_COLS;
+  DDRC  = 0;
+  DDRD  = 0;
+
+  /* Enable pull-up resistors on inputs */
+  PORTE  |= E_COLS;
+  PORTC   = C_COLS;
   PORTD   = D_COLS;
 }
 

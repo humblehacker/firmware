@@ -3,21 +3,21 @@
                     Copyright © 2008, David Whetstone
                david DOT whetstone AT humblehacker DOT com
 
-This file is a part of The HumbleHacker Keyboard Project.  
+This file is a part of The HumbleHacker Keyboard Project.
 
-The HumbleHacker Keyboard Project is free software: you can redistribute 
-it and/or modify it under the terms of the GNU General Public License as 
-published by the Free Software Foundation, either version 3 of the 
-License, or (at your option) any later version.  
+The HumbleHacker Keyboard Project is free software: you can redistribute
+it and/or modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-The HumbleHacker Keyboard Project is distributed in the hope that it will 
-be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General 
-Public License for more details.  
+The HumbleHacker Keyboard Project is distributed in the hope that it will
+be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+Public License for more details.
 
-You should have received a copy of the GNU General Public License along 
-with The HumbleHacker Keyboard Project.  If not, see 
-<http://www.gnu.org/licenses/>.  
+You should have received a copy of the GNU General Public License along
+with The HumbleHacker Keyboard Project.  If not, see
+<http://www.gnu.org/licenses/>.
 
 */
 
@@ -37,13 +37,13 @@ typedef struct
   uint8_t mode_keys;
   uint8_t keys[MAX_KEYS];
   uint8_t num_keys;
-  Cell active_cells[MAX_ACTIVE_CELLS];
-  uint8_t num_active_cells;
+  Cell active_cells[MAX_ACTIVE_CELLS];  // Keep
+  uint8_t num_active_cells;             // Keep
   uint16_t consumer_key;
   const Macro * macro;
   uint8_t macro_key_index;
   uint8_t pre_macro_modifiers;
-  uint8_t error_roll_over;
+  uint8_t error_roll_over;              // Keep
 } KeyboardState;
 
 extern KeyboardState *g_current_kb_state;

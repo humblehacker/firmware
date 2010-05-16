@@ -33,7 +33,7 @@
 
              LUFA Library
      Copyright (C) Dean Camera, 2010.
-              
+
   dean [at] fourwalledcubicle [dot] com
       www.fourwalledcubicle.com
   --------------------------------------------------------------------
@@ -92,7 +92,7 @@ uint8_t g_num_lock, g_caps_lock, g_scrl_lock;
 static MatrixMap s_current_kb_map;
 static MatrixMap s_active_mode_kb_map;
 static MatrixMap s_prev_kb_map[NUM_MODE_KEYS];
-static uint32_t s_row_data[NUM_ROWS];
+static uint32_t s_row_data[NUM_ROWS];             // Keep
 static uint16_t s_timeout;
 // static uint8_t s_idleDuration[3];
 
@@ -211,8 +211,6 @@ void EVENT_USB_Device_StartOfFrame(void)
 bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo, uint8_t* const ReportID,
                                          const uint8_t ReportType, void* ReportData, uint16_t* ReportSize)
 {
-	USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
-
   get_keyboard_state();
 
   if (!keyboard_state__is_error())
@@ -221,13 +219,14 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
     process_mode_keys();
     process_keys();
   }
+	USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
   fill_report(KeyboardReport);
   *ReportSize = sizeof(USB_KeyboardReport_Data_t);
 
   // if processing macro, don't swap states until macro is complete
   if (keyboard_state__is_processing_macro() == FALSE)
     keyboard_state__swap_states();
-	
+
 	return false;
 }
 
@@ -306,8 +305,7 @@ get_keyboard_state(void)
 
     // Place data on all column pins for active row into a single
     // 32 bit value.
-		s_row_data[row] = 0;
-    s_row_data[row] = compress_cols();
+    s_row_data[row] = read_cols();
   }
 
   uint8_t irow, ncols;
@@ -575,7 +573,7 @@ fill_report(USB_KeyboardReport_Data_t* report)
   {
     report->Modifier = g_current_kb_state->modifiers;
     for (key = 1; key < 7; ++key)
-      report->KeyCode[key] = USAGE_ID(HID_USAGE_KEYBOARD_ERRORROLLOVER);
+      report->KeyCode[key] = USAGE_ID(HID_USAGE_ERRORROLLOVER);
     return;
   }
 
@@ -619,21 +617,21 @@ get_modifier(Usage usage)
 {
   switch(usage)
   {
-  case HID_USAGE_KEYBOARD_LEFTCONTROL:
+  case HID_USAGE_LEFTCONTROL:
     return L_CTL;
-  case HID_USAGE_KEYBOARD_LEFTSHIFT:
+  case HID_USAGE_LEFTSHIFT:
     return L_SHF;
-  case HID_USAGE_KEYBOARD_LEFTALT:
+  case HID_USAGE_LEFTALT:
     return L_ALT;
-  case HID_USAGE_KEYBOARD_LEFT_GUI:
+  case HID_USAGE_LEFT_GUI:
     return L_GUI;
-  case HID_USAGE_KEYBOARD_RIGHTCONTROL:
+  case HID_USAGE_RIGHTCONTROL:
     return R_CTL;
-  case HID_USAGE_KEYBOARD_RIGHTSHIFT:
+  case HID_USAGE_RIGHTSHIFT:
     return R_SHF;
-  case HID_USAGE_KEYBOARD_RIGHTALT:
+  case HID_USAGE_RIGHTALT:
     return R_ALT;
-  case HID_USAGE_KEYBOARD_RIGHT_GUI:
+  case HID_USAGE_RIGHT_GUI:
     return R_GUI;
   default:
     return 0;

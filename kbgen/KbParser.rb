@@ -80,26 +80,26 @@ class KeyboardCH
     /\$Rev: ([0-9]+) \$/.match(rev)[1]
   end
 
-  def process_modifier(attr_hash)
-    case attr_hash['id']
-    when "Left Alt"
+  def process_modifier(mod_text)
+    case mod_text
+    when "left_alt"
       return Modifiers[:L_ALT]
-    when "Left Ctrl"
+    when "left_ctrl"
       return Modifiers[:L_CTRL]
-    when "Left Shift"
+    when "left_shift"
       return Modifiers[:L_SHFT]
-    when "Left GUI"
+    when "left_gui"
       return Modifiers[:L_GUI]
-    when "Right Alt"
+    when "right_alt"
       return Modifiers[:R_ALT]
-    when "Right Ctrl"
+    when "right_ctrl"
       return Modifiers[:R_CTRL]
-    when "Right Shift"
+    when "right_shift"
       return Modifiers[:R_SHFT]
-    when "Right GUI"
+    when "right_gui"
       return Modifiers[:R_GUI]
     else
-      raise UnknownModifierError.new(attr_hash['id'], @filenames)
+      raise UnknownModifierError.new(mod_text, @filenames)
     end
   end
 

@@ -1,8 +1,10 @@
 Keyboard:TypeMatrix2030USB rev:63
 
 #include "Matrix.kspec"
+#include "Map-Common.kspec"
 #include "Map-US.kspec"
 #include "Map-DV.kspec"
+#include "Map-pDV.kspec"
 #include "Map-JP.kspec"
 #include "Map-Nm.kspec"
 #include "Map-Fn.kspec"
