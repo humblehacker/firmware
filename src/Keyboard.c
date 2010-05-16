@@ -46,6 +46,7 @@
  */
 
 #include "Keyboard.h"
+#include "mapping.c"
 #include "keyboard_state.h"
 #include "Macros.c"
 #include "kb_leds.h"
@@ -101,6 +102,8 @@ static uint8_t  EEMEM ee_persistent_map;
 
 /* Local functions */
 static     void get_keyboard_state(void);
+static     void process_active_cells();
+static     void scan_matrix(void);
 static     void process_mode_keys(void);
 static     void process_keys(void);
 static     void fill_report(USB_KeyboardReport_Data_t* report);
@@ -216,6 +219,7 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
   if (!keyboard_state__is_error())
   {
     s_active_mode_kb_map = s_current_kb_map;
+    lookup_keys()
     process_mode_keys();
     process_keys();
   }
@@ -291,11 +295,9 @@ process_keyboard_endpoint(void)
 
 static
 void
-get_keyboard_state(void)
+scan_matrix()
 {
-  keyboard_state__reset_current_state();
-
-	uint8_t row, col;
+  uint8_t row, col;
   for (row = 0; row < NUM_ROWS; ++row)
   {
     activate_row(row);
@@ -307,7 +309,13 @@ get_keyboard_state(void)
     // 32 bit value.
     s_row_data[row] = read_cols();
   }
+}
 
+static
+void
+process_active_cells()
+{
+  uint8_t row, col;
   uint8_t irow, ncols;
   // now process row/column data to get raw keypresses
   for (row = 0; row < NUM_ROWS; ++row)
@@ -346,7 +354,28 @@ get_keyboard_state(void)
       }
     }
   }
-  return;
+}
+
+static
+void
+get_keyboard_state(void)
+{
+  keyboard_state__reset_current_state();
+  scan_matrix();
+	process_active_cells();
+}
+
+static
+void
+lookup_keys(Modifiers modifiers)
+{
+  Cell active_cell;
+  int i;
+  for (i = 0; i < g_current_kb_state->num_active_cells; ++i)
+  {
+    active_cell = g_current_kb_state->active_cells[i];
+    Mapping *mapping = get_mapping(modifiers, active_cell, s_active_mode_kb_map);
+  }
 }
 
 static

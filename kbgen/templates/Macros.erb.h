@@ -1,23 +1,7 @@
 #ifndef __MACROS_H__
 #define __MACROS_H__
 
-#include "HIDUsageTables.h"
-
-typedef union
-{
-  uint8_t all;
-  struct
-  {
-    uint8_t l_ctrl:1;
-    uint8_t l_shft:1;
-    uint8_t l_alt:1;
-    uint8_t l_gui:1;
-    uint8_t r_ctrl:1;
-    uint8_t r_shft:1;
-    uint8_t r_alt:1;
-    uint8_t r_gui:1;
-  };
-} Modifiers;
+#include "hid_usages.h"
 
 typedef struct
 {

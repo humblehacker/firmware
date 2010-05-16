@@ -430,7 +430,7 @@ REMOVEDIR = rm -rf
 COPY = cp
 WINSHELL = cmd
 KBGEN_DIR = ../kbgen
-HIDGEN = ruby -I$(KBGEN_DIR) $(KBGEN_DIR)/hid_keyboard_gen.rb -O$(GENERATED)
+KBGEN = ruby -I$(KBGEN_DIR) $(KBGEN_DIR)/kbgen.rb -O$(GENERATED)
 
 # Define Messages
 # English
@@ -490,7 +490,7 @@ $(KBGEN_DIR)/kspec.rb : $(KBGEN_DIR)/kspec.tt
 # Generate header files
 $(GENERATED)/keymaps.h: $(KBGEN_DIR)/kspec.rb $(KBGEN_DIR)/kb.kspec
 	@echo Generating code
-	@$(HIDGEN) $(KBGEN_DIR)/kb.kspec -I$(LAYOUTS) -O$(GENERATED)
+	@$(KBGEN) $(KBGEN_DIR)/kb.kspec -I$(LAYOUTS) -O$(GENERATED)
 
 # Generate combined kspec file
 $(KBGEN_DIR)/kb.kspec : $(LAYOUTS)/*.kspec
