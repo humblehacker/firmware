@@ -46,8 +46,6 @@ grammar KSpec
     {
       def content(kb)
 
-        puts "\n\nKeymap: #{ident.text_value}"
-
         kb.defaultMap = ident.text_value unless default.text_value.empty?
 
         if base.text_value.empty?
@@ -147,7 +145,6 @@ grammar KSpec
     {
       def content
         mods = 0
-        puts "Modifiers: <#{modifier_list.text_value}>"
         modifier_list.elements.each do |e|
           mods |= process_modifier(e.text_value.sub("|",""))
         end

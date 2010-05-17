@@ -82,7 +82,6 @@ def create_individual_matrix_map_sourcefiles
     $keyboard.maps.each_value do |keymap|
       modeKeys = {}
       kbIdentifier = $keymapIDs[keymap.id]
-      puts kbIdentifier
 
       rows = matrix.size
       cols = matrix[0].size
@@ -114,7 +113,7 @@ def generate_from_template(filename, template, bindings)
   block = <<-EOF
     input  = File.new("../kbgen/templates/#{template}")
     output = File.new("#{$options[:outdir]}/#{filename}", 'w+')
-    puts "Generating: \#{output.path} from \#{input.path}"
+    puts "Generating: \#{output.path} from \#{input.path}" if $options[:debug]
     output.puts "/* DO NOT EDIT.  This is a GENERATED FILE. */"
     output.puts "/* Edit instead: \#{input.path} */"
     output.puts ERB.new(input.read,0,'<>').result(binding)
