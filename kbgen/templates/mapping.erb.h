@@ -28,11 +28,13 @@ typedef struct
   Modifiers premods;
 } Mapping;
 
+typedef const Mapping*** KeyMap;
+
 typedef struct
 {
   Mapping super;
   enum {MOMENTARY, TOGGLE} type;
-  Mapping *selecting_map;
+  KeyMap selecting_map;
 } ModeMapping;
 
 typedef struct
@@ -48,12 +50,9 @@ typedef struct
   const MapMapping *mappings;
 } MacroMapping;
 
-typedef const Mapping*** KeyMap;
-
 <% $keyboard.maps.each_value do |keymap|
      keymap.keys.each do |location, key| %>
-extern const Mapping *<%= "#{keymap.ids.last}_#{key.location}" %>[];
-<%
+extern const Mapping *<%= "#{keymap.ids.last}_#{key.location}" %>[];<%
      end
    end
 %>

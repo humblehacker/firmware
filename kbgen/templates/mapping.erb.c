@@ -17,7 +17,7 @@ const MapMapping <%=ident%>Mappings[] =
 
 const MacroMapping <%= ident %> = { {MACRO, {<%=premods%>}}, &<%=ident%>Mappings[0] }; <%
          elsif mapping.instance_of? Mode %>
-const ModeMapping <%= ident %> = { }; <%
+const ModeMapping <%= ident %> = { {MODE, {<%=premods%>}}, <%=mapping.type.upcase%>, kbd_map_<%=mapping.mode%>_mx }; <%
          else
            %><%="/* What? */"%><%
          end
