@@ -46,10 +46,12 @@
  */
 
 #include "Keyboard.h"
+#include "keymaps.h"
 #include "mapping.c"
 #include "keyboard_state.h"
-#include "Macros.c"
 #include "kb_leds.h"
+
+//enum { FALSE, TRUE };
 
 typedef enum
 {
@@ -89,25 +91,29 @@ uint8_t g_num_lock, g_caps_lock, g_scrl_lock;
 
 /* Local Variables */
 
+// TODO: Generate this value or get rid of it
+#define NUM_MODE_KEYS 8
+
 /* each row contains data for 3 Ports */
-static MatrixMap s_current_kb_map;
-static MatrixMap s_active_mode_kb_map;
-static MatrixMap s_prev_kb_map[NUM_MODE_KEYS];
+static KeyMap s_current_kb_map;
+static KeyMap s_active_mode_kb_map;
+static KeyMap s_prev_kb_map[NUM_MODE_KEYS];
 static uint32_t s_row_data[NUM_ROWS];             // Keep
 static uint16_t s_timeout;
 // static uint8_t s_idleDuration[3];
 
 // -- EEPROM Data --
-static uint8_t  EEMEM ee_persistent_map;
+static KeyMap  EEMEM ee_persistent_map;
 
 /* Local functions */
 static     void get_keyboard_state(void);
-static     void process_active_cells();
+static     void process_active_cells(void);
 static     void scan_matrix(void);
+static     void lookup_keys(Modifiers modifiers);
 static     void process_mode_keys(void);
 static     void process_keys(void);
 static     void fill_report(USB_KeyboardReport_Data_t* report);
-static    Usage map_get_usage(MatrixMap map, uint8_t cell);
+static    Usage map_get_usage(Mapping *map, uint8_t cell);
 static   ModKey get_modifier(Usage usage);
 // static     void process_consumer_control_endpoint(void);
 
@@ -147,7 +153,7 @@ void SetupHardware()
 
   g_num_lock           = g_caps_lock = g_scrl_lock = 0;
   s_active_mode_kb_map = NULL;
-  s_current_kb_map     = (MatrixMap) pgm_read_word(&kbd_map_mx_default);
+  s_current_kb_map     = (KeyMap) pgm_read_word(&kbd_map_mx_default);
   s_timeout            = 500;
 
   led_on(LED_NUM);
@@ -219,7 +225,8 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
   if (!keyboard_state__is_error())
   {
     s_active_mode_kb_map = s_current_kb_map;
-    lookup_keys()
+    Modifiers mods;
+    lookup_keys(mods);
     process_mode_keys();
     process_keys();
   }
@@ -228,7 +235,7 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
   *ReportSize = sizeof(USB_KeyboardReport_Data_t);
 
   // if processing macro, don't swap states until macro is complete
-  if (keyboard_state__is_processing_macro() == FALSE)
+  if (!keyboard_state__is_processing_macro())
     keyboard_state__swap_states();
 
 	return false;
@@ -297,8 +304,7 @@ static
 void
 scan_matrix()
 {
-  uint8_t row, col;
-  for (row = 0; row < NUM_ROWS; ++row)
+  for (uint8_t row = 0; row < NUM_ROWS; ++row)
   {
     activate_row(row);
 
@@ -366,6 +372,12 @@ get_keyboard_state(void)
 }
 
 static
+Mapping *get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap)
+{
+  return NULL;
+}
+
+static
 void
 lookup_keys(Modifiers modifiers)
 {
@@ -375,6 +387,7 @@ lookup_keys(Modifiers modifiers)
   {
     active_cell = g_current_kb_state->active_cells[i];
     Mapping *mapping = get_mapping(modifiers, active_cell, s_active_mode_kb_map);
+    if (mapping->kind == MAP) ;
   }
 }
 
@@ -382,6 +395,7 @@ static
 void
 process_mode_keys()
 {
+#if 0
   g_current_kb_state->mode_keys = 0;
 
   // First, check if any of the momentary-type mode keys are down
@@ -448,6 +462,7 @@ process_mode_keys()
       }
     }
   }
+#endif
 }
 
 
@@ -455,6 +470,7 @@ static
 void
 process_keys()
 {
+#if 0
   uint8_t i, modifier;
   uint8_t num_blocked_keys = 0;
   Cell raw_key;
@@ -521,6 +537,7 @@ process_keys()
   }
   if (keyboard_state__mode_keys_have_changed())
     g_num_blocked_keys = num_blocked_keys;
+#endif
 }
 
 #if 0
@@ -615,6 +632,7 @@ fill_report(USB_KeyboardReport_Data_t* report)
   }
   else
   {
+#if 0
     const Macro * macro = g_current_kb_state->macro;
     MacroKey mkey;
     mkey.mod.all = pgm_read_byte(&macro->keys[g_current_kb_state->macro_key_index].mod);
@@ -629,13 +647,14 @@ fill_report(USB_KeyboardReport_Data_t* report)
       g_current_kb_state->macro_key_index = 0;
     }
     return;
+#endif
   }
 }
 
 static
 inline
 Usage
-map_get_usage(MatrixMap map, uint8_t cell)
+map_get_usage(Mapping *map, uint8_t cell)
 {
   return pgm_read_word(map + cell);
 }

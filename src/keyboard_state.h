@@ -24,12 +24,14 @@ with The HumbleHacker Keyboard Project.  If not, see
 #ifndef __KEYBOARD_STATE_H__
 #define __KEYBOARD_STATE_H__
 
-#include "ModeKeys.h"
-#include "Macros.h"
+#include "matrix.h"
+#include "mapping.h"
+//#include "ModeKeys.h"
 
 #define NUM_MODIFIERS 8
 #define MAX_KEYS      6
-#define MAX_ACTIVE_CELLS (MAX_KEYS + NUM_MODE_KEYS + NUM_MODIFIERS)
+#define MAX_ACTIVE_CELLS (MAX_KEYS + NUM_MODIFIERS)
+//#define MAX_ACTIVE_CELLS (MAX_KEYS + NUM_MODE_KEYS + NUM_MODIFIERS)
 
 typedef struct
 {
@@ -40,7 +42,7 @@ typedef struct
   Cell active_cells[MAX_ACTIVE_CELLS];  // Keep
   uint8_t num_active_cells;             // Keep
   uint16_t consumer_key;
-  const Macro * macro;
+  const MacroMapping *macro;
   uint8_t macro_key_index;
   uint8_t pre_macro_modifiers;
   uint8_t error_roll_over;              // Keep

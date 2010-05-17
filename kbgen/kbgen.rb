@@ -86,84 +86,6 @@ def init(filename, options)
 
 end
 
-def create_macro_header
-  $macros = {}
-  output = File.new("#{$options[:outdir]}/Macros.h", 'w+')
-  template = ERB.new("../kbgen/templates/Macros.erb.h")
-  output.puts template.result(binding)
-
-  # also write Macro.c
-  output = File.new("#{$options[:outdir]}/Macros.c", 'w+')
-
-  output.puts "#include \"config.h\""
-  output.puts "#include \"Macros.h\""
-  output.puts
-
-  index = 0
-  $keyboard.maps.each_value do |map|
-    sortedKeys = map.keys.sort
-    sortedKeys.each do |loc, key|
-      next if key.macro.empty?
-
-      output.puts
-      output.puts "/* #{map.id} @ #{loc} */"
-      output.puts "const Macro p_macro#{index} PROGMEM = "
-      output.puts "{"
-      output.puts "  #{key.macro.size},"
-      output.puts "  {"
-      index += 1
-      key.macro.each do |macroKey|
-#          puts macroKey.usage.page
-        next if macroKey.usage.page.id != 0x07 # Keyboard and Keypad
-        output.print "    { {#{dec_to_hex(macroKey.modifiers)}}, "
-        output.print         "MAKE_USAGE(#{dec_to_hex(macroKey.usage.page.id)}, "
-        output.puts          "#{dec_to_hex(macroKey.usage.id)})},"
-      end
-      output.puts "  }"
-      output.puts "};"
-    end
-  end
-
-  output.puts
-  output.puts "const Macro * p_macros[#{index}] PROGMEM = "
-  output.puts "{"
-
-  index.times do |i|
-    output.puts "  &p_macro#{i},"
-  end
-
-  output.puts "};"
-
-end
-
-# Create "keymaps.h" - includes all of the generated keymap headers
-def create_keymaps_header
-  output = File.new("#{$options[:outdir]}/keymaps.h", 'w+')
-
-  output.puts include_guard(output.path, :begin)
-  output.puts
-  output.puts '#include "config.h"'
-  output.puts
-  $keymapIDs.each do |name, id|
-    output.puts "#include \"#{id}_mx.h\""
-  end
-  output.puts
-
-  output.puts include_guard(output.path, :end)
-
-  output = File.new("#{$options[:outdir]}/keymaps.c", 'w+')
-
-  output.puts '#include "config.h"'
-  output.puts
-
-  $keymapIDs.each do |name, id|
-#   output.puts "#include \"#{id}.c\""
-    output.puts "#include \"#{id}_mx.c\""
-  end
-  output.puts
-
-end
-
 # Create header and source files for maps
 def create_individual_matrix_map_sourcefiles
   macroIndex = 0
@@ -343,11 +265,12 @@ begin
   init(filename, $options)
   generate("hid_usages.h", binding)
   generate("matrix.h", binding)
+  generate("mapping.h", binding)
   generate("mapping.c", binding)
   create_individual_matrix_map_sourcefiles
-  create_keymaps_header
+  generate("keymaps.h", binding)
+  generate("keymaps.c", binding)
 # create_modekeys_header
-  # create_macro_header
 rescue Exception => e
   puts e.to_str
   raise

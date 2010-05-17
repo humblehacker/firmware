@@ -32,7 +32,7 @@ typedef struct
 {
   Mapping super;
   enum {MOMENTARY, TOGGLE} type;
-  MatrixMap selecting_map;
+  Mapping *selecting_map;
 } ModeMapping;
 
 typedef struct
@@ -45,7 +45,18 @@ typedef struct
 typedef struct
 {
   Mapping super;
-  MapMapping *mappings;
+  const MapMapping *mappings;
 } MacroMapping;
+
+typedef const Mapping*** KeyMap;
+
+<% $keyboard.maps.each_value do |keymap|
+     keymap.keys.each do |location, key| %>
+extern const Mapping *<%= "#{keymap.ids.last}_#{key.location}" %>[];
+<%
+     end
+   end
+%>
+
 
 #endif // __MAPPING_H__

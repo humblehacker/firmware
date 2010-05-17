@@ -1,8 +1,7 @@
 #include "<%= output.path.sub(/\.c$/, '.h')%>"
 #include "hid_usages.h"
-#include "ModeKeys.h"
 
-const Mapping* kbd_map_Common_mx[] PROGMEM =
+const Mapping **kbd_map_<%=kbIdentifier%>_mx[] PROGMEM =
 {
 <% lastcol = flippedMatrix.count
    flippedMatrix.each_index do |iCol| %>
@@ -13,9 +12,9 @@ const Mapping* kbd_map_Common_mx[] PROGMEM =
        location = row[iRow] %>
   /* row:<%=iRow%> loc = <%=location%> */ <%
        key = keymap.keys[location]
-       if key == nil %>NIL<%
+       if key == nil %>NULL<%
        elsif key.mappings.empty? == nil %>EMPTY<%
-       else%><%="#{keymap.ids.last}_#{key.location}"%><%
+       else%>&<%=kbIdentifier%>_<%=key.location%>[0]<%
        end %><%= "," if iCol < lastcol %><%
      end
    end
@@ -23,5 +22,5 @@ const Mapping* kbd_map_Common_mx[] PROGMEM =
 };
 
 <% if $keyboard.defaultMap == keymap.id %>
-const MatrixMap kbd_map_mx_default PROGMEM = kbd_map_<%=kbIdentifier%>_mx;
+const KeyMap kbd_map_mx_default PROGMEM = &kbd_map_<%=kbIdentifier%>_mx[0];
 <% end %>

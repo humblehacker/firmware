@@ -15,10 +15,7 @@ rows = cols = 0
 #define NUM_ROWS <%=rows%>
 #define NUM_COLS <%=cols%>
 
-typedef const uint16_t * MatrixMap;
 typedef uint8_t Cell;
-
-extern const MatrixMap kbd_map_mx_default;
 
 #endif /* __MATRIX_H__ */
 

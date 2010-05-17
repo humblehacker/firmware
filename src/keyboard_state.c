@@ -3,21 +3,21 @@
                  Copyright © 2008, David Whetstone
             david DOT whetstone AT humblehacker DOT com
 
-  This file is a part of The HumbleHacker Keyboard Project.  
+  This file is a part of The HumbleHacker Keyboard Project.
 
-  The HumbleHacker Keyboard Project is free software: you can 
-  redistribute it and/or modify it under the terms of the GNU General 
-  Public License as published by the Free Software Foundation, either 
-  version 3 of the License, or (at your option) any later version.  
+  The HumbleHacker Keyboard Project is free software: you can
+  redistribute it and/or modify it under the terms of the GNU General
+  Public License as published by the Free Software Foundation, either
+  version 3 of the License, or (at your option) any later version.
 
-  The HumbleHacker Keyboard Project is distributed in the hope that it 
-  will be useful, but WITHOUT ANY WARRANTY; without even the implied 
-  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
-  See the GNU General Public License for more details.  
+  The HumbleHacker Keyboard Project is distributed in the hope that it
+  will be useful, but WITHOUT ANY WARRANTY; without even the implied
+  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License 
-  along with The HumbleHacker Keyboard Project.  If not, see 
-  <http://www.gnu.org/licenses/>.  
+  You should have received a copy of the GNU General Public License
+  along with The HumbleHacker Keyboard Project.  If not, see
+  <http://www.gnu.org/licenses/>.
 
 */
 
@@ -38,7 +38,7 @@ init_keyboard_state(KeyboardState *kb_state)
 {
   kb_state->modifiers = kb_state->mode_keys = 0;
   kb_state->num_active_cells = kb_state->num_keys = 0;
-  kb_state->macro = NULL;
+//kb_state->macro = NULL;
   kb_state->macro_key_index = 0;
   kb_state->pre_macro_modifiers = 0;
   kb_state->error_roll_over = FALSE;
@@ -77,7 +77,10 @@ keyboard_state__is_empty()
 uint8_t
 keyboard_state__is_processing_macro()
 {
+  return false;
+#if 0 // FIXME
   return g_current_kb_state->macro != NULL;
+#endif
 }
 
 uint8_t

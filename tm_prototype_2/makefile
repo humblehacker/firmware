@@ -137,7 +137,6 @@ LAYOUT_FILE = $(LAYOUTS)/Keyboard.kspec
 SRC =   $(SRCDIR)/Keyboard.c                                       \
 	$(SRCDIR)/Descriptors.c                                    \
 	$(SRCDIR)/keyboard_state.c                                 \
-	$(GENERATED)/ModeKeys.c                                    \
 	$(GENERATED)/keymaps.c                                     \
 	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/DevChapter9.c       \
 	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Endpoint.c          \

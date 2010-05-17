@@ -4,21 +4,21 @@
                     Copyright © 2008, David Whetstone
                david DOT whetstone AT humblehacker DOT com
 
-This file is a part of The HumbleHacker Keyboard Project.  
+This file is a part of The HumbleHacker Keyboard Project.
 
-The HumbleHacker Keyboard Project is free software: you can redistribute 
-it and/or modify it under the terms of the GNU General Public License as 
-published by the Free Software Foundation, either version 3 of the 
-License, or (at your option) any later version.  
+The HumbleHacker Keyboard Project is free software: you can redistribute
+it and/or modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
 
-The HumbleHacker Keyboard Project is distributed in the hope that it will 
-be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General 
-Public License for more details.  
+The HumbleHacker Keyboard Project is distributed in the hope that it will
+be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+Public License for more details.
 
-You should have received a copy of the GNU General Public License along 
-with The HumbleHacker Keyboard Project.  If not, see 
-<http://www.gnu.org/licenses/>.  
+You should have received a copy of the GNU General Public License along
+with The HumbleHacker Keyboard Project.  If not, see
+<http://www.gnu.org/licenses/>.
 
 */
 
@@ -33,12 +33,12 @@ with The HumbleHacker Keyboard Project.  If not, see
 #define OFF        0
 
 static inline void init_leds(void);
-static inline void led_on(U8 led);
-static inline void led_off(U8 led);
-static inline void led_set(U8 led, U8 state);
-static inline void led_toggle(U8 led);
-static inline void milli_pause(U16 ms);
-static inline void micro_pause(U16 microsecs);
+static inline void led_on(uint8_t led);
+static inline void led_off(uint8_t led);
+static inline void led_set(uint8_t led, uint8_t state);
+static inline void led_toggle(uint8_t led);
+static inline void milli_pause(uint16_t ms);
+static inline void micro_pause(uint16_t microsecs);
 
 static
 inline
@@ -49,26 +49,26 @@ init_leds(void)
   KB_LED_PORT |= KB_LEDS; // set KB bits high to prevent sinking (lights off)
 }
 
-static 
+static
 inline
 void
-led_on(U8 led)
+led_on(uint8_t led)
 {
   KB_LED_PORT &= ~led;
 }
 
-static 
+static
 inline
 void
-led_off(U8 led)
+led_off(uint8_t led)
 {
   KB_LED_PORT |= led;
 }
-   
-static 
+
+static
 inline
 void
-led_set(U8 led, U8 state)
+led_set(uint8_t led, uint8_t state)
 {
   if (state)
   {
@@ -80,45 +80,45 @@ led_set(U8 led, U8 state)
   }
 }
 
-static 
+static
 inline
 void
-led_toggle(U8 led)
+led_toggle(uint8_t led)
 {
   KB_LED_PORT ^= led;
 }
 
-static 
+static
 inline
 void
-pause(U8 secs)
+pause(uint8_t secs)
 {
-  U32 count = secs * 4 * _250ms;
+  uint32_t count = secs * 4 * _250ms;
   while (--count) asm("NOP");
 }
 
-static 
+static
 inline
 void
-milli_pause(U16 ms)
+milli_pause(uint16_t ms)
 {
-  U16 count = (_250ms / 250UL) * ms;
+  uint16_t count = (_250ms / 250UL) * ms;
   while (--count) asm("NOP");
 }
 
-static 
+static
 inline
 void
-micro_pause(U16 microsecs)
+micro_pause(uint16_t microsecs)
 {
-  U8 count = ((_250ms / 250UL) / 1000UL) * microsecs;
+  uint8_t count = ((_250ms / 250UL) / 1000UL) * microsecs;
   while (--count) asm("NOP");
 }
 
-static 
+static
 inline
 void
-blink(U8 led, U8 blinks, U16 millisecs)
+blink(uint8_t led, uint8_t blinks, uint16_t millisecs)
 {
   while (blinks--)
   {
