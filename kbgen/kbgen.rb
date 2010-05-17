@@ -41,18 +41,6 @@ def include_guard( filename, which )
   end
 end
 
-def delete_file(filename)
-  if File.exists?(filename)
-    puts "Deleting: #{filename}"
-    File.delete(filename)
-  end
-end
-
-def loc_to_hex(location)
-  return '0x00' if location == nil
-  return "0x#{location[1,5]}"
-end
-
 def dec_to_hex(dec)
   return "0x#{('%x'%dec).rjust(2,'0')}"
 end
@@ -119,102 +107,6 @@ def create_individual_matrix_map_sourcefiles
       generate_from_template("#{kbIdentifier}_mx.h", "KeyMap.erb.h", binding)
       generate_from_template("#{kbIdentifier}_mx.c", "KeyMap.erb.c", binding)
     end
-  end
-end
-
-# Create "ModeKeys.h" - defines the mode key tables, one set for each map
-def create_modekeys_header
-  $keyboard.maps.each_value do |map|
-    modeKeys = {}
-    kbIdentifier = $keymapIDs[map.id]
-
-    sortedKeys = map.keys.sort
-    index = 0
-    sortedKeys.each do |loc, key|
-      locIndex = loc[1,5].to_i(16)
-      while( index < locIndex )
-        index += 1
-      end
-
-      if key.mode != ''
-        modeKeys[loc] = key.mode
-        $allModeKeys[locIndex] = ModeKey.new(key.mode, locIndex, $keyboard.reverseMatrix[loc],
-                                             key.modeType, key.modeMapID)
-        index += 1
-        next
-      end
-
-      next if key.usage == nil
-
-      index += 1
-    end
-  end
-
-
-  if !$allModeKeys.empty?
-
-    modeKeyNames = {}
-    nextID = 0
-    $allModeKeys.each do |location, mode_key|
-      if !modeKeyNames.has_key? mode_key.name
-        modeKeyNames[mode_key.name] = nextID
-        nextID += 1
-      end
-    end
-
-    output = File.new("#{$options[:outdir]}/ModeKeys.h", 'w+')
-
-    output.puts include_guard(output.path, :begin)
-    output.puts
-    output.puts '#include "config.h"'
-    output.puts '#include "matrix.h"'
-    output.puts '#include "hid_usages.h"'
-    output.puts
-    output.puts "#define MOMENTARY 0    // mode only active when mode key is pressed"
-    output.puts "#define TOGGLE    1    // mode key toggles mode on and off"
-    output.puts
-    output.puts "typedef struct"
-    output.puts "{"
-    output.puts "  Cell cell;                // location of mode key"
-    output.puts "  uint8_t type;             // type of mode key (MOMENTARY, TOGGLE)"
-    output.puts "  MatrixMap selecting_map;  // the map this mode key selects"
-    output.puts "} ModeKey;"
-    output.puts
-    output.puts "extern const ModeKey modeKeys[];"
-    output.puts
-    output.puts "#define MODE_KEY_NONE 0xff"
-    modeKeyNames.each do |key, id|
-      output.puts "#define MODE_KEY_#{normalize_identifier(key)} #{id}"
-    end
-    output.puts
-    output.puts "#define NUM_MODE_KEYS #{modeKeyNames.size}"
-    output.puts
-    output.puts include_guard(output.path, :end)
-
-    # also create ModeKeys.c
-    output = File.new("#{$options[:outdir]}/ModeKeys.c", 'w+')
-
-    output.puts '#include "keymaps.h"'
-    output.puts '#include "ModeKeys.h"'
-    output.puts
-    output.puts "const ModeKey modeKeys[] PROGMEM = "
-    output.puts "{"
-
-    first = true
-    $allModeKeys.each do |location, modeKey|
-      output.puts "," if !first
-      first = false
-
-      keyid = modeKeyNames[modeKey.name]
-      output.print "  /* #{modeKey.name} @ t#{'%x'%location} */"        # comment
-      output.print " { MATRIX_CELL(#{modeKey.matrix_cell.row},"
-      output.print              "#{modeKey.matrix_cell.col}),"          # matrixCell (e.g. MATRIX_CELL(5,2))
-      output.print " #{modeKey.type.upcase},"                           # type       (e.g. MOMENTARY)
-      output.print " kbd_map_#{$keymapIDs[modeKey.selectingMapID]}_mx }"# selectingMap
-    end
-    output.puts
-    output.puts "};"
-
   end
 end
 
