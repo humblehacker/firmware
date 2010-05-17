@@ -45,16 +45,16 @@
  *  is responsible for the initial application hardware configuration.
  */
 
+#include <assert.h>
 #include "Keyboard.h"
 #include "keymaps.h"
 #include "mapping.c"
 #include "keyboard_state.h"
 #include "kb_leds.h"
 
-//enum { FALSE, TRUE };
-
 typedef enum
 {
+  NONE  = 0,
   L_CTL = (1<<0),
   L_SHF = (1<<1),
   L_ALT = (1<<2),
@@ -95,27 +95,32 @@ uint8_t g_num_lock, g_caps_lock, g_scrl_lock;
 #define NUM_MODE_KEYS 8
 
 /* each row contains data for 3 Ports */
+static KeyMap s_saved_map;
 static KeyMap s_current_kb_map;
 static KeyMap s_active_mode_kb_map;
-static KeyMap s_prev_kb_map[NUM_MODE_KEYS];
+//static KeyMap s_prev_kb_map[NUM_MODE_KEYS];
 static uint32_t s_row_data[NUM_ROWS];             // Keep
 static uint16_t s_timeout;
 // static uint8_t s_idleDuration[3];
 
 // -- EEPROM Data --
-static KeyMap  EEMEM ee_persistent_map;
+//static KeyMap  EEMEM ee_persistent_map;
 
 /* Local functions */
-static     void get_keyboard_state(void);
-static     void process_active_cells(void);
+static     void get_active_cells(void);
 static     void scan_matrix(void);
-static     void lookup_keys(Modifiers modifiers);
+static     bool momentary_mode_engaged(void);
+static     bool modifier_keys_engaged(void);
+static     void check_mode_toggle(void);
 static     void process_mode_keys(void);
 static     void process_keys(void);
 static     void fill_report(USB_KeyboardReport_Data_t* report);
+static     void push_temporary_mode(KeyMap mode_map);
 static    Usage map_get_usage(Mapping *map, uint8_t cell);
+static     void maybe_pop_temporary_mode(void);
 static   ModKey get_modifier(Usage usage);
 // static     void process_consumer_control_endpoint(void);
+static const Mapping* get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap);
 
 /** Main program entry point. This routine contains the overall program flow, including initial
  *  setup of all components and the main program loop.
@@ -220,15 +225,22 @@ void EVENT_USB_Device_StartOfFrame(void)
 bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo, uint8_t* const ReportID,
                                          const uint8_t ReportType, void* ReportData, uint16_t* ReportSize)
 {
-  get_keyboard_state();
+  keyboard_state__reset_current_state();
+  scan_matrix();
+	get_active_cells();
 
   if (!keyboard_state__is_error())
   {
     s_active_mode_kb_map = s_current_kb_map;
-    Modifiers mods;
-    lookup_keys(mods);
-    process_mode_keys();
+    g_current_kb_state->modifiers.all = 0;
+    loop:
+    if (momentary_mode_engaged())
+      goto loop;
+    if (modifier_keys_engaged())
+      goto loop;
+    check_mode_toggle();
     process_keys();
+    maybe_pop_temporary_mode();
   }
 	USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
   fill_report(KeyboardReport);
@@ -319,7 +331,7 @@ scan_matrix()
 
 static
 void
-process_active_cells()
+get_active_cells()
 {
   uint8_t row, col;
   uint8_t irow, ncols;
@@ -363,32 +375,95 @@ process_active_cells()
 }
 
 static
-void
-get_keyboard_state(void)
+const Mapping *
+get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap)
 {
-  keyboard_state__reset_current_state();
-  scan_matrix();
-	process_active_cells();
-}
-
-static
-Mapping *get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap)
-{
+  return NULL;
+  const Mapping **mappings = (const Mapping**)pgm_read_word(keymap + cell);
+  if (!mappings)
+    return NULL;
+  int i = 0;
+  while (mappings[i])
+  {
+    if (mappings[i]->premods.all == modifiers.all)
+      return mappings[i];
+  }
   return NULL;
 }
 
 static
 void
-lookup_keys(Modifiers modifiers)
+push_temporary_mode(KeyMap mode_map)
+{
+  s_saved_map = s_active_mode_kb_map;
+  s_active_mode_kb_map = mode_map;
+}
+
+static
+void
+maybe_pop_temporary_mode(void)
+{
+  if (s_saved_map)
+  {
+    s_active_mode_kb_map = s_saved_map;
+    s_saved_map = NULL;
+  }
+}
+
+bool
+momentary_mode_engaged()
 {
   Cell active_cell;
   int i;
   for (i = 0; i < g_current_kb_state->num_active_cells; ++i)
   {
     active_cell = g_current_kb_state->active_cells[i];
-    Mapping *mapping = get_mapping(modifiers, active_cell, s_active_mode_kb_map);
-    if (mapping->kind == MAP) ;
+    if (active_cell != DEACTIVATED)
+      continue;
+    const Mapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
+    if (mapping->kind == MODE)
+    {
+      ModeMapping *mode_mapping = (ModeMapping*)mapping;
+      if (mode_mapping->type == MOMENTARY)
+      {
+        push_temporary_mode(mode_mapping->mode_map);
+        g_current_kb_state->active_cells[i] = DEACTIVATED;
+        return true;
+      }
+    }
   }
+  return false;
+}
+
+bool
+modifier_keys_engaged()
+{
+  Cell active_cell;
+  int i;
+  for (i = 0; i < g_current_kb_state->num_active_cells; ++i)
+  {
+    active_cell = g_current_kb_state->active_cells[i];
+    if (active_cell != DEACTIVATED)
+      continue;
+    const Mapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
+    if (mapping->kind == MAP)
+    {
+      const MapMapping *map_mapping = (const MapMapping*)mapping;
+      ModKey this_modifier = 0;
+      if ((this_modifier = get_modifier(map_mapping->usage)) != 0)
+      {
+        g_current_kb_state->modifiers.all |= this_modifier;
+        g_current_kb_state->active_cells[i] = DEACTIVATED;
+      }
+    }
+  }
+  return g_current_kb_state->modifiers.all != 0;
+}
+
+static
+void
+check_mode_toggle(void)
+{
 }
 
 static
@@ -617,7 +692,7 @@ fill_report(USB_KeyboardReport_Data_t* report)
 
   if (keyboard_state__is_error())
   {
-    report->Modifier = g_current_kb_state->modifiers;
+    report->Modifier = g_current_kb_state->modifiers.all;
     for (key = 1; key < 7; ++key)
       report->KeyCode[key] = USAGE_ID(HID_USAGE_ERRORROLLOVER);
     return;
@@ -625,7 +700,7 @@ fill_report(USB_KeyboardReport_Data_t* report)
 
   if (!keyboard_state__is_processing_macro())
   {
-    report->Modifier = g_current_kb_state->modifiers;
+    report->Modifier = g_current_kb_state->modifiers.all;
 
     for (key = 0; key < g_current_kb_state->num_keys; ++key)
       report->KeyCode[key] = g_current_kb_state->keys[key];

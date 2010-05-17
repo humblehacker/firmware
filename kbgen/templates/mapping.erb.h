@@ -34,7 +34,7 @@ typedef struct
 {
   Mapping super;
   enum {MOMENTARY, TOGGLE} type;
-  KeyMap selecting_map;
+  KeyMap mode_map;
 } ModeMapping;
 
 typedef struct

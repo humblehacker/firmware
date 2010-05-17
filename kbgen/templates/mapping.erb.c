@@ -33,6 +33,7 @@ const Mapping *<%= "#{keymap.ids.last}_#{key.location}" %>[] =
 {<%    key.mappings.each do |premods, mapping| %>
   (Mapping*)&<%= mapping_identifier(keymap, key.location, premods, mapping.class) %>,<%
        end %>
+  NULL
 };
 <%
      end

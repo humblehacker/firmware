@@ -36,7 +36,7 @@ static
 void
 init_keyboard_state(KeyboardState *kb_state)
 {
-  kb_state->modifiers = kb_state->mode_keys = 0;
+  kb_state->modifiers.all = kb_state->mode_keys = 0;
   kb_state->num_active_cells = kb_state->num_keys = 0;
 //kb_state->macro = NULL;
   kb_state->macro_key_index = 0;
@@ -111,7 +111,7 @@ keyboard_state__cooked_keys_have_changed()
   if (kb_state_1.num_keys != kb_state_2.num_keys)
     return TRUE;
 
-  if (kb_state_1.modifiers != kb_state_2.modifiers)
+  if (kb_state_1.modifiers.all != kb_state_2.modifiers.all)
     return TRUE;
 
   uint8_t i;
@@ -136,7 +136,7 @@ keyboard_state__swap_states()
   KeyboardState *tmp = prev_kb_state;
   prev_kb_state = g_current_kb_state;
   g_current_kb_state = tmp;
-  g_current_kb_state->modifiers = 0;
+  g_current_kb_state->modifiers.all = 0;
 }
 
 uint8_t
