@@ -316,6 +316,7 @@ static
 void
 scan_matrix()
 {
+  init_cols();
   for (uint8_t row = 0; row < NUM_ROWS; ++row)
   {
     activate_row(row);
@@ -325,7 +326,8 @@ scan_matrix()
 
     // Place data on all column pins for active row into a single
     // 32 bit value.
-    s_row_data[row] = read_cols();
+		s_row_data[row] = 0;
+    s_row_data[row] = read_row_data();
   }
 }
 
@@ -333,13 +335,12 @@ static
 void
 get_active_cells()
 {
-  uint8_t row, col;
-  uint8_t irow, ncols;
+  uint8_t ncols;
   // now process row/column data to get raw keypresses
-  for (row = 0; row < NUM_ROWS; ++row)
+  for (uint8_t row = 0; row < NUM_ROWS; ++row)
   {
     ncols = 0;
-    for (col = 0; col < NUM_COLS; ++col)
+    for (uint8_t col = 0; col < NUM_COLS; ++col)
     {
       if (s_row_data[row] & (1UL << col))
       {
@@ -356,7 +357,7 @@ get_active_cells()
     // if 2 or more keys pressed in a row, check for ghost-key
     if (ncols > 1)
     {
-      for (irow = 0; irow < NUM_ROWS; ++irow)
+      for (uint8_t irow = 0; irow < NUM_ROWS; ++irow)
       {
         if (irow == row)
           continue;
@@ -378,7 +379,6 @@ static
 const Mapping *
 get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap)
 {
-  return NULL;
   const Mapping **mappings = (const Mapping**)pgm_read_word(keymap + cell);
   if (!mappings)
     return NULL;
@@ -401,6 +401,16 @@ push_temporary_mode(KeyMap mode_map)
 
 static
 void
+toggle_map(KeyMap mode_map)
+{
+  if (s_current_kb_map == kbd_map_mx_default)
+    s_current_kb_map = mode_map;
+  else
+    s_current_kb_map = kbd_map_mx_default;
+}
+
+static
+void
 maybe_pop_temporary_mode(void)
 {
   if (s_saved_map)
@@ -418,7 +428,7 @@ momentary_mode_engaged()
   for (i = 0; i < g_current_kb_state->num_active_cells; ++i)
   {
     active_cell = g_current_kb_state->active_cells[i];
-    if (active_cell != DEACTIVATED)
+    if (active_cell == DEACTIVATED)
       continue;
     const Mapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
     if (mapping->kind == MODE)
@@ -443,7 +453,7 @@ modifier_keys_engaged()
   for (i = 0; i < g_current_kb_state->num_active_cells; ++i)
   {
     active_cell = g_current_kb_state->active_cells[i];
-    if (active_cell != DEACTIVATED)
+    if (active_cell == DEACTIVATED)
       continue;
     const Mapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
     if (mapping->kind == MAP)
@@ -464,6 +474,25 @@ static
 void
 check_mode_toggle(void)
 {
+  Cell active_cell;
+  int i;
+  for (i = 0; i < g_current_kb_state->num_active_cells; ++i)
+  {
+    active_cell = g_current_kb_state->active_cells[i];
+    if (active_cell == DEACTIVATED)
+      continue;
+    const Mapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
+    if (mapping->kind == MODE)
+    {
+      ModeMapping *mode_mapping = (ModeMapping*)mapping;
+      if (mode_mapping->type == TOGGLE)
+      {
+        toggle_map(mode_mapping->mode_map);
+        g_current_kb_state->active_cells[i] = DEACTIVATED;
+        return;
+      }
+    }
+  }
 }
 
 static
@@ -545,6 +574,22 @@ static
 void
 process_keys()
 {
+  Cell active_cell;
+  int i;
+  for (i = 0; i < g_current_kb_state->num_active_cells; ++i)
+  {
+    active_cell = g_current_kb_state->active_cells[i];
+    if (active_cell == DEACTIVATED)
+      continue;
+    const Mapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
+    if (mapping->kind == MAP)
+    {
+      const MapMapping *map_mapping = (const MapMapping*)mapping;
+      g_current_kb_state->keys[g_current_kb_state->num_keys] = map_mapping->usage;
+      g_current_kb_state->modifiers.all |= map_mapping->modifiers.all;
+      ++g_current_kb_state->num_keys;
+    }
+  }
 #if 0
   uint8_t i, modifier;
   uint8_t num_blocked_keys = 0;

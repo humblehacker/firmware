@@ -52,11 +52,34 @@ inline void activate_row(uint8_t row)
 }
 
 static
-inline uint32_t read_cols(void)
+inline
+uint32_t
+fix(uint32_t val)
 {
-  return ((uint32_t)((~PINE)&E_COLS))
-       | ((uint32_t)((~PINC)&C_COLS)<<( E_BITS        ))
-       | ((uint32_t)((~PIND)&D_COLS)<<( E_BITS+C_BITS ));
+  // While wiring up the controller board, columns
+  // 7 & 9 and 10 & 12 were inadvertently transposed,
+  // so we put them back in their correct order here.
+
+  uint32_t bit7  = val & (1<<7);
+  uint32_t bit9  = val & (1<<9);
+  uint32_t bit10 = val & (1<<10);
+  uint32_t bit12 = val & (1<<12);
+
+  val &= ~((1<<12)|(1<<10)|(1<<9)|(1<<7));
+  val |= ((bit10<<2)|(bit12>>2)|(bit7<<2)|(bit9>>2));
+  return val;
+}
+
+static
+inline
+uint32_t
+read_row_data(void)
+{
+  uint32_t result;
+  result = ((uint32_t)((~PINE)&E_COLS))
+         | ((uint32_t)((~PINC)&C_COLS)<<( E_BITS        ))
+         | ((uint32_t)((~PIND)&D_COLS)<<( E_BITS+C_BITS ));
+  return fix(result);
 }
 
 static

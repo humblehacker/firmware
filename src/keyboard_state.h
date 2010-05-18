@@ -32,13 +32,13 @@ with The HumbleHacker Keyboard Project.  If not, see
 #define MAX_KEYS      6
 #define MAX_ACTIVE_CELLS (MAX_KEYS + NUM_MODIFIERS)
 //#define MAX_ACTIVE_CELLS (MAX_KEYS + NUM_MODE_KEYS + NUM_MODIFIERS)
-#define DEACTIVATED ((uint8_t)-1)
+enum {DEACTIVATED=((uint8_t)-1)};
 
 typedef struct
 {
   Modifiers modifiers;
   uint8_t mode_keys;
-  uint8_t keys[MAX_KEYS];
+  Usage keys[MAX_KEYS];
   uint8_t num_keys;
   Cell active_cells[MAX_ACTIVE_CELLS];  // Keep
   uint8_t num_active_cells;             // Keep

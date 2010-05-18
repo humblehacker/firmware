@@ -6,12 +6,12 @@
        key.mappings.each do |premods, mapping|
          ident = mapping_identifier(keymap, key.location, premods, mapping.class)
          if mapping.instance_of? Map %>
-const MapMapping <%=ident%> = { {MAP, {<%=premods%>}}, {<%=mapping.modifiers%>}, MAKE_USAGE(<%=mapping.usage.page.id%>, <%=mapping.usage.id%>) };<%
+const MapMapping <%=ident%> = { {MAP, {<%=premods%>}}, {<%=mapping.modifiers%>}, HID_USAGE_<%=normalize_identifier(mapping.usage.name)%> };<%
          elsif mapping.instance_of? Macro %>
 const MapMapping <%=ident%>Mappings[] =
 {
 <%         mapping.mappings.each do |macro_mapping| %>
-  { {MAP, {0}}, {<%=macro_mapping.modifiers%>}, MAKE_USAGE(<%=macro_mapping.usage.page.id%>, <%=macro_mapping.usage.id%>) },
+  { {MAP, {0}}, {<%=macro_mapping.modifiers%>}, HID_USAGE_<%=normalize_identifier(macro_mapping.usage.name)%> },
 <%         end %>
 };
 
