@@ -103,7 +103,6 @@ static      void check_mode_toggle(void);
 static      void process_mode_keys(void);
 static      void process_keys(void);
 static      void fill_report(USB_KeyboardReport_Data_t* report);
-static     Usage map_get_usage(Mapping *map, uint8_t cell);
 static      void set_momentary_mode(KeyMap mode_map);
 static      void maybe_pop_temporary_mode(void);
 static Modifiers get_modifier(Usage usage);
@@ -233,10 +232,6 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
   fill_report(KeyboardReport);
   *ReportSize = sizeof(USB_KeyboardReport_Data_t);
 
-  // if processing macro, don't swap states until macro is complete
-  if (!keyboard_state__is_processing_macro())
-    keyboard_state__swap_states();
-
 	return false;
 }
 
@@ -260,44 +255,6 @@ void CALLBACK_HID_Device_ProcessHIDReport(USB_ClassInfo_HID_Device_t* const HIDI
 	led_set(LED_SCRL, g_scrl_lock);
   led_set(LED_NUM,  g_num_lock);
 }
-
-#if 0
-static
-void
-process_keyboard_endpoint(void)
-{
-	Endpoint_SelectEndpoint(KEYBOARD_EPNUM);
-	if (!Endpoint_ReadWriteAllowed())
-		return;
-
-  get_keyboard_state();
-
-  // check for changes
-  uint8_t changed = keyboard_state__has_changed();
-
-  // only send data if changed or timeout has occured
-  if (changed == TRUE || s_timeout == 0)
-  {
-    s_timeout = 500; // milliseconds
-
-    // prevents empty timeout reports from being sent.
-    if (changed || !keyboard_state__is_empty())
-    {
-      if (!keyboard_state__is_error())
-      {
-        s_active_mode_kb_map = s_current_kb_map;
-        process_mode_keys();
-        process_keys();
-      }
-      send_keys();
-    }
-
-    // if processing macro, don't swap states until macro is complete
-    if (changed == TRUE && keyboard_state__is_processing_macro() == FALSE )
-      keyboard_state__swap_states();
-  }
-}
-#endif
 
 static
 void
@@ -587,144 +544,7 @@ process_keys()
       ++g_current_kb_state->num_keys;
     }
   }
-#if 0
-  uint8_t i, modifier;
-  uint8_t num_blocked_keys = 0;
-  Cell raw_key;
-  Usage usage;
-  UsagePage usage_page;
-  for (i=0; i < g_current_kb_state->num_active_cells; ++i)
-  {
-    if (g_current_kb_state->num_keys > MAX_KEYS)
-    {
-      g_current_kb_state->error_roll_over = TRUE;
-      break;
-    }
-
-    raw_key = g_current_kb_state->active_cells[i];
-
-    if (keyboard_state__mode_keys_have_changed())
-    {
-      g_blocked_keys[num_blocked_keys++] = raw_key;
-      continue;
-    }
-
-    usage = map_get_usage(s_active_mode_kb_map, raw_key);
-
-    modifier = get_modifier(usage);
-    if (modifier)
-    {
-      g_current_kb_state->modifiers |= modifier;
-    }
-    else
-    {
-      if (keyboard_state__key_is_blocked(raw_key))
-        continue;
-
-      usage_page = USAGE_PAGE(usage);
-
-      if (usage_page == HID_USAGE_PAGE_KEYBOARD_AND_KEYPAD)
-      {
-        g_current_kb_state->keys[g_current_kb_state->num_keys] = USAGE_ID(usage);
-        ++g_current_kb_state->num_keys;
-        continue;
-      }
-
-      if (usage_page == HID_USAGE_PAGE_CONSUMER_CONTROL)
-      {
-        if (g_current_kb_state->consumer_key)
-        {
-          g_current_kb_state->error_roll_over = TRUE;
-          break;
-        }
-        g_current_kb_state->consumer_key = USAGE_ID(usage);
-        continue;
-      }
-
-      if (usage_page == HID_USAGE_PAGE_MACRO)
-      {
-        g_current_kb_state->macro = (const Macro *)pgm_read_word(&p_macros[USAGE_ID(usage)]);
-        g_current_kb_state->pre_macro_modifiers = g_current_kb_state->modifiers;
-        continue;
-      }
-
-      if (usage == HID_USAGE_CUSTOM)
-        continue;
-    }
-  }
-  if (keyboard_state__mode_keys_have_changed())
-    g_num_blocked_keys = num_blocked_keys;
-#endif
 }
-
-#if 0
-static
-void
-send_keys(void)
-{
-	Endpoint_SelectEndpoint(KEYBOARD_EPNUM);
-	while(!Endpoint_ReadWriteAllowed());
-
-  uint8_t key;
-
-  if (keyboard_state__is_error())
-  {
-    Endpoint_Write_Byte(g_current_kb_state->modifiers); // Byte0: Modifiers still reported
-    Endpoint_Write_Byte(0);                // Byte1: Reserved
-    for (key = 1; key < 7; ++key)
-      Endpoint_Write_Byte(USAGE_ID(HID_USAGE_KEYBOARD_ERRORROLLOVER));
-		Endpoint_ClearCurrentBank();
-    return;
-  }
-
-  if (!keyboard_state__is_processing_macro())
-  {
-    if (keyboard_state__cooked_keys_have_changed())
-    {
-      Endpoint_Write_Byte(g_current_kb_state->modifiers); // Byte0: Modifier
-      Endpoint_Write_Byte(0);                // Byte1: Reserved
-
-      for (key = 0; key < g_current_kb_state->num_keys; ++key)
-      {
-        Endpoint_Write_Byte(g_current_kb_state->keys[key]);
-      }
-      for (; key < 7; ++key)
-      {
-        Endpoint_Write_Byte(0);
-      }
-			Endpoint_ClearCurrentBank();
-    }
-  }
-  else
-  {
-    const Macro * macro = g_current_kb_state->macro;
-    MacroKey mkey;
-    mkey.mod.all = pgm_read_byte(&macro->keys[g_current_kb_state->macro_key_index].mod);
-    mkey.usage = pgm_read_word(&macro->keys[g_current_kb_state->macro_key_index].usage);
-    uint8_t num_macro_keys = pgm_read_byte(&macro->num_keys);
-    Endpoint_Write_Byte(g_current_kb_state->pre_macro_modifiers | mkey.mod.all);
-    Endpoint_Write_Byte(0);
-    Endpoint_Write_Byte(USAGE_ID(mkey.usage));
-    for (key = 2; key < 7; ++key)
-      Endpoint_Write_Byte(0);
-		Endpoint_ClearCurrentBank();
-    g_current_kb_state->macro_key_index++;
-    if (g_current_kb_state->macro_key_index >= num_macro_keys)
-    {
-      g_current_kb_state->macro = NULL;
-      g_current_kb_state->macro_key_index = 0;
-    }
-    return;
-  }
-
-#ifdef LEDS_DONE
-  if (g_current_kb_state->num_keys)
-    led_on(LED_GRN_1);
-  else
-    led_off(LED_GRN_1);
-#endif
-}
-#endif
 
 static
 void
@@ -749,6 +569,7 @@ fill_report(USB_KeyboardReport_Data_t* report)
   }
   else
   {
+    // TODO: Macro processing
 #if 0
     const Macro * macro = g_current_kb_state->macro;
     MacroKey mkey;
@@ -766,14 +587,6 @@ fill_report(USB_KeyboardReport_Data_t* report)
     return;
 #endif
   }
-}
-
-static
-inline
-Usage
-map_get_usage(Mapping *map, uint8_t cell)
-{
-  return pgm_read_word(map + cell);
 }
 
 static
