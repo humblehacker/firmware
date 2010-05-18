@@ -4,20 +4,17 @@
 #include "hid_usages.h"
 #include "matrix.h"
 
-typedef union
+typedef enum
 {
-  uint8_t all;
-  struct
-  {
-    uint8_t l_ctrl:1;
-    uint8_t l_shft:1;
-    uint8_t l_alt:1;
-    uint8_t l_gui:1;
-    uint8_t r_ctrl:1;
-    uint8_t r_shft:1;
-    uint8_t r_alt:1;
-    uint8_t r_gui:1;
-  } bits;
+  NONE  = 0,
+  L_CTL = (1<<0),
+  L_SHF = (1<<1),
+  L_ALT = (1<<2),
+  L_GUI = (1<<3),
+  R_CTL = (1<<4),
+  R_SHF = (1<<5),
+  R_ALT = (1<<6),
+  R_GUI = (1<<7),
 } Modifiers;
 
 typedef enum {MAP, MODE, MACRO} MappingKind;

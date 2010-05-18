@@ -6,18 +6,18 @@
        key.mappings.each do |premods, mapping|
          ident = mapping_identifier(keymap, key.location, premods, mapping.class)
          if mapping.instance_of? Map %>
-const MapMapping <%=ident%> = { {MAP, {<%=premods%>}}, {<%=mapping.modifiers%>}, HID_USAGE_<%=normalize_identifier(mapping.usage.name)%> };<%
+const MapMapping <%=ident%> = { {MAP, <%=premods%>}, <%=mapping.modifiers%>, HID_USAGE_<%=normalize_identifier(mapping.usage.name)%> };<%
          elsif mapping.instance_of? Macro %>
 const MapMapping <%=ident%>Mappings[] =
 {
 <%         mapping.mappings.each do |macro_mapping| %>
-  { {MAP, {0}}, {<%=macro_mapping.modifiers%>}, HID_USAGE_<%=normalize_identifier(macro_mapping.usage.name)%> },
+  { {MAP, 0}, <%=macro_mapping.modifiers%>, HID_USAGE_<%=normalize_identifier(macro_mapping.usage.name)%> },
 <%         end %>
 };
 
-const MacroMapping <%= ident %> = { {MACRO, {<%=premods%>}}, &<%=ident%>Mappings[0] }; <%
+const MacroMapping <%= ident %> = { {MACRO, <%=premods%>}, &<%=ident%>Mappings[0] }; <%
          elsif mapping.instance_of? Mode %>
-const ModeMapping <%= ident %> = { {MODE, {<%=premods%>}}, <%=mapping.type.upcase%>, kbd_map_<%=mapping.mode%>_mx }; <%
+const ModeMapping <%= ident %> = { {MODE, <%=premods%>}, <%=mapping.type.upcase%>, kbd_map_<%=mapping.mode%>_mx }; <%
          else
            %><%="/* What? */"%><%
          end

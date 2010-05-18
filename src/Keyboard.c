@@ -52,19 +52,6 @@
 #include "keyboard_state.h"
 #include "kb_leds.h"
 
-typedef enum
-{
-  NONE  = 0,
-  L_CTL = (1<<0),
-  L_SHF = (1<<1),
-  L_ALT = (1<<2),
-  L_GUI = (1<<3),
-  R_CTL = (1<<4),
-  R_SHF = (1<<5),
-  R_ALT = (1<<6),
-  R_GUI = (1<<7),
-} ModKey;
-
 /** Buffer to hold the previously generated Keyboard HID report, for comparison purposes inside the HID class driver. */
 uint8_t PrevKeyboardHIDReportBuffer[sizeof(USB_KeyboardReport_Data_t)];
 
@@ -107,18 +94,18 @@ static uint16_t s_timeout;
 //static KeyMap  EEMEM ee_persistent_map;
 
 /* Local functions */
-static     void get_active_cells(void);
-static     void scan_matrix(void);
-static     bool momentary_mode_engaged(void);
-static     bool modifier_keys_engaged(void);
-static     void check_mode_toggle(void);
-static     void process_mode_keys(void);
-static     void process_keys(void);
-static     void fill_report(USB_KeyboardReport_Data_t* report);
-static     void push_temporary_mode(KeyMap mode_map);
-static    Usage map_get_usage(Mapping *map, uint8_t cell);
-static     void maybe_pop_temporary_mode(void);
-static   ModKey get_modifier(Usage usage);
+static      void get_active_cells(void);
+static      void scan_matrix(void);
+static      bool momentary_mode_engaged(void);
+static      bool modifier_keys_engaged(void);
+static      void check_mode_toggle(void);
+static      void process_mode_keys(void);
+static      void process_keys(void);
+static      void fill_report(USB_KeyboardReport_Data_t* report);
+static      void push_temporary_mode(KeyMap mode_map);
+static     Usage map_get_usage(Mapping *map, uint8_t cell);
+static      void maybe_pop_temporary_mode(void);
+static Modifiers get_modifier(Usage usage);
 // static     void process_consumer_control_endpoint(void);
 static const Mapping* get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap);
 
@@ -232,7 +219,7 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
   if (!keyboard_state__is_error())
   {
     s_active_mode_kb_map = s_current_kb_map;
-    g_current_kb_state->modifiers.all = 0;
+    g_current_kb_state->modifiers = 0;
     loop:
     if (momentary_mode_engaged())
       goto loop;
@@ -382,12 +369,20 @@ get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap)
   const Mapping **mappings = (const Mapping**)pgm_read_word(keymap + cell);
   if (!mappings)
     return NULL;
-  int i = 0;
-  while (mappings[i])
+  for (int i = 0; mappings[i]; ++i)
   {
-    if (mappings[i]->premods.all == modifiers.all)
+    // return the mapping that matches the specified modifier state.
+    if (mappings[i]->premods == modifiers)
       return mappings[i];
   }
+
+  // if no match was found, return the default mapping
+  // TODO: ensure this assumption is correct - that the first
+  // mapping will be the one with premods == NONE.
+  if (mappings[0]->premods == NONE)
+    return mappings[0];
+
+  // No matching mappings found
   return NULL;
 }
 
@@ -448,6 +443,7 @@ momentary_mode_engaged()
 bool
 modifier_keys_engaged()
 {
+  Modifiers active_modifiers = NONE;
   Cell active_cell;
   int i;
   for (i = 0; i < g_current_kb_state->num_active_cells; ++i)
@@ -459,15 +455,16 @@ modifier_keys_engaged()
     if (mapping->kind == MAP)
     {
       const MapMapping *map_mapping = (const MapMapping*)mapping;
-      ModKey this_modifier = 0;
-      if ((this_modifier = get_modifier(map_mapping->usage)) != 0)
+      Modifiers this_modifier = NONE;
+      if ((this_modifier = get_modifier(map_mapping->usage)) != NONE)
       {
-        g_current_kb_state->modifiers.all |= this_modifier;
+        active_modifiers |= this_modifier;
         g_current_kb_state->active_cells[i] = DEACTIVATED;
       }
     }
   }
-  return g_current_kb_state->modifiers.all != 0;
+  g_current_kb_state->modifiers |= active_modifiers;
+  return active_modifiers != NONE;
 }
 
 static
@@ -586,7 +583,7 @@ process_keys()
     {
       const MapMapping *map_mapping = (const MapMapping*)mapping;
       g_current_kb_state->keys[g_current_kb_state->num_keys] = map_mapping->usage;
-      g_current_kb_state->modifiers.all |= map_mapping->modifiers.all;
+      g_current_kb_state->modifiers |= map_mapping->modifiers;
       ++g_current_kb_state->num_keys;
     }
   }
@@ -737,7 +734,7 @@ fill_report(USB_KeyboardReport_Data_t* report)
 
   if (keyboard_state__is_error())
   {
-    report->Modifier = g_current_kb_state->modifiers.all;
+    report->Modifier = g_current_kb_state->modifiers;
     for (key = 1; key < 7; ++key)
       report->KeyCode[key] = USAGE_ID(HID_USAGE_ERRORROLLOVER);
     return;
@@ -745,7 +742,7 @@ fill_report(USB_KeyboardReport_Data_t* report)
 
   if (!keyboard_state__is_processing_macro())
   {
-    report->Modifier = g_current_kb_state->modifiers.all;
+    report->Modifier = g_current_kb_state->modifiers;
 
     for (key = 0; key < g_current_kb_state->num_keys; ++key)
       report->KeyCode[key] = g_current_kb_state->keys[key];
@@ -780,7 +777,7 @@ map_get_usage(Mapping *map, uint8_t cell)
 }
 
 static
-ModKey
+Modifiers
 get_modifier(Usage usage)
 {
   switch(usage)
@@ -802,7 +799,7 @@ get_modifier(Usage usage)
   case HID_USAGE_RIGHT_GUI:
     return R_GUI;
   default:
-    return 0;
+    return NONE;
   }
 }
 
