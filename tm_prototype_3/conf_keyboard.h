@@ -46,8 +46,8 @@ inline void activate_row(uint8_t row)
 {
   // set row pins as outputs
   // TODO: this probably doesn't need to happen every time.
-  DDRA &= ~A_ROWS;
-  DDRC &= ~C_ROWS;
+  DDRA |= A_ROWS;
+  DDRC |= C_ROWS;
 
   // drive all row pins high
   PORTA |= A_ROWS;
