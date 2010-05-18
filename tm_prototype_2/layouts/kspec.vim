@@ -1,19 +1,19 @@
 syntax match comment /\/\/.*$/
 syntax region String start=+L\="+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end='$' contains=cSpecial,@Spell
-syntax keyword identifier p_and_P
+syntax region Comment start=/\/\*/ end=/\*\// 
 syntax match Modifier /\(left_\|right_\)\{0,1\}\(shift\|control\|alt\|gui\)/
 syntax region Modifiers start=/</ end=/>/ contains=Modifier
 syntax match Location / [0-9][A-Z]/
 
-highlight identifier guifg=Blue
-highlight Key guifg=Brown
-highlight HeadKey guifg=Red
-highlight String guifg=Cyan
-highlight Modifier guifg=PaleGreen
-highlight Modifiers guifg=Orange
-highlight Usage guifg=Purple
-highlight UsagePage guifg=Green
-highlight Location guifg=Yellow
+highlight identifier guifg=Blue ctermfg=Blue
+highlight Key guifg=Brown ctermfg=Brown
+highlight HeadKey guifg=Red ctermfg=Red
+highlight String guifg=Cyan ctermfg=Cyan
+highlight Modifier guifg=PaleGreen ctermfg=LightBlue
+highlight Modifiers guifg=Orange ctermfg=Gray
+highlight Usage guifg=Purple ctermfg=Magenta
+highlight UsagePage guifg=Green ctermfg=Green
+highlight Location guifg=Yellow ctermfg=Yellow
 
 syntax match HeadKey /Keyboard/
 syntax match HeadKey /Layout/
@@ -32,7 +32,7 @@ syntax match HeadKey /UsagePage/
 syntax match Key /include/
 syntax match Key /base/
 syntax match Key /rev/
-syntax match Key /id/
+syntax match Key /page/
 syntax match Key /led/
 syntax match Key /width/
 syntax match Key /height/
@@ -163,17 +163,17 @@ syntax match Usage /ESCAPE/
 syntax match Usage /Backspace/
 syntax match Usage /Tab/
 syntax match Usage /Spacebar/
-syntax match Usage /-_and__/
+syntax match Usage /-_and_Underscore/
 syntax match Usage /=_and_+/
-syntax match Usage /\\\[_and_\\{/
-syntax match Usage /\\\]_and_\\}/
+syntax match Usage /\[_and_{/
+syntax match Usage /\]_and_}/
 syntax match Usage /\\_and_|/
 syntax match Usage /Non-US_#_and_\~/
 syntax match Usage /;_and_\\:/
 syntax match Usage /\\'_and_\\"/
 syntax match Usage /`_and_\~/
-syntax match Usage /,_and_</
-syntax match Usage /._and_>/
+syntax match Usage /,_and_\\</
+syntax match Usage /._and_\\>/
 syntax match Usage /\/_and_?/
 syntax match Usage /Caps_Lock/
 syntax match Usage /F1/
@@ -234,18 +234,18 @@ syntax match Usage /F21/
 syntax match Usage /F22/
 syntax match Usage /F23/
 syntax match Usage /F24/
-syntax match Usage /Execute/
-syntax match Usage /Help/
-syntax match Usage /Menu/
-syntax match Usage /Select/
-syntax match Usage /Stop/
-syntax match Usage /Again/
-syntax match Usage /Undo/
-syntax match Usage /Cut/
-syntax match Usage /Copy/
-syntax match Usage /Paste/
-syntax match Usage /Find/
-syntax match Usage /Mute/
+syntax match Usage /Keyboard_Execute/
+syntax match Usage /Keyboard_Help/
+syntax match Usage /Keyboard_Menu/
+syntax match Usage /Keyboard_Select/
+syntax match Usage /Keyboard_Stop/
+syntax match Usage /Keyboard_Again/
+syntax match Usage /Keyboard_Undo/
+syntax match Usage /Keyboard_Cut/
+syntax match Usage /Keyboard_Copy/
+syntax match Usage /Keyboard_Paste/
+syntax match Usage /Keyboard_Find/
+syntax match Usage /Keyboard_Mute/
 syntax match Usage /Volume_Up/
 syntax match Usage /Volume_Down/
 syntax match Usage /Locking_Caps_Lock/
