@@ -85,6 +85,7 @@ uint8_t g_num_lock, g_caps_lock, g_scrl_lock;
 static KeyMap s_saved_map;
 static KeyMap s_current_kb_map;
 static KeyMap s_active_mode_kb_map;
+static KeyMap s_default_kb_map;
 //static KeyMap s_prev_kb_map[NUM_MODE_KEYS];
 static uint32_t s_row_data[NUM_ROWS];             // Keep
 static uint16_t s_timeout;
@@ -102,8 +103,8 @@ static      void check_mode_toggle(void);
 static      void process_mode_keys(void);
 static      void process_keys(void);
 static      void fill_report(USB_KeyboardReport_Data_t* report);
-static      void push_temporary_mode(KeyMap mode_map);
 static     Usage map_get_usage(Mapping *map, uint8_t cell);
+static      void set_momentary_mode(KeyMap mode_map);
 static      void maybe_pop_temporary_mode(void);
 static Modifiers get_modifier(Usage usage);
 // static     void process_consumer_control_endpoint(void);
@@ -145,7 +146,7 @@ void SetupHardware()
 
   g_num_lock           = g_caps_lock = g_scrl_lock = 0;
   s_active_mode_kb_map = NULL;
-  s_current_kb_map     = (KeyMap) pgm_read_word(&kbd_map_mx_default);
+  s_current_kb_map = s_default_kb_map = (KeyMap) pgm_read_word(&kbd_map_mx_default);
   s_timeout            = 500;
 
   led_on(LED_NUM);
@@ -227,7 +228,6 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
       goto loop;
     check_mode_toggle();
     process_keys();
-    maybe_pop_temporary_mode();
   }
 	USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
   fill_report(KeyboardReport);
@@ -388,9 +388,8 @@ get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap)
 
 static
 void
-push_temporary_mode(KeyMap mode_map)
+set_momentary_mode(KeyMap mode_map)
 {
-  s_saved_map = s_active_mode_kb_map;
   s_active_mode_kb_map = mode_map;
 }
 
@@ -398,10 +397,10 @@ static
 void
 toggle_map(KeyMap mode_map)
 {
-  if (s_current_kb_map == kbd_map_mx_default)
-    s_current_kb_map = mode_map;
+  if (s_current_kb_map == mode_map)
+    s_current_kb_map = s_default_kb_map;
   else
-    s_current_kb_map = kbd_map_mx_default;
+    s_current_kb_map = mode_map;
 }
 
 static
@@ -431,7 +430,7 @@ momentary_mode_engaged()
       ModeMapping *mode_mapping = (ModeMapping*)mapping;
       if (mode_mapping->type == MOMENTARY)
       {
-        push_temporary_mode(mode_mapping->mode_map);
+        set_momentary_mode(mode_mapping->mode_map);
         g_current_kb_state->active_cells[i] = DEACTIVATED;
         return true;
       }
