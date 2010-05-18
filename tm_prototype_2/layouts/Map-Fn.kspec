@@ -1,9 +1,10 @@
 KeyMap:Fn base:Nm rev:203
 
     /* Row 1 */
-    Key:1A Mode:US            type:toggle                   tl:"US"
-    Key:1B Mode:DV led:Dvorak type:toggle                   tl:"Dvorak"
-    Key:1C Mode:JP led:Scroll type:toggle                   tl:"Japan"
+    Key:1A Mode:US             type:toggle                   tl:"US"
+    Key:1B Mode:DV  led:Dvorak type:toggle                   tl:"Dvorak"
+    Key:1C Mode:pDV led:Dvorak type:toggle                   tl:"Japan"
+    Key:1D Mode:JP  led:Scroll type:toggle                   tl:"Japan"
     Key:1E Macro:
         Map:t_and_T <shift>
         Map:y_and_Y
