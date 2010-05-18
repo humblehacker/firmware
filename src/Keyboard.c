@@ -583,6 +583,7 @@ process_keys()
     {
       const MapMapping *map_mapping = (const MapMapping*)mapping;
       g_current_kb_state->keys[g_current_kb_state->num_keys] = map_mapping->usage;
+      g_current_kb_state->modifiers &= ~map_mapping->super.premods;
       g_current_kb_state->modifiers |= map_mapping->modifiers;
       ++g_current_kb_state->num_keys;
     }
