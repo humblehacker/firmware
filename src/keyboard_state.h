@@ -45,12 +45,11 @@ typedef struct
   uint8_t error_roll_over;              // Keep
 } KeyboardState;
 
-extern KeyboardState *g_current_kb_state;
+extern KeyboardState g_kb_state;
 extern uint8_t g_num_blocked_keys;
 extern uint8_t g_blocked_keys[MAX_ACTIVE_CELLS];
 
-void keyboard_state__init(void);
-void keyboard_state__reset_current_state(void);
+void keyboard_state__reset(void);
 
 uint8_t   keyboard_state__is_error(void);
 uint8_t   keyboard_state__is_empty(void);

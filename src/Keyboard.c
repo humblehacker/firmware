@@ -139,7 +139,7 @@ void SetupHardware()
   /* Task init */
   init_cols();
   init_leds();
-  keyboard_state__init();
+  keyboard_state__reset();
 
   g_num_lock           = g_caps_lock = g_scrl_lock = 0;
   s_active_mode_kb_map = NULL;
@@ -210,14 +210,14 @@ void EVENT_USB_Device_StartOfFrame(void)
 bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo, uint8_t* const ReportID,
                                          const uint8_t ReportType, void* ReportData, uint16_t* ReportSize)
 {
-  keyboard_state__reset_current_state();
+  keyboard_state__reset();
   scan_matrix();
 	get_active_cells();
 
   if (!keyboard_state__is_error())
   {
     s_active_mode_kb_map = s_current_kb_map;
-    g_current_kb_state->modifiers = 0;
+    g_kb_state.modifiers = 0;
     loop:
     if (momentary_mode_engaged())
       goto loop;
@@ -286,13 +286,13 @@ get_active_cells()
     {
       if (s_row_data[row] & (1UL << col))
       {
-        if (g_current_kb_state->num_active_cells > MAX_ACTIVE_CELLS)
+        if (g_kb_state.num_active_cells > MAX_ACTIVE_CELLS)
         {
-          g_current_kb_state->error_roll_over = TRUE;
+          g_kb_state.error_roll_over = TRUE;
           return;
         }
         ++ncols;
-        g_current_kb_state->active_cells[g_current_kb_state->num_active_cells++] = MATRIX_CELL(row, col);
+        g_kb_state.active_cells[g_kb_state.num_active_cells++] = MATRIX_CELL(row, col);
       }
     }
 
@@ -309,7 +309,7 @@ get_active_cells()
         // ghost-key condition.
         if (s_row_data[row] & s_row_data[irow])
         {
-          g_current_kb_state->error_roll_over = TRUE;
+          g_kb_state.error_roll_over = TRUE;
           return;
         }
       }
@@ -365,20 +365,19 @@ bool
 momentary_mode_engaged()
 {
   Cell active_cell;
-  int i;
-  for (i = 0; i < g_current_kb_state->num_active_cells; ++i)
+  for (int i = 0; i < g_kb_state.num_active_cells; ++i)
   {
-    active_cell = g_current_kb_state->active_cells[i];
+    active_cell = g_kb_state.active_cells[i];
     if (active_cell == DEACTIVATED)
       continue;
-    const KeyMapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
+    const KeyMapping *mapping = get_mapping(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
     if (mapping->kind == MODE)
     {
       ModeTarget *target = (ModeTarget*)mapping->target;
       if (target->type == MOMENTARY)
       {
         set_momentary_mode(target->mode_map);
-        g_current_kb_state->active_cells[i] = DEACTIVATED;
+        g_kb_state.active_cells[i] = DEACTIVATED;
         return true;
       }
     }
@@ -391,13 +390,12 @@ modifier_keys_engaged()
 {
   Modifiers active_modifiers = NONE;
   Cell active_cell;
-  int i;
-  for (i = 0; i < g_current_kb_state->num_active_cells; ++i)
+  for (int i = 0; i < g_kb_state.num_active_cells; ++i)
   {
-    active_cell = g_current_kb_state->active_cells[i];
+    active_cell = g_kb_state.active_cells[i];
     if (active_cell == DEACTIVATED)
       continue;
-    const KeyMapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
+    const KeyMapping *mapping = get_mapping(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
     if (mapping->kind == MAP)
     {
       const MapTarget *target = (const MapTarget*)mapping->target;
@@ -405,11 +403,11 @@ modifier_keys_engaged()
       if ((this_modifier = get_modifier(target->usage)) != NONE)
       {
         active_modifiers |= this_modifier;
-        g_current_kb_state->active_cells[i] = DEACTIVATED;
+        g_kb_state.active_cells[i] = DEACTIVATED;
       }
     }
   }
-  g_current_kb_state->modifiers |= active_modifiers;
+  g_kb_state.modifiers |= active_modifiers;
   return active_modifiers != NONE;
 }
 
@@ -418,20 +416,19 @@ void
 check_mode_toggle(void)
 {
   Cell active_cell;
-  int i;
-  for (i = 0; i < g_current_kb_state->num_active_cells; ++i)
+  for (int i = 0; i < g_kb_state.num_active_cells; ++i)
   {
-    active_cell = g_current_kb_state->active_cells[i];
+    active_cell = g_kb_state.active_cells[i];
     if (active_cell == DEACTIVATED)
       continue;
-    const KeyMapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
+    const KeyMapping *mapping = get_mapping(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
     if (mapping->kind == MODE)
     {
       ModeTarget *target = (ModeTarget*)mapping->target;
       if (target->type == TOGGLE)
       {
         toggle_map(target->mode_map);
-        g_current_kb_state->active_cells[i] = DEACTIVATED;
+        g_kb_state.active_cells[i] = DEACTIVATED;
         return;
       }
     }
@@ -443,13 +440,13 @@ static
 void
 process_mode_keys()
 {
-  g_current_kb_state->mode_keys = 0;
+  g_kb_state.mode_keys = 0;
 
   // First, check if any of the momentary-type mode keys are down
   ModeKey modeKey;
   Usage usage;
   uint8_t i, mode;
-  for (i = 0; i < g_current_kb_state->num_active_cells; ++i)
+  for (i = 0; i < g_kb_state.num_active_cells; ++i)
   {
     for (mode = 0; mode < NUM_MODE_KEYS; ++mode)
     {
@@ -461,9 +458,9 @@ process_mode_keys()
 
       if (USAGE_PAGE(usage) == HID_USAGE_PAGE_CUSTOM
        && USAGE_ID(usage) == mode
-       && g_current_kb_state->active_cells[i] == modeKey.cell)
+       && g_kb_state.active_cells[i] == modeKey.cell)
       {
-        g_current_kb_state->mode_keys |= (1<<mode);
+        g_kb_state.mode_keys |= (1<<mode);
         s_active_mode_kb_map = modeKey.selecting_map;
         // TODO: modeKeys[i].leds
         break;
@@ -472,7 +469,7 @@ process_mode_keys()
   }
 
   // Now, process toggle-type mode keys
-  for (i = 0; i < g_current_kb_state->num_active_cells; ++i)
+  for (i = 0; i < g_kb_state.num_active_cells; ++i)
   {
     for (mode = 0; mode < NUM_MODE_KEYS; ++mode)
     {
@@ -484,9 +481,9 @@ process_mode_keys()
 
       if (USAGE_PAGE(usage) == HID_USAGE_PAGE_CUSTOM
        && USAGE_ID(usage) == mode
-       && g_current_kb_state->active_cells[i] == modeKey.cell)
+       && g_kb_state.active_cells[i] == modeKey.cell)
       {
-        g_current_kb_state->mode_keys |= (1<<mode);
+        g_kb_state.mode_keys |= (1<<mode);
 
         // if the current map is the same as the mode key's map,
         // set the current map back to the default, otherwise,
@@ -518,20 +515,19 @@ void
 process_keys()
 {
   Cell active_cell;
-  int i;
-  for (i = 0; i < g_current_kb_state->num_active_cells; ++i)
+  for (int i = 0; i < g_kb_state.num_active_cells; ++i)
   {
-    active_cell = g_current_kb_state->active_cells[i];
+    active_cell = g_kb_state.active_cells[i];
     if (active_cell == DEACTIVATED)
       continue;
-    const KeyMapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
+    const KeyMapping *mapping = get_mapping(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
     if (mapping->kind == MAP)
     {
       const MapTarget *target = (const MapTarget*)mapping->target;
-      g_current_kb_state->keys[g_current_kb_state->num_keys] = target->usage;
-      g_current_kb_state->modifiers &= ~mapping->premods;
-      g_current_kb_state->modifiers |= target->modifiers;
-      ++g_current_kb_state->num_keys;
+      g_kb_state.keys[g_kb_state.num_keys] = target->usage;
+      g_kb_state.modifiers &= ~mapping->premods;
+      g_kb_state.modifiers |= target->modifiers;
+      ++g_kb_state.num_keys;
     }
   }
 }
@@ -544,7 +540,7 @@ fill_report(USB_KeyboardReport_Data_t* report)
 
   if (keyboard_state__is_error())
   {
-    report->Modifier = g_current_kb_state->modifiers;
+    report->Modifier = g_kb_state.modifiers;
     for (key = 1; key < 7; ++key)
       report->KeyCode[key] = USAGE_ID(HID_USAGE_ERRORROLLOVER);
     return;
@@ -552,27 +548,27 @@ fill_report(USB_KeyboardReport_Data_t* report)
 
   if (!keyboard_state__is_processing_macro())
   {
-    report->Modifier = g_current_kb_state->modifiers;
+    report->Modifier = g_kb_state.modifiers;
 
-    for (key = 0; key < g_current_kb_state->num_keys; ++key)
-      report->KeyCode[key] = g_current_kb_state->keys[key];
+    for (key = 0; key < g_kb_state.num_keys; ++key)
+      report->KeyCode[key] = g_kb_state.keys[key];
   }
   else
   {
     // TODO: Macro processing
 #if 0
-    const Macro * macro = g_current_kb_state->macro;
+    const Macro * macro = g_kb_state.macro;
     MacroKey mkey;
-    mkey.mod.all = pgm_read_byte(&macro->keys[g_current_kb_state->macro_key_index].mod);
-    mkey.usage = pgm_read_word(&macro->keys[g_current_kb_state->macro_key_index].usage);
+    mkey.mod.all = pgm_read_byte(&macro->keys[g_kb_state.macro_key_index].mod);
+    mkey.usage = pgm_read_word(&macro->keys[g_kb_state.macro_key_index].usage);
     uint8_t num_macro_keys = pgm_read_byte(&macro->num_keys);
-    report->Modifier = g_current_kb_state->pre_macro_modifiers | mkey.mod.all;
+    report->Modifier = g_kb_state.pre_macro_modifiers | mkey.mod.all;
     report->KeyCode[0] = USAGE_ID(mkey.usage);
-    g_current_kb_state->macro_key_index++;
-    if (g_current_kb_state->macro_key_index >= num_macro_keys)
+    g_kb_state.macro_key_index++;
+    if (g_kb_state.macro_key_index >= num_macro_keys)
     {
-      g_current_kb_state->macro = NULL;
-      g_current_kb_state->macro_key_index = 0;
+      g_kb_state.macro = NULL;
+      g_kb_state.macro_key_index = 0;
     }
     return;
 #endif

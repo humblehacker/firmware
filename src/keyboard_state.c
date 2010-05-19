@@ -26,8 +26,7 @@
 #include <string.h>
 #include <limits.h>
 
-static KeyboardState kb_state_1;
-KeyboardState *g_current_kb_state;
+KeyboardState g_kb_state;
 uint8_t g_num_blocked_keys;
 uint8_t g_blocked_keys[MAX_ACTIVE_CELLS];
 
@@ -35,37 +34,27 @@ static
 void
 init_keyboard_state(KeyboardState *kb_state)
 {
-  kb_state->num_active_cells = kb_state->num_keys = 0;
-//kb_state->macro = NULL;
-  kb_state->error_roll_over = FALSE;
-  kb_state->consumer_key = 0;
-  memset(&kb_state->keys[0], UCHAR_MAX, sizeof(kb_state->keys[0])*MAX_KEYS);
-  memset(&kb_state->active_cells[0], UCHAR_MAX, sizeof(kb_state->active_cells[0])*MAX_ACTIVE_CELLS);
 }
 
 void
-keyboard_state__init()
+keyboard_state__reset()
 {
-  init_keyboard_state(&kb_state_1);
-  g_current_kb_state = &kb_state_1;
-}
-
-void
-keyboard_state__reset_current_state()
-{
-  init_keyboard_state(g_current_kb_state);
+  g_kb_state.num_active_cells = g_kb_state.num_keys = 0;
+  g_kb_state.error_roll_over = FALSE;
+  memset(&g_kb_state.keys[0], UCHAR_MAX, sizeof(g_kb_state.keys[0])*MAX_KEYS);
+  memset(&g_kb_state.active_cells[0], UCHAR_MAX, sizeof(g_kb_state.active_cells[0])*MAX_ACTIVE_CELLS);
 }
 
 uint8_t
 keyboard_state__is_error()
 {
-  return g_current_kb_state->error_roll_over;
+  return g_kb_state.error_roll_over;
 }
 
 uint8_t
 keyboard_state__is_empty()
 {
-  return g_current_kb_state->num_active_cells == 0;
+  return g_kb_state.num_active_cells == 0;
 }
 
 uint8_t
@@ -73,7 +62,7 @@ keyboard_state__is_processing_macro()
 {
   return false;
 #if 0 // FIXME
-  return g_current_kb_state->macro != NULL;
+  return g_kb_state.macro != NULL;
 #endif
 }
 
