@@ -1,7 +1,6 @@
 <%= include_guard(output.path, :begin) %>
 
 
-#include "config.h"
 #include "matrix.h"
 #include "mapping.h"
 <% if keymap.type == 'system' %>

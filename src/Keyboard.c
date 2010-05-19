@@ -46,11 +46,12 @@
  */
 
 #include <assert.h>
+#include <util/delay.h>
 #include "Keyboard.h"
 #include "keymaps.h"
 #include "mapping.c"
 #include "keyboard_state.h"
-#include "kb_leds.h"
+#include "conf_keyboard.h"
 
 /** Buffer to hold the previously generated Keyboard HID report, for comparison purposes inside the HID class driver. */
 uint8_t PrevKeyboardHIDReportBuffer[sizeof(USB_KeyboardReport_Data_t)];
@@ -114,7 +115,7 @@ int main(void)
 {
 	SetupHardware();
 
-//LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
+  LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
 
 	for (;;)
 	{
@@ -134,19 +135,17 @@ void SetupHardware()
 	clock_prescale_set(clock_div_1);
 
 	/* Hardware Initialization */
+	LEDs_Init();
 	USB_Init();
 
   /* Task init */
   init_cols();
-  init_leds();
   keyboard_state__reset();
 
   g_num_lock           = g_caps_lock = g_scrl_lock = 0;
   s_active_mode_kb_map = NULL;
   s_current_kb_map = s_default_kb_map = (KeyMap) pgm_read_word(&kbd_map_mx_default);
   s_timeout            = 500;
-
-  led_on(LED_NUM);
 
 #if defined(BOOTLOADER_TEST)
   uint8_t bootloader = eeprom_read_byte(&ee_bootloader);
@@ -164,23 +163,23 @@ void SetupHardware()
 /** Event handler for the library USB Connection event. */
 void EVENT_USB_Device_Connect(void)
 {
-//LEDs_SetAllLEDs(LEDMASK_USB_ENUMERATING);
+  LEDs_SetAllLEDs(LEDMASK_USB_ENUMERATING);
 }
 
 /** Event handler for the library USB Disconnection event. */
 void EVENT_USB_Device_Disconnect(void)
 {
-//LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
+  LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
 }
 
 /** Event handler for the library USB Configuration Changed event. */
 void EVENT_USB_Device_ConfigurationChanged(void)
 {
-//LEDs_SetAllLEDs(LEDMASK_USB_READY);
+  LEDs_SetAllLEDs(LEDMASK_USB_READY);
 
 	if (!(HID_Device_ConfigureEndpoints(&Keyboard_HID_Interface)))
     ;
-//  LEDs_SetAllLEDs(LEDMASK_USB_ERROR);
+  LEDs_SetAllLEDs(LEDMASK_USB_ERROR);
 
 	USB_Device_EnableSOFEvents();
 }
@@ -249,9 +248,10 @@ void CALLBACK_HID_Device_ProcessHIDReport(USB_ClassInfo_HID_Device_t* const HIDI
 	g_caps_lock = (*LEDReport & (1<<1));
 	g_scrl_lock = (*LEDReport & (1<<2));
 
-	led_set(LED_CAPS, g_caps_lock);
-	led_set(LED_SCRL, g_scrl_lock);
-  led_set(LED_NUM,  g_num_lock);
+  LEDs_ChangeLEDs(LED_CAPS|LED_SCRL|LED_NUM, *LEDReport);
+//led_set(LED_CAPS, g_caps_lock);
+//led_set(LED_SCRL, g_scrl_lock);
+//led_set(LED_NUM,  g_num_lock);
 }
 
 static
@@ -264,7 +264,7 @@ scan_matrix()
     activate_row(row);
 
     // Insert NOPs for synchronization
-    micro_pause(20);
+    _delay_us(20);
 
     // Place data on all column pins for active row into a single
     // 32 bit value.
@@ -288,7 +288,7 @@ get_active_cells()
       {
         if (g_kb_state.num_active_cells > MAX_ACTIVE_CELLS)
         {
-          g_kb_state.error_roll_over = TRUE;
+          g_kb_state.error_roll_over = true;
           return;
         }
         ++ncols;
@@ -309,7 +309,7 @@ get_active_cells()
         // ghost-key condition.
         if (s_row_data[row] & s_row_data[irow])
         {
-          g_kb_state.error_roll_over = TRUE;
+          g_kb_state.error_roll_over = true;
           return;
         }
       }

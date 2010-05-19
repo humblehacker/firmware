@@ -21,7 +21,7 @@
 
 */
 
-#include "config.h"
+#include "Keyboard.h"
 #include "keyboard_state.h"
 #include <string.h>
 #include <limits.h>
@@ -30,17 +30,11 @@ KeyboardState g_kb_state;
 uint8_t g_num_blocked_keys;
 uint8_t g_blocked_keys[MAX_ACTIVE_CELLS];
 
-static
-void
-init_keyboard_state(KeyboardState *kb_state)
-{
-}
-
 void
 keyboard_state__reset()
 {
   g_kb_state.num_active_cells = g_kb_state.num_keys = 0;
-  g_kb_state.error_roll_over = FALSE;
+  g_kb_state.error_roll_over = false;
   memset(&g_kb_state.keys[0], UCHAR_MAX, sizeof(g_kb_state.keys[0])*MAX_KEYS);
   memset(&g_kb_state.active_cells[0], UCHAR_MAX, sizeof(g_kb_state.active_cells[0])*MAX_ACTIVE_CELLS);
 }

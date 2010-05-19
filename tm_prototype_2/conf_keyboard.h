@@ -29,8 +29,6 @@ with The HumbleHacker Keyboard Project.  If not, see
 
 #include "conf_keyboard_defs.h"
 
-#define TARGET_BOARD USBKEY
-
 // Rows are A0-A7
 #define ROW_DDR  DDRA
 #define ROW_PORT PORTA
@@ -96,14 +94,13 @@ inline void init_cols(void)
   PORTD   = D_COLS;
 }
 
-// Keyboard LEDs are F0-F3
 #define KB_LED_DDR  DDRF
 #define KB_LED_PORT PORTF
 #define KB_LEDS ((1<<0)|(1<<1)|(1<<2)|(1<<3))
-#define LED_NUM    (1<<0)
-#define LED_CAPS   (1<<1)
-#define LED_SCRL   (1<<2)
-#define LED_DV     (1<<3)
+//#define LED_NUM    (1<<0)
+//#define LED_CAPS   (1<<1)
+//#define LED_SCRL   (1<<2)
+//#define LED_DV     (1<<3)
 
 #endif
 

@@ -1,3 +1,4 @@
+#include "Keyboard.h"
 #include "keymaps.h"
 
 <% $keymapIDs.each do |name, id| %>

@@ -26,7 +26,6 @@ with The HumbleHacker Keyboard Project.  If not, see
 
 #include "matrix.h"
 #include "mapping.h"
-//#include "ModeKeys.h"
 
 #define NUM_MODIFIERS 8
 #define MAX_KEYS      6
@@ -39,10 +38,10 @@ typedef struct
   Modifiers modifiers;
   Usage keys[MAX_KEYS];
   uint8_t num_keys;
-  Cell active_cells[MAX_ACTIVE_CELLS];  // Keep
-  uint8_t num_active_cells;             // Keep
+  Cell active_cells[MAX_ACTIVE_CELLS];
+  uint8_t num_active_cells;
   const MacroTarget *macro;
-  uint8_t error_roll_over;              // Keep
+  bool error_roll_over;
 } KeyboardState;
 
 extern KeyboardState g_kb_state;
