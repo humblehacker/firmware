@@ -199,8 +199,8 @@ UsagePage:Keyboard_and_Keypad id:0x07
     Usage:Keyboard_Paste id:0x7d
     Usage:Keyboard_Find id:0x7e
     Usage:Keyboard_Mute id:0x7f
-    Usage:Volume_Up id:0x80
-    Usage:Volume_Down id:0x81
+    Usage:Keyboard_Volume_Up id:0x80
+    Usage:Keyboard_Volume_Down id:0x81
     Usage:Locking_Caps_Lock id:0x82
     Usage:Locking_Num_Lock id:0x83
     Usage:Locking_Scroll_Lock id:0x84
@@ -281,13 +281,13 @@ UsagePage:Keyboard_and_Keypad id:0x07
     Usage:Keypad_Octal id:0xdb
     Usage:Keypad_Decimal id:0xdc
     Usage:Keypad_Hexadecimal id:0xdd
-    Usage:LeftControl id:0xe0
-    Usage:LeftShift id:0xe1
-    Usage:LeftAlt id:0xe2
+    Usage:Left_Control id:0xe0
+    Usage:Left_Shift id:0xe1
+    Usage:Left_Alt id:0xe2
     Usage:Left_GUI id:0xe3
-    Usage:RightControl id:0xe4
-    Usage:RightShift id:0xe5
-    Usage:RightAlt id:0xe6
+    Usage:Right_Control id:0xe4
+    Usage:Right_Shift id:0xe5
+    Usage:Right_Alt id:0xe6
     Usage:Right_GUI id:0xe7
 
 UsagePage:Consumer_Control id:0x0c

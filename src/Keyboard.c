@@ -581,19 +581,19 @@ get_modifier(Usage usage)
 {
   switch(usage)
   {
-  case HID_USAGE_LEFTCONTROL:
+  case HID_USAGE_LEFT_CONTROL:
     return L_CTL;
-  case HID_USAGE_LEFTSHIFT:
+  case HID_USAGE_LEFT_SHIFT:
     return L_SHF;
-  case HID_USAGE_LEFTALT:
+  case HID_USAGE_LEFT_ALT:
     return L_ALT;
   case HID_USAGE_LEFT_GUI:
     return L_GUI;
-  case HID_USAGE_RIGHTCONTROL:
+  case HID_USAGE_RIGHT_CONTROL:
     return R_CTL;
-  case HID_USAGE_RIGHTSHIFT:
+  case HID_USAGE_RIGHT_SHIFT:
     return R_SHF;
-  case HID_USAGE_RIGHTALT:
+  case HID_USAGE_RIGHT_ALT:
     return R_ALT;
   case HID_USAGE_RIGHT_GUI:
     return R_GUI;

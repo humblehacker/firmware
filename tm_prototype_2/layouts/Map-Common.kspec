@@ -26,16 +26,16 @@ KeyMap:Common rev:203
         Key:3O Map:AL_Email_Reader page:Consumer_Control      tl:"{mail}"
 
         /* Row 4 */
-        Key:4A Map:LeftShift                                  tl:"Shift"
+        Key:4A Map:Left_Shift                                 tl:"Shift"
         Key:4G Map:Return_(ENTER)                             tl:"Enter"
-        Key:4N Map:RightShift                                 tl:"Shift"
+        Key:4N Map:Right_Shift                                tl:"Shift"
         Key:4O Map:Caps_Lock                                  tl:"Caps"
 
         /* Row 5 */
         Key:5O Map:AC_Home page:Consumer_Control              tl:"{web}"
 
         /* Row 6 */
-        Key:6A Map:LeftControl                                tl:"Ctrl"
+        Key:6A Map:Left_Control                               tl:"Ctrl"
         Key:6B Map:Play/Pause page:Consumer_Control           tl:"Play"
         Key:6C Map:Application                                tl:"App"
         Key:6D Map:Tab<left_alt>                              tl:"Shuffle"
@@ -44,14 +44,14 @@ KeyMap:Common rev:203
         Key:6K Map:Home                                       tl:"Home"
         Key:6L Map:UpArrow                                    tl:"{up}"
         Key:6M Map:End                                        tl:"End"
-        Key:6N Map:RightControl                               tl:"Ctrl"
+        Key:6N Map:Right_Control                              tl:"Ctrl"
         Key:6O Map:PageUp                                     tl:"Pg Up"
 
         /* Row 7 */
         Key:7A Mode:Fn led:Num type:momentary                 tl:"Fn"
         Key:7B Map:Left_GUI                                   tl:"Start"
-        Key:7C Map:LeftAlt                                    tl:"Alt"
-        Key:7J Map:RightAlt                                   tl:"Alt"
+        Key:7C Map:Left_Alt                                   tl:"Alt"
+        Key:7J Map:Right_Alt                                  tl:"Alt"
         Key:7K Map:LeftArrow                                  tl:"{left}"
         Key:7L Map:DownArrow                                  tl:"{down}"
         Key:7M Map:RightArrow                                 tl:"{right}"
