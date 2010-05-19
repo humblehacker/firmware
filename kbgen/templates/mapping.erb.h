@@ -17,39 +17,42 @@ typedef enum
   R_GUI = (1<<7),
 } Modifiers;
 
-typedef enum {MAP, MODE, MACRO} MappingKind;
-
 typedef struct
 {
-  MappingKind kind;
+  enum {NOMAP, MAP, MODE, MACRO} kind;
   Modifiers premods;
-} Mapping;
-
-typedef const Mapping*** KeyMap;
+  void *target;
+} KeyMapping;
 
 typedef struct
 {
-  Mapping super;
+  uint8_t length;
+  const KeyMapping *data;
+} KeyMappingArray;
+
+typedef const KeyMappingArray* KeyMap;
+
+typedef struct
+{
   enum {MOMENTARY, TOGGLE} type;
   KeyMap mode_map;
-} ModeMapping;
+} ModeTarget;
 
 typedef struct
 {
-  Mapping super;
   Modifiers modifiers;
   Usage usage;
-} MapMapping;
+} MapTarget;
 
 typedef struct
 {
-  Mapping super;
-  const MapMapping *mappings;
-} MacroMapping;
+  uint8_t length;
+  const MapTarget *targets;
+} MacroTarget;
 
 <% $keyboard.maps.each_value do |keymap|
      keymap.keys.each do |location, key| %>
-extern const Mapping *<%= "#{keymap.ids.last}_#{key.location}" %>[];<%
+extern const KeyMapping <%= "#{keymap.ids.last}_#{key.location}" %>[];<%
      end
    end
 %>

@@ -82,7 +82,6 @@ uint8_t g_num_lock, g_caps_lock, g_scrl_lock;
 #define NUM_MODE_KEYS 8
 
 /* each row contains data for 3 Ports */
-static KeyMap s_saved_map;
 static KeyMap s_current_kb_map;
 static KeyMap s_active_mode_kb_map;
 static KeyMap s_default_kb_map;
@@ -100,14 +99,13 @@ static      void scan_matrix(void);
 static      bool momentary_mode_engaged(void);
 static      bool modifier_keys_engaged(void);
 static      void check_mode_toggle(void);
-static      void process_mode_keys(void);
+//static      void process_mode_keys(void);
 static      void process_keys(void);
 static      void fill_report(USB_KeyboardReport_Data_t* report);
 static      void set_momentary_mode(KeyMap mode_map);
-static      void maybe_pop_temporary_mode(void);
 static Modifiers get_modifier(Usage usage);
 // static     void process_consumer_control_endpoint(void);
-static const Mapping* get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap);
+static const KeyMapping* get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap);
 
 /** Main program entry point. This routine contains the overall program flow, including initial
  *  setup of all components and the main program loop.
@@ -320,24 +318,27 @@ get_active_cells()
 }
 
 static
-const Mapping *
+const KeyMapping *
 get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap)
 {
-  const Mapping **mappings = (const Mapping**)pgm_read_word(keymap + cell);
-  if (!mappings)
+  static const KeyMappingArray mappings;
+  memcpy_P((void*)&mappings, &keymap[cell], sizeof(keymap[cell]));
+  if (mappings.length == 0)
     return NULL;
-  for (int i = 0; mappings[i]; ++i)
+  for (int i = 0; i < mappings.length; ++i)
   {
     // return the mapping that matches the specified modifier state.
-    if (mappings[i]->premods == modifiers)
-      return mappings[i];
+    if (mappings.data[i].premods == modifiers)
+      return &mappings.data[i];
   }
 
   // if no match was found, return the default mapping
-  // TODO: ensure this assumption is correct - that the first
-  // mapping will be the one with premods == NONE.
-  if (mappings[0]->premods == NONE)
-    return mappings[0];
+  // TODO: the code generator must ensure that the
+  // following assumption is correct, the first
+  // mapping will be the one and only mapping with
+  // premods == NONE.
+  if (mappings.data[0].premods == NONE)
+    return &mappings.data[0];
 
   // No matching mappings found
   return NULL;
@@ -360,17 +361,6 @@ toggle_map(KeyMap mode_map)
     s_current_kb_map = mode_map;
 }
 
-static
-void
-maybe_pop_temporary_mode(void)
-{
-  if (s_saved_map)
-  {
-    s_active_mode_kb_map = s_saved_map;
-    s_saved_map = NULL;
-  }
-}
-
 bool
 momentary_mode_engaged()
 {
@@ -381,13 +371,13 @@ momentary_mode_engaged()
     active_cell = g_current_kb_state->active_cells[i];
     if (active_cell == DEACTIVATED)
       continue;
-    const Mapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
+    const KeyMapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
     if (mapping->kind == MODE)
     {
-      ModeMapping *mode_mapping = (ModeMapping*)mapping;
-      if (mode_mapping->type == MOMENTARY)
+      ModeTarget *target = (ModeTarget*)mapping->target;
+      if (target->type == MOMENTARY)
       {
-        set_momentary_mode(mode_mapping->mode_map);
+        set_momentary_mode(target->mode_map);
         g_current_kb_state->active_cells[i] = DEACTIVATED;
         return true;
       }
@@ -407,12 +397,12 @@ modifier_keys_engaged()
     active_cell = g_current_kb_state->active_cells[i];
     if (active_cell == DEACTIVATED)
       continue;
-    const Mapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
+    const KeyMapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
     if (mapping->kind == MAP)
     {
-      const MapMapping *map_mapping = (const MapMapping*)mapping;
+      const MapTarget *target = (const MapTarget*)mapping->target;
       Modifiers this_modifier = NONE;
-      if ((this_modifier = get_modifier(map_mapping->usage)) != NONE)
+      if ((this_modifier = get_modifier(target->usage)) != NONE)
       {
         active_modifiers |= this_modifier;
         g_current_kb_state->active_cells[i] = DEACTIVATED;
@@ -434,13 +424,13 @@ check_mode_toggle(void)
     active_cell = g_current_kb_state->active_cells[i];
     if (active_cell == DEACTIVATED)
       continue;
-    const Mapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
+    const KeyMapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
     if (mapping->kind == MODE)
     {
-      ModeMapping *mode_mapping = (ModeMapping*)mapping;
-      if (mode_mapping->type == TOGGLE)
+      ModeTarget *target = (ModeTarget*)mapping->target;
+      if (target->type == TOGGLE)
       {
-        toggle_map(mode_mapping->mode_map);
+        toggle_map(target->mode_map);
         g_current_kb_state->active_cells[i] = DEACTIVATED;
         return;
       }
@@ -448,11 +438,11 @@ check_mode_toggle(void)
   }
 }
 
+#if 0
 static
 void
 process_mode_keys()
 {
-#if 0
   g_current_kb_state->mode_keys = 0;
 
   // First, check if any of the momentary-type mode keys are down
@@ -519,8 +509,8 @@ process_mode_keys()
       }
     }
   }
-#endif
 }
+#endif
 
 
 static
@@ -534,13 +524,13 @@ process_keys()
     active_cell = g_current_kb_state->active_cells[i];
     if (active_cell == DEACTIVATED)
       continue;
-    const Mapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
+    const KeyMapping *mapping = get_mapping(g_current_kb_state->modifiers, active_cell, s_active_mode_kb_map);
     if (mapping->kind == MAP)
     {
-      const MapMapping *map_mapping = (const MapMapping*)mapping;
-      g_current_kb_state->keys[g_current_kb_state->num_keys] = map_mapping->usage;
-      g_current_kb_state->modifiers &= ~map_mapping->super.premods;
-      g_current_kb_state->modifiers |= map_mapping->modifiers;
+      const MapTarget *target = (const MapTarget*)mapping->target;
+      g_current_kb_state->keys[g_current_kb_state->num_keys] = target->usage;
+      g_current_kb_state->modifiers &= ~mapping->premods;
+      g_current_kb_state->modifiers |= target->modifiers;
       ++g_current_kb_state->num_keys;
     }
   }

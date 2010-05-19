@@ -1,7 +1,7 @@
 #include "<%= output.path.sub(/\.c$/, '.h')%>"
 #include "hid_usages.h"
 
-const Mapping **kbd_map_<%=kbIdentifier%>_mx[] PROGMEM =
+const KeyMappingArray kbd_map_<%=kbIdentifier%>_mx[] PROGMEM =
 {
 <% lastcol = flippedMatrix.count
    flippedMatrix.each_index do |iCol| %>
@@ -12,9 +12,9 @@ const Mapping **kbd_map_<%=kbIdentifier%>_mx[] PROGMEM =
        location = row[iRow] %>
   /* row:<%=iRow%> loc = <%=location%> */ <%
        key = keymap.keys[location]
-       if key == nil %>NULL<%
-       elsif key.mappings.empty? == nil %>EMPTY<%
-       else%>&<%=kbIdentifier%>_<%=key.location%>[0]<%
+       if key == nil %>{0, NULL}<%
+       elsif key.mappings.empty? == nil %>{0, NULL} /* EMPTY DEFINITION! */<%
+       else%>{<%=key.mappings.length%>, &<%=kbIdentifier%>_<%=key.location%>[0]}<%
        end %><%= "," if iCol < lastcol %><%
      end
    end

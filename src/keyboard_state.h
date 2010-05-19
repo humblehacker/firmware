@@ -43,7 +43,7 @@ typedef struct
   Cell active_cells[MAX_ACTIVE_CELLS];  // Keep
   uint8_t num_active_cells;             // Keep
   uint16_t consumer_key;
-  const MacroMapping *macro;
+  const MacroTarget *macro;
   uint8_t macro_key_index;
   uint8_t pre_macro_modifiers;
   uint8_t error_roll_over;              // Keep

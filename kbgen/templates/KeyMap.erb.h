@@ -14,7 +14,7 @@
 #define NUM_ROWS 8
 #define NUM_COLS 18
 
-extern const Mapping **kbd_map_<%=kbIdentifier%>_mx[] <%=storage%>;
+extern const KeyMappingArray kbd_map_<%=kbIdentifier%>_mx[] <%=storage%>;
 extern const KeyMap kbd_map_mx_default PROGMEM;
 
 <%= include_guard(output.path, :end) %>
