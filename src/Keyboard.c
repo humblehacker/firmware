@@ -78,34 +78,24 @@ USB_ClassInfo_HID_Device_t Keyboard_HID_Interface =
 uint8_t g_num_lock, g_caps_lock, g_scrl_lock;
 
 /* Local Variables */
+static   KeyMap s_current_kb_map;
+static   KeyMap s_active_mode_kb_map;
+static   KeyMap s_default_kb_map;
+static uint32_t s_row_data[NUM_ROWS];
 
-// TODO: Generate this value or get rid of it
-#define NUM_MODE_KEYS 8
-
-/* each row contains data for 3 Ports */
-static KeyMap s_current_kb_map;
-static KeyMap s_active_mode_kb_map;
-static KeyMap s_default_kb_map;
-//static KeyMap s_prev_kb_map[NUM_MODE_KEYS];
-static uint32_t s_row_data[NUM_ROWS];             // Keep
-static uint16_t s_timeout;
-// static uint8_t s_idleDuration[3];
-
-// -- EEPROM Data --
+/* EEPROM Data */
 //static KeyMap  EEMEM ee_persistent_map;
 
 /* Local functions */
-static      void get_active_cells(void);
-static      void scan_matrix(void);
-static      bool momentary_mode_engaged(void);
-static      bool modifier_keys_engaged(void);
-static      void check_mode_toggle(void);
-//static      void process_mode_keys(void);
-static      void process_keys(void);
-static      void fill_report(USB_KeyboardReport_Data_t* report);
-static      void set_momentary_mode(KeyMap mode_map);
-static Modifiers get_modifier(Usage usage);
-// static     void process_consumer_control_endpoint(void);
+static              void get_active_cells(void);
+static              void scan_matrix(void);
+static              bool momentary_mode_engaged(void);
+static              bool modifier_keys_engaged(void);
+static              void check_mode_toggle(void);
+static              void process_keys(void);
+static              void fill_report(USB_KeyboardReport_Data_t* report);
+static              void set_momentary_mode(KeyMap mode_map);
+static         Modifiers get_modifier(Usage usage);
 static const KeyMapping* get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap);
 
 /** Main program entry point. This routine contains the overall program flow, including initial
@@ -145,7 +135,6 @@ void SetupHardware()
   g_num_lock           = g_caps_lock = g_scrl_lock = 0;
   s_active_mode_kb_map = NULL;
   s_current_kb_map = s_default_kb_map = (KeyMap) pgm_read_word(&kbd_map_mx_default);
-  s_timeout            = 500;
 
 #if defined(BOOTLOADER_TEST)
   uint8_t bootloader = eeprom_read_byte(&ee_bootloader);
@@ -325,12 +314,15 @@ get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap)
   memcpy_P((void*)&mappings, &keymap[cell], sizeof(keymap[cell]));
   if (mappings.length == 0)
     return NULL;
+
+  // find and return the mapping that matches the specified modifier state.
   for (int i = 0; i < mappings.length; ++i)
   {
-    // return the mapping that matches the specified modifier state.
     if (mappings.data[i].premods == modifiers)
       return &mappings.data[i];
   }
+
+  // TODO: fuzzier matching on modifer keys.
 
   // if no match was found, return the default mapping
   // TODO: the code generator must ensure that the
@@ -434,81 +426,6 @@ check_mode_toggle(void)
     }
   }
 }
-
-#if 0
-static
-void
-process_mode_keys()
-{
-  g_kb_state.mode_keys = 0;
-
-  // First, check if any of the momentary-type mode keys are down
-  ModeKey modeKey;
-  Usage usage;
-  uint8_t i, mode;
-  for (i = 0; i < g_kb_state.num_active_cells; ++i)
-  {
-    for (mode = 0; mode < NUM_MODE_KEYS; ++mode)
-    {
-      memcpy_P(&modeKey,&(modeKeys[mode]),sizeof(ModeKey));
-      if (modeKey.type != MOMENTARY)
-        continue;
-
-      usage = map_get_usage(s_current_kb_map, modeKey.cell);
-
-      if (USAGE_PAGE(usage) == HID_USAGE_PAGE_CUSTOM
-       && USAGE_ID(usage) == mode
-       && g_kb_state.active_cells[i] == modeKey.cell)
-      {
-        g_kb_state.mode_keys |= (1<<mode);
-        s_active_mode_kb_map = modeKey.selecting_map;
-        // TODO: modeKeys[i].leds
-        break;
-      }
-    }
-  }
-
-  // Now, process toggle-type mode keys
-  for (i = 0; i < g_kb_state.num_active_cells; ++i)
-  {
-    for (mode = 0; mode < NUM_MODE_KEYS; ++mode)
-    {
-      memcpy_P(&modeKey,&(modeKeys[mode]),sizeof(ModeKey));
-      if (modeKey.type != TOGGLE)
-        continue;
-
-      usage = map_get_usage(s_active_mode_kb_map, modeKey.cell);
-
-      if (USAGE_PAGE(usage) == HID_USAGE_PAGE_CUSTOM
-       && USAGE_ID(usage) == mode
-       && g_kb_state.active_cells[i] == modeKey.cell)
-      {
-        g_kb_state.mode_keys |= (1<<mode);
-
-        // if the current map is the same as the mode key's map,
-        // set the current map back to the default, otherwise,
-        // set the current map to the mode key's map.
-
-        if (s_current_kb_map == modeKey.selecting_map)
-        {
-          s_current_kb_map = s_prev_kb_map[mode];
-          eeprom_write_byte(&ee_persistent_map, MODE_KEY_NONE);
-          // TODO: LEDs
-        }
-        else
-        {
-          s_prev_kb_map[mode] = s_current_kb_map;
-          s_current_kb_map = modeKey.selecting_map;
-          eeprom_write_byte(&ee_persistent_map, mode);
-          // TODO: LEDs
-        }
-        break;
-      }
-    }
-  }
-}
-#endif
-
 
 static
 void
