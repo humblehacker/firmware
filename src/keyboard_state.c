@@ -26,8 +26,7 @@
 #include <string.h>
 #include <limits.h>
 
-static KeyboardState kb_state_1, kb_state_2;
-static KeyboardState *prev_kb_state;
+static KeyboardState kb_state_1;
 KeyboardState *g_current_kb_state;
 uint8_t g_num_blocked_keys;
 uint8_t g_blocked_keys[MAX_ACTIVE_CELLS];
@@ -36,11 +35,8 @@ static
 void
 init_keyboard_state(KeyboardState *kb_state)
 {
-  kb_state->modifiers = kb_state->mode_keys = 0;
   kb_state->num_active_cells = kb_state->num_keys = 0;
 //kb_state->macro = NULL;
-  kb_state->macro_key_index = 0;
-  kb_state->pre_macro_modifiers = 0;
   kb_state->error_roll_over = FALSE;
   kb_state->consumer_key = 0;
   memset(&kb_state->keys[0], UCHAR_MAX, sizeof(kb_state->keys[0])*MAX_KEYS);
@@ -51,9 +47,7 @@ void
 keyboard_state__init()
 {
   init_keyboard_state(&kb_state_1);
-  init_keyboard_state(&kb_state_2);
   g_current_kb_state = &kb_state_1;
-  prev_kb_state      = &kb_state_2;
 }
 
 void
@@ -83,77 +77,4 @@ keyboard_state__is_processing_macro()
 #endif
 }
 
-uint8_t
-keyboard_state__has_changed()
-{
-  if (kb_state_1.num_active_cells != kb_state_2.num_active_cells)
-    return TRUE;
-
-  if (kb_state_1.error_roll_over != kb_state_2.error_roll_over)
-    return TRUE;
-
-  if (kb_state_1.macro || kb_state_2.macro)
-    return TRUE;
-
-  uint8_t i;
-  for (i=0; i< kb_state_1.num_active_cells; ++i)
-  {
-    if (kb_state_1.active_cells[i] != kb_state_2.active_cells[i])
-      return TRUE;
-  }
-
-  return FALSE;
-}
-
-uint8_t
-keyboard_state__cooked_keys_have_changed()
-{
-  if (kb_state_1.num_keys != kb_state_2.num_keys)
-    return TRUE;
-
-  if (kb_state_1.modifiers != kb_state_2.modifiers)
-    return TRUE;
-
-  uint8_t i;
-  for (i=0; i< kb_state_1.num_keys; ++i)
-  {
-    if (kb_state_1.keys[i] != kb_state_2.keys[i])
-      return TRUE;
-  }
-
-  return FALSE;
-}
-
-uint8_t
-keyboard_state__mode_keys_have_changed()
-{
-  return kb_state_1.mode_keys != kb_state_2.mode_keys;
-}
-
-void
-keyboard_state__swap_states()
-{
-  KeyboardState *tmp = prev_kb_state;
-  prev_kb_state = g_current_kb_state;
-  g_current_kb_state = tmp;
-  g_current_kb_state->modifiers = NONE;
-}
-
-uint8_t
-keyboard_state__key_is_blocked(uint8_t key)
-{
-  uint8_t i;
-  for(i = 0; i < g_num_blocked_keys; ++i)
-  {
-    if(g_blocked_keys[i] == key)
-      return TRUE;
-  }
-  return FALSE;
-}
-
-uint8_t
-keyboard_state__should_send_empty_consumer_key()
-{
-  return g_current_kb_state->consumer_key == 0 && prev_kb_state->consumer_key;
-}
 

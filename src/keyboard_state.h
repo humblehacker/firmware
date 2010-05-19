@@ -37,15 +37,11 @@ enum {DEACTIVATED=((uint8_t)-1)};
 typedef struct
 {
   Modifiers modifiers;
-  uint8_t mode_keys;
   Usage keys[MAX_KEYS];
   uint8_t num_keys;
   Cell active_cells[MAX_ACTIVE_CELLS];  // Keep
   uint8_t num_active_cells;             // Keep
-  uint16_t consumer_key;
   const MacroTarget *macro;
-  uint8_t macro_key_index;
-  uint8_t pre_macro_modifiers;
   uint8_t error_roll_over;              // Keep
 } KeyboardState;
 
@@ -55,16 +51,9 @@ extern uint8_t g_blocked_keys[MAX_ACTIVE_CELLS];
 
 void keyboard_state__init(void);
 void keyboard_state__reset_current_state(void);
-void keyboard_state__reset_blocked_keys(void);
-void keyboard_state__swap_states(void);
 
-uint8_t   keyboard_state__has_changed(void);
-uint8_t   keyboard_state__cooked_keys_have_changed(void);
-uint8_t   keyboard_state__mode_keys_have_changed(void);
 uint8_t   keyboard_state__is_error(void);
 uint8_t   keyboard_state__is_empty(void);
 uint8_t   keyboard_state__is_processing_macro(void);
-uint8_t   keyboard_state__key_is_blocked(uint8_t key);
-uint8_t   keyboard_state__should_send_empty_consumer_key(void);
 
 #endif // __KEYBOARD_STATE_H__
