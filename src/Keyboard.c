@@ -46,12 +46,8 @@
  */
 
 #include <assert.h>
-#include <util/delay.h>
 #include "Keyboard.h"
-#include "keymaps.h"
-#include "binding.c"
-#include "keyboard_state.h"
-#include "conf_keyboard.h"
+#include "keyboard_class.h"
 
 /** Buffer to hold the previously generated Keyboard HID report, for comparison purposes inside the HID class driver. */
 uint8_t PrevKeyboardHIDReportBuffer[sizeof(USB_KeyboardReport_Data_t)];
@@ -77,23 +73,8 @@ USB_ClassInfo_HID_Device_t Keyboard_HID_Interface =
 
 uint8_t g_num_lock, g_caps_lock, g_scrl_lock;
 
-/* Local Variables */
-static   KeyMap s_current_kb_map;
-static   KeyMap s_active_mode_kb_map;
-static   KeyMap s_default_kb_map;
-
 /* EEPROM Data */
 //static KeyMap  EEMEM ee_persistent_map;
-
-/* Local functions */
-static              void scan_matrix(void);
-static              bool momentary_mode_engaged(void);
-static              bool modifier_keys_engaged(void);
-static              void check_mode_toggle(void);
-static              void process_keys(void);
-static              void set_momentary_mode(KeyMap mode_map);
-static         Modifiers get_modifier(Usage usage);
-static const KeyBinding* get_binding(Modifiers modifiers, Cell cell, KeyMap keymap);
 
 /** Main program entry point. This routine contains the overall program flow, including initial
  *  setup of all components and the main program loop.
@@ -126,12 +107,9 @@ void SetupHardware()
 	USB_Init();
 
   /* Task init */
-  init_cols();
-  keyboard_state__reset();
+  Keyboard__init();
 
-  g_num_lock           = g_caps_lock = g_scrl_lock = 0;
-  s_active_mode_kb_map = NULL;
-  s_current_kb_map = s_default_kb_map = (KeyMap) pgm_read_word(&kbd_map_mx_default);
+  g_num_lock = g_caps_lock = g_scrl_lock = 0;
 
 #if defined(BOOTLOADER_TEST)
   uint8_t bootloader = eeprom_read_byte(&ee_bootloader);
@@ -195,25 +173,24 @@ void EVENT_USB_Device_StartOfFrame(void)
 bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo, uint8_t* const ReportID,
                                          const uint8_t ReportType, void* ReportData, uint16_t* ReportSize)
 {
-  keyboard_state__reset();
-  scan_matrix();
-	keyboard_state__get_active_cells();
+  Keyboard__reset();
+  Keyboard__scan_matrix();
+	Keyboard__init_active_keys();
 
-  if (!keyboard_state__is_error())
+  if (!Keyboard__is_error())
   {
-    s_active_mode_kb_map = s_current_kb_map;
-    g_kb_state.modifiers = 0;
     loop:
-    if (momentary_mode_engaged())
+    Keyboard__update_bindings();
+    if (Keyboard__momentary_mode_engaged())
       goto loop;
-    if (modifier_keys_engaged())
+    if (Keyboard__modifier_keys_engaged())
       goto loop;
-    check_mode_toggle();
-    process_keys();
+    Keyboard__check_mode_toggle();
+    Keyboard__process_keys();
   }
-	USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
 
-  *ReportSize = keyboard_state__fill_report(KeyboardReport);
+	USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
+  *ReportSize = Keyboard__fill_report(KeyboardReport);
 
 	return false;
 }
@@ -237,193 +214,5 @@ void CALLBACK_HID_Device_ProcessHIDReport(USB_ClassInfo_HID_Device_t* const HIDI
   LEDs_ChangeLEDs(LED_CAPS|LED_SCRL|LED_NUM, *LEDReport);
 }
 
-static
-void
-scan_matrix()
-{
-  init_cols();
-  for (uint8_t row = 0; row < NUM_ROWS; ++row)
-  {
-    activate_row(row);
-
-    // Insert NOPs for synchronization
-    _delay_us(20);
-
-    // Place data on all column pins for active row into a single
-    // 32 bit value.
-		g_kb_state.row_data[row] = 0;
-    g_kb_state.row_data[row] = read_row_data();
-  }
-}
-
-static
-const KeyBinding *
-get_binding(Modifiers modifiers, Cell cell, KeyMap keymap)
-{
-  static const KeyBindingArray bindings;
-  memcpy_P((void*)&bindings, &keymap[cell], sizeof(keymap[cell]));
-  if (bindings.length == 0)
-    return NULL;
-
-  // find and return the binding that matches the specified modifier state.
-  for (int i = 0; i < bindings.length; ++i)
-  {
-    if (bindings.data[i].premods == modifiers)
-      return &bindings.data[i];
-  }
-
-  // TODO: fuzzier matching on modifer keys.
-
-  // if no match was found, return the default binding
-  // TODO: the code generator must ensure that the
-  // following assumption is correct, the first
-  // binding will be the one and only binding with
-  // premods == NONE.
-  if (bindings.data[0].premods == NONE)
-    return &bindings.data[0];
-
-  // No matching bindings found
-  return NULL;
-}
-
-static
-void
-set_momentary_mode(KeyMap mode_map)
-{
-  s_active_mode_kb_map = mode_map;
-}
-
-static
-void
-toggle_map(KeyMap mode_map)
-{
-  if (s_current_kb_map == mode_map)
-    s_current_kb_map = s_default_kb_map;
-  else
-    s_current_kb_map = mode_map;
-}
-
-bool
-momentary_mode_engaged()
-{
-  Cell active_cell;
-  for (int i = 0; i < g_kb_state.num_active_cells; ++i)
-  {
-    active_cell = g_kb_state.active_cells[i];
-    if (active_cell == DEACTIVATED)
-      continue;
-    const KeyBinding *binding = get_binding(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
-    if (binding->kind == MODE)
-    {
-      ModeTarget *target = (ModeTarget*)binding->target;
-      if (target->type == MOMENTARY)
-      {
-        set_momentary_mode(target->mode_map);
-        g_kb_state.active_cells[i] = DEACTIVATED;
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
-bool
-modifier_keys_engaged()
-{
-  Modifiers active_modifiers = NONE;
-  Cell active_cell;
-  for (int i = 0; i < g_kb_state.num_active_cells; ++i)
-  {
-    active_cell = g_kb_state.active_cells[i];
-    if (active_cell == DEACTIVATED)
-      continue;
-    const KeyBinding *binding = get_binding(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
-    if (binding->kind == MAP)
-    {
-      const MapTarget *target = (const MapTarget*)binding->target;
-      Modifiers this_modifier = NONE;
-      if ((this_modifier = get_modifier(target->usage)) != NONE)
-      {
-        active_modifiers |= this_modifier;
-        g_kb_state.active_cells[i] = DEACTIVATED;
-      }
-    }
-  }
-  g_kb_state.modifiers |= active_modifiers;
-  return active_modifiers != NONE;
-}
-
-static
-void
-check_mode_toggle(void)
-{
-  Cell active_cell;
-  for (int i = 0; i < g_kb_state.num_active_cells; ++i)
-  {
-    active_cell = g_kb_state.active_cells[i];
-    if (active_cell == DEACTIVATED)
-      continue;
-    const KeyBinding *binding = get_binding(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
-    if (binding->kind == MODE)
-    {
-      ModeTarget *target = (ModeTarget*)binding->target;
-      if (target->type == TOGGLE)
-      {
-        toggle_map(target->mode_map);
-        g_kb_state.active_cells[i] = DEACTIVATED;
-        return;
-      }
-    }
-  }
-}
-
-static
-void
-process_keys()
-{
-  Cell active_cell;
-  for (int i = 0; i < g_kb_state.num_active_cells; ++i)
-  {
-    active_cell = g_kb_state.active_cells[i];
-    if (active_cell == DEACTIVATED)
-      continue;
-    const KeyBinding *binding = get_binding(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
-    if (binding->kind == MAP)
-    {
-      const MapTarget *target = (const MapTarget*)binding->target;
-      g_kb_state.keys[g_kb_state.num_keys] = target->usage;
-      g_kb_state.modifiers &= ~binding->premods;
-      g_kb_state.modifiers |= target->modifiers;
-      ++g_kb_state.num_keys;
-    }
-  }
-}
-
-static
-Modifiers
-get_modifier(Usage usage)
-{
-  switch(usage)
-  {
-  case HID_USAGE_LEFT_CONTROL:
-    return L_CTL;
-  case HID_USAGE_LEFT_SHIFT:
-    return L_SHF;
-  case HID_USAGE_LEFT_ALT:
-    return L_ALT;
-  case HID_USAGE_LEFT_GUI:
-    return L_GUI;
-  case HID_USAGE_RIGHT_CONTROL:
-    return R_CTL;
-  case HID_USAGE_RIGHT_SHIFT:
-    return R_SHF;
-  case HID_USAGE_RIGHT_ALT:
-    return R_ALT;
-  case HID_USAGE_RIGHT_GUI:
-    return R_GUI;
-  default:
-    return NONE;
-  }
-}
 
 

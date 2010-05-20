@@ -136,7 +136,8 @@ LAYOUT_FILE = $(LAYOUTS)/Keyboard.kspec
 # List C source files here. (C dependencies are automatically generated.)
 SRC =   $(SRCDIR)/Keyboard.c                                       \
 	$(SRCDIR)/Descriptors.c                                    \
-	$(SRCDIR)/keyboard_state.c                                 \
+	$(SRCDIR)/keyboard_class.c                                 \
+	$(SRCDIR)/bound_key.c                                      \
 	$(GENERATED)/keymaps.c                                     \
 	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/DevChapter9.c       \
 	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Endpoint.c          \
@@ -224,7 +225,7 @@ CFLAGS += -O$(OPT)
 CFLAGS += -funsigned-char
 CFLAGS += -funsigned-bitfields
 CFLAGS += -ffunction-sections
-CFLAGS += -fno-inline-small-functions
+#CFLAGS += -fno-inline-small-functions
 CFLAGS += -fpack-struct
 CFLAGS += -fshort-enums
 CFLAGS += -Wall
@@ -306,7 +307,7 @@ MATH_LIB = -lm
 
 
 # List any extra directories to look for libraries here.
-#     Each directory must be seperated by a space.
+#     Each directory mnust be seperated by a space.
 #     Use forward slashes for directory separators.
 #     For a directory that has spaces, enclose it in quotes.
 EXTRALIBDIRS = 

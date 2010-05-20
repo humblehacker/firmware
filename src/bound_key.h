@@ -21,38 +21,22 @@
 
 */
 
-#ifndef __KEYBOARD_STATE_H__
-#define __KEYBOARD_STATE_H__
+#ifndef __BOUND_KEY_H__
+#define __BOUND_KEY_H__
 
-#include "matrix.h"
+#include <stdbool.h>
 #include "binding.h"
 
-#define NUM_MODIFIERS 8
-#define MAX_KEYS      6
-#define MAX_ACTIVE_CELLS (MAX_KEYS + NUM_MODIFIERS)
-//#define MAX_ACTIVE_CELLS (MAX_KEYS + NUM_MODE_KEYS + NUM_MODIFIERS)
 enum {DEACTIVATED=((uint8_t)-1)};
 
 typedef struct
 {
-  uint32_t  row_data[NUM_ROWS];
-  Modifiers modifiers;
-  Usage     keys[MAX_KEYS];
-  uint8_t   num_keys;
-  Cell      active_cells[MAX_ACTIVE_CELLS];
-  uint8_t   num_active_cells;
-  const     MacroTarget *macro;
-  bool      error_roll_over;
-} KeyboardState;
+  Cell              cell;
+  const KeyBinding *binding;
+} BoundKey;
 
-extern KeyboardState g_kb_state;
+extern bool BoundKey__is_active(BoundKey *key);
+extern void BoundKey__deactivate(BoundKey *key);
+extern void BoundKey__update_binding(BoundKey *key, Modifiers mods, KeyMap keymap);
 
-void    keyboard_state__reset(void);
-
-bool    keyboard_state__is_error(void);
-bool    keyboard_state__is_empty(void);
-void    keyboard_state__get_active_cells(void);
-uint8_t keyboard_state__fill_report(USB_KeyboardReport_Data_t *report);
-bool    keyboard_state__is_processing_macro(void);
-
-#endif // __KEYBOARD_STATE_H__
+#endif // __BOUND_KEY_H__

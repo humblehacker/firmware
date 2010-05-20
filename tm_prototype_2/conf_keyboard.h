@@ -36,16 +36,15 @@
 #define C_BITS 8
 #define D_COLS 0xff
 
-static
-inline void activate_row(uint8_t row)
+static inline
+void activate_row(uint8_t row)
 {
   // Activate the current row
   ROW_DDR  =  (1 << row);  // set row as output
   ROW_PORT = ~(1 << row);  // row pin driven low
 }
 
-static
-inline
+static inline
 uint32_t
 fix(uint32_t val)
 {
@@ -63,8 +62,7 @@ fix(uint32_t val)
   return val;
 }
 
-static
-inline
+static inline
 uint32_t
 read_row_data(void)
 {
@@ -75,8 +73,9 @@ read_row_data(void)
   return fix(result);
 }
 
-static
-inline void init_cols(void)
+static inline
+void
+init_cols(void)
 {
   /* Columns are inputs */
   DDRE &= ~E_COLS;
