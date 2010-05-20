@@ -191,7 +191,7 @@ class Cell
 end
 
 class Key
-  attr_accessor :location, :mappings
+  attr_accessor :location, :kbindings
   def initialize(location, color='black')
     @location = location
 #   @label = KeyLabel.new
@@ -204,7 +204,7 @@ class Key
 #   @modeType = nil
 #   @modeLED = nil
 #   @modifiers = 0
-    @mappings = {}
+    @kbindings = {}
   end
 
   def empty?
@@ -252,9 +252,9 @@ class Mode
 end
 
 class Macro
-  attr_accessor :mappings
+  attr_accessor :kbindings
   def initialize
-    @mappings = []
+    @kbindings = []
   end
 end
 

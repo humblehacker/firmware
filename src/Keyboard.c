@@ -49,7 +49,7 @@
 #include <util/delay.h>
 #include "Keyboard.h"
 #include "keymaps.h"
-#include "mapping.c"
+#include "binding.c"
 #include "keyboard_state.h"
 #include "conf_keyboard.h"
 
@@ -93,7 +93,7 @@ static              void check_mode_toggle(void);
 static              void process_keys(void);
 static              void set_momentary_mode(KeyMap mode_map);
 static         Modifiers get_modifier(Usage usage);
-static const KeyMapping* get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap);
+static const KeyBinding* get_binding(Modifiers modifiers, Cell cell, KeyMap keymap);
 
 /** Main program entry point. This routine contains the overall program flow, including initial
  *  setup of all components and the main program loop.
@@ -257,32 +257,32 @@ scan_matrix()
 }
 
 static
-const KeyMapping *
-get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap)
+const KeyBinding *
+get_binding(Modifiers modifiers, Cell cell, KeyMap keymap)
 {
-  static const KeyMappingArray mappings;
-  memcpy_P((void*)&mappings, &keymap[cell], sizeof(keymap[cell]));
-  if (mappings.length == 0)
+  static const KeyBindingArray bindings;
+  memcpy_P((void*)&bindings, &keymap[cell], sizeof(keymap[cell]));
+  if (bindings.length == 0)
     return NULL;
 
-  // find and return the mapping that matches the specified modifier state.
-  for (int i = 0; i < mappings.length; ++i)
+  // find and return the binding that matches the specified modifier state.
+  for (int i = 0; i < bindings.length; ++i)
   {
-    if (mappings.data[i].premods == modifiers)
-      return &mappings.data[i];
+    if (bindings.data[i].premods == modifiers)
+      return &bindings.data[i];
   }
 
   // TODO: fuzzier matching on modifer keys.
 
-  // if no match was found, return the default mapping
+  // if no match was found, return the default binding
   // TODO: the code generator must ensure that the
   // following assumption is correct, the first
-  // mapping will be the one and only mapping with
+  // binding will be the one and only binding with
   // premods == NONE.
-  if (mappings.data[0].premods == NONE)
-    return &mappings.data[0];
+  if (bindings.data[0].premods == NONE)
+    return &bindings.data[0];
 
-  // No matching mappings found
+  // No matching bindings found
   return NULL;
 }
 
@@ -312,10 +312,10 @@ momentary_mode_engaged()
     active_cell = g_kb_state.active_cells[i];
     if (active_cell == DEACTIVATED)
       continue;
-    const KeyMapping *mapping = get_mapping(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
-    if (mapping->kind == MODE)
+    const KeyBinding *binding = get_binding(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
+    if (binding->kind == MODE)
     {
-      ModeTarget *target = (ModeTarget*)mapping->target;
+      ModeTarget *target = (ModeTarget*)binding->target;
       if (target->type == MOMENTARY)
       {
         set_momentary_mode(target->mode_map);
@@ -337,10 +337,10 @@ modifier_keys_engaged()
     active_cell = g_kb_state.active_cells[i];
     if (active_cell == DEACTIVATED)
       continue;
-    const KeyMapping *mapping = get_mapping(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
-    if (mapping->kind == MAP)
+    const KeyBinding *binding = get_binding(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
+    if (binding->kind == MAP)
     {
-      const MapTarget *target = (const MapTarget*)mapping->target;
+      const MapTarget *target = (const MapTarget*)binding->target;
       Modifiers this_modifier = NONE;
       if ((this_modifier = get_modifier(target->usage)) != NONE)
       {
@@ -363,10 +363,10 @@ check_mode_toggle(void)
     active_cell = g_kb_state.active_cells[i];
     if (active_cell == DEACTIVATED)
       continue;
-    const KeyMapping *mapping = get_mapping(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
-    if (mapping->kind == MODE)
+    const KeyBinding *binding = get_binding(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
+    if (binding->kind == MODE)
     {
-      ModeTarget *target = (ModeTarget*)mapping->target;
+      ModeTarget *target = (ModeTarget*)binding->target;
       if (target->type == TOGGLE)
       {
         toggle_map(target->mode_map);
@@ -387,12 +387,12 @@ process_keys()
     active_cell = g_kb_state.active_cells[i];
     if (active_cell == DEACTIVATED)
       continue;
-    const KeyMapping *mapping = get_mapping(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
-    if (mapping->kind == MAP)
+    const KeyBinding *binding = get_binding(g_kb_state.modifiers, active_cell, s_active_mode_kb_map);
+    if (binding->kind == MAP)
     {
-      const MapTarget *target = (const MapTarget*)mapping->target;
+      const MapTarget *target = (const MapTarget*)binding->target;
       g_kb_state.keys[g_kb_state.num_keys] = target->usage;
-      g_kb_state.modifiers &= ~mapping->premods;
+      g_kb_state.modifiers &= ~binding->premods;
       g_kb_state.modifiers |= target->modifiers;
       ++g_kb_state.num_keys;
     }

@@ -25,7 +25,7 @@
 #define __KEYBOARD_STATE_H__
 
 #include "matrix.h"
-#include "mapping.h"
+#include "binding.h"
 
 #define NUM_MODIFIERS 8
 #define MAX_KEYS      6

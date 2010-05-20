@@ -21,8 +21,8 @@
 
 */
 
-#ifndef __MAPPING_H__
-#define __MAPPING_H__
+#ifndef __BINDING_H__
+#define __BINDING_H__
 
 #include "hid_usages.h"
 #include "matrix.h"
@@ -45,15 +45,15 @@ typedef struct
   enum {NOMAP, MAP, MODE, MACRO} kind;
   Modifiers premods;
   void *target;
-} KeyMapping;
+} KeyBinding;
 
 typedef struct
 {
   uint8_t length;
-  const KeyMapping *data;
-} KeyMappingArray;
+  const KeyBinding *data;
+} KeyBindingArray;
 
-typedef const KeyMappingArray* KeyMap;
+typedef const KeyBindingArray* KeyMap;
 
 typedef struct
 {
@@ -75,7 +75,7 @@ typedef struct
 
 <% $keyboard.maps.each_value do |keymap|
      keymap.keys.each do |location, key| %>
-extern const KeyMapping <%= "#{keymap.ids.last}_#{key.location}" %>[];<%
+extern const KeyBinding <%= "#{keymap.ids.last}_#{key.location}" %>[];<%
      end
    end
 %>

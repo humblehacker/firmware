@@ -42,8 +42,8 @@ class ModeKey
   end
 end
 
-def mapping_identifier(keymap, location, mods, mapping_type)
-  "#{keymap.ids.last}_#{location}_#{mods}_#{mapping_type}"
+def kbinding_identifier(keymap, location, mods, kbinding_type)
+  "#{keymap.ids.last}_#{location}_#{mods}_#{kbinding_type}"
 end
 
 def include_guard( filename, which )
@@ -173,8 +173,8 @@ begin
   init(filename, $options)
   generate("hid_usages.h", binding)
   generate("matrix.h", binding)
-  generate("mapping.h", binding)
-  generate("mapping.c", binding)
+  generate("binding.h", binding)
+  generate("binding.c", binding)
   create_individual_matrix_map_sourcefiles
   generate("keymaps.h", binding)
   generate("keymaps.c", binding)

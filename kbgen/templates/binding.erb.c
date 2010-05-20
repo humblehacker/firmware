@@ -21,26 +21,26 @@
 
 */
 
-#include "mapping.h"
+#include "binding.h"
 
-/* All Mappings */
+/* All Bindings */
 <% $keyboard.maps.each_value do |keymap|
      keymap.keys.each do |location, key|
-       key.mappings.each do |premods, mapping|
-         ident = mapping_identifier(keymap, key.location, premods, mapping.class)
-         if mapping.instance_of? Map %>
-const MapTarget <%=ident%> = { <%=mapping.modifiers%>, HID_USAGE_<%=normalize_identifier(mapping.usage.name)%> };<%
-         elsif mapping.instance_of? Macro %>
+       key.kbindings.each do |premods, kbinding|
+         ident = kbinding_identifier(keymap, key.location, premods, kbinding.class)
+         if kbinding.instance_of? Map %>
+const MapTarget <%=ident%> = { <%=kbinding.modifiers%>, HID_USAGE_<%=normalize_identifier(kbinding.usage.name)%> };<%
+         elsif kbinding.instance_of? Macro %>
 const MapTarget <%=ident%>Targets[] =
 {
-<%         mapping.mappings.each do |macro_mapping| %>
-  { <%=macro_mapping.modifiers%>, HID_USAGE_<%=normalize_identifier(macro_mapping.usage.name)%> },
+<%         kbinding.kbindings.each do |macro_kbinding| %>
+  { <%=macro_kbinding.modifiers%>, HID_USAGE_<%=normalize_identifier(macro_kbinding.usage.name)%> },
 <%         end %>
 };
 
-const MacroTarget <%= ident %> = { <%=mapping.mappings.length%>, &<%=ident%>Targets[0] }; <%
-         elsif mapping.instance_of? Mode %>
-const ModeTarget <%= ident %> = { <%=mapping.type.upcase%>, kbd_map_<%=mapping.mode%>_mx }; <%
+const MacroTarget <%= ident %> = { <%=kbinding.kbindings.length%>, &<%=ident%>Targets[0] }; <%
+         elsif kbinding.instance_of? Mode %>
+const ModeTarget <%= ident %> = { <%=kbinding.type.upcase%>, kbd_map_<%=kbinding.mode%>_mx }; <%
          else
            %><%="/* What? */"%><%
          end
@@ -49,21 +49,21 @@ const ModeTarget <%= ident %> = { <%=mapping.type.upcase%>, kbd_map_<%=mapping.m
    end
 %>
 
-/* Aggregated mappings per key */
+/* Aggregated bindings per key */
 <% $keyboard.maps.each_value do |keymap|
      keymap.keys.each do |location, key| %>
-const KeyMapping <%= "#{keymap.ids.last}_#{key.location}" %>[] =
-{<%    key.mappings.each do |premods, mapping| %>
-  { <%   if mapping.instance_of? Map
+const KeyBinding <%= "#{keymap.ids.last}_#{key.location}" %>[] =
+{<%    key.kbindings.each do |premods, kbinding| %>
+  { <%   if kbinding.instance_of? Map
     %>MAP, <%
-         elsif mapping.instance_of? Macro
+         elsif kbinding.instance_of? Macro
     %>MACRO, <%
-         elsif mapping.instance_of? Mode
+         elsif kbinding.instance_of? Mode
     %>MODE, <%
          else
     %><%="/* What? */"%>, <%
          end
-%><%= premods %>, (void*)&<%= mapping_identifier(keymap, key.location, premods, mapping.class) %> }, <%
+%><%= premods %>, (void*)&<%= kbinding_identifier(keymap, key.location, premods, kbinding.class) %> }, <%
        end %>
 };
 <%

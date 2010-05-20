@@ -88,11 +88,11 @@ grammar KSpec
   end
 
   rule key
-    'Key:' location ws mapping:( map / macro / mode )+
+    'Key:' location ws kbinding:( map / macro / mode )+
     {
       def content
         key = Key.new(location.text_value)
-        mapping.elements.each {|e| e.fill_key(key)}
+        kbinding.elements.each {|e| e.fill_key(key)}
         key
       end
     }
@@ -113,7 +113,7 @@ grammar KSpec
         premods.text_value.empty? ? 0 : premods.content
       end
       def fill_key(key)
-        key.mappings[the_premods] = content
+        key.kbindings[the_premods] = content
       end
       def content
         the_mods   = mods.text_value.empty? ? 0 : mods.modifiers.content
@@ -136,7 +136,7 @@ grammar KSpec
         the_premods = premods.text_value.empty? ? 0 : premods.modifiers.content
         the_mode = Mode.new(mode.text_value, type.text_value)
         the_mode.led = led.ident.text_value unless led.text_value.empty?
-        key.mappings[the_premods] = the_mode
+        key.kbindings[the_premods] = the_mode
       end
     }
   end
@@ -147,8 +147,8 @@ grammar KSpec
       def fill_key(key)
         the_premods = premods.text_value.empty? ? 0 : premods.modifiers.content
         macro = Macro.new
-        maps.elements.each {|map| macro.mappings << map.content}
-        key.mappings[the_premods] = macro
+        maps.elements.each {|map| macro.kbindings << map.content}
+        key.kbindings[the_premods] = macro
       end
     }
   end
