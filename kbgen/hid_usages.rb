@@ -53,14 +53,16 @@ class HIDUsageTable
 
     if !File.exist? filename
       newname = @includes.find_file(filename)
-      if newname == nil
-        raise "ERROR: Could not find file #{filename}"
-      end
+      raise "ERROR: Could not find file #{filename}" if newname == nil
       filename = newname
     end
     hidfile = File.open(filename)
     hid_parser = HIDParser.new
     result = hid_parser.parse(hidfile.read)
+    if !result
+      $stderr.puts "#{filename}:#{hid_parser.failure_line}: error: #{hid_parser.failure_reason}"
+      raise "Parse failed"
+    end
     result.build_table(self)
 
     @usagePagesByName = {}

@@ -31,7 +31,7 @@ grammar HID
   end
 
   rule usage_page
-    'UsagePage:' ident ws 'id:' hex ws usages:usage+
+    comment? 'UsagePage:' ident ws 'id:' hex ws usages:usage+
     {
       def build_page(table)
         page = UsagePage.new(ident.text_value, hex.text_value.to_i(16))
@@ -62,4 +62,7 @@ grammar HID
     [ \t\n]+
   end
 
+  rule comment
+    ws? '/*' (!'*/' . )* '*/' ws?
+  end
 end

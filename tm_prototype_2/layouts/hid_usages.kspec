@@ -1,74 +1,25 @@
-UsagePage:Generic_Desktop id:0x01
-    Usage:Undefined id:0x00
-    Usage:Pointer id:0x01
-    Usage:Mouse id:0x02
-    Usage:Joystick id:0x04
-    Usage:Game_Pad id:0x05
-    Usage:Keyboard id:0x06
-    Usage:Keypad id:0x07
-    Usage:Multi-axis_Controller id:0x08
-    Usage:Tablet_PC_System_Controls id:0x09
-    Usage:X id:0x30
-    Usage:Y id:0x31
-    Usage:Z id:0x32
-    Usage:Rx id:0x33
-    Usage:Ry id:0x34
-    Usage:Rz id:0x35
-    Usage:Slider id:0x36
-    Usage:Dial id:0x37
-    Usage:Wheel id:0x38
-    Usage:Hat_switch id:0x39
-    Usage:Counted_Buffer id:0x3a
-    Usage:Byte_Count id:0x3b
-    Usage:Motion_Wakeup id:0x3c
-    Usage:Start id:0x3d
-    Usage:Select id:0x3e
-    Usage:Vx id:0x40
-    Usage:Vy id:0x41
-    Usage:Vz id:0x42
-    Usage:Vbrx id:0x43
-    Usage:Vbry id:0x44
-    Usage:Vbrz id:0x45
-    Usage:Vno id:0x46
-    Usage:Feature_Notification id:0x47
-    Usage:Resolution_Multiplier id:0x48
-    Usage:System_Control id:0x80
-    Usage:System_Power_Down id:0x81
-    Usage:System_Sleep id:0x82
-    Usage:System_Wake_Up id:0x83
-    Usage:System_Context_Menu id:0x84
-    Usage:System_Main_Menu id:0x85
-    Usage:System_App_Menu id:0x86
-    Usage:System_Menu_Help id:0x87
-    Usage:System_Menu_Exit id:0x88
-    Usage:System_Menu_Select id:0x89
-    Usage:System_Menu_Right id:0x8a
-    Usage:System_Menu_Left id:0x8b
-    Usage:System_Menu_Up id:0x8c
-    Usage:System_Menu_Down id:0x8d
-    Usage:System_Cold_Restart id:0x8e
-    Usage:System_Warm_Restart id:0x8f
-    Usage:D-pad_Up id:0x90
-    Usage:D-pad_Down id:0x91
-    Usage:D-pad_Right id:0x92
-    Usage:D-pad_Left id:0x93
-    Usage:System_Dock id:0xa0
-    Usage:System_Undock id:0xa1
-    Usage:System_Setup id:0xa2
-    Usage:System_Break id:0xa3
-    Usage:System_Debugger_Break id:0xa4
-    Usage:Application_Break id:0xa5
-    Usage:Application_Debugger_Break id:0xa6
-    Usage:System_Speaker_Mute id:0xa7
-    Usage:System_Hibernate id:0xa8
-    Usage:System_Display_Invert id:0xb0
-    Usage:System_Display_Internal id:0xb1
-    Usage:System_Display_External id:0xb2
-    Usage:System_Display_Both id:0xb3
-    Usage:System_Display_Dual id:0xb4
-    Usage:System_Display_Toggle_Int/Ext id:0xb5
-    Usage:System_Display_Swap_Primary/Secondary id:0xb6
-    Usage:System_Display_LCD_Autoscale id:0xb7
+/*
+                    The HumbleHacker Keyboard Project
+                 Copyright © 2008-2010, David Whetstone
+               david DOT whetstone AT humblehacker DOT com
+
+  This file is a part of The HumbleHacker Keyboard Project.
+
+  The HumbleHacker Keyboard Project is free software: you can redistribute
+  it and/or modify it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  The HumbleHacker Keyboard Project is distributed in the hope that it will
+  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+  Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with The HumbleHacker Keyboard Project.  If not, see
+  <http://www.gnu.org/licenses/>.
+
+*/
 
 UsagePage:Keyboard_and_Keypad id:0x07
     Usage:Reserved_(no_event_indicated) id:0x0
@@ -656,3 +607,77 @@ UsagePage:Consumer_Control id:0x0c
     Usage:AC_Split id:0x29a type:Sel section:15.16
     Usage:AC_Disribute_Horizontally id:0x29b type:Sel section:15.16
     Usage:AC_Distribute_Vertically id:0x29c type:Sel section:15.16
+
+UsagePage:Generic_Desktop id:0x01
+    Usage:Undefined id:0x00
+    Usage:Pointer id:0x01
+    Usage:Mouse id:0x02
+    Usage:Joystick id:0x04
+    Usage:Game_Pad id:0x05
+    Usage:Keyboard id:0x06
+    Usage:Keypad id:0x07
+    Usage:Multi-axis_Controller id:0x08
+    Usage:Tablet_PC_System_Controls id:0x09
+    Usage:X id:0x30
+    Usage:Y id:0x31
+    Usage:Z id:0x32
+    Usage:Rx id:0x33
+    Usage:Ry id:0x34
+    Usage:Rz id:0x35
+    Usage:Slider id:0x36
+    Usage:Dial id:0x37
+    Usage:Wheel id:0x38
+    Usage:Hat_switch id:0x39
+    Usage:Counted_Buffer id:0x3a
+    Usage:Byte_Count id:0x3b
+    Usage:Motion_Wakeup id:0x3c
+    Usage:Start id:0x3d
+    Usage:Select id:0x3e
+    Usage:Vx id:0x40
+    Usage:Vy id:0x41
+    Usage:Vz id:0x42
+    Usage:Vbrx id:0x43
+    Usage:Vbry id:0x44
+    Usage:Vbrz id:0x45
+    Usage:Vno id:0x46
+    Usage:Feature_Notification id:0x47
+    Usage:Resolution_Multiplier id:0x48
+    Usage:System_Control id:0x80
+    Usage:System_Power_Down id:0x81
+    Usage:System_Sleep id:0x82
+    Usage:System_Wake_Up id:0x83
+    Usage:System_Context_Menu id:0x84
+    Usage:System_Main_Menu id:0x85
+    Usage:System_App_Menu id:0x86
+    Usage:System_Menu_Help id:0x87
+    Usage:System_Menu_Exit id:0x88
+    Usage:System_Menu_Select id:0x89
+    Usage:System_Menu_Right id:0x8a
+    Usage:System_Menu_Left id:0x8b
+    Usage:System_Menu_Up id:0x8c
+    Usage:System_Menu_Down id:0x8d
+    Usage:System_Cold_Restart id:0x8e
+    Usage:System_Warm_Restart id:0x8f
+    Usage:D-pad_Up id:0x90
+    Usage:D-pad_Down id:0x91
+    Usage:D-pad_Right id:0x92
+    Usage:D-pad_Left id:0x93
+    Usage:System_Dock id:0xa0
+    Usage:System_Undock id:0xa1
+    Usage:System_Setup id:0xa2
+    Usage:System_Break id:0xa3
+    Usage:System_Debugger_Break id:0xa4
+    Usage:Application_Break id:0xa5
+    Usage:Application_Debugger_Break id:0xa6
+    Usage:System_Speaker_Mute id:0xa7
+    Usage:System_Hibernate id:0xa8
+    Usage:System_Display_Invert id:0xb0
+    Usage:System_Display_Internal id:0xb1
+    Usage:System_Display_External id:0xb2
+    Usage:System_Display_Both id:0xb3
+    Usage:System_Display_Dual id:0xb4
+    Usage:System_Display_Toggle_Int/Ext id:0xb5
+    Usage:System_Display_Swap_Primary/Secondary id:0xb6
+    Usage:System_Display_LCD_Autoscale id:0xb7
+
+
