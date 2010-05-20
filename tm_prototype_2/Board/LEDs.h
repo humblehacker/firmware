@@ -1,42 +1,35 @@
 /*
+                   The HumbleHacker Keyboard Project
+                 Copyright © 2008-2010, David Whetstone
+              david DOT whetstone AT humblehacker DOT com
+
+  This file is a part of the HumbleHacker Keyboard Firmware project.
+
+  The HumbleHacker Keyboard Project is free software: you can
+  redistribute it and/or modify it under the terms of the GNU General
+  Public License as published by the Free Software Foundation, either
+  version 3 of the License, or (at your option) any later version.
+
+  The HumbleHacker Keyboard Project is distributed in the
+  hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+  PURPOSE.  See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with The HumbleHacker Keyboard Firmware project.  If not, see
+  <http://www.gnu.org/licenses/>.
+
+  --------------------------------------------------------------------
+
+  This code is based on the LUFA library's LED driver stub, written
+  by Dean Camera.
+
              LUFA Library
      Copyright (C) Dean Camera, 2010.
 
   dean [at] fourwalledcubicle [dot] com
       www.fourwalledcubicle.com
-*/
-
-/*
-  Copyright 2010  Dean Camera (dean [at] fourwalledcubicle [dot] com)
-
-  Permission to use, copy, modify, distribute, and sell this
-  software and its documentation for any purpose is hereby granted
-  without fee, provided that the above copyright notice appear in
-  all copies and that both that the copyright notice and this
-  permission notice and warranty disclaimer appear in supporting
-  documentation, and that the name of the author not be used in
-  advertising or publicity pertaining to distribution of the
-  software without specific, written prior permission.
-
-  The author disclaim all warranties with regard to this
-  software, including all implied warranties of merchantability
-  and fitness.  In no event shall the author be liable for any
-  special, indirect or consequential damages or any damages
-  whatsoever resulting from loss of use, data or profits, whether
-  in an action of contract, negligence or other tortious action,
-  arising out of or in connection with the use or performance of
-  this software.
-*/
-
-/*
-   This is a stub driver header file, for implementing custom board
-   layout hardware with compatible LUFA board specific drivers. If
-   the library is configured to use the BOARD_USER board mode, this
-   driver file should be completed and copied into the "/Board/" folder
-   inside the application's folder.
-
-   This stub is for the board-specific component of the LUFA LEDs driver,
-   for the LEDs (up to four) mounted on most USB AVR boards.
+  --------------------------------------------------------------------
 */
 
 #ifndef __LEDS_USER_H__

@@ -21,22 +21,22 @@
 
 */
 
-<%= include_guard(output.path, :begin) %>
+#ifndef __IDENTIFIERS_H__
+#define __IDENTIFIERS_H__
 
+#define MANUFACTURER_NAME     L"HumbleHacker.com"
+#define MANUFACTURER_NAME_LEN USB_STRING_LEN(16)
 
-#include "matrix.h"
-#include "mapping.h"
-<% if keymap.type == 'system' %>
-#include <avr/pgmspace.h>
-<% else %>
-#include <avr/eeprom.h>
-<% end %>
-#include <avr/pgmspace.h>
+#define PRODUCT_NAME          L"HumbleHacked TypeMatrix 2030 USB"
+#define PRODUCT_NAME_LEN      USB_STRING_LEN(32)
 
-#define NUM_ROWS 8
-#define NUM_COLS 18
+#define SERIAL_NUMBER         L"000000000000"
+#define SERIAL_NUMBER_LEN     USB_STRING_LEN(12)
 
-extern const KeyMappingArray kbd_map_<%=kbIdentifier%>_mx[] <%=storage%>;
-extern const KeyMap kbd_map_mx_default PROGMEM;
+#define FIRMWARE_ID           "TypeMatrix 2030 Professional"
 
-<%= include_guard(output.path, :end) %>
+#define VENDOR_ID             0x05AF
+#define PRODUCT_ID            0x2031
+#define RELEASE_NUMBER        0xF000
+
+#endif // __IDENTIFIERS_H__

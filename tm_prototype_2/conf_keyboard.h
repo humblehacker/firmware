@@ -1,33 +1,28 @@
-
 /*
                     The HumbleHacker Keyboard Project
-                    Copyright © 2008, David Whetstone
+                 Copyright © 2008-2010, David Whetstone
                david DOT whetstone AT humblehacker DOT com
 
-This file is a part of The HumbleHacker Keyboard Project.
+  This file is a part of The HumbleHacker Keyboard Project.
 
-The HumbleHacker Keyboard Project is free software: you can redistribute
-it and/or modify it under the terms of the GNU General Public License as
-published by the Free Software Foundation, either version 3 of the
-License, or (at your option) any later version.
+  The HumbleHacker Keyboard Project is free software: you can redistribute
+  it and/or modify it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
 
-The HumbleHacker Keyboard Project is distributed in the hope that it will
-be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
-Public License for more details.
+  The HumbleHacker Keyboard Project is distributed in the hope that it will
+  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+  Public License for more details.
 
-You should have received a copy of the GNU General Public License along
-with The HumbleHacker Keyboard Project.  If not, see
-<http://www.gnu.org/licenses/>.
+  You should have received a copy of the GNU General Public License along
+  with The HumbleHacker Keyboard Project.  If not, see
+  <http://www.gnu.org/licenses/>.
 
 */
 
 #ifndef __TYPEMATRIX_PROTOTYPE_2_H__
 #define __TYPEMATRIX_PROTOTYPE_2_H__
-
-#if defined(TYPEMATRIX_PROTOTYPE_2)
-
-#include "conf_keyboard_defs.h"
 
 // Rows are A0-A7
 #define ROW_DDR  DDRA
@@ -93,15 +88,5 @@ inline void init_cols(void)
   PORTC   = C_COLS;
   PORTD   = D_COLS;
 }
-
-#define KB_LED_DDR  DDRF
-#define KB_LED_PORT PORTF
-#define KB_LEDS ((1<<0)|(1<<1)|(1<<2)|(1<<3))
-//#define LED_NUM    (1<<0)
-//#define LED_CAPS   (1<<1)
-//#define LED_SCRL   (1<<2)
-//#define LED_DV     (1<<3)
-
-#endif
 
 #endif // __TYPEMATRIX_PROTOTYPE_2_H__

@@ -1,39 +1,39 @@
-/* 
-               The HumbleHacker Keyboard Firmware Project
-                   Copyright © 2008, David Whetstone
+/*
+                   The HumbleHacker Keyboard Project
+                 Copyright © 2008-2010, David Whetstone
               david DOT whetstone AT humblehacker DOT com
- 
-  This file is a part of the HumbleHacker Keyboard Firmware project.  
- 
-  The HumbleHacker Keyboard Firmware project is free software: you can 
-  redistribute it and/or modify it under the terms of the GNU General 
-  Public License as published by the Free Software Foundation, either 
-  version 3 of the License, or (at your option) any later version.  
 
-  The HumbleHacker Keyboard Firmware project is distributed in the 
-  hope that it will be useful, but WITHOUT ANY WARRANTY; without even 
-  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
-  PURPOSE.  See the GNU General Public License for more details.  
+  This file is a part of the HumbleHacker Keyboard Firmware project.
 
-  You should have received a copy of the GNU General Public License 
-  along with The HumbleHacker Keyboard Firmware project.  If not, see 
+      The HumbleHacker Keyboard Project is free software: you can
+  redistribute it and/or modify it under the terms of the GNU General
+  Public License as published by the Free Software Foundation, either
+  version 3 of the License, or (at your option) any later version.
+
+      The HumbleHacker Keyboard Project is distributed in the
+  hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+  PURPOSE.  See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with The HumbleHacker Keyboard Firmware project.  If not, see
   <http://www.gnu.org/licenses/>.
- 
+
   --------------------------------------------------------------------
- 
-  This code is based on the keyboard demonstration application by 
-  Denver Gingerich.  
- 
+
+  This code is based on the keyboard demonstration application by
+  Denver Gingerich.
+
   Copyright 2008  Denver Gingerich (denver [at] ossguy [dot] com)
- 
+
   --------------------------------------------------------------------
- 
-  Gingerich's keyboard demonstration application is based on the MyUSB 
-  Mouse demonstration application, written by Dean Camera.  
- 
+
+  Gingerich's keyboard demonstration application is based on the MyUSB
+  Mouse demonstration application, written by Dean Camera.
+
              LUFA Library
      Copyright (C) Dean Camera, 2010.
-              
+
   dean [at] fourwalledcubicle [dot] com
       www.fourwalledcubicle.com
   --------------------------------------------------------------------
@@ -41,13 +41,13 @@
 
 /** \file
  *
- *  USB Device Descriptors, for library use when in USB device mode. Descriptors are special 
+ *  USB Device Descriptors, for library use when in USB device mode. Descriptors are special
  *  computer-readable structures which the host requests upon device enumeration, to determine
- *  the device's capabilities and functions.  
+ *  the device's capabilities and functions.
  */
 
 #include "Descriptors.h"
-#include "conf_keyboard_defs.h"
+#include "Board/Identifiers.h"
 
 
 /** HID class report descriptor. This is a special descriptor constructed with values from the
@@ -142,22 +142,22 @@ USB_Descriptor_HIDReport_Datatype_t ConsumerControlReport[] PROGMEM =
 USB_Descriptor_Device_t PROGMEM DeviceDescriptor =
 {
 	.Header                 = {.Size = sizeof(USB_Descriptor_Device_t), .Type = DTYPE_Device},
-		
+
 	.USBSpecification       = VERSION_BCD(01.10),
 	.Class                  = 0x00,
 	.SubClass               = 0x00,
 	.Protocol               = 0x00,
-				
+
 	.Endpoint0Size          = FIXED_CONTROL_ENDPOINT_SIZE,
-		
+
 	.VendorID               = 0x03EB,
 	.ProductID              = 0x2042,
 	.ReleaseNumber          = 0x0000,
-		
+
 	.ManufacturerStrIndex   = 0x01,
 	.ProductStrIndex        = 0x02,
 	.SerialNumStrIndex      = NO_DESCRIPTOR,
-		
+
 	.NumberOfConfigurations = FIXED_NUM_CONFIGURATIONS
 };
 
@@ -168,49 +168,49 @@ USB_Descriptor_Device_t PROGMEM DeviceDescriptor =
  */
 USB_Descriptor_Configuration_t PROGMEM ConfigurationDescriptor =
 {
-	.Config = 
+	.Config =
 		{
 			.Header                 = {.Size = sizeof(USB_Descriptor_Configuration_Header_t), .Type = DTYPE_Configuration},
 
 			.TotalConfigurationSize = sizeof(USB_Descriptor_Configuration_t),
 			.TotalInterfaces        = 1,
-				
+
 			.ConfigurationNumber    = 1,
 			.ConfigurationStrIndex  = NO_DESCRIPTOR,
-				
+
 			.ConfigAttributes       = (USB_CONFIG_ATTR_BUSPOWERED | USB_CONFIG_ATTR_SELFPOWERED),
-			
+
 			.MaxPowerConsumption    = USB_CONFIG_POWER_MA(100)
 		},
-		
-	.Interface = 
+
+	.Interface =
 		{
 			.Header                 = {.Size = sizeof(USB_Descriptor_Interface_t), .Type = DTYPE_Interface},
 
 			.InterfaceNumber        = 0x00,
 			.AlternateSetting       = 0x00,
-			
+
 			.TotalEndpoints         = 1,
-				
+
 			.Class                  = 0x03,
 			.SubClass               = 0x01,
 			.Protocol               = HID_BOOT_KEYBOARD_PROTOCOL,
-				
+
 			.InterfaceStrIndex      = NO_DESCRIPTOR
 		},
 
-	.KeyboardHID = 
-		{  
+	.KeyboardHID =
+		{
 			.Header                 = {.Size = sizeof(USB_HID_Descriptor_t), .Type = DTYPE_HID},
-			
+
 			.HIDSpec                = VERSION_BCD(01.11),
 			.CountryCode            = 0x00,
 			.TotalReportDescriptors = 1,
 			.HIDReportType          = DTYPE_Report,
 			.HIDReportLength        = sizeof(KeyboardReport)
 		},
-		
-	.KeyboardEndpoint = 
+
+	.KeyboardEndpoint =
 		{
 			.Header                 = {.Size = sizeof(USB_Descriptor_Endpoint_t), .Type = DTYPE_Endpoint},
 
@@ -228,7 +228,7 @@ USB_Descriptor_Configuration_t PROGMEM ConfigurationDescriptor =
 USB_Descriptor_String_t PROGMEM LanguageString =
 {
 	.Header                 = {.Size = USB_STRING_LEN(1), .Type = DTYPE_String},
-		
+
 	.UnicodeString          = {LANGUAGE_ID_ENG}
 };
 
@@ -238,9 +238,9 @@ USB_Descriptor_String_t PROGMEM LanguageString =
  */
 USB_Descriptor_String_t PROGMEM ManufacturerString =
 {
-	.Header                 = {.Size = USB_STRING_LEN(16), .Type = DTYPE_String},
-		
-	.UnicodeString          = L"Denver Gingerich"
+	.Header                 = {.Size = MANUFACTURER_NAME_LEN, .Type = DTYPE_String},
+
+	.UnicodeString          = MANUFACTURER_NAME
 };
 
 /** Product descriptor string. This is a Unicode string containing the product's details in human readable form,
@@ -249,9 +249,9 @@ USB_Descriptor_String_t PROGMEM ManufacturerString =
  */
 USB_Descriptor_String_t PROGMEM ProductString =
 {
-	.Header                 = {.Size = USB_STRING_LEN(18), .Type = DTYPE_String},
-		
-	.UnicodeString          = L"LUFA Keyboard Demo"
+	.Header                 = {.Size = PRODUCT_NAME_LEN, .Type = DTYPE_String},
+
+	.UnicodeString          = PRODUCT_NAME
 };
 
 /** This function is called by the library when in device mode, and must be overridden (see library "USB Descriptors"
@@ -294,7 +294,7 @@ uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex,
 					Size    = pgm_read_byte(&ProductString.Header.Size);
 					break;
 			}
-			
+
 			break;
 		case DTYPE_HID:
 			Address = (void*)&ConfigurationDescriptor.KeyboardHID;
@@ -305,7 +305,7 @@ uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex,
 			Size    = sizeof(KeyboardReport);
 			break;
 	}
-	
+
 	*DescriptorAddress = Address;
 	return Size;
 }

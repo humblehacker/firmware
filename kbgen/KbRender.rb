@@ -1,7 +1,24 @@
 #!/usr/bin/env ruby
-#
-#  Created by David Whetstone on 2007-03-28.
-#  Copyright (c) 2007. All rights reserved.
+##
+##                    The HumbleHacker Keyboard Project
+##                 Copyright ? 2008-2010, David Whetstone
+##               david DOT whetstone AT humblehacker DOT com
+##
+##  This file is a part of The HumbleHacker Keyboard Project.
+##
+##  The HumbleHacker Keyboard Project is free software: you can redistribute
+##  it and/or modify it under the terms of the GNU General Public License as
+##  published by the Free Software Foundation, either version 3 of the
+##  License, or (at your option) any later version.
+##
+##  The HumbleHacker Keyboard Project is distributed in the hope that it will
+##  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+##  Public License for more details.
+##
+##  You should have received a copy of the GNU General Public License along
+##  with The HumbleHacker Keyboard Project.  If not, see
+##  <http://www.gnu.org/licenses/>.
 
 require 'rubygems'
 require 'appscript'
@@ -22,7 +39,7 @@ class KBRender
               :with_properties => { :template => 'US Legal (Metric)'} )
     @ogDoc = @og.windows.first.get
     @og.windows.first.zoomed.set true
-    
+
     # Create the layers
     @layers = {}
     @kb.maps.each do |map|
@@ -34,10 +51,10 @@ class KBRender
     make_layer('Background', true)
     make_layer('Keyboard', true)
     make_layer('Mounts', true)
-    
+
     @fontAdj = 0
     @fontAdj = 2 if !@options[:showInternalIDs]
-    
+
     # Define special characters
     @special = {
       '{up}'        => { :text => '↑', :size => 14 + @fontAdj },
@@ -59,19 +76,19 @@ class KBRender
 
     replace_special(@kb.copyright)
   end
-  
+
   def make_layer(name, visible=false)
     lprops = { :name    => name,
-               :locked  => false, 
-               :prints  => true,  
+               :locked  => false,
+               :prints  => true,
                :visible => visible }
     layer = @og.make(:new => :layer,
                      :at => @ogDoc.canvases.end,
                      :with_properties => lprops)
     @layers[name] = layer
   end
-  
-  
+
+
   def render(show_overrides=:none)
     @show_overrides = show_overrides
     draw_headers
@@ -81,16 +98,16 @@ class KBRender
     @layers
     @show_overrides = :none
   end
-  
+
   def export(show_overrides=:none)
     @show_overrides = show_overrides
     # do the export
     @show_overrides = :none
   end
-  
+
   def draw_text(text, size, alignment, origin, layer)
     black = rgb_to_og(@kb.colors['Black'])
-    properties = 
+    properties =
     {
       :vertical_padding  => 0,
       :side_padding      => 0,
@@ -102,7 +119,7 @@ class KBRender
       :text_placement    => :center,
 
       :text =>
-      { 
+      {
         :text  => text,
         :size  => size + @fontAdj,
         :font  => 'ArialRoundedMTBold',
@@ -111,38 +128,38 @@ class KBRender
       }
     }
 
-    label = @og.make( :new             => :shape, 
+    label = @og.make( :new             => :shape,
                       :at              => @ogDoc.graphics.end,
                       :with_properties => properties )
     label.layer.set layer
     label.origin.set origin
     return label
   end
-  
+
 
   def draw_headers
     textBox = draw_text("Layout '#{@kb.layout.id}': Revision #{@kb.layout.rev}",
                         10, :right, [10000,0], @layers['Keyboard'])
-    baseline_origin =  [@kb.max.x - textBox.size.x.get + @@Offset.x, 
+    baseline_origin =  [@kb.max.x - textBox.size.x.get + @@Offset.x,
                         @kb.max.y + @@Offset.y + 0.5 * Keyboard::Scale]
     textBox.origin.set baseline_origin
 
     @kb.maps.each do |map|
       layer = @layers[map.id]
       textBox = draw_text("#{@kb.org} #{@kb.layout.id}-#{map.id}  #{@kb.platform}", 14,
-                          :left, [1 * Keyboard::Scale, 1 * Keyboard::Scale], 
+                          :left, [1 * Keyboard::Scale, 1 * Keyboard::Scale],
                           layer)
       foot = ''
       map.ids.each_index do |n|
-        foot += "Map '#{map.ids[n]}': Revision #{map.revs[n]}\n" 
+        foot += "Map '#{map.ids[n]}': Revision #{map.revs[n]}\n"
       end
       textBox = draw_text(foot, 10, :right, [10000,0], layer)
-      textBox.origin.set [@kb.max.x - textBox.size.x.get + @@Offset.x, 
+      textBox.origin.set [@kb.max.x - textBox.size.x.get + @@Offset.x,
                           @kb.max.y + @@Offset.y + 0.9 * Keyboard::Scale]
     end
     textBox = draw_text( @kb.copyright, 10, :left, [10000,0], @layers['Keyboard'])
     textBox.origin.set [1 * Keyboard::Scale, @kb.max.y + @@Offset.y + 0.5 * Keyboard::Scale]
-    
+
     baseline_origin[0] = 30.25
     baseline_origin[1] += 5
     shape = @og.make( :new => :shape,
@@ -150,49 +167,49 @@ class KBRender
                       :with_properties => { :double_stroke => true, :thickness => 4, :draws_shadow => false,
                                             :origin => baseline_origin, :size => [200, 64], :fill => :no_fill } )
     shape.layer.set @layers['Keyboard']
-    
+
     shape = @og.make( :new => :shape,
                       :at  => @ogDoc.graphics.end,
-                      :with_properties => 
-                      { 
-                        :text => 
+                      :with_properties =>
+                      {
+                        :text =>
                         [
-                          {:size => 10, :font => "DejaVuSans",      :text => "\n"}, 
-                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "LA"}, 
-                          {:size => 9,  :font => "DejaVuSans",      :text => ": Left Alt\n"}, 
-                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "LC"}, 
-                          {:size => 9,  :font => "DejaVuSans",      :text => ": Left Control\n"}, 
-                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "LS"}, 
-                          {:size => 9,  :font => "DejaVuSans",      :text => ": Left Shift\n"}, 
-                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "LG"}, 
+                          {:size => 10, :font => "DejaVuSans",      :text => "\n"},
+                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "LA"},
+                          {:size => 9,  :font => "DejaVuSans",      :text => ": Left Alt\n"},
+                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "LC"},
+                          {:size => 9,  :font => "DejaVuSans",      :text => ": Left Control\n"},
+                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "LS"},
+                          {:size => 9,  :font => "DejaVuSans",      :text => ": Left Shift\n"},
+                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "LG"},
                           {:size => 9,  :font => "DejaVuSans",      :text => ": Left GUI (Win)"}
                         ],
-                        :vertical_padding => 5, :autosizing => :vertically_only, 
-                        :draws_stroke => false, :double_stroke => true, 
-                        :thickness => 4, :draws_shadow => false, 
+                        :vertical_padding => 5, :autosizing => :vertically_only,
+                        :draws_stroke => false, :double_stroke => true,
+                        :thickness => 4, :draws_shadow => false,
                         :origin => [131, 465], :size => [101, 61], :fill => :no_fill
                       }
                     )
-                        
+
     shape = @og.make( :new => :shape,
                       :at  => @ogDoc.graphics.end,
-                      :with_properties => 
-                      { 
-                        :text => 
+                      :with_properties =>
+                      {
+                        :text =>
                         [
-                          {:size => 10, :font => "DejaVuSans-Bold", :text => "Legend\n"}, 
-                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "RA"}, 
-                          {:size => 9,  :font => "DejaVuSans",      :text => ": Right Alt\n"}, 
-                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "RC"}, 
-                          {:size => 9,  :font => "DejaVuSans",      :text => ": Right Control\n"}, 
-                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "RS"}, 
-                          {:size => 9,  :font => "DejaVuSans",      :text => ": Right Shift\n"}, 
-                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "RG"}, 
+                          {:size => 10, :font => "DejaVuSans-Bold", :text => "Legend\n"},
+                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "RA"},
+                          {:size => 9,  :font => "DejaVuSans",      :text => ": Right Alt\n"},
+                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "RC"},
+                          {:size => 9,  :font => "DejaVuSans",      :text => ": Right Control\n"},
+                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "RS"},
+                          {:size => 9,  :font => "DejaVuSans",      :text => ": Right Shift\n"},
+                          {:size => 9,  :font => "DejaVuSans-Bold", :text => "RG"},
                           {:size => 9,  :font => "DejaVuSans",      :text => ": Right GUI (Win)"}
                         ],
-                        :vertical_padding => 5, :autosizing => :vertically_only, 
-                        :draws_stroke => false, :double_stroke => true, 
-                        :thickness => 4, :draws_shadow => false, 
+                        :vertical_padding => 5, :autosizing => :vertically_only,
+                        :draws_stroke => false, :double_stroke => true,
+                        :thickness => 4, :draws_shadow => false,
                         :origin => [34, 465], :size => [101, 61], :fill => :no_fill
                       }
                     )
@@ -201,14 +218,14 @@ class KBRender
     # "}, {:size 9, :font "DejaVuSans-Bold", :text "RC"}, {:size 9, :font "DejaVuSans", :text ": Right Control
     # "}, {:size 9, :font "DejaVuSans-Bold", :text "RS"}, {:size 9, :font "DejaVuSans", :text ": Right Shift
     # "}, {:size 9, :font "DejaVuSans-Bold", :text "RG"}, {:size 9, :font "DejaVuSans", :text ": Right GUI (Win)"}}, vertical padding: 5, autosizing: vertically only, draws stroke: false, double stroke: true, thickness: 4, draws shadow: false, origin: {33.771835, 465.464386}, :size {103.685165, 61.000000}, fill: no fill}
-    #     make new shape at end of graphics with properties {vertical padding: 5, double stroke: true, thickness: 4, 
+    #     make new shape at end of graphics with properties {vertical padding: 5, double stroke: true, thickness: 4,
     #       draws shadow: false, origin: {30.252129, 464.747864}, :size {201.944901, 63.999950}, fill: no fill}
     #     assemble graphics -3 through -1
     #   end tell
     # end tell
-    
+
   end
-  
+
   def draw_keyboard
     showInt = @options[:showInternalIDs]
     black = rgb_to_og(@kb.colors['Black'])
@@ -227,10 +244,10 @@ class KBRender
             # draw background
             color = keydef.background != nil ? rgb_to_og(keydef.background) : white
             draw_background(keydef, color)
-            
+
             # draw border
             draw_border(keydef, keyboardLayer, black, true)
-            
+
             # maybe draw Internal ID
             draw_label(keydef, keydef.id, idLayer, :left, :bottom, brown) if showInt
           end
@@ -265,9 +282,9 @@ class KBRender
 
         # draw regular labels
         key.label.legends.each do |loc, legend|
-          case loc 
+          case loc
           when :topLeft, :topCenter, :topRight
-            placement = :top                  
+            placement = :top
           when :centerLeft, :center, :centerRight
             # :center... options are the same as :bottom... options
             # when :showInternalIDs is false
@@ -290,7 +307,7 @@ class KBRender
           legendColor = legend.color == nil ? color : rgb_to_og(legend.color)
           draw_label(keydef, legend.text, layer, alignment, placement, legendColor, legend.note)
         end
-        
+
         # draw Usage ID
         usageID = ''
         if key.usage != nil
@@ -325,24 +342,24 @@ class KBRender
       end
     end
   end
-  
+
   def draw_border(keydef, layer, color, shadow=false)
-    properties = 
+    properties =
     {
-      :origin        => (keydef.origin + @@Offset).to_a, 
+      :origin        => (keydef.origin + @@Offset).to_a,
       :size          => keydef.size.to_a,
       :fill          => :no_fill,
       :draws_shadow  => shadow,
       :corner_radius => 2,
       :stroke_color  => color
     }
-    shape = @og.make( :new             => :shape, 
+    shape = @og.make( :new             => :shape,
                       :at              => @ogDoc.graphics.end,
                       :with_properties => properties )
     shape.layer.set layer
-    
+
   end
-  
+
   def draw_mount(mount, keydef, layer)
     black = rgb_to_og(@kb.colors['Black'])
     spacing = @kb.layout.spacing
@@ -354,7 +371,7 @@ class KBRender
     padding = (subWidth - mount.width) / 2
     numMounts.times do |time|
       mountdef.origin.x += (time*(mount.width+padding+spacing)) + padding
-      properties = 
+      properties =
       {
         :origin => mountdef.origin.to_a,
         :size => mount.to_a,
@@ -368,9 +385,9 @@ class KBRender
       shape.layer.set layer
     end
   end
-  
+
   def replace_special(text)
-    if text =~ @specialRegex 
+    if text =~ @specialRegex
       replaceMe = text.match(@specialRegex)[0]
       if @special.has_key? replaceMe
         special = @special[replaceMe]
@@ -380,9 +397,9 @@ class KBRender
     end
     return nil
   end
-   
+
   def draw_label(keydef, label, layer, alignment, placement, color, note=nil)
-    properties = 
+    properties =
     {
       :vertical_padding  => 5,
       :draws_stroke      => false,
@@ -393,9 +410,9 @@ class KBRender
       :text_placement    => placement,
       :interline_spacing => -5.0,
       :side_padding      => (alignment==:center)?3:5,
-      
+
       :text =>
-      { 
+      {
         :text  => label,
         :size  => 9 + @fontAdj,
         :font  => 'ArialRoundedMTBold',
@@ -403,11 +420,11 @@ class KBRender
         :alignment => alignment
       }
     }
-    
+
     if note != nil
       properties[:notes] = {:text => note }
     end
-    
+
     special = replace_special(label)
     if special != nil
       properties[:text][:text] = label
@@ -415,17 +432,17 @@ class KBRender
       properties[:text][:size] = special[:size] if special.has_key? :size
     end
 
-    label = @og.make( :new             => :shape, 
+    label = @og.make( :new             => :shape,
                       :at              => @ogDoc.graphics.end,
                       :with_properties => properties )
     # WORKAROUND: setting interline_spacing using make :with_properties
     # doesn't seem to work
     if @options[:showInternalIDs]
-      label.interline_spacing.set -5.0 
+      label.interline_spacing.set -5.0
     end
     label.layer.set layer
   end
-  
+
   def draw_mounts
     return if @kb.layout.mount == nil
 
@@ -435,7 +452,7 @@ class KBRender
       if row != nil
         row.keydefs.to_a.each do |keydef|
           if keydef.null == false
-            
+
             # draw border
             draw_mount(mount, keydef, layer)
 
@@ -443,18 +460,18 @@ class KBRender
         end
       end
     end
-    
+
   end
-  
+
   def rgb_to_og(color)
     r = color[0..1].to_i(16).to_f
     g = color[2..3].to_i(16).to_f
     b = color[4..5].to_i(16).to_f
     return [r/0xff,g/0xff,b/0xff]
   end
-  
+
   def draw_background(keydef, color)
-    properties = 
+    properties =
     {
       :draws_stroke      => true,
       :draws_shadow      => false,
@@ -467,10 +484,10 @@ class KBRender
       :layer             => @bgLayer
     }
 
-    shape = @og.make( :new             => :shape, 
+    shape = @og.make( :new             => :shape,
                       :at              => @ogDoc.graphics.end,
                       :with_properties => properties )
     shape.layer.set @layers['Background']
   end
-  
+
 end

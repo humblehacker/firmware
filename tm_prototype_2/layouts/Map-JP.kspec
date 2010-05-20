@@ -1,3 +1,26 @@
+/*
+                    The HumbleHacker Keyboard Project
+                 Copyright ? 2008-2010, David Whetstone
+               david DOT whetstone AT humblehacker DOT com
+
+  This file is a part of The HumbleHacker Keyboard Project.
+
+  The HumbleHacker Keyboard Project is free software: you can redistribute
+  it and/or modify it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  The HumbleHacker Keyboard Project is distributed in the hope that it will
+  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+  Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with The HumbleHacker Keyboard Project.  If not, see
+  <http://www.gnu.org/licenses/>.
+
+*/
+
 KeyMap:JP base:US rev:57
 
   /* Row 2 */
@@ -15,8 +38,8 @@ KeyMap:JP base:US rev:57
   Key:2M Map:-_and_Underscore tl:"="    bl:"-"     tr:"£"  br:"ほ"
   Key:2N Map:=_and_+          tl:"__"   bl:"^"     tr:"々" br:"ㇸ"
   Key:2O Map:International3   tl:"¦"    bl:"¥"     tr:"￢" br:"–"
-                              
-  /* Row 3 */                 
+
+  /* Row 3 */
   Key:3B Map:q_and_Q          tl:"Q"               tr:"だ" br:"た"
   Key:3C Map:w_and_W          tl:"W"               tr:"で" br:"て"
   Key:3D Map:e_and_E          tl:"E"               tr:"ぃ" br:"い"
@@ -30,8 +53,8 @@ KeyMap:JP base:US rev:57
   Key:3M Map:[_and_{          tl:"`"    bl:"@"             br:"゛"
   Key:3N Map:]_and_}          tl:"{"    bl:"["     tr:"「" br:"゜"
   Key:3O Map:\_and_|          tl:"}"    bl:"]"     tr:"」" br:"む"
-                              
-  /* Row 4 */                 
+
+  /* Row 4 */
   Key:4B Map:a_and_A          tl:"A"                       br:"ち"
   Key:4C Map:s_and_S          tl:"S"                       br:"と"
   Key:4D Map:d_and_D          tl:"D"                       br:"し"
@@ -43,8 +66,8 @@ KeyMap:JP base:US rev:57
   Key:4K Map:l_and_L          tl:"L"                       br:"り"
   Key:4L Map:;_and_\:         tl:"+"    bl:";"     tr:"』" br:"れ"
   Key:4M Map:\'_and_\"        tl:"*"    bl:":"     tr:"ヶ" br:"け"
-                              
-  /* Row 5 */                 
+
+  /* Row 5 */
   Key:5B Map:z_and_Z          tl:"Z"               tr:"っ" br:"つ"
   Key:5C Map:x_and_X          tl:"X"                       br:"さ"
   Key:5D Map:c_and_C          tl:"C"                       br:"そ"
@@ -56,11 +79,11 @@ KeyMap:JP base:US rev:57
   Key:5K Map:._and_\>         tl:"&gt;" bl:"."     tr:"。" br:"る"
   Key:5L Map:/_and_?          tl:"?"    bl:""      tr:"・" br:"め"
   Key:5M Map:International1   tl:"_"    bl:"\\"    tr:"|"  br:"ろ"
-                              
-  /* Row 6 */                 
+
+  /* Row 6 */
   Key:6J Map:International2   tl:"カタカナ ひらがな ローマ字"
-                              
-  /* Row 7 */                 
+
+  /* Row 7 */
   /* Key:7A Map:Caps_Lock     tl:"Caps/Topl" bl:"英数 漢字番号" */
   Key:7C Map:International5   tl:"無変換"
   Key:7J Map:International4   tl:"前侯補 変換 (次侯補) 侯補"
