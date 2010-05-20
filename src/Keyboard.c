@@ -81,19 +81,16 @@ uint8_t g_num_lock, g_caps_lock, g_scrl_lock;
 static   KeyMap s_current_kb_map;
 static   KeyMap s_active_mode_kb_map;
 static   KeyMap s_default_kb_map;
-static uint32_t s_row_data[NUM_ROWS];
 
 /* EEPROM Data */
 //static KeyMap  EEMEM ee_persistent_map;
 
 /* Local functions */
-static              void get_active_cells(void);
 static              void scan_matrix(void);
 static              bool momentary_mode_engaged(void);
 static              bool modifier_keys_engaged(void);
 static              void check_mode_toggle(void);
 static              void process_keys(void);
-static              void fill_report(USB_KeyboardReport_Data_t* report);
 static              void set_momentary_mode(KeyMap mode_map);
 static         Modifiers get_modifier(Usage usage);
 static const KeyMapping* get_mapping(Modifiers modifiers, Cell cell, KeyMap keymap);
@@ -200,7 +197,7 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
 {
   keyboard_state__reset();
   scan_matrix();
-	get_active_cells();
+	keyboard_state__get_active_cells();
 
   if (!keyboard_state__is_error())
   {
@@ -215,8 +212,8 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
     process_keys();
   }
 	USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
-  fill_report(KeyboardReport);
-  *ReportSize = sizeof(USB_KeyboardReport_Data_t);
+
+  *ReportSize = keyboard_state__fill_report(KeyboardReport);
 
 	return false;
 }
@@ -238,9 +235,6 @@ void CALLBACK_HID_Device_ProcessHIDReport(USB_ClassInfo_HID_Device_t* const HIDI
 	g_scrl_lock = (*LEDReport & (1<<2));
 
   LEDs_ChangeLEDs(LED_CAPS|LED_SCRL|LED_NUM, *LEDReport);
-//led_set(LED_CAPS, g_caps_lock);
-//led_set(LED_SCRL, g_scrl_lock);
-//led_set(LED_NUM,  g_num_lock);
 }
 
 static
@@ -257,52 +251,8 @@ scan_matrix()
 
     // Place data on all column pins for active row into a single
     // 32 bit value.
-		s_row_data[row] = 0;
-    s_row_data[row] = read_row_data();
-  }
-}
-
-static
-void
-get_active_cells()
-{
-  uint8_t ncols;
-  // now process row/column data to get raw keypresses
-  for (uint8_t row = 0; row < NUM_ROWS; ++row)
-  {
-    ncols = 0;
-    for (uint8_t col = 0; col < NUM_COLS; ++col)
-    {
-      if (s_row_data[row] & (1UL << col))
-      {
-        if (g_kb_state.num_active_cells > MAX_ACTIVE_CELLS)
-        {
-          g_kb_state.error_roll_over = true;
-          return;
-        }
-        ++ncols;
-        g_kb_state.active_cells[g_kb_state.num_active_cells++] = MATRIX_CELL(row, col);
-      }
-    }
-
-    // if 2 or more keys pressed in a row, check for ghost-key
-    if (ncols > 1)
-    {
-      for (uint8_t irow = 0; irow < NUM_ROWS; ++irow)
-      {
-        if (irow == row)
-          continue;
-
-        // if any other row has a key pressed in the same column as any
-        // of the two or more keys pressed in the current row, we have a
-        // ghost-key condition.
-        if (s_row_data[row] & s_row_data[irow])
-        {
-          g_kb_state.error_roll_over = true;
-          return;
-        }
-      }
-    }
+		g_kb_state.row_data[row] = 0;
+    g_kb_state.row_data[row] = read_row_data();
   }
 }
 
@@ -446,49 +396,6 @@ process_keys()
       g_kb_state.modifiers |= target->modifiers;
       ++g_kb_state.num_keys;
     }
-  }
-}
-
-static
-void
-fill_report(USB_KeyboardReport_Data_t* report)
-{
-  uint8_t key;
-
-  if (keyboard_state__is_error())
-  {
-    report->Modifier = g_kb_state.modifiers;
-    for (key = 1; key < 7; ++key)
-      report->KeyCode[key] = USAGE_ID(HID_USAGE_ERRORROLLOVER);
-    return;
-  }
-
-  if (!keyboard_state__is_processing_macro())
-  {
-    report->Modifier = g_kb_state.modifiers;
-
-    for (key = 0; key < g_kb_state.num_keys; ++key)
-      report->KeyCode[key] = g_kb_state.keys[key];
-  }
-  else
-  {
-    // TODO: Macro processing
-#if 0
-    const Macro * macro = g_kb_state.macro;
-    MacroKey mkey;
-    mkey.mod.all = pgm_read_byte(&macro->keys[g_kb_state.macro_key_index].mod);
-    mkey.usage = pgm_read_word(&macro->keys[g_kb_state.macro_key_index].usage);
-    uint8_t num_macro_keys = pgm_read_byte(&macro->num_keys);
-    report->Modifier = g_kb_state.pre_macro_modifiers | mkey.mod.all;
-    report->KeyCode[0] = USAGE_ID(mkey.usage);
-    g_kb_state.macro_key_index++;
-    if (g_kb_state.macro_key_index >= num_macro_keys)
-    {
-      g_kb_state.macro = NULL;
-      g_kb_state.macro_key_index = 0;
-    }
-    return;
-#endif
   }
 }
 

@@ -35,23 +35,24 @@ enum {DEACTIVATED=((uint8_t)-1)};
 
 typedef struct
 {
+  uint32_t  row_data[NUM_ROWS];
   Modifiers modifiers;
-  Usage keys[MAX_KEYS];
-  uint8_t num_keys;
-  Cell active_cells[MAX_ACTIVE_CELLS];
-  uint8_t num_active_cells;
-  const MacroTarget *macro;
-  bool error_roll_over;
+  Usage     keys[MAX_KEYS];
+  uint8_t   num_keys;
+  Cell      active_cells[MAX_ACTIVE_CELLS];
+  uint8_t   num_active_cells;
+  const     MacroTarget *macro;
+  bool      error_roll_over;
 } KeyboardState;
 
 extern KeyboardState g_kb_state;
-extern uint8_t g_num_blocked_keys;
-extern uint8_t g_blocked_keys[MAX_ACTIVE_CELLS];
 
-void keyboard_state__reset(void);
+void    keyboard_state__reset(void);
 
-uint8_t   keyboard_state__is_error(void);
-uint8_t   keyboard_state__is_empty(void);
-uint8_t   keyboard_state__is_processing_macro(void);
+bool    keyboard_state__is_error(void);
+bool    keyboard_state__is_empty(void);
+void    keyboard_state__get_active_cells(void);
+uint8_t keyboard_state__fill_report(USB_KeyboardReport_Data_t *report);
+bool    keyboard_state__is_processing_macro(void);
 
 #endif // __KEYBOARD_STATE_H__
