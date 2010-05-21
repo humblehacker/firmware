@@ -265,13 +265,13 @@ ModifierCodes = { :L_CTRL => 'LC',   :L_SHFT => 'LS',   :L_ALT => 'LA',   :L_GUI
 
 def process_modifier(mod_text)
   case mod_text
-  when "left_alt", "alt"
+  when "left_alt"
     return Modifiers[:L_ALT]
-  when "left_control", "control"
+  when "left_control"
     return Modifiers[:L_CTRL]
-  when "left_shift", "shift"
+  when "left_shift"
     return Modifiers[:L_SHFT]
-  when "left_gui", "gui"
+  when "left_gui"
     return Modifiers[:L_GUI]
   when "right_alt"
     return Modifiers[:R_ALT]
@@ -284,7 +284,7 @@ def process_modifier(mod_text)
   when ""
     return 0
   else
-    raise UnknownModifierError.new(mod_text, @filenames)
+    raise "Unknown modifier #{mod_text}"
   end
 end
 
