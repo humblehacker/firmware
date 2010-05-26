@@ -87,10 +87,11 @@ MatrixDiscovery__scan_matrix()
   if (!stdout_is_empty())
     return;
 
-  struct
+  enum {MAX_VERTICES=20};
+  static struct
   {
     int row, col;
-  } vertices[20];
+  } vertices[MAX_VERTICES];
   int vertex = 0;
 
   int col_start = 0;
@@ -105,6 +106,8 @@ MatrixDiscovery__scan_matrix()
         vertices[vertex].row = row;
         vertices[vertex].col = col;
         ++vertex;
+        if (vertex > MAX_VERTICES)
+          break;
       }
     }
   }
@@ -120,9 +123,7 @@ uint8_t
 MatrixDiscovery__get_report(USB_KeyboardReport_Data_t *report)
 {
   if (!stdout_is_empty())
-  {
     write_output_char(report);
-  }
 
   return sizeof(USB_KeyboardReport_Data_t);
 }
