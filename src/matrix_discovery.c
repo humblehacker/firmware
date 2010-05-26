@@ -98,7 +98,7 @@ MatrixDiscovery__scan_matrix()
   struct
   {
     int row, col;
-  } vertices[10];
+  } vertices[20];
   int vertex = 0;
 
   for (int row = 0; row < registers_length; ++row)
@@ -117,10 +117,9 @@ MatrixDiscovery__scan_matrix()
   printf("Scan complete: found %d matches\n", vertex);
   for (int x = 0; x < vertex; ++x)
   {
-    Registers *rreg = &registers[vertices[x].row];
-    Registers *creg = &registers[vertices[x].col];
-    printf("%s, %s\n", rreg->name, creg->name);
+    printf("(%s, %s), ", registers[vertices[x].row].name, registers[vertices[x].col].name);
   }
+  printf("\n");
 }
 
 uint8_t
