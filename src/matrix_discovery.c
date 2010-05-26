@@ -68,8 +68,8 @@ MatrixDiscovery__activate_row(int row)
 {
   Registers *reg = &registers[row];
 
-  reg->ddr  |=  reg->bitmask;  // 1 = pin as output
-  reg->port &= ~reg->bitmask;  // 0 = drive pin low
+  DDR(reg)  |=  reg->bitmask;  // 1 = pin as output
+  PORT(reg) &= ~reg->bitmask;  // 0 = drive pin low
   _delay_us(20);
 }
 
@@ -83,10 +83,10 @@ MatrixDiscovery__check_column(int col)
   MCUCR &= ~PUD;
   _delay_us(20);
 
-  reg->ddr  &= ~reg->bitmask;  // 0 = pin as input
-  reg->port |=  reg->bitmask;  // 1 = activate pull-up
+  DDR(reg)  &= ~reg->bitmask;  // 0 = pin as input
+  PORT(reg) |=  reg->bitmask;  // 1 = activate pull-up
 
-  return (~reg->pin) & reg->bitmask;
+  return (~PIN(reg)) & reg->bitmask;
 }
 
 void

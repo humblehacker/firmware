@@ -189,7 +189,7 @@ ERBSRC = $(KBGEN_DIR)/templates/binding.erb.c    \
 	 $(KBGEN_DIR)/templates/hid_usages.erb.h \
 	 $(KBGEN_DIR)/templates/KeyMap.erb.c     \
 	 $(KBGEN_DIR)/templates/KeyMap.erb.h     \
-	 $(KBGEN_DIR)/templates/keymaps.erb.cpp  \
+	 $(KBGEN_DIR)/templates/keymaps.erb.c    \
 	 $(KBGEN_DIR)/templates/keymaps.erb.h    \
 	 $(KBGEN_DIR)/templates/matrix.erb.h     
 

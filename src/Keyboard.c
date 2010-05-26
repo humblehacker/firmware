@@ -94,7 +94,7 @@ int main(void)
 	{
 		HID_Device_USBTask(&Keyboard_HID_Interface);
 #ifdef MATRIX_DISCOVERY_MODE
-//  MatrixDiscovery__scan_matrix();
+    MatrixDiscovery__scan_matrix();
 #endif
 		USB_USBTask();
 	}

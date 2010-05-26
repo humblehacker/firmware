@@ -1,10 +1,6 @@
 #include "registers.h"
 #include "matrix_discovery_defs.h"
 
-#define PIN(x)  _SFR_IO8(x)
-#define DDR(x)  _SFR_IO8(x)
-#define PORT(x) _SFR_IO8(x)
-
 #define vPINA  0x00
 #define vDDRA  0x01
 #define vPORTA 0x02
