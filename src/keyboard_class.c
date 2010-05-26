@@ -32,14 +32,7 @@
 #include "binding.c"
 #include "active_keys.h"
 
-static Modifiers get_modifier(Usage usage);
-
-#define NUM_MODIFIERS 8
-#define MAX_KEYS      6
-#define MAX_ACTIVE_CELLS (MAX_KEYS + NUM_MODIFIERS)
-//#define MAX_ACTIVE_CELLS (MAX_KEYS + NUM_MODE_KEYS + NUM_MODIFIERS)
-
-typedef struct
+struct
 {
   uint32_t                  row_data[NUM_ROWS];
   uint8_t                   num_keys;
@@ -50,86 +43,69 @@ typedef struct
   KeyMap                    selected_keymap;
   KeyMap                    default_keymap;
   USB_KeyboardReport_Data_t report;
-} Keyboard;
+} kb;
 
-Keyboard keyboard;
+static void    reset(void);
 
-static void      Keyboard__reset(void);
+static void    scan_matrix(void);
 
-static void      Keyboard__scan_matrix(void);
+static uint8_t fill_report(USB_KeyboardReport_Data_t *report);
+static bool    is_processing_macro(void);
 
-static bool      Keyboard__is_error(void);
-static uint8_t   Keyboard__fill_report(USB_KeyboardReport_Data_t *report);
-static bool      Keyboard__is_processing_macro(void);
+static bool    momentary_mode_engaged(void);
+static bool    modifier_keys_engaged(void);
+static void    maybe_toggle_mode(void);
+static void    process_keys(void);
+static void    toggle_map(KeyMap mode_map);
 
-static bool      Keyboard__momentary_mode_engaged(void);
-static bool      Keyboard__modifier_keys_engaged(void);
-static void      Keyboard__maybe_toggle_mode(void);
-static void      Keyboard__process_keys(void);
-static void      Keyboard__toggle_map(KeyMap mode_map);
-
-static void      Keyboard__update_bindings(void);
-static void      Keyboard__init_active_keys(void);
-static BoundKey* Keyboard__first_active_key(void);
-static BoundKey* Keyboard__next_active_key(void);
+static void    update_bindings(void);
+static void    init_active_keys(void);
 
 void
 Keyboard__init()
 {
   init_cols();
 
-  keyboard.default_keymap = (KeyMap) pgm_read_word(&kbd_map_mx_default);
-  keyboard.selected_keymap = keyboard.default_keymap;
-  keyboard.active_keymap = NULL;
+  kb.default_keymap  = (KeyMap) pgm_read_word(&kbd_map_mx_default);
+  kb.selected_keymap = kb.default_keymap;
+  kb.active_keymap   = NULL;
 
-  Keyboard__reset();
+  reset();
 }
 
 void
-Keyboard__reset()
+reset()
 {
-  ActiveKeys__reset(&keyboard.active_keys);
+  ActiveKeys__reset(&kb.active_keys);
+  memset(&kb.report, 0, sizeof(kb.report));
 
-  keyboard.num_keys = 0;
-
-
-  memset(&keyboard.report, 0, sizeof(keyboard.report));
-
-  keyboard.error_roll_over = false;
-
-  keyboard.active_keymap = keyboard.selected_keymap;
-}
-
-bool
-Keyboard__is_error()
-{
-  return keyboard.error_roll_over;
+  kb.num_keys        = 0;
+  kb.error_roll_over = false;
+  kb.active_keymap   = kb.selected_keymap;
 }
 
 uint8_t
 Keyboard__get_report(USB_KeyboardReport_Data_t *report)
 {
-  Keyboard__reset();
-  Keyboard__scan_matrix();
-	Keyboard__init_active_keys();
+  reset();
+  scan_matrix();
+	init_active_keys();
 
-  if (!keyboard.error_roll_over)
+  if (!kb.error_roll_over)
   {
     do
-      keyboard_update_bindings();
-    while (keyboard.momentary_mode_engaged()
-        || keyboard.modifier_keys_engaged());
-    Keyboard__maybe_toggle_mode();
-    Keyboard__process_keys();
+      update_bindings();
+    while (momentary_mode_engaged() || modifier_keys_engaged());
+    maybe_toggle_mode();
+    process_keys();
   }
 
-  return Keyboard__fill_report(report);
+  return fill_report(report);
 }
 
 void
-Keyboard__scan_matrix()
+scan_matrix()
 {
-  init_cols();
   for (uint8_t row = 0; row < NUM_ROWS; ++row)
   {
     activate_row(row);
@@ -137,26 +113,25 @@ Keyboard__scan_matrix()
     // Insert NOPs for synchronization
     _delay_us(20);
 
-    // Place data on all column pins for active row into a single
-    // 32 bit value.
-		keyboard.row_data[row] = 0;
-    keyboard.row_data[row] = read_row_data();
+    // Place data on all column pins for active row
+    // into a single  32 bit value.
+    kb.row_data[row] = read_row_data();
   }
 }
 
 void
-Keyboard__update_bindings(void)
+update_bindings(void)
 {
-  for (BoundKey* key = ActiveKeys__first(&keyboard.active_keys);
-       key;      key = ActiveKeys__next(&keyboard.active_keys))
+  for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
+       key;      key = ActiveKeys__next(&kb.active_keys))
   {
-    BoundKey__update_binding(key, keyboard.report.Modifier, keyboard.active_keymap);
+    BoundKey__update_binding(key, kb.report.Modifier, kb.active_keymap);
   }
 }
 
 
 void
-Keyboard__init_active_keys()
+init_active_keys()
 {
   uint8_t ncols;
   // now process row/column data to get raw keypresses
@@ -165,11 +140,11 @@ Keyboard__init_active_keys()
     ncols = 0;
     for (uint8_t col = 0; col < NUM_COLS; ++col)
     {
-      if (keyboard.row_data[row] & (1UL << col))
+      if (kb.row_data[row] & (1UL << col))
       {
-        if (!ActiveKeys__add_cell(&keyboard.active_keys, MATRIX_CELL(row, col)))
+        if (!ActiveKeys__add_cell(&kb.active_keys, MATRIX_CELL(row, col)))
         {
-          keyboard.error_roll_over = true;
+          kb.error_roll_over = true;
           return;
         }
         ++ncols;
@@ -187,9 +162,9 @@ Keyboard__init_active_keys()
         // if any other row has a key pressed in the same column as any
         // of the two or more keys pressed in the current row, we have a
         // ghost-key condition.
-        if (keyboard.row_data[row] & keyboard.row_data[irow])
+        if (kb.row_data[row] & kb.row_data[irow])
         {
-          keyboard.error_roll_over = true;
+          kb.error_roll_over = true;
           return;
         }
       }
@@ -198,17 +173,17 @@ Keyboard__init_active_keys()
 }
 
 bool
-Keyboard__momentary_mode_engaged()
+momentary_mode_engaged()
 {
-  for (BoundKey* key = ActiveKeys__first(&keyboard.active_keys);
-       key;      key = ActiveKeys__next(&keyboard.active_keys))
+  for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
+       key;      key = ActiveKeys__next(&kb.active_keys))
   {
     if (key->binding->kind == MODE)
     {
       ModeTarget *target = (ModeTarget*)key->binding->target;
       if (target->type == MOMENTARY)
       {
-        keyboard.active_keymap = target->mode_map;
+        kb.active_keymap = target->mode_map;
         BoundKey__deactivate(key);
         return true;
       }
@@ -218,11 +193,11 @@ Keyboard__momentary_mode_engaged()
 }
 
 bool
-Keyboard__modifier_keys_engaged()
+modifier_keys_engaged()
 {
   Modifiers active_modifiers = NONE;
-  for (BoundKey* key = ActiveKeys__first(&keyboard.active_keys);
-       key;      key = ActiveKeys__next(&keyboard.active_keys))
+  for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
+       key;      key = ActiveKeys__next(&kb.active_keys))
   {
     if (key->binding->kind == MAP)
     {
@@ -235,31 +210,31 @@ Keyboard__modifier_keys_engaged()
       }
     }
   }
-  keyboard.report.Modifier |= active_modifiers;
+  kb.report.Modifier |= active_modifiers;
   return active_modifiers != NONE;
 }
 
 void
-Keyboard__toggle_map(KeyMap mode_map)
+toggle_map(KeyMap mode_map)
 {
-  if (keyboard.selected_keymap == mode_map)
-    keyboard.selected_keymap = keyboard.default_keymap;
+  if (kb.selected_keymap == mode_map)
+    kb.selected_keymap = kb.default_keymap;
   else
-    keyboard.selected_keymap = mode_map;
+    kb.selected_keymap = mode_map;
 }
 
 void
-Keyboard__maybe_toggle_mode(void)
+maybe_toggle_mode(void)
 {
-  for (BoundKey* key = ActiveKeys__first(&keyboard.active_keys);
-       key;      key = ActiveKeys__next(&keyboard.active_keys))
+  for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
+       key;      key = ActiveKeys__next(&kb.active_keys))
   {
     if (key->binding->kind == MODE)
     {
       ModeTarget *target = (ModeTarget*)key->binding->target;
       if (target->type == TOGGLE)
       {
-        Keyboard__toggle_map(target->mode_map);
+        toggle_map(target->mode_map);
         BoundKey__deactivate(key);
         return;
       }
@@ -268,34 +243,34 @@ Keyboard__maybe_toggle_mode(void)
 }
 
 void
-Keyboard__process_keys()
+process_keys()
 {
-  for (BoundKey* key = ActiveKeys__first(&keyboard.active_keys);
-       key;      key = ActiveKeys__next(&keyboard.active_keys))
+  for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
+       key;      key = ActiveKeys__next(&kb.active_keys))
   {
     if (key->binding->kind == MAP)
     {
       const MapTarget *target = (const MapTarget*)key->binding->target;
-      keyboard.report.KeyCode[keyboard.num_keys] = target->usage;
-      keyboard.report.Modifier &= ~key->binding->premods;
-      keyboard.report.Modifier |= target->modifiers;
-      ++keyboard.num_keys;
+      kb.report.KeyCode[kb.num_keys] = target->usage;
+      kb.report.Modifier &= ~key->binding->premods;
+      kb.report.Modifier |= target->modifiers;
+      ++kb.num_keys;
     }
   }
 }
 
 uint8_t
-Keyboard__fill_report(USB_KeyboardReport_Data_t *report)
+fill_report(USB_KeyboardReport_Data_t *report)
 {
-  if (Keyboard__is_error())
+  if (kb.error_roll_over)
   {
-    report->Modifier = keyboard.report.Modifier;
+    report->Modifier = kb.report.Modifier;
     for (uint8_t key = 1; key < 7; ++key)
       report->KeyCode[key] = USAGE_ID(HID_USAGE_ERRORROLLOVER);
   }
-  else if (!Keyboard__is_processing_macro())
+  else if (!is_processing_macro())
   {
-    memcpy(report, &keyboard.report, sizeof(keyboard.report));
+    memcpy(report, &kb.report, sizeof(kb.report));
   }
   else
   {
@@ -320,7 +295,7 @@ Keyboard__fill_report(USB_KeyboardReport_Data_t *report)
 }
 
 bool
-Keyboard__is_processing_macro()
+is_processing_macro()
 {
   return false;
 #if 0 // FIXME
