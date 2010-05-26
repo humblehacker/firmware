@@ -15,9 +15,9 @@ MatrixDiscovery self;
 
 extern const USB_KeyboardReport_Data_t ascii_table[] PROGMEM;
 
-static void MatrixDiscovery__write_output_char(USB_KeyboardReport_Data_t *report);
-static void MatrixDiscovery__activate_row(int row);
-static bool MatrixDiscovery__check_column(int col);
+static void write_output_char(USB_KeyboardReport_Data_t *report);
+static void activate_row(int row);
+static bool check_column(int col);
 
 void
 MatrixDiscovery__init()
@@ -31,7 +31,7 @@ MatrixDiscovery__init()
 }
 
 void
-MatrixDiscovery__write_output_char(USB_KeyboardReport_Data_t *report)
+write_output_char(USB_KeyboardReport_Data_t *report)
 {
   if (self.send_empty_report)
   {
@@ -44,27 +44,23 @@ MatrixDiscovery__write_output_char(USB_KeyboardReport_Data_t *report)
   if (!ch)
     return;
 
-//if (ch == '\\')
-//{
-//  switch ((ch = popchar()))
-//  {
-//  case 'n':
-//    ch = (char)10; break;
-//  case 't':
-//    ch = (char)9;  break;
-//  case 'b':
-//    ch = (char)8;  break;
-//  case '\\':
-//    break;
-//  }
-//}
-
   memcpy_P(report, &ascii_table[(uint8_t)ch], sizeof(USB_KeyboardReport_Data_t));
   self.send_empty_report = true;
 }
 
 void
-MatrixDiscovery__activate_row(int row)
+reset_pins()
+{
+  PORTA |= PORTA_MASK;
+  PORTB |= PORTB_MASK;
+  PORTC |= PORTC_MASK;
+  PORTD |= PORTD_MASK;
+  PORTE |= PORTE_MASK;
+  PORTF |= PORTF_MASK;
+}
+
+void
+activate_row(int row)
 {
   Registers *reg = &registers[row];
 
@@ -74,14 +70,9 @@ MatrixDiscovery__activate_row(int row)
 }
 
 bool
-MatrixDiscovery__check_column(int col)
+check_column(int col)
 {
   Registers *reg = &registers[col];
-
-  MCUCR |= PUD;
-  _delay_us(20);
-  MCUCR &= ~PUD;
-  _delay_us(20);
 
   DDR(reg)  &= ~reg->bitmask;  // 0 = pin as input
   PORT(reg) |=  reg->bitmask;  // 1 = activate pull-up
@@ -105,8 +96,9 @@ MatrixDiscovery__scan_matrix()
   {
     for (int col = 0; col < registers_length; ++col)
     {
-      MatrixDiscovery__activate_row(row);
-      if (row != col && MatrixDiscovery__check_column(col))
+      reset_pins();
+      activate_row(row);
+      if (row != col && check_column(col))
       {
         vertices[vertex].row = row;
         vertices[vertex].col = col;
@@ -114,12 +106,12 @@ MatrixDiscovery__scan_matrix()
       }
     }
   }
-  printf("Scan complete: found %d matches\n", vertex);
-  for (int x = 0; x < vertex; ++x)
+  if (vertex)
   {
-    printf("(%s, %s), ", registers[vertices[x].row].name, registers[vertices[x].col].name);
+    for (int x = 0; x < vertex; ++x)
+      printf("(%s, %s), ", registers[vertices[x].row].name, registers[vertices[x].col].name);
+    printf("\n");
   }
-  printf("\n");
 }
 
 uint8_t
@@ -127,7 +119,7 @@ MatrixDiscovery__get_report(USB_KeyboardReport_Data_t *report)
 {
   if (!stdout_is_empty())
   {
-    MatrixDiscovery__write_output_char(report);
+    write_output_char(report);
   }
 
   return sizeof(USB_KeyboardReport_Data_t);
