@@ -3,7 +3,7 @@
 static int hid_putc(char, FILE*);
 static FILE buf_stdout = FDEV_SETUP_STREAM(hid_putc, NULL, _FDEV_SETUP_WRITE);
 
-#define OUTPUT_BUFSIZE 128
+#define OUTPUT_BUFSIZE 256
 char output_buffer[OUTPUT_BUFSIZE];
 uint8_t current_pos;
 uint8_t end_pos;
