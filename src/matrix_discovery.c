@@ -18,6 +18,7 @@ extern const USB_KeyboardReport_Data_t ascii_table[] PROGMEM;
 static void write_output_char(USB_KeyboardReport_Data_t *report);
 static void activate_row(int row);
 static bool check_column(int col);
+static void reset_pins(void);
 
 void
 MatrixDiscovery__init()
@@ -27,7 +28,7 @@ MatrixDiscovery__init()
   _delay_ms(15000);
   printf("The HumbleHacker Keyboard firmware\n");
   printf("------ Matrix Discovery Mode -----\n\n");
-  printf("Press and hold 'ESC'\n");
+  printf("Press any key to find out which PORT/PIN it is connected to.\n");
 }
 
 void
@@ -92,9 +93,10 @@ MatrixDiscovery__scan_matrix()
   } vertices[20];
   int vertex = 0;
 
+  int col_start = 0;
   for (int row = 0; row < registers_length; ++row)
   {
-    for (int col = 0; col < registers_length; ++col)
+    for (int col = col_start++; col < registers_length; ++col)
     {
       reset_pins();
       activate_row(row);
