@@ -95,26 +95,32 @@ MatrixDiscovery__scan_matrix()
   if (!stdout_is_empty())
     return;
 
-  for (int attempt = 0; attempt < 1; ++attempt)
+  struct
   {
-    for (int row = 0; row < registers_length; ++row)
+    int row, col;
+  } vertices[10];
+  int vertex = 0;
+
+  for (int row = 0; row < registers_length; ++row)
+  {
+    for (int col = 0; col < registers_length; ++col)
     {
-      for (int col = 0; col < registers_length; ++col)
+      MatrixDiscovery__activate_row(row);
+      if (row != col && MatrixDiscovery__check_column(col))
       {
-        MatrixDiscovery__activate_row(row);
-        Registers *rreg = &registers[row];
-        if (row != col && MatrixDiscovery__check_column(col))
-        {
-          Registers *creg = &registers[col];
-          printf("Found!\n");
-          printf("\tRow:%d %s\n", row, rreg->name);
-          printf("\tCol:%d %s\n", col, creg->name);
-        }
+        vertices[vertex].row = row;
+        vertices[vertex].col = col;
+        ++vertex;
       }
     }
   }
-
-  printf("Scan complete\n");
+  printf("Scan complete: found %d matches\n", vertex);
+  for (int x = 0; x < vertex; ++x)
+  {
+    Registers *rreg = &registers[vertices[x].row];
+    Registers *creg = &registers[vertices[x].col];
+    printf("%s, %s\n", rreg->name, creg->name);
+  }
 }
 
 uint8_t
