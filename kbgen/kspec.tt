@@ -78,7 +78,11 @@ grammar KSpec
           raise "Error: base map '#{base.ident.text_value}' has not been defined"
         end
         kb.maps[ident.text_value] = map
-        keys.elements.each {|e| key = e.content; map.keys[key.location] = key}
+        begin
+          keys.elements.each {|e| key = e.content; map.keys[key.location] = key}
+        rescue Exception => e
+          raise e.exception("#{e} while processing keymap '#{ident.text_value}'")
+        end
       end
     }
   end

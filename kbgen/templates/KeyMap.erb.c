@@ -24,7 +24,7 @@
 #include "<%= output.path.sub(/\.c$/, '.h')%>"
 #include "hid_usages.h"
 
-const KeyBindingArray kbd_map_<%=kbIdentifier%>_mx[] PROGMEM =
+const KeyBindingArray kbd_map_<%=kbIdentifier%>_mx[] =
 {
 <% lastcol = flippedMatrix.count
    flippedMatrix.each_index do |iCol| %>
@@ -45,5 +45,5 @@ const KeyBindingArray kbd_map_<%=kbIdentifier%>_mx[] PROGMEM =
 };
 
 <% if $keyboard.defaultMap == keymap.id %>
-const KeyMap kbd_map_mx_default PROGMEM = &kbd_map_<%=kbIdentifier%>_mx[0];
+const KeyMap kbd_map_mx_default = &kbd_map_<%=kbIdentifier%>_mx[0];
 <% end %>

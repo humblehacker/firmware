@@ -62,7 +62,7 @@ UsagePage:Keyboard_and_Keypad id:0x07
     Usage:8_and_* id:0x25
     Usage:9_and_( id:0x26
     Usage:0_and_) id:0x27
-    Usage:Return_(ENTER) id:0x28
+    Usage:Return_or_Enter id:0x28
     Usage:ESCAPE id:0x29
     Usage:Backspace id:0x2a
     Usage:Tab id:0x2b
@@ -72,7 +72,7 @@ UsagePage:Keyboard_and_Keypad id:0x07
     Usage:[_and_{ id:0x2f
     Usage:]_and_} id:0x30
     Usage:\_and_| id:0x31
-    Usage:Non-US_#_and_~ id:0x32
+    Usage:NonUS_#_and_~ id:0x32
     Usage:;_and_\: id:0x33
     Usage:\'_and_\" id:0x34
     Usage:`_and_~ id:0x35
@@ -122,7 +122,7 @@ UsagePage:Keyboard_and_Keypad id:0x07
     Usage:Keypad_9_and_PageUp id:0x61
     Usage:Keypad_0_and_Insert id:0x62
     Usage:Keypad_._and_Delete id:0x63
-    Usage:Non-US_\_and_| id:0x64
+    Usage:NonUS_\_and_| id:0x64
     Usage:Application id:0x65
     Usage:Keyboard_Power id:0x66
     Usage:Keypad_= id:0x67
@@ -208,13 +208,13 @@ UsagePage:Keyboard_and_Keypad id:0x07
     Usage:Keypad_XOR id:0xc2
     Usage:Keypad_^ id:0xc3
     Usage:Keypad_% id:0xc4
-    Usage:Keypad_< id:0xc5
-    Usage:Keypad_> id:0xc6
+    Usage:Keypad_\< id:0xc5
+    Usage:Keypad_\> id:0xc6
     Usage:Keypad_& id:0xc7
     Usage:Keypad_&& id:0xc8
     Usage:Keypad_| id:0xc9
     Usage:Keypad_|| id:0xca
-    Usage:Keypad_: id:0xcb
+    Usage:Keypad_\: id:0xcb
     Usage:Keypad_# id:0xcc
     Usage:Keypad_Space id:0xcd
     Usage:Keypad_@ id:0xce

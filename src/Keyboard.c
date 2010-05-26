@@ -47,7 +47,12 @@
 
 #include <assert.h>
 #include "Keyboard.h"
+#ifndef MATRIX_DISCOVERY_MODE
 #include "keyboard_class.h"
+#else
+#include "matrix_discovery.h"
+#endif
+
 
 /** Buffer to hold the previously generated Keyboard HID report, for comparison purposes inside the HID class driver. */
 uint8_t PrevKeyboardHIDReportBuffer[sizeof(USB_KeyboardReport_Data_t)];
@@ -88,6 +93,9 @@ int main(void)
 	for (;;)
 	{
 		HID_Device_USBTask(&Keyboard_HID_Interface);
+#ifdef MATRIX_DISCOVERY_MODE
+//  MatrixDiscovery__scan_matrix();
+#endif
 		USB_USBTask();
 	}
 }
@@ -107,7 +115,11 @@ void SetupHardware()
 	USB_Init();
 
   /* Task init */
+#ifndef MATRIX_DISCOVERY_MODE
   Keyboard__init();
+#else
+  MatrixDiscovery__init();
+#endif
 
   g_num_lock = g_caps_lock = g_scrl_lock = 0;
 
@@ -173,26 +185,14 @@ void EVENT_USB_Device_StartOfFrame(void)
 bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo, uint8_t* const ReportID,
                                          const uint8_t ReportType, void* ReportData, uint16_t* ReportSize)
 {
-  Keyboard__reset();
-  Keyboard__scan_matrix();
-	Keyboard__init_active_keys();
+  USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
+#ifndef MATRIX_DISCOVERY_MODE
+  *ReportSize = Keyboard__get_report(KeyboardReport);
+#else
+  *ReportSize = MatrixDiscovery__get_report(KeyboardReport);
+#endif
 
-  if (!Keyboard__is_error())
-  {
-    loop:
-    Keyboard__update_bindings();
-    if (Keyboard__momentary_mode_engaged())
-      goto loop;
-    if (Keyboard__modifier_keys_engaged())
-      goto loop;
-    Keyboard__check_mode_toggle();
-    Keyboard__process_keys();
-  }
-
-	USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
-  *ReportSize = Keyboard__fill_report(KeyboardReport);
-
-	return false;
+  return false;
 }
 
 /** HID class driver callback function for the processing of HID reports from the host.

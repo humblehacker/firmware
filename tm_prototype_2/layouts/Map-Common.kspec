@@ -50,7 +50,7 @@ KeyMap:Common rev:203
 
         /* Row 4 */
         Key:4A Map:Left_Shift                                 tl:"Shift"
-        Key:4G Map:Return_(ENTER)                             tl:"Enter"
+        Key:4G Map:Return_or_Enter                            tl:"Enter"
         Key:4N Map:Right_Shift                                tl:"Shift"
         Key:4O Map:Caps_Lock                                  tl:"Caps"
 

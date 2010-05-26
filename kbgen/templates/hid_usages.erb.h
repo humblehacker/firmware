@@ -49,5 +49,45 @@ typedef enum
 
 } Usage;
 
+typedef enum
+{
+  NONE  = 0,
+  L_CTL = (1<<0),
+  L_SHF = (1<<1),
+  L_ALT = (1<<2),
+  L_GUI = (1<<3),
+  R_CTL = (1<<4),
+  R_SHF = (1<<5),
+  R_ALT = (1<<6),
+  R_GUI = (1<<7),
+} Modifiers;
+
+static inline
+Modifiers
+get_modifier(Usage usage)
+{
+  switch(usage)
+  {
+  case HID_USAGE_LEFT_CONTROL:
+    return L_CTL;
+  case HID_USAGE_LEFT_SHIFT:
+    return L_SHF;
+  case HID_USAGE_LEFT_ALT:
+    return L_ALT;
+  case HID_USAGE_LEFT_GUI:
+    return L_GUI;
+  case HID_USAGE_RIGHT_CONTROL:
+    return R_CTL;
+  case HID_USAGE_RIGHT_SHIFT:
+    return R_SHF;
+  case HID_USAGE_RIGHT_ALT:
+    return R_ALT;
+  case HID_USAGE_RIGHT_GUI:
+    return R_GUI;
+  default:
+    return NONE;
+  }
+}
+
 #endif /* __HIDUSAGETABLES_H__ */
 

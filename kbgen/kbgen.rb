@@ -88,7 +88,6 @@ def init(filename, options)
     keymapIdentifier = normalize_filename("#{map.id}")
     $keymapIDs[map.id] = keymapIdentifier
   end
-
 end
 
 # Create header and source files for maps
@@ -155,6 +154,10 @@ opts = OptionParser.new do |opts|
     $options[:debug] = true
     puts "Debug mode enabled"
   end
+  opts.on("", "--hid-only", "only generate hid usage tables") do |hid_only|
+    $options[:hid_only] = true
+    puts "Only HID Usage tables will be generated"
+  end
   opts.on("-O [OUTDIR]") do |path|
     $options[:outdir] = path
   end
@@ -171,7 +174,9 @@ filename = opts.default_argv[0]
 
 begin
   init(filename, $options)
+
   generate("hid_usages.h", binding)
+  exit 0 if $options[:hid_only]
   generate("matrix.h", binding)
   generate("binding.h", binding)
   generate("binding.c", binding)

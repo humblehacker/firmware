@@ -58,6 +58,9 @@
 # To rebuild project do "make clean" then "make all".
 #----------------------------------------------------------------------------
 
+# Matrix discovery mode
+MATRIX_MODE = 1
+
 
 # MCU name
 MCU = at90usb1287
@@ -131,15 +134,7 @@ LAYOUTS = ./layouts
 # TODO: hardware dependent
 LAYOUT_FILE = $(LAYOUTS)/Keyboard.kspec
 
-
-
-# List C source files here. (C dependencies are automatically generated.)
-SRC =   $(SRCDIR)/Keyboard.c                                       \
-	$(SRCDIR)/Descriptors.c                                    \
-	$(SRCDIR)/keyboard_class.c                                 \
-	$(SRCDIR)/bound_key.c                                      \
-	$(GENERATED)/keymaps.c                                     \
-	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/DevChapter9.c       \
+LUFA_SRC = $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/DevChapter9.c    \
 	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Endpoint.c          \
 	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Host.c              \
 	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/HostChapter9.c      \
@@ -151,7 +146,28 @@ SRC =   $(SRCDIR)/Keyboard.c                                       \
 	$(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/ConfigDescriptor.c \
 	$(LUFA_PATH)/LUFA/Drivers/USB/Class/Device/HID.c           \
 	$(LUFA_PATH)/LUFA/Drivers/USB/Class/Host/HID.c             \
-	$(LUFA_PATH)/LUFA/Drivers/USB/Class/Host/HIDParser.c       \
+	$(LUFA_PATH)/LUFA/Drivers/USB/Class/Host/HIDParser.c       
+
+# List C source files here. (C dependencies are automatically generated.)
+ifndef MATRIX_MODE
+SRC =   $(SRCDIR)/Keyboard.c                                       \
+	$(SRCDIR)/Descriptors.c                                    \
+	$(SRCDIR)/keyboard_class.c                                 \
+	$(SRCDIR)/bound_key.c                                      \
+	$(SRCDIR)/active_keys.c                                    \
+	$(SRCDIR)/bound_key.c                                      \
+	$(GENERATED)/keymaps.c                                     \
+	$(LUFA_SRC)
+else
+SRC =   $(SRCDIR)/Keyboard.c                                       \
+	$(SRCDIR)/Descriptors.c                                    \
+	$(SRCDIR)/matrix_discovery.c                               \
+	$(SRCDIR)/registers.c					   \
+	$(SRCDIR)/hhstdio.c					   \
+	$(LUFA_SRC)
+endif
+
+	
 
 
 # List C++ source files here. (C dependencies are automatically generated.)
@@ -167,6 +183,15 @@ CPPSRC =
 #     care about how the name is spelled on its command-line.
 ASRC =
 
+# ERB template files for kbgen code generator
+ERBSRC = $(KBGEN_DIR)/templates/binding.erb.c    \
+	 $(KBGEN_DIR)/templates/binding.erb.h    \
+	 $(KBGEN_DIR)/templates/hid_usages.erb.h \
+	 $(KBGEN_DIR)/templates/KeyMap.erb.c     \
+	 $(KBGEN_DIR)/templates/KeyMap.erb.h     \
+	 $(KBGEN_DIR)/templates/keymaps.erb.cpp  \
+	 $(KBGEN_DIR)/templates/keymaps.erb.h    \
+	 $(KBGEN_DIR)/templates/matrix.erb.h     
 
 # Optimization level, can be [0, 1, 2, 3, s]. 
 #     0 = turn off optimization. s = optimize for size.
@@ -199,6 +224,7 @@ CSTANDARD = -std=gnu99
 
 # Place -D or -U options here for C sources
 CDEFS  = -DF_CPU=$(F_CPU)UL -DF_CLOCK=$(F_CLOCK)UL -DBOARD=BOARD_$(BOARD) $(LUFA_OPTS)
+CDEFS += $(HH_DEFS)
 
 
 # Place -D or -U options here for ASM sources
@@ -210,7 +236,9 @@ CPPDEFS = -DF_CPU=$(F_CPU)UL
 #CPPDEFS += -D__STDC_LIMIT_MACROS
 #CPPDEFS += -D__STDC_CONSTANT_MACROS
 
-
+ifdef MATRIX_MODE
+HH_DEFS = -DMATRIX_DISCOVERY_MODE
+endif
 
 #---------------- Compiler Options C ----------------
 #  -g*:          generate debugging information
@@ -261,7 +289,7 @@ CFLAGS += -Wundef
 #CPPFLAGS += -Wstrict-prototypes
 #CPPFLAGS += -Wunreachable-code
 #CPPFLAGS += -Wsign-compare
-CPPFLAGS += -Wa,$(patsubst %.cpp,%.lst,$(<:../%.cpp=%.lst))
+CPPFLAGS += -Wa,-adhlns=$(patsubst %.cpp,%.lst,$(<:../%.cpp=%.lst))
 CPPFLAGS += $(patsubst %,-I%,$(EXTRAINCDIRS))
 #CPPFLAGS += $(CSTANDARD)
 
@@ -427,7 +455,11 @@ REMOVEDIR = rm -rf
 COPY = cp
 WINSHELL = cmd
 KBGEN_DIR = ../kbgen
-KBGEN = ruby -I$(KBGEN_DIR) $(KBGEN_DIR)/kbgen.rb -O$(GENERATED)
+KBGEN_OPTS = -O$(GENERATED)
+ifdef MATRIX_MODE
+KBGEN_OPTS += --hid-only
+endif
+KBGEN = ruby -I$(KBGEN_DIR) $(KBGEN_DIR)/kbgen.rb $(KBGEN_OPTS)
 
 # Define Messages
 # English
@@ -477,7 +509,7 @@ ALL_ASFLAGS = -mmcu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)
 
 
 # Default target.
-all: begin $(GENERATED)/keymaps.h gccversion sizebefore build checkinvalidevents showliboptions showtarget sizeafter end
+all: begin generate gccversion sizebefore build checkinvalidevents showliboptions showtarget sizeafter end
 
 # Build kspec parser
 $(KBGEN_DIR)/kspec.rb : $(KBGEN_DIR)/kspec.tt
@@ -485,7 +517,7 @@ $(KBGEN_DIR)/kspec.rb : $(KBGEN_DIR)/kspec.tt
 	@cd $(KBGEN_DIR); tt kspec.tt
 
 # Generate header files
-$(GENERATED)/keymaps.h: $(KBGEN_DIR)/kspec.rb $(KBGEN_DIR)/kb.kspec
+$(GENERATED)/hid_usages.h: $(KBGEN_DIR)/kspec.rb $(KBGEN_DIR)/kb.kspec $(ERBSRC)
 	@echo Generating code
 	@$(KBGEN) $(KBGEN_DIR)/kb.kspec -I$(LAYOUTS) -O$(GENERATED)
 
@@ -494,6 +526,7 @@ $(KBGEN_DIR)/kb.kspec : $(LAYOUTS)/*.kspec
 	@echo Preprocessing keyboard layouts
 	@$(CPP) -P $(LAYOUT_FILE) $(KBGEN_DIR)/kb.kspec
 
+generate: $(GENERATED)/hid_usages.h
 
 # Change the build target to build a HEX file or a library.
 build: elf hex eep lss sym
@@ -793,4 +826,5 @@ $(shell mkdir -p $(GENERATED) 2>/dev/null)
 showtarget begin finish end sizebefore sizeafter  \
 gccversion build elf hex eep lss sym coff extcoff \
 program dfu flip flip-ee dfu-ee clean debug       \
-clean_list clean_binary gdb-config doxygen
+clean_list clean_binary gdb-config doxygen        \
+generate

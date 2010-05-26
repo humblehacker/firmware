@@ -33,23 +33,7 @@
 struct USB_KeyboardReport_Data_t;
 
 void      Keyboard__init(void);
-void      Keyboard__reset(void);
+uint8_t   Keyboard__get_report(USB_KeyboardReport_Data_t *report);
 
-void      Keyboard__scan_matrix(void);
-
-bool      Keyboard__is_error(void);
-uint8_t   Keyboard__fill_report(USB_KeyboardReport_Data_t *report);
-bool      Keyboard__is_processing_macro(void);
-
-bool      Keyboard__momentary_mode_engaged(void);
-bool      Keyboard__modifier_keys_engaged(void);
-void      Keyboard__check_mode_toggle(void);
-void      Keyboard__process_keys(void);
-void      Keyboard__toggle_map(KeyMap mode_map);
-
-void      Keyboard__update_bindings(void);
-void      Keyboard__init_active_keys(void);
-BoundKey* Keyboard__first_active_key(void);
-BoundKey* Keyboard__next_active_key(void);
 
 #endif // __KEYBOARD_CLASS_H__

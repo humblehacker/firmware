@@ -3,25 +3,32 @@
 #include "bound_key.h"
 #include "keyboard_class.h"
 
+void
+BoundKey__set_cell(BoundKey *this, Cell cell)
+{
+  this->cell = cell;
+  this->binding = NULL;
+}
+
 bool
-BoundKey__is_active(BoundKey *key)
+BoundKey__is_active(BoundKey *this)
 {
-  return key->cell != DEACTIVATED;
+  return this->cell != DEACTIVATED;
 }
 
 void
-BoundKey__deactivate(BoundKey *key)
+BoundKey__deactivate(BoundKey *this)
 {
-  key->cell = DEACTIVATED;
+  this->cell = DEACTIVATED;
 }
 
 void
-BoundKey__update_binding(BoundKey *key, Modifiers mods, KeyMap keymap)
+BoundKey__update_binding(BoundKey *this, Modifiers mods, KeyMap keymap)
 {
-  key->binding = NULL;
+  this->binding = NULL;
 
   static const KeyBindingArray bindings;
-  memcpy_P((void*)&bindings, &keymap[key->cell], sizeof(keymap[key->cell]));
+  memcpy_P((void*)&bindings, &keymap[this->cell], sizeof(keymap[this->cell]));
   if (bindings.length != 0)
   {
     // find and return the binding that matches the specified modifier state.
@@ -29,7 +36,7 @@ BoundKey__update_binding(BoundKey *key, Modifiers mods, KeyMap keymap)
     {
       if (bindings.data[i].premods == mods)
       {
-        key->binding = &bindings.data[i];
+        this->binding = &bindings.data[i];
         return;
       }
     }
@@ -43,7 +50,7 @@ BoundKey__update_binding(BoundKey *key, Modifiers mods, KeyMap keymap)
     // premods == NONE.
     if (bindings.data[0].premods == NONE)
     {
-      key->binding = &bindings.data[0];
+      this->binding = &bindings.data[0];
       return;
     }
   }

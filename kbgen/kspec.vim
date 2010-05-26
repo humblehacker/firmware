@@ -158,7 +158,7 @@ syntax match Usage /7_and_&/
 syntax match Usage /8_and_\*/
 syntax match Usage /9_and_(/
 syntax match Usage /0_and_)/
-syntax match Usage /Return_(ENTER)/
+syntax match Usage /Return_or_Enter/
 syntax match Usage /ESCAPE/
 syntax match Usage /Backspace/
 syntax match Usage /Tab/
@@ -168,7 +168,7 @@ syntax match Usage /=_and_+/
 syntax match Usage /\[_and_{/
 syntax match Usage /\]_and_}/
 syntax match Usage /\\_and_|/
-syntax match Usage /Non-US_#_and_\~/
+syntax match Usage /NonUS_#_and_\~/
 syntax match Usage /;_and_\\:/
 syntax match Usage /\\'_and_\\"/
 syntax match Usage /`_and_\~/
@@ -218,7 +218,7 @@ syntax match Usage /Keypad_8_and_Up_Arrow/
 syntax match Usage /Keypad_9_and_PageUp/
 syntax match Usage /Keypad_0_and_Insert/
 syntax match Usage /Keypad_._and_Delete/
-syntax match Usage /Non-US_\\_and_|/
+syntax match Usage /NonUS_\\_and_|/
 syntax match Usage /Application/
 syntax match Usage /Keyboard_Power/
 syntax match Usage /Keypad_=/

@@ -67,10 +67,10 @@ KeyMap:Fn base:Nm rev:203
     Key:1O Map:Keypad_Num_Lock_and_Clear                    tl:"N. Lock"
 
     /* Row 5 */
-    Key:5B Map:Non-US_\_and_|                               tl:"<"
-    Key:5C Map:Non-US_\_and_| <alt|shift>                       tl:">"
-    Key:5D Map:Non-US_\_and_| <right_alt>                   tl:"¦"
-    Key:5E Map:Non-US_\_and_| <right_alt|shift>             tl:"_"
+    Key:5B Map:NonUS_\_and_|                                tl:"<"
+    Key:5C Map:NonUS_\_and_| <shift>                        tl:">"
+    Key:5D Map:NonUS_\_and_| <right_alt>                    tl:"¦"
+    Key:5E Map:NonUS_\_and_| <right_alt|shift>              tl:"_"
 
     /* Row 6 */
     Key:6B Map:Keyboard_Cut                                 tl:"Cut"

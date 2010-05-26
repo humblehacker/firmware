@@ -25,9 +25,10 @@
 #define __BOUND_KEY_H__
 
 #include <stdbool.h>
+#include <limits.h>
 #include "binding.h"
 
-enum {DEACTIVATED=((uint8_t)-1)};
+enum {DEACTIVATED=UCHAR_MAX};
 
 typedef struct
 {
@@ -35,8 +36,11 @@ typedef struct
   const KeyBinding *binding;
 } BoundKey;
 
-extern bool BoundKey__is_active(BoundKey *key);
-extern void BoundKey__deactivate(BoundKey *key);
-extern void BoundKey__update_binding(BoundKey *key, Modifiers mods, KeyMap keymap);
+extern void BoundKey__set_cell(BoundKey *this, Cell cell);
+extern void BoundKey__update_binding(BoundKey *this, Modifiers mods, KeyMap keymap);
+extern void BoundKey__deactivate(BoundKey *this);
+
+extern bool BoundKey__is_active(BoundKey *this);
+
 
 #endif // __BOUND_KEY_H__
