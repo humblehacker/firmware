@@ -34,11 +34,34 @@ typedef struct
   void *target;
 } KeyBinding;
 
+static inline
+void
+KeyBinding__get(KeyBinding *binding, const KeyBinding *from)
+{
+  memcpy_P((void*)binding, (PGM_VOID_P)from, sizeof(KeyBinding));
+}
+
+static inline
+void
+KeyBinding__copy(KeyBinding *dst, const KeyBinding *src)
+{
+  dst->kind = src->kind;
+  dst->premods = src->premods;
+  dst->target = src->target;
+}
+
 typedef struct
 {
   uint8_t length;
   const KeyBinding *data;
 } KeyBindingArray;
+
+static inline
+void
+KeyBindingArray__get(KeyBindingArray *array, const KeyBindingArray *from)
+{
+  memcpy_P((void*)array, (PGM_VOID_P)from, sizeof(KeyBindingArray));
+}
 
 typedef const KeyBindingArray* KeyMap;
 
@@ -48,11 +71,25 @@ typedef struct
   KeyMap mode_map;
 } ModeTarget;
 
+static inline
+void
+ModeTarget__get(ModeTarget *target, const ModeTarget *from)
+{
+  memcpy_P((void*)target, (PGM_VOID_P)from, sizeof(ModeTarget));
+}
+
 typedef struct
 {
   Modifiers modifiers;
   Usage usage;
 } MapTarget;
+
+static inline
+void
+MapTarget__get(MapTarget *target, const MapTarget *from)
+{
+  memcpy_P((void*)target, (PGM_VOID_P)from, sizeof(MapTarget));
+}
 
 typedef struct
 {
@@ -60,9 +97,16 @@ typedef struct
   const MapTarget *targets;
 } MacroTarget;
 
+static inline
+void
+MacroTarget__get(MacroTarget *target, const MacroTarget *from)
+{
+  memcpy_P((void*)target, (PGM_VOID_P)from, sizeof(MacroTarget));
+}
+
 <% $keyboard.maps.each_value do |keymap|
      keymap.keys.each do |location, key| %>
-extern const KeyBinding <%= "#{keymap.ids.last}_#{key.location}" %>[];<%
+extern const KeyBinding <%= "#{keymap.ids.last}_#{key.location}" %>[] PROGMEM;<%
      end
    end
 %>

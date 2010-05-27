@@ -29,18 +29,18 @@
        key.kbindings.each do |premods, kbinding|
          ident = kbinding_identifier(keymap, key.location, premods, kbinding.class)
          if kbinding.instance_of? Map %>
-const MapTarget <%=ident%> = { <%=kbinding.modifiers%>, HID_USAGE_<%=normalize_identifier(kbinding.usage.name)%> };<%
+const MapTarget <%=ident%> PROGMEM = { <%=kbinding.modifiers%>, HID_USAGE_<%=normalize_identifier(kbinding.usage.name)%> };<%
          elsif kbinding.instance_of? Macro %>
-const MapTarget <%=ident%>Targets[] =
+const MapTarget <%=ident%>Targets[] PROGMEM =
 {
 <%         kbinding.kbindings.each do |macro_kbinding| %>
   { <%=macro_kbinding.modifiers%>, HID_USAGE_<%=normalize_identifier(macro_kbinding.usage.name)%> },
 <%         end %>
 };
 
-const MacroTarget <%= ident %> = { <%=kbinding.kbindings.length%>, &<%=ident%>Targets[0] }; <%
+const MacroTarget <%= ident %> PROGMEM = { <%=kbinding.kbindings.length%>, &<%=ident%>Targets[0] }; <%
          elsif kbinding.instance_of? Mode %>
-const ModeTarget <%= ident %> = { <%=kbinding.type.upcase%>, kbd_map_<%=kbinding.mode%>_mx }; <%
+const ModeTarget <%= ident %> PROGMEM = { <%=kbinding.type.upcase%>, kbd_map_<%=kbinding.mode%>_mx }; <%
          else
            %><%="/* What? */"%><%
          end
@@ -52,7 +52,7 @@ const ModeTarget <%= ident %> = { <%=kbinding.type.upcase%>, kbd_map_<%=kbinding
 /* Aggregated bindings per key */
 <% $keyboard.maps.each_value do |keymap|
      keymap.keys.each do |location, key| %>
-const KeyBinding <%= "#{keymap.ids.last}_#{key.location}" %>[] =
+const KeyBinding <%= "#{keymap.ids.last}_#{key.location}" %>[] PROGMEM =
 {<%    key.kbindings.each do |premods, kbinding| %>
   { <%   if kbinding.instance_of? Map
     %>MAP, <%

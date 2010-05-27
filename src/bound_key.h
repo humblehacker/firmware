@@ -32,8 +32,8 @@ enum {DEACTIVATED=UCHAR_MAX};
 
 typedef struct
 {
-  Cell              cell;
-  const KeyBinding *binding;
+  Cell        cell;
+  KeyBinding  binding;
 } BoundKey;
 
 extern void BoundKey__set_cell(BoundKey *this, Cell cell);

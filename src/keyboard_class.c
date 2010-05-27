@@ -184,12 +184,13 @@ momentary_mode_engaged()
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
        key;      key = ActiveKeys__next(&kb.active_keys))
   {
-    if (key->binding->kind == MODE)
+    if (key->binding.kind == MODE)
     {
-      ModeTarget *target = (ModeTarget*)key->binding->target;
-      if (target->type == MOMENTARY)
+      ModeTarget target;
+      ModeTarget__get(&target, key->binding.target);
+      if (target.type == MOMENTARY)
       {
-        kb.active_keymap = target->mode_map;
+        kb.active_keymap = target.mode_map;
         BoundKey__deactivate(key);
         return true;
       }
@@ -205,11 +206,12 @@ modifier_keys_engaged()
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
        key;      key = ActiveKeys__next(&kb.active_keys))
   {
-    if (key->binding->kind == MAP)
+    if (key->binding.kind == MAP)
     {
-      const MapTarget *target = (const MapTarget*)key->binding->target;
+      MapTarget target;
+      MapTarget__get(&target, key->binding.target);
       Modifiers this_modifier = NONE;
-      if ((this_modifier = get_modifier(target->usage)) != NONE)
+      if ((this_modifier = get_modifier(target.usage)) != NONE)
       {
         active_modifiers |= this_modifier;
         BoundKey__deactivate(key);
@@ -235,12 +237,13 @@ maybe_toggle_mode(void)
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
        key;      key = ActiveKeys__next(&kb.active_keys))
   {
-    if (key->binding->kind == MODE)
+    if (key->binding.kind == MODE)
     {
-      ModeTarget *target = (ModeTarget*)key->binding->target;
-      if (target->type == TOGGLE)
+      ModeTarget target;
+      ModeTarget__get(&target, key->binding.target);
+      if (target.type == TOGGLE)
       {
-        toggle_map(target->mode_map);
+        toggle_map(target.mode_map);
         BoundKey__deactivate(key);
         return;
       }
@@ -254,21 +257,21 @@ process_keys()
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
        key;      key = ActiveKeys__next(&kb.active_keys))
   {
-    switch (key->binding->kind)
+    switch (key->binding.kind)
     {
     case MAP:
       {
-        const MapTarget *target = (const MapTarget*)key->binding->target;
-        kb.report.KeyCode[kb.num_keys] = USAGE_ID(target->usage);
-        kb.report.Modifier &= ~key->binding->premods;
-        kb.report.Modifier |= target->modifiers;
+        MapTarget target;
+        MapTarget__get(&target, key->binding.target);
+        kb.report.KeyCode[kb.num_keys] = USAGE_ID(target.usage);
+        kb.report.Modifier &= ~key->binding.premods;
+        kb.report.Modifier |= target.modifiers;
         ++kb.num_keys;
         break;
       }
     case MACRO:
       {
-        const MacroTarget *target = (const MacroTarget*)key->binding->target;
-        kb.macro = target;
+        kb.macro = (const MacroTarget*)key->binding.target;
         break;
       }
     default:
@@ -303,16 +306,20 @@ process_macro()
   if (send_blank ^= true)
     return true;
 
-  if (kb.macro_index == kb.macro->length)
+  MacroTarget macro;
+  MacroTarget__get(&macro, kb.macro);
+
+  if (kb.macro_index == macro.length)
   {
     kb.macro_index = 0;
     kb.macro = NULL;
     return false;
   }
 
-  const MapTarget *target = &kb.macro->targets[kb.macro_index];
-  kb.report.KeyCode[kb.num_keys] = target->usage;
-  kb.report.Modifier |= target->modifiers;
+  MapTarget target;
+  MapTarget__get(&target, &macro.targets[kb.macro_index]);
+  kb.report.KeyCode[kb.num_keys] = target.usage;
+  kb.report.Modifier |= target.modifiers;
   ++kb.num_keys;
   ++kb.macro_index;
   return true;
