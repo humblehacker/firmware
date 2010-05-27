@@ -140,7 +140,7 @@ void
 init_active_keys()
 {
   uint8_t ncols;
-  // now process row/column data to get raw keypresses
+  // process row/column data to find the active keys
   for (uint8_t row = 0; row < NUM_ROWS; ++row)
   {
     ncols = 0;
@@ -259,7 +259,7 @@ process_keys()
     case MAP:
       {
         const MapTarget *target = (const MapTarget*)key->binding->target;
-        kb.report.KeyCode[kb.num_keys] = target->usage;
+        kb.report.KeyCode[kb.num_keys] = USAGE_ID(target->usage);
         kb.report.Modifier &= ~key->binding->premods;
         kb.report.Modifier |= target->modifiers;
         ++kb.num_keys;
