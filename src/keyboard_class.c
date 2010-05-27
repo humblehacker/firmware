@@ -38,6 +38,7 @@ struct
   uint8_t                   num_keys;
   ActiveKeys                active_keys;
   const MacroTarget        *macro;
+  int                       macro_index;
   bool                      error_roll_over;
   KeyMap                    active_keymap;
   KeyMap                    selected_keymap;
@@ -50,7 +51,7 @@ static void    reset(void);
 static void    scan_matrix(void);
 
 static uint8_t fill_report(USB_KeyboardReport_Data_t *report);
-static bool    is_processing_macro(void);
+static bool    process_macro(void);
 
 static bool    momentary_mode_engaged(void);
 static bool    modifier_keys_engaged(void);
@@ -69,6 +70,8 @@ Keyboard__init()
   kb.default_keymap  = (KeyMap) pgm_read_word(&kbd_map_mx_default);
   kb.selected_keymap = kb.default_keymap;
   kb.active_keymap   = NULL;
+  kb.macro           = NULL;
+  kb.macro_index     = 0;
 
   reset();
 }
@@ -88,16 +91,19 @@ uint8_t
 Keyboard__get_report(USB_KeyboardReport_Data_t *report)
 {
   reset();
-  scan_matrix();
-	init_active_keys();
-
-  if (!kb.error_roll_over)
+  if (!process_macro())
   {
-    do
-      update_bindings();
-    while (momentary_mode_engaged() || modifier_keys_engaged());
-    maybe_toggle_mode();
-    process_keys();
+    scan_matrix();
+    init_active_keys();
+
+    if (!kb.error_roll_over)
+    {
+      do
+        update_bindings();
+      while (momentary_mode_engaged() || modifier_keys_engaged());
+      maybe_toggle_mode();
+      process_keys();
+    }
   }
 
   return fill_report(report);
@@ -248,13 +254,25 @@ process_keys()
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
        key;      key = ActiveKeys__next(&kb.active_keys))
   {
-    if (key->binding->kind == MAP)
+    switch (key->binding->kind)
     {
-      const MapTarget *target = (const MapTarget*)key->binding->target;
-      kb.report.KeyCode[kb.num_keys] = target->usage;
-      kb.report.Modifier &= ~key->binding->premods;
-      kb.report.Modifier |= target->modifiers;
-      ++kb.num_keys;
+    case MAP:
+      {
+        const MapTarget *target = (const MapTarget*)key->binding->target;
+        kb.report.KeyCode[kb.num_keys] = target->usage;
+        kb.report.Modifier &= ~key->binding->premods;
+        kb.report.Modifier |= target->modifiers;
+        ++kb.num_keys;
+        break;
+      }
+    case MACRO:
+      {
+        const MacroTarget *target = (const MacroTarget*)key->binding->target;
+        kb.macro = target;
+        break;
+      }
+    default:
+      break;
     }
   }
 }
@@ -268,38 +286,36 @@ fill_report(USB_KeyboardReport_Data_t *report)
     for (uint8_t key = 1; key < 7; ++key)
       report->KeyCode[key] = USAGE_ID(HID_USAGE_ERRORROLLOVER);
   }
-  else if (!is_processing_macro())
-  {
-    memcpy(report, &kb.report, sizeof(kb.report));
-  }
   else
   {
-    // TODO: Macro processing
-#if 0
-    const Macro * macro = g_kb_state.macro;
-    MacroKey mkey;
-    mkey.mod.all = pgm_read_byte(&macro->keys[g_kb_state.macro_key_index].mod);
-    mkey.usage = pgm_read_word(&macro->keys[g_kb_state.macro_key_index].usage);
-    uint8_t num_macro_keys = pgm_read_byte(&macro->num_keys);
-    report->Modifier = g_kb_state.pre_macro_modifiers | mkey.mod.all;
-    report->KeyCode[0] = USAGE_ID(mkey.usage);
-    g_kb_state.macro_key_index++;
-    if (g_kb_state.macro_key_index >= num_macro_keys)
-    {
-      g_kb_state.macro = NULL;
-      g_kb_state.macro_key_index = 0;
-    }
-#endif
+    memcpy(report, &kb.report, sizeof(kb.report));
   }
   return sizeof(USB_KeyboardReport_Data_t);
 }
 
 bool
-is_processing_macro()
+process_macro()
 {
-  return false;
-#if 0 // FIXME
-  return g_kb_state.macro != NULL;
-#endif
+  if (!kb.macro)
+    return false;
+
+  static bool send_blank = false;
+  if (send_blank ^= true)
+    return true;
+
+  if (kb.macro_index == kb.macro->length)
+  {
+    kb.macro_index = 0;
+    kb.macro = NULL;
+    return false;
+  }
+
+  const MapTarget *target = &kb.macro->targets[kb.macro_index];
+  kb.report.KeyCode[kb.num_keys] = target->usage;
+  kb.report.Modifier |= target->modifiers;
+  ++kb.num_keys;
+  ++kb.macro_index;
+  return true;
 }
+
 

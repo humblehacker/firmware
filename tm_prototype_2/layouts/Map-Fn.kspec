@@ -29,6 +29,19 @@ KeyMap:Fn base:Nm rev:203
     Key:1C Mode:pDV led:Dvorak type:toggle                   tl:"Japan"
     Key:1D Mode:JP  led:Scroll type:toggle                   tl:"Japan"
     Key:1E Macro:
+        Map:h_and_H <shift>
+        Map:u_and_U
+        Map:m_and_M
+        Map:b_and_B
+        Map:l_and_L
+        Map:e_and_E
+        Map:h_and_H <shift>
+        Map:a_and_A
+        Map:c_and_C
+        Map:k_and_K
+        Map:e_and_E
+        Map:d_and_D
+        Map:Spacebar
         Map:t_and_T <shift>
         Map:y_and_Y
         Map:p_and_P
@@ -57,6 +70,7 @@ KeyMap:Fn base:Nm rev:203
         Map:n_and_N
         Map:a_and_A
         Map:l_and_L
+        Map:Return_or_Enter
     Key:1G Map:Insert                                       tl:"Insert"
     Key:1I Map:System_Power_Down  page:Generic_Desktop      tl:"Power"
     Key:1J Map:System_Sleep       page:Generic_Desktop      tl:"Sleep"
