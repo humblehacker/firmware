@@ -26,12 +26,6 @@
 
 #include <LUFA/Drivers/USB/Class/HID.h>
 
-#include "matrix.h"
-#include "binding.h"
-#include "bound_key.h"
-
-struct USB_KeyboardReport_Data_t;
-
 void      Keyboard__init(void);
 uint8_t   Keyboard__get_report(USB_KeyboardReport_Data_t *report);
 

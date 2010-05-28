@@ -44,19 +44,15 @@ struct
 } kb;
 
 static void    reset(void);
-
 static void    scan_matrix(void);
-
-static uint8_t fill_report(USB_KeyboardReport_Data_t *report);
-
+static void    init_active_keys(void);
+static void    update_bindings(void);
 static bool    momentary_mode_engaged(void);
 static bool    modifier_keys_engaged(void);
 static void    maybe_toggle_mode(void);
 static void    process_keys(void);
+static uint8_t fill_report(USB_KeyboardReport_Data_t *report);
 static void    toggle_map(KeyMap mode_map);
-
-static void    update_bindings(void);
-static void    init_active_keys(void);
 
 void
 Keyboard__init()
@@ -69,15 +65,6 @@ Keyboard__init()
 
   reset();
   ReportQueue__init();
-}
-
-void
-reset()
-{
-  ActiveKeys__reset(&kb.active_keys);
-
-  kb.error_roll_over = false;
-  kb.active_keymap   = kb.selected_keymap;
 }
 
 uint8_t
@@ -104,6 +91,15 @@ Keyboard__get_report(USB_KeyboardReport_Data_t *report)
 }
 
 void
+reset()
+{
+  ActiveKeys__reset(&kb.active_keys);
+
+  kb.error_roll_over = false;
+  kb.active_keymap   = kb.selected_keymap;
+}
+
+void
 scan_matrix()
 {
   for (uint8_t row = 0; row < NUM_ROWS; ++row)
@@ -118,18 +114,6 @@ scan_matrix()
     kb.row_data[row] = read_row_data();
   }
 }
-
-void
-update_bindings(void)
-{
-  KeyboardReport *report = ReportQueue__peek();
-  for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
-       key;      key = ActiveKeys__next(&kb.active_keys))
-  {
-    BoundKey__update_binding(key, KeyboardReport__get_modifiers(report), kb.active_keymap);
-  }
-}
-
 
 void
 init_active_keys()
@@ -170,6 +154,17 @@ init_active_keys()
         }
       }
     }
+  }
+}
+
+void
+update_bindings(void)
+{
+  KeyboardReport *report = ReportQueue__peek();
+  for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
+       key;      key = ActiveKeys__next(&kb.active_keys))
+  {
+    BoundKey__update_binding(key, KeyboardReport__get_modifiers(report), kb.active_keymap);
   }
 }
 
@@ -216,15 +211,6 @@ modifier_keys_engaged()
   KeyboardReport *report = ReportQueue__peek();
   KeyboardReport__set_modifiers(report, active_modifiers);
   return active_modifiers != NONE;
-}
-
-void
-toggle_map(KeyMap mode_map)
-{
-  if (kb.selected_keymap == mode_map)
-    kb.selected_keymap = kb.default_keymap;
-  else
-    kb.selected_keymap = mode_map;
 }
 
 void
@@ -312,6 +298,15 @@ fill_report(USB_KeyboardReport_Data_t *dest_report)
       dest_report->KeyCode[key] = USAGE_ID(HID_USAGE_ERRORROLLOVER);
   }
   return sizeof(USB_KeyboardReport_Data_t);
+}
+
+void
+toggle_map(KeyMap mode_map)
+{
+  if (kb.selected_keymap == mode_map)
+    kb.selected_keymap = kb.default_keymap;
+  else
+    kb.selected_keymap = mode_map;
 }
 
 
