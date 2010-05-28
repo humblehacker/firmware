@@ -13,14 +13,14 @@ Usage
 
 - Edit the makefile, and uncomment the line
 
-    MATRIX_MODE = 1
+    `MATRIX_MODE = 1`
 
 - Edit the file 'matrix_discovery_defs.h' to specify which ports/pins are 
   connected to your keyboard matrix.  For example, if you connected one of 
   the leads on your keyboard matrix to port D pin 3, you would find and 
   uncomment the line:
 
-    #define USE_PIND3
+    `#define USE_PIND3`
 
 - Build the firmware, and program it into your controller board.  
 
