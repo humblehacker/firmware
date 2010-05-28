@@ -62,6 +62,7 @@ KeyMap:Common rev:203
         Key:6B Map:Play/Pause page:Consumer_Control           tl:"Play"
         Key:6C Map:Application                                tl:"App"
         Key:6D Map:Tab<left_alt>                              tl:"Shuffle"
+               <shift>Map:Left_Control
         Key:6E Map:Spacebar
         Key:6J Map:d_and_D<left_gui>                          tl:"Desktop"
         Key:6K Map:Home                                       tl:"Home"

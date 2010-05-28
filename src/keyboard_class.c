@@ -192,6 +192,7 @@ momentary_mode_engaged()
 bool
 modifier_keys_engaged()
 {
+  KeyboardReport *report = ReportQueue__peek();
   Modifiers active_modifiers = NONE;
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
        key;      key = ActiveKeys__next(&kb.active_keys))
@@ -204,11 +205,11 @@ modifier_keys_engaged()
       if ((this_modifier = get_modifier(target.usage)) != NONE)
       {
         active_modifiers |= this_modifier;
+        KeyboardReport__reset_modifiers(report, key->binding.premods);
         BoundKey__deactivate(key);
       }
     }
   }
-  KeyboardReport *report = ReportQueue__peek();
   KeyboardReport__set_modifiers(report, active_modifiers);
   return active_modifiers != NONE;
 }
