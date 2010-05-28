@@ -23,7 +23,7 @@ static void reset_pins(void);
 void
 MatrixDiscovery__init()
 {
-  init_stdio();
+  stdio_init();
   self.send_empty_report = false;
   _delay_ms(15000);
   printf("The HumbleHacker Keyboard firmware\n");
@@ -41,7 +41,7 @@ write_output_char(USB_KeyboardReport_Data_t *report)
     return;
   }
 
-  char ch = popchar();
+  char ch = stdout_popchar();
   if (!ch)
     return;
 

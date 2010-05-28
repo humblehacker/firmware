@@ -36,11 +36,10 @@ typedef struct
   KeyBinding  binding;
 } BoundKey;
 
-extern void BoundKey__set_cell(BoundKey *this, Cell cell);
-extern void BoundKey__update_binding(BoundKey *this, Modifiers mods, KeyMap keymap);
-extern void BoundKey__deactivate(BoundKey *this);
-
-extern bool BoundKey__is_active(BoundKey *this);
+void BoundKey__set_cell(BoundKey *this, Cell cell);
+void BoundKey__update_binding(BoundKey *this, Modifiers mods, KeyMap keymap);
+void BoundKey__deactivate(BoundKey *this);
+bool BoundKey__is_active(BoundKey *this);
 
 
 #endif // __BOUND_KEY_H__

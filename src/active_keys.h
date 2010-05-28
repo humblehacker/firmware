@@ -14,8 +14,8 @@ typedef struct
   uint8_t   curr_key;
 } ActiveKeys;
 
-void ActiveKeys__reset(ActiveKeys *keys);
-bool ActiveKeys__add_cell(ActiveKeys *keys, Cell cell);
+void      ActiveKeys__reset(ActiveKeys *keys);
+bool      ActiveKeys__add_cell(ActiveKeys *keys, Cell cell);
 
 BoundKey* ActiveKeys__first(ActiveKeys *keys);
 BoundKey* ActiveKeys__next(ActiveKeys *keys);

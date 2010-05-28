@@ -9,7 +9,7 @@ uint8_t current_pos;
 uint8_t end_pos;
 
 void
-init_stdio(void)
+stdio_init(void)
 {
   stdout      = &buf_stdout;
   current_pos = 0;
@@ -34,7 +34,7 @@ stdout_is_empty(void)
 }
 
 char
-popchar(void)
+stdout_popchar(void)
 {
   if (current_pos == OUTPUT_BUFSIZE || !output_buffer[current_pos])
   {
