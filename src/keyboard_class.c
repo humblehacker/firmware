@@ -37,8 +37,6 @@ struct
 {
   uint32_t                  row_data[NUM_ROWS];
   ActiveKeys                active_keys;
-  const MacroTarget        *macro;
-  int                       macro_index;
   bool                      error_roll_over;
   KeyMap                    active_keymap;
   KeyMap                    selected_keymap;
@@ -50,7 +48,6 @@ static void    reset(void);
 static void    scan_matrix(void);
 
 static uint8_t fill_report(USB_KeyboardReport_Data_t *report);
-static bool    process_macro(void);
 
 static bool    momentary_mode_engaged(void);
 static bool    modifier_keys_engaged(void);
@@ -69,8 +66,6 @@ Keyboard__init()
   kb.default_keymap  = (KeyMap) pgm_read_word(&kbd_map_mx_default);
   kb.selected_keymap = kb.default_keymap;
   kb.active_keymap   = NULL;
-  kb.macro           = NULL;
-  kb.macro_index     = 0;
 
   reset();
   ReportQueue__init();
@@ -91,20 +86,17 @@ Keyboard__get_report(USB_KeyboardReport_Data_t *report)
   reset();
   if (ReportQueue__is_empty())
   {
-    ReportQueue__push();
-    if (!process_macro())
-    {
-      scan_matrix();
-      init_active_keys();
+    scan_matrix();
+    init_active_keys();
 
-      if (!kb.error_roll_over)
-      {
-        do
-          update_bindings();
-        while (momentary_mode_engaged() || modifier_keys_engaged());
-        maybe_toggle_mode();
-        process_keys();
-      }
+    if (!kb.error_roll_over)
+    {
+      ReportQueue__push();
+      do
+        update_bindings();
+      while (momentary_mode_engaged() || modifier_keys_engaged());
+      maybe_toggle_mode();
+      process_keys();
     }
   }
 
@@ -275,7 +267,25 @@ process_keys()
       }
     case MACRO:
       {
-        kb.macro = (const MacroTarget*)key->binding.target;
+        MacroTarget macro;
+        MacroTarget__get(&macro, key->binding.target);
+        KeyboardReport *report = NULL;
+        for (int i = 0; i < macro.length; ++i)
+        {
+          report = ReportQueue__push();
+          if (!report)  // TODO: ensure macro size < queue capacity
+            break;
+          MapTarget target;
+          MapTarget__get(&target, &macro.targets[i]);
+          KeyboardReport__add_key(report, target.usage);
+          KeyboardReport__set_modifiers(report, target.modifiers);
+
+          // add a blank report to simulate key-up
+          report = ReportQueue__push();
+          if (!report)
+            break;
+          KeyboardReport__set_modifiers(report, target.modifiers);
+        }
         break;
       }
     default:
@@ -287,7 +297,10 @@ process_keys()
 uint8_t
 fill_report(USB_KeyboardReport_Data_t *dest_report)
 {
+  memset(dest_report, 0, sizeof(*dest_report));
+
   KeyboardReport *report = ReportQueue__pop();
+
   if (!kb.error_roll_over)
   {
     KeyboardReport__copy(report, dest_report);
@@ -299,35 +312,6 @@ fill_report(USB_KeyboardReport_Data_t *dest_report)
       dest_report->KeyCode[key] = USAGE_ID(HID_USAGE_ERRORROLLOVER);
   }
   return sizeof(USB_KeyboardReport_Data_t);
-}
-
-bool
-process_macro()
-{
-  if (!kb.macro)
-    return false;
-
-  static bool send_blank = false;
-  if (send_blank ^= true)
-    return true;
-
-  MacroTarget macro;
-  MacroTarget__get(&macro, kb.macro);
-
-  if (kb.macro_index == macro.length)
-  {
-    kb.macro_index = 0;
-    kb.macro = NULL;
-    return false;
-  }
-
-  KeyboardReport *report = ReportQueue__peek();
-  MapTarget target;
-  MapTarget__get(&target, &macro.targets[kb.macro_index]);
-  KeyboardReport__add_key(report, target.usage);
-  KeyboardReport__set_modifiers(report, target.modifiers);
-  ++kb.macro_index;
-  return true;
 }
 
 
