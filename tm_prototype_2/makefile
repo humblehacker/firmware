@@ -118,7 +118,7 @@ SRCDIR = ../src
 VPATH = ..
 
 # Path to the LUFA library
-LUFA_PATH = ../lufa-100219
+LUFA_PATH = ../lufa-100513
 
 # LUFA library compile-time options
 LUFA_OPTS  = -D USB_DEVICE_ONLY
@@ -140,10 +140,10 @@ LUFA_SRC = $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/DevChapter9.c    \
 	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/HostChapter9.c      \
 	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/LowLevel.c          \
 	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Pipe.c              \
-	$(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/Events.c           \
-	$(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/USBInterrupt.c     \
-	$(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/USBTask.c          \
+	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/USBInterrupt.c      \
 	$(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/ConfigDescriptor.c \
+	$(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/Events.c           \
+	$(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/USBTask.c          \
 	$(LUFA_PATH)/LUFA/Drivers/USB/Class/Device/HID.c           \
 	$(LUFA_PATH)/LUFA/Drivers/USB/Class/Host/HID.c             \
 	$(LUFA_PATH)/LUFA/Drivers/USB/Class/Host/HIDParser.c       
@@ -337,7 +337,7 @@ MATH_LIB = -lm
 
 
 # List any extra directories to look for libraries here.
-#     Each directory mnust be seperated by a space.
+#     Each directory must be seperated by a space.
 #     Use forward slashes for directory separators.
 #     For a directory that has spaces, enclose it in quotes.
 EXTRALIBDIRS = 
@@ -572,7 +572,7 @@ sizeafter:
 	2>/dev/null; echo; fi
 
 $(LUFA_PATH)/LUFA/LUFA_Events.lst:
-	@make -C $(LUFA_PATH)/LUFA/ LUFA_Events.lst
+	@$(MAKE) -C $(LUFA_PATH)/LUFA/ LUFA_Events.lst
 
 checkinvalidevents: $(LUFA_PATH)/LUFA/LUFA_Events.lst
 	@echo
@@ -686,21 +686,25 @@ extcoff: $(TARGET).elf
 
 # Create final output files (.hex, .eep) from ELF output file.
 %.hex: %.elf
-	@echo $(MSG_FLASH) $@
+	@echo
+	@echo $(MSG_FLASH) $@ 
 	@$(OBJCOPY) -O $(FORMAT) -R .eeprom $< $@
 
 %.eep: %.elf
+	@echo
 	@echo $(MSG_EEPROM) $@
 	@-$(OBJCOPY) -j .eeprom --set-section-flags=.eeprom="alloc,load" \
 	  --change-section-lma .eeprom=0 --no-change-warnings -O $(FORMAT) $< $@ || exit 0
 
 # Create extended listing file from ELF output file.
 %.lss: %.elf
+	@echo
 	@echo $(MSG_EXTENDED_LISTING) $@
 	@$(OBJDUMP) -h -z -S $< > $@
 
 # Create a symbol table from ELF output file.
 %.sym: %.elf
+	@echo
 	@echo $(MSG_SYMBOL_TABLE) $@
 	@$(NM) -n $< > $@
 
@@ -727,6 +731,7 @@ extcoff: $(TARGET).elf
 # Compile: create object files from C source files.
 #$(OBJDIR)/%.o : %.c
 %.o : %.c 
+	@echo
 	@echo $(MSG_COMPILING) $<
 	@if ! test -d $(dir $@); then \
 	  @echo Creating dir: $(dir $@); \
