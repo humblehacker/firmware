@@ -151,6 +151,8 @@ LUFA_SRC = $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/DevChapter9.c    \
 # List C source files here. (C dependencies are automatically generated.)
 ifndef MATRIX_MODE
 SRC =   $(SRCDIR)/Keyboard.c                                       \
+	$(SRCDIR)/keyboard_report.c                                \
+	$(SRCDIR)/report_queue.c                                   \
 	$(SRCDIR)/Descriptors.c                                    \
 	$(SRCDIR)/keyboard_class.c                                 \
 	$(SRCDIR)/bound_key.c                                      \

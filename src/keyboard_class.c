@@ -31,11 +31,11 @@
 #include "conf_keyboard.h"
 #include "binding.c"
 #include "active_keys.h"
+#include "report_queue.h"
 
 struct
 {
   uint32_t                  row_data[NUM_ROWS];
-  uint8_t                   num_keys;
   ActiveKeys                active_keys;
   const MacroTarget        *macro;
   int                       macro_index;
@@ -43,7 +43,6 @@ struct
   KeyMap                    active_keymap;
   KeyMap                    selected_keymap;
   KeyMap                    default_keymap;
-  USB_KeyboardReport_Data_t report;
 } kb;
 
 static void    reset(void);
@@ -74,15 +73,14 @@ Keyboard__init()
   kb.macro_index     = 0;
 
   reset();
+  ReportQueue__init();
 }
 
 void
 reset()
 {
   ActiveKeys__reset(&kb.active_keys);
-  memset(&kb.report, 0, sizeof(kb.report));
 
-  kb.num_keys        = 0;
   kb.error_roll_over = false;
   kb.active_keymap   = kb.selected_keymap;
 }
@@ -91,18 +89,22 @@ uint8_t
 Keyboard__get_report(USB_KeyboardReport_Data_t *report)
 {
   reset();
-  if (!process_macro())
+  if (ReportQueue__is_empty())
   {
-    scan_matrix();
-    init_active_keys();
-
-    if (!kb.error_roll_over)
+    ReportQueue__push();
+    if (!process_macro())
     {
-      do
-        update_bindings();
-      while (momentary_mode_engaged() || modifier_keys_engaged());
-      maybe_toggle_mode();
-      process_keys();
+      scan_matrix();
+      init_active_keys();
+
+      if (!kb.error_roll_over)
+      {
+        do
+          update_bindings();
+        while (momentary_mode_engaged() || modifier_keys_engaged());
+        maybe_toggle_mode();
+        process_keys();
+      }
     }
   }
 
@@ -128,10 +130,11 @@ scan_matrix()
 void
 update_bindings(void)
 {
+  KeyboardReport *report = ReportQueue__peek();
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
        key;      key = ActiveKeys__next(&kb.active_keys))
   {
-    BoundKey__update_binding(key, kb.report.Modifier, kb.active_keymap);
+    BoundKey__update_binding(key, KeyboardReport__get_modifiers(report), kb.active_keymap);
   }
 }
 
@@ -218,7 +221,8 @@ modifier_keys_engaged()
       }
     }
   }
-  kb.report.Modifier |= active_modifiers;
+  KeyboardReport *report = ReportQueue__peek();
+  KeyboardReport__set_modifiers(report, active_modifiers);
   return active_modifiers != NONE;
 }
 
@@ -254,6 +258,7 @@ maybe_toggle_mode(void)
 void
 process_keys()
 {
+  KeyboardReport *report = ReportQueue__peek();
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
        key;      key = ActiveKeys__next(&kb.active_keys))
   {
@@ -263,10 +268,9 @@ process_keys()
       {
         MapTarget target;
         MapTarget__get(&target, key->binding.target);
-        kb.report.KeyCode[kb.num_keys] = USAGE_ID(target.usage);
-        kb.report.Modifier &= ~key->binding.premods;
-        kb.report.Modifier |= target.modifiers;
-        ++kb.num_keys;
+        KeyboardReport__add_key(report, target.usage);
+        KeyboardReport__reset_modifiers(report, key->binding.premods);
+        KeyboardReport__set_modifiers(report, target.modifiers);
         break;
       }
     case MACRO:
@@ -281,17 +285,18 @@ process_keys()
 }
 
 uint8_t
-fill_report(USB_KeyboardReport_Data_t *report)
+fill_report(USB_KeyboardReport_Data_t *dest_report)
 {
-  if (kb.error_roll_over)
+  KeyboardReport *report = ReportQueue__pop();
+  if (!kb.error_roll_over)
   {
-    report->Modifier = kb.report.Modifier;
-    for (uint8_t key = 1; key < 7; ++key)
-      report->KeyCode[key] = USAGE_ID(HID_USAGE_ERRORROLLOVER);
+    KeyboardReport__copy(report, dest_report);
   }
   else
   {
-    memcpy(report, &kb.report, sizeof(kb.report));
+    dest_report->Modifier = KeyboardReport__get_modifiers(report);
+    for (uint8_t key = 1; key < 7; ++key)
+      dest_report->KeyCode[key] = USAGE_ID(HID_USAGE_ERRORROLLOVER);
   }
   return sizeof(USB_KeyboardReport_Data_t);
 }
@@ -316,11 +321,11 @@ process_macro()
     return false;
   }
 
+  KeyboardReport *report = ReportQueue__peek();
   MapTarget target;
   MapTarget__get(&target, &macro.targets[kb.macro_index]);
-  kb.report.KeyCode[kb.num_keys] = target.usage;
-  kb.report.Modifier |= target.modifiers;
-  ++kb.num_keys;
+  KeyboardReport__add_key(report, target.usage);
+  KeyboardReport__set_modifiers(report, target.modifiers);
   ++kb.macro_index;
   return true;
 }
