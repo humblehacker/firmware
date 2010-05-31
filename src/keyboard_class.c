@@ -247,19 +247,17 @@ process_keys()
 {
   // Binding with modifier overlap problem
   // -------------------------------------
-  // Key bindings with modifiers conflict with bindings without
-  // modifiers. That is, they cannot be sent in the same report.
-  // To avoid the conflict, we must try to determine the
-  // intended sequence of the keys, and simulate that the keys
-  // were actually pressed and released in that sequence.
+  // Key bindings with that change modifiers conflict with
+  // bindings that don't. That is, they cannot be sent in the
+  // same report. To avoid the conflict, we must try to
+  // determine the intended sequence of the keys, and simulate
+  // that the keys were actually pressed and released in that
+  // sequence.
 
   // To do this, we must first determine if we are in the overlap
-  // problem state by checking three things:
-  // * if any of the keys in the active set contain modifiers
-  // * if there are two or more keys in the active set
-  // * if the modifier of the current key binding differs from
-  //   the real set of modifiers (if the modifier is the same,
-  //   there will be no problem with overlap).
+  // problem state by checking two things:
+  // * if there are two or more keys in the active set.
+  // * if any of these keys would cause a modifier change.
 
   // Once we've determined that we're in the problem state, we try
   // to determine the sequence of keys.  If the current key was
@@ -278,7 +276,6 @@ process_keys()
   // of writing a custom keyboard driver) of correctly handling
   // multiple simultaneous keys when some have modifiers and some
   // don't.  This is a limitation of the HID keyboard protocol.
-  //
 
   KeyboardReport *report      = ReportQueue__peek();
   KeyboardReport *prev_report = ReportQueue__prev();
@@ -291,23 +288,26 @@ process_keys()
   {
     if (key->binding.kind == MAP)
     {
+      uint8_t current_mods = KeyboardReport__get_modifiers(report);
       const MapTarget *target = KeyBinding__get_map_target(&key->binding);
-      if (target->modifiers != 0 &&
-          ActiveKeys__count(&kb.active_keys) > 1 &&
-          !(KeyboardReport__get_modifiers(report) & target->modifiers))
+      if (ActiveKeys__count(&kb.active_keys) > 1 &&
+          ((current_mods & ~key->binding.premods) | target->modifiers) != current_mods)
       {
         if (KeyboardReport__has_key(prev_report, target->usage))
         {
+          // Key is leaving, block it
           BlockedKeys__block_key(key->cell);
+          BoundKey__deactivate(key);
         }
         else
         {
+          // Key is arriving, assume others are leaving and block them
           block_others = true;
           KeyboardReport__add_key(report, target->usage);
           KeyboardReport__reset_modifiers(report, key->binding.premods);
           KeyboardReport__set_modifiers(report, target->modifiers);
+          BoundKey__deactivate(key);
         }
-        BoundKey__deactivate(key);
       }
     }
   }

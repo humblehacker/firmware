@@ -25,7 +25,13 @@ ActiveKeys__add_cell(ActiveKeys *this, Cell cell)
 uint8_t
 ActiveKeys__count(ActiveKeys *this)
 {
-  return this->num_keys;
+  uint8_t count = 0;
+  for (uint8_t i = 0; i < this->num_keys; ++i)
+  {
+    if (BoundKey__is_active(&this->keys[i]))
+      ++count;
+  }
+  return count;
 }
 
 BoundKey*
