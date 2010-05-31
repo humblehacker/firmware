@@ -245,6 +245,41 @@ maybe_toggle_mode(void)
 void
 process_keys()
 {
+  // Binding with modifier overlap problem
+  // -------------------------------------
+  // Key bindings with modifiers conflict with bindings without
+  // modifiers. That is, they cannot be sent in the same report.
+  // To avoid the conflict, we must try to determine the
+  // intended sequence of the keys, and simulate that the keys
+  // were actually pressed and released in that sequence.
+
+  // To do this, we must first determine if we are in the overlap
+  // problem state by checking three things:
+  // * if any of the keys in the active set contain modifiers
+  // * if there are two or more keys in the active set
+  // * if the modifier of the current key binding differs from
+  //   the real set of modifiers (if the modifier is the same,
+  //   there will be no problem with overlap).
+
+  // Once we've determined that we're in the problem state, we try
+  // to determine the sequence of keys.  If the current key was
+  // active in the previous cycle, we assume that this key is on
+  // its way out, so we block the key until it is released.
+  // Otherwise, we assume that all of the other keys in this cycle
+  // are on their way out, so we block them until they are
+  // released.
+
+  // Problem with this approach
+  // --------------------------
+  // This only really works under the assumption that there are
+  // only two keys to deal with, and that they are the result of
+  // an overlap caused by fast typing (as one key is being
+  // released, another is being pressed). There is no way (short
+  // of writing a custom keyboard driver) of correctly handling
+  // multiple simultaneous keys when some have modifiers and some
+  // don't.  This is a limitation of the HID keyboard protocol.
+  //
+
   KeyboardReport *report      = ReportQueue__peek();
   KeyboardReport *prev_report = ReportQueue__prev();
 
@@ -281,46 +316,46 @@ process_keys()
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
        key;      key = ActiveKeys__next(&kb.active_keys))
   {
-    switch (key->binding.kind)
+    if (block_others)
     {
-    case MAP:
+      BlockedKeys__block_key(key->cell);
+    }
+    else
+    {
+      switch (key->binding.kind)
       {
-        if (block_others)
-        {
-          BlockedKeys__block_key(key->cell);
-        }
-        else
+      case MAP:
         {
           const MapTarget *target = KeyBinding__get_map_target(&key->binding);
           KeyboardReport__add_key(report, target->usage);
           KeyboardReport__reset_modifiers(report, key->binding.premods);
           KeyboardReport__set_modifiers(report, target->modifiers);
+          break;
         }
-        break;
-      }
-    case MACRO:
-      {
-        const MacroTarget *macro = KeyBinding__get_macro_target(&key->binding);
-        KeyboardReport *report = NULL;
-        for (int i = 0; i < macro->length; ++i)
+      case MACRO:
         {
-          report = ReportQueue__push();
-          if (!report)  // TODO: ensure macro size < queue capacity
-            break;
-          const MapTarget *target = MacroTarget__get_map_target(macro, i);
-          KeyboardReport__add_key(report, target->usage);
-          KeyboardReport__set_modifiers(report, target->modifiers);
+          const MacroTarget *macro = KeyBinding__get_macro_target(&key->binding);
+          KeyboardReport *report = NULL;
+          for (int i = 0; i < macro->length; ++i)
+          {
+            report = ReportQueue__push();
+            if (!report)  // TODO: ensure macro size < queue capacity
+              break;
+            const MapTarget *target = MacroTarget__get_map_target(macro, i);
+            KeyboardReport__add_key(report, target->usage);
+            KeyboardReport__set_modifiers(report, target->modifiers);
 
-          // add a blank report to simulate key-up
-          report = ReportQueue__push();
-          if (!report)
-            break;
-          KeyboardReport__set_modifiers(report, target->modifiers);
+            // add a blank report to simulate key-up
+            report = ReportQueue__push();
+            if (!report)
+              break;
+            KeyboardReport__set_modifiers(report, target->modifiers);
+          }
+          break;
         }
+      default:
         break;
       }
-    default:
-      break;
     }
   }
 }
