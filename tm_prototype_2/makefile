@@ -158,6 +158,7 @@ SRC =   $(SRCDIR)/Keyboard.c                                       \
 	$(SRCDIR)/bound_key.c                                      \
 	$(SRCDIR)/active_keys.c                                    \
 	$(SRCDIR)/bound_key.c                                      \
+	$(SRCDIR)/blocked_keys.c                                   \
 	$(GENERATED)/keymaps.c                                     \
 	$(LUFA_SRC)
 else

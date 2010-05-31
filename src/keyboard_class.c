@@ -32,15 +32,16 @@
 #include "binding.c"
 #include "active_keys.h"
 #include "report_queue.h"
+#include "blocked_keys.h"
 
 struct
 {
-  uint32_t                  row_data[NUM_ROWS];
-  ActiveKeys                active_keys;
-  bool                      error_roll_over;
-  KeyMap                    active_keymap;
-  KeyMap                    selected_keymap;
-  KeyMap                    default_keymap;
+  uint32_t    row_data[NUM_ROWS];
+  ActiveKeys  active_keys;
+  bool        error_roll_over;
+  KeyMap      active_keymap;      // keymap used to determine current bindings
+  KeyMap      selected_keymap;    // the 'current default'. Reset to this every cycle.
+  KeyMap      default_keymap;     // used at startup and when a mode it toggled off
 } kb;
 
 static void    reset(void);
@@ -64,6 +65,7 @@ Keyboard__init()
   kb.active_keymap   = NULL;
 
   reset();
+  BlockedKeys__init();
   ReportQueue__init();
 }
 
@@ -118,21 +120,29 @@ scan_matrix()
 void
 init_active_keys()
 {
-  uint8_t ncols;
+  uint8_t ncols, cell;
   // process row/column data to find the active keys
   for (uint8_t row = 0; row < NUM_ROWS; ++row)
   {
     ncols = 0;
     for (uint8_t col = 0; col < NUM_COLS; ++col)
     {
+      cell = MATRIX_CELL(row, col);
       if (kb.row_data[row] & (1UL << col))
       {
-        if (!ActiveKeys__add_cell(&kb.active_keys, MATRIX_CELL(row, col)))
+        if (!BlockedKeys__is_blocked(cell))
         {
-          kb.error_roll_over = true;
-          return;
+          if (!ActiveKeys__add_cell(&kb.active_keys, cell))
+          {
+            kb.error_roll_over = true;
+            return;
+          }
         }
         ++ncols;
+      }
+      else
+      {
+        BlockedKeys__unblock_key(cell);
       }
     }
 
@@ -228,6 +238,7 @@ maybe_toggle_mode(void)
       {
         toggle_map(target.mode_map);
         BoundKey__deactivate(key);
+        BlockedKeys__block_key(key->cell);
         return;
       }
     }
