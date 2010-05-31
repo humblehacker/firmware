@@ -1,0 +1,34 @@
+/*
+                    The HumbleHacker Keyboard Project
+                 Copyright © 2008-2010, David Whetstone
+               david DOT whetstone AT humblehacker DOT com
+
+  This file is a part of The HumbleHacker Keyboard Project.
+
+  The HumbleHacker Keyboard Project is free software: you can redistribute
+  it and/or modify it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  The HumbleHacker Keyboard Project is distributed in the hope that it will
+  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+  Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with The HumbleHacker Keyboard Project.  If not, see
+  <http://www.gnu.org/licenses/>.
+
+*/
+
+Matrix:2030-USB rev:197
+/*            0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17 */
+/* 0 */ Row: 7L, --, 7J, 7M, --, --, --, --, 7K, 1N, 5L, 6C, --, 5H, 5F, --, --, --
+/* 1 */ Row: 1O, --, --, --, --, 6N, --, --, --, 4G, --, 5K, 5J, 5I, 5E, 5D, 5C, 5B
+/* 2 */ Row: 6E, --, 7C, --, --, --, --, --, 6L, 1M, 4M, --, 1H, 4H, 4F, 1E, --, 1A
+/* 3 */ Row: 1G, --, --, 3O, --, 6A, --, 6O, 6K, 1K, 2M, 1J, 2N, 2H, 2F, 1C, 1B, 2A
+/* 4 */ Row: --, --, --, --, 6J, --, 4N, --, 5O, 5M, 4L, 4K, 4J, 4I, 4E, 4D, 4C, 4B
+/* 5 */ Row: --, --, --, --, 7A, 1F, --, 7O, 6M, 1L, 2L, 2K, 2J, 2I, 2E, 2D, 2C, 2B
+/* 6 */ Row: --, 7B, --, --, 6D, --, 4A, --, 2O, 2G, 3M, 1I, 3N, 3H, 3F, 1D, 4O, 3A
+/* 7 */ Row: --, --, --, --, --, --, --, --, 6B, --, 3L, 3K, 3J, 3I, 3E, 3D, 3C, 3B
+

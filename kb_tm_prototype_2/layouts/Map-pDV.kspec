@@ -1,0 +1,90 @@
+/*
+                    The HumbleHacker Keyboard Project
+                 Copyright © 2008-2010, David Whetstone
+               david DOT whetstone AT humblehacker DOT com
+
+  This file is a part of The HumbleHacker Keyboard Project.
+
+  The HumbleHacker Keyboard Project is free software: you can redistribute
+  it and/or modify it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  The HumbleHacker Keyboard Project is distributed in the hope that it will
+  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+  Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with The HumbleHacker Keyboard Project.  If not, see
+  <http://www.gnu.org/licenses/>.
+
+*/
+
+KeyMap:pDV base:US rev:57
+
+  /* Row 2 */
+  Key:2A         Map:4_and_$  <shift>            bl:"$"
+         <shift> Map:`_and_~  <shift>    tl:"~"
+  Key:2B         Map:7_and_&  <shift>            bl:"&"
+         <shift> Map:5_and_%  <shift>    tl:"%"
+  Key:2C         Map:[_and_{                     bl:"["
+         <shift> Map:7_and_&             tl:"7"
+  Key:2D         Map:[_and_{  <shift>            bl:"{"
+         <shift> Map:5_and_%             tl:"5"
+  Key:2E         Map:]_and_}  <shift>            bl:"}"
+         <shift> Map:3_and_#             tl:"3"
+  Key:2F         Map:9_and_(  <shift>            bl:"("
+         <shift> Map:1_and_!             tl:"1"
+  Key:2H         Map:=_and_+                     bl:"="
+         <shift> Map:9_and_(             tl:"9"
+  Key:2I         Map:8_and_*  <shift>            bl:"*"
+         <shift> Map:0_and_)             tl:"0"
+  Key:2J         Map:0_and_)  <shift>            bl:")"
+         <shift> Map:2_and_@             tl:"2"
+  Key:2K         Map:=_and_+  <shift>            bl:"+"
+         <shift> Map:4_and_$             tl:"4"
+  Key:2L         Map:]_and_}                     bl:"]"
+         <shift> Map:6_and_^             tl:"6"
+  Key:2M         Map:1_and_!  <shift>            bl:"!"
+         <shift> Map:8_and_*             tl:"8"
+  Key:2N         Map:3_and_#  <shift>            bl:"#"
+         <shift> Map:`_and_~             tl:"'"
+
+  /* Row 3 */
+  Key:3B          Map:;_and_\:           tl:":"  bl:";"
+  Key:3C          Map:,_and_\<           tl:"<"  bl:","
+  Key:3D          Map:._and_\>           tl:">"  bl:"."
+  Key:3E          Map:p_and_P            tl:"P"
+  Key:3F          Map:y_and_Y            tl:"Y"
+  Key:3H          Map:f_and_F            tl:"F"
+  Key:3I          Map:g_and_G            tl:"G"
+  Key:3J          Map:c_and_C            tl:"C"
+  Key:3K          Map:r_and_R            tl:"R"
+  Key:3L          Map:l_and_L            tl:"L"
+  Key:3M          Map:/_and_?            tl:"?"  bl:"/"
+  Key:3N          Map:2_and_@ <shift>    tl:"@"
+          <shift> Map:6_and_^ <shift>    bl:"^"
+
+  /* Row 4 */
+  Key:4C  Map:o_and_O                    tl:"O"
+  Key:4D  Map:e_and_E                    tl:"E"
+  Key:4E  Map:u_and_U                    tl:"U"
+  Key:4F  Map:i_and_I                    tl:"I"
+  Key:4H  Map:d_and_D                    tl:"D"
+  Key:4I  Map:h_and_H                    tl:"H"
+  Key:4J  Map:t_and_T                    tl:"T"
+  Key:4K  Map:n_and_N                    tl:"N"
+  Key:4L  Map:s_and_S                    tl:"S"
+  Key:4M  Map:-_and_Underscore           tl:"__" bl:"-"
+
+  /* Row 5 */
+  Key:5B  Map:\'_and_\"                  tl:"\"" bl:"\'"
+  Key:5C  Map:q_and_Q                    tl:"Q"
+  Key:5D  Map:j_and_J                    tl:"J"
+  Key:5E  Map:k_and_K                    tl:"K"
+  Key:5F  Map:x_and_X                    tl:"X"
+  Key:5H  Map:b_and_B                    tl:"B"
+  Key:5J  Map:w_and_W                    tl:"W"
+  Key:5K  Map:v_and_V                    tl:"V"
+  Key:5L  Map:z_and_Z                    tl:"Z"
