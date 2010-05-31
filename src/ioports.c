@@ -21,7 +21,7 @@
 
 */
 
-#include "registers.h"
+#include "ioports.h"
 #include "matrix_discovery_defs.h"
 
 #define vPINA  0x00
@@ -48,7 +48,7 @@
 #define vDDRF  0x10
 #define vPORTF 0x11
 
-Registers registers[] =
+IOPort ioports[] =
 {
 #ifdef USE_PINA0
   { vDDRA, vPORTA, vPINA, (1<<0), "A0" },
@@ -201,5 +201,5 @@ Registers registers[] =
 #endif
 };
 
-uint8_t registers_length = sizeof(registers)/sizeof(Registers);
+uint8_t ioports_length = sizeof(ioports)/sizeof(IOPort);
 

@@ -134,41 +134,41 @@ LAYOUTS = ./layouts
 # TODO: hardware dependent
 LAYOUT_FILE = $(LAYOUTS)/Keyboard.kspec
 
-LUFA_SRC = $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/DevChapter9.c    \
-	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Endpoint.c          \
-	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Host.c              \
-	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/HostChapter9.c      \
-	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/LowLevel.c          \
-	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Pipe.c              \
-	$(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/USBInterrupt.c      \
-	$(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/ConfigDescriptor.c \
-	$(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/Events.c           \
-	$(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/USBTask.c          \
-	$(LUFA_PATH)/LUFA/Drivers/USB/Class/Device/HID.c           \
-	$(LUFA_PATH)/LUFA/Drivers/USB/Class/Host/HID.c             \
-	$(LUFA_PATH)/LUFA/Drivers/USB/Class/Host/HIDParser.c       
+LUFA_SRC = $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/DevChapter9.c       \
+	   $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Endpoint.c          \
+	   $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Host.c              \
+	   $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/HostChapter9.c      \
+	   $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/LowLevel.c          \
+	   $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Pipe.c              \
+	   $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/USBInterrupt.c      \
+	   $(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/ConfigDescriptor.c \
+	   $(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/Events.c           \
+	   $(LUFA_PATH)/LUFA/Drivers/USB/HighLevel/USBTask.c          \
+	   $(LUFA_PATH)/LUFA/Drivers/USB/Class/Device/HID.c           \
+	   $(LUFA_PATH)/LUFA/Drivers/USB/Class/Host/HID.c             \
+	   $(LUFA_PATH)/LUFA/Drivers/USB/Class/Host/HIDParser.c       
 
 # List C source files here. (C dependencies are automatically generated.)
 ifndef MATRIX_MODE
-SRC =   $(SRCDIR)/Keyboard.c                                       \
-	$(SRCDIR)/keyboard_report.c                                \
-	$(SRCDIR)/report_queue.c                                   \
-	$(SRCDIR)/Descriptors.c                                    \
-	$(SRCDIR)/keyboard_class.c                                 \
-	$(SRCDIR)/bound_key.c                                      \
-	$(SRCDIR)/active_keys.c                                    \
-	$(SRCDIR)/bound_key.c                                      \
-	$(SRCDIR)/blocked_keys.c                                   \
-	$(GENERATED)/keymaps.c                                     \
+SRC =   $(SRCDIR)/Keyboard.c         \
+	$(SRCDIR)/keyboard_report.c  \
+	$(SRCDIR)/report_queue.c     \
+	$(SRCDIR)/Descriptors.c      \
+	$(SRCDIR)/keyboard_class.c   \
+	$(SRCDIR)/bound_key.c        \
+	$(SRCDIR)/active_keys.c      \
+	$(SRCDIR)/bound_key.c        \
+	$(SRCDIR)/blocked_keys.c     \
+	$(GENERATED)/keymaps.c       \
 	$(LUFA_SRC)
-  else
-  SRC =   $(SRCDIR)/Keyboard.c                                     \
-			 $(SRCDIR)/Descriptors.c                   \
-			 $(SRCDIR)/matrix_discovery.c              \
-			 $(SRCDIR)/registers.c                     \
-			 $(SRCDIR)/hhstdio.c                       \
-			 $(LUFA_SRC)
-  endif
+else
+SRC =   $(SRCDIR)/Keyboard.c         \
+	$(SRCDIR)/Descriptors.c      \
+	$(SRCDIR)/matrix_discovery.c \
+	$(SRCDIR)/ioports.c          \
+	$(SRCDIR)/hhstdio.c          \
+	$(LUFA_SRC)
+endif
 
 
 
@@ -188,13 +188,13 @@ ASRC =
 
 # ERB template files for kbgen code generator
 ERBSRC = $(KBGEN_DIR)/templates/binding.erb.c    \
-			$(KBGEN_DIR)/templates/binding.erb.h    \
-			$(KBGEN_DIR)/templates/hid_usages.erb.h \
-			$(KBGEN_DIR)/templates/KeyMap.erb.c     \
-			$(KBGEN_DIR)/templates/KeyMap.erb.h     \
-			$(KBGEN_DIR)/templates/keymaps.erb.c    \
-			$(KBGEN_DIR)/templates/keymaps.erb.h    \
-			$(KBGEN_DIR)/templates/matrix.erb.h     
+	 $(KBGEN_DIR)/templates/binding.erb.h    \
+	 $(KBGEN_DIR)/templates/hid_usages.erb.h \
+	 $(KBGEN_DIR)/templates/KeyMap.erb.c     \
+	 $(KBGEN_DIR)/templates/KeyMap.erb.h     \
+	 $(KBGEN_DIR)/templates/keymaps.erb.c    \
+	 $(KBGEN_DIR)/templates/keymaps.erb.h    \
+	 $(KBGEN_DIR)/templates/matrix.erb.h     
 
 # Optimization level, can be [0, 1, 2, 3, s]. 
 #     0 = turn off optimization. s = optimize for size.
@@ -579,7 +579,7 @@ checkinvalidevents: $(LUFA_PATH)/LUFA/LUFA_Events.lst
 	@echo
 	@echo Checking for invalid events...
 	@$(shell) avr-nm $(OBJ) | sed -n -e 's/^.*EVENT_/EVENT_/p' | \
-	                 grep -F -v --file=$(LUFA_PATH)/LUFA/LUFA_Events.lst > InvalidEvents.tmp || true
+	  grep -F -v --file=$(LUFA_PATH)/LUFA/LUFA_Events.lst > InvalidEvents.tmp || true
 	@sed -n -e 's/^/  WARNING - INVALID EVENT NAME: /p' InvalidEvents.tmp
 	@if test -s InvalidEvents.tmp; then exit 1; fi
 

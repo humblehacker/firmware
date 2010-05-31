@@ -30,11 +30,13 @@
 
 enum {DEACTIVATED=UCHAR_MAX};
 
-typedef struct
+struct BoundKey
 {
   Cell        cell;
   KeyBinding  binding;
-} BoundKey;
+};
+
+typedef struct BoundKey BoundKey;
 
 void BoundKey__set_cell(BoundKey *this, Cell cell);
 void BoundKey__update_binding(BoundKey *this, Modifiers mods, KeyMap keymap);

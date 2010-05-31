@@ -21,22 +21,24 @@
 
 */
 
-#ifndef __REGISTERS_H__
-#define __REGISTERS_H__
+#ifndef __IOPORTS_H__
+#define __IOPORTS_H__
 
 #include <avr/pgmspace.h>
 
-typedef struct
+struct IOPort
 {
   uint8_t ddr;
   uint8_t port;
   uint8_t pin;
   uint8_t bitmask;
   char name[3];
-} Registers;
+};
 
-extern uint8_t registers_length;
-extern Registers registers[];
+typedef struct IOPort IOPort;
+
+extern uint8_t ioports_length;
+extern IOPort ioports[];
 
 #define PIN(p)  _SFR_IO8(p->pin)
 #define DDR(p)  _SFR_IO8(p->ddr)
@@ -203,4 +205,5 @@ enum
 };
 
 
-#endif // __REGISTERS_H__
+
+#endif // __IOPORTS_H__

@@ -7,12 +7,14 @@
 #define MAX_KEYS      6
 #define MAX_ACTIVE_CELLS (MAX_KEYS + NUM_MODIFIERS)
 
-typedef struct
+struct ActiveKeys
 {
   BoundKey  keys[MAX_ACTIVE_CELLS];
   uint8_t   num_keys;
   uint8_t   curr_key;
-} ActiveKeys;
+};
+
+typedef struct ActiveKeys ActiveKeys;
 
 void      ActiveKeys__reset(ActiveKeys *this);
 bool      ActiveKeys__add_cell(ActiveKeys *this, Cell cell);

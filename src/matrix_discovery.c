@@ -28,13 +28,11 @@
 #include "registers.h"
 #include "hhstdio.h"
 
-typedef struct
+struct MatrixDiscovery
 {
   enum State { LEARN, DISPLAY, AWAITING_INPUT, IDLE } state;
   bool send_empty_report;
-} MatrixDiscovery;
-
-MatrixDiscovery self;
+} self;
 
 extern const USB_KeyboardReport_Data_t ascii_table[] PROGMEM;
 
