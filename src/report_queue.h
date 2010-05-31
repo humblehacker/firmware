@@ -41,6 +41,9 @@ RQ_elem_t* ReportQueue__pop(void);
            // returns most recent report, or NULL if queue is empty.
 RQ_elem_t* ReportQueue__peek(void);
 
+           // returns previous most recent report, or NULL if queue is empty.
+RQ_elem_t* ReportQueue__prev(void);
+
            // return true if queue is empty.
 bool       ReportQueue__is_empty(void);
 

@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include "report_queue.h"
 
-struct ReportQueue
+static struct ReportQueue
 {
   uint8_t   front;
   uint8_t   rear;
@@ -52,7 +52,6 @@ ReportQueue__push()
   self.count++;
   self.rear = (self.rear + 1) % self.data_size;
   KeyboardReport__init(&self.data[self.rear]);
-  memset(&self.data[self.rear], 0, sizeof(RQ_elem_t));
   return &self.data[self.rear];
 }
 
@@ -75,6 +74,19 @@ ReportQueue__peek()
     return NULL;
 
   return &self.data[self.front];
+}
+
+RQ_elem_t  *
+ReportQueue__prev()
+{
+  if (ReportQueue__is_empty())
+    return NULL;
+
+  uint8_t prev_front = (self.data_size + self.front - 1) % self.data_size;
+  if (prev_front == self.rear)
+    return NULL;
+
+  return &self.data[prev_front];
 }
 
 bool

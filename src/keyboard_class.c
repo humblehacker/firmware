@@ -245,7 +245,39 @@ maybe_toggle_mode(void)
 void
 process_keys()
 {
-  KeyboardReport *report = ReportQueue__peek();
+  KeyboardReport *report      = ReportQueue__peek();
+  KeyboardReport *prev_report = ReportQueue__prev();
+
+  bool block_others = false;
+
+  // First, process keys with modifiers
+  for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
+       key;      key = ActiveKeys__next(&kb.active_keys))
+  {
+    if (key->binding.kind == MAP)
+    {
+      const MapTarget *target = KeyBinding__get_map_target(&key->binding);
+      if (target->modifiers != 0 &&
+          ActiveKeys__count(&kb.active_keys) > 1 &&
+          !(KeyboardReport__get_modifiers(report) & target->modifiers))
+      {
+        if (KeyboardReport__has_key(prev_report, target->usage))
+        {
+          BlockedKeys__block_key(key->cell);
+        }
+        else
+        {
+          block_others = true;
+          KeyboardReport__add_key(report, target->usage);
+          KeyboardReport__reset_modifiers(report, key->binding.premods);
+          KeyboardReport__set_modifiers(report, target->modifiers);
+        }
+        BoundKey__deactivate(key);
+      }
+    }
+  }
+
+  // Then, process keys without modifiers
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
        key;      key = ActiveKeys__next(&kb.active_keys))
   {
@@ -253,10 +285,17 @@ process_keys()
     {
     case MAP:
       {
+        if (block_others)
+        {
+          BlockedKeys__block_key(key->cell);
+        }
+        else
+        {
           const MapTarget *target = KeyBinding__get_map_target(&key->binding);
           KeyboardReport__add_key(report, target->usage);
           KeyboardReport__reset_modifiers(report, key->binding.premods);
           KeyboardReport__set_modifiers(report, target->modifiers);
+        }
         break;
       }
     case MACRO:

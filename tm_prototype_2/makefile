@@ -105,17 +105,17 @@ FORMAT = ihex
 
 
 # Target file name (without extension).
-TARGET = firmware
+TARGET = $(OBJDIR)/firmware
 
 
 # Object files directory
 #     To put object files in current directory, use a dot (.), do NOT make
 #     this an empty or blank macro!
-OBJDIR = .
+OBJDIR = build
 
 # Source files directory
 SRCDIR = ../src
-VPATH = ..
+VPATH = .. $(OBJDIR)
 
 # Path to the LUFA library
 LUFA_PATH = ../lufa-100513
@@ -128,7 +128,7 @@ LUFA_OPTS += -D USE_FLASH_DESCRIPTORS
 LUFA_OPTS += -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENABLED | USB_OPT_AUTO_PLL)"
 
 # Generated files directory
-GENERATED = $(OBJDIR)/generated
+GENERATED = generated
 LAYOUTS = ./layouts
 
 # TODO: hardware dependent
@@ -161,16 +161,16 @@ SRC =   $(SRCDIR)/Keyboard.c                                       \
 	$(SRCDIR)/blocked_keys.c                                   \
 	$(GENERATED)/keymaps.c                                     \
 	$(LUFA_SRC)
-else
-SRC =   $(SRCDIR)/Keyboard.c                                       \
-	$(SRCDIR)/Descriptors.c                                    \
-	$(SRCDIR)/matrix_discovery.c                               \
-	$(SRCDIR)/registers.c					   \
-	$(SRCDIR)/hhstdio.c					   \
-	$(LUFA_SRC)
-endif
+  else
+  SRC =   $(SRCDIR)/Keyboard.c                                     \
+			 $(SRCDIR)/Descriptors.c                   \
+			 $(SRCDIR)/matrix_discovery.c              \
+			 $(SRCDIR)/registers.c                     \
+			 $(SRCDIR)/hhstdio.c                       \
+			 $(LUFA_SRC)
+  endif
 
-	
+
 
 
 # List C++ source files here. (C dependencies are automatically generated.)
@@ -188,13 +188,13 @@ ASRC =
 
 # ERB template files for kbgen code generator
 ERBSRC = $(KBGEN_DIR)/templates/binding.erb.c    \
-	 $(KBGEN_DIR)/templates/binding.erb.h    \
-	 $(KBGEN_DIR)/templates/hid_usages.erb.h \
-	 $(KBGEN_DIR)/templates/KeyMap.erb.c     \
-	 $(KBGEN_DIR)/templates/KeyMap.erb.h     \
-	 $(KBGEN_DIR)/templates/keymaps.erb.c    \
-	 $(KBGEN_DIR)/templates/keymaps.erb.h    \
-	 $(KBGEN_DIR)/templates/matrix.erb.h     
+			$(KBGEN_DIR)/templates/binding.erb.h    \
+			$(KBGEN_DIR)/templates/hid_usages.erb.h \
+			$(KBGEN_DIR)/templates/KeyMap.erb.c     \
+			$(KBGEN_DIR)/templates/KeyMap.erb.h     \
+			$(KBGEN_DIR)/templates/keymaps.erb.c    \
+			$(KBGEN_DIR)/templates/keymaps.erb.h    \
+			$(KBGEN_DIR)/templates/matrix.erb.h     
 
 # Optimization level, can be [0, 1, 2, 3, s]. 
 #     0 = turn off optimization. s = optimize for size.
@@ -214,7 +214,7 @@ DEBUG = dwarf-2
 #     Each directory must be seperated by a space.
 #     Use forward slashes for directory separators.
 #     For a directory that has spaces, enclose it in quotes.
-EXTRAINCDIRS = $(LUFA_PATH)/ $(GENERATED) $(SRCDIR)
+EXTRAINCDIRS = $(LUFA_PATH)/ $(OBJDIR)/$(GENERATED) $(SRCDIR)
 
 
 # Compiler flag to set the C Standard level.
@@ -265,7 +265,7 @@ CFLAGS += -Wundef
 #CFLAGS += -fno-unit-at-a-time
 #CFLAGS += -Wunreachable-code
 #CFLAGS += -Wsign-compare
-CFLAGS += -Wa,-adhlns=$(patsubst %.c,%.lst,$(<:../%.c=%.lst))
+CFLAGS += -Wa,-adhlns=$(patsubst %.c,%.lst,$(<:../%.c=$(OBJDIR)/%.lst))
 CFLAGS += $(patsubst %,-I%,$(EXTRAINCDIRS))
 CFLAGS += $(CSTANDARD)
 
@@ -292,7 +292,7 @@ CFLAGS += -Wundef
 #CPPFLAGS += -Wstrict-prototypes
 #CPPFLAGS += -Wunreachable-code
 #CPPFLAGS += -Wsign-compare
-CPPFLAGS += -Wa,-adhlns=$(patsubst %.cpp,%.lst,$(<:../%.cpp=%.lst))
+CPPFLAGS += -Wa,-adhlns=$(patsubst %.cpp,%.lst,$(<:../%.cpp=$(OBJDIR)/%.lst))
 CPPFLAGS += $(patsubst %,-I%,$(EXTRAINCDIRS))
 #CPPFLAGS += $(CSTANDARD)
 
@@ -306,7 +306,7 @@ CPPFLAGS += $(patsubst %,-I%,$(EXTRAINCDIRS))
 #             files -- see avr-libc docs [FIXME: not yet described there]
 #  -listing-cont-lines: Sets the maximum number of continuation lines of hex 
 #       dump that will be displayed for a given single line of source input.
-ASFLAGS = $(ADEFS) -Wa,-adhlns=$(patsubst %.S,%.lst,$(<:../%.S=%.lst)),-gstabs,--listing-cont-lines=100
+ASFLAGS = $(ADEFS) -Wa,-adhlns=$(patsubst %.S,%.lst,$(<:../%.S=$(OBJDIR)/%.lst)),-gstabs,--listing-cont-lines=100
 
 
 #---------------- Library Options ----------------
@@ -458,7 +458,7 @@ REMOVEDIR = rm -rf
 COPY = cp
 WINSHELL = cmd
 KBGEN_DIR = ../kbgen
-KBGEN_OPTS = -O$(GENERATED)
+KBGEN_OPTS = -O$(OBJDIR)/$(GENERATED)
 ifdef MATRIX_MODE
 KBGEN_OPTS += --hid-only
 endif
@@ -488,13 +488,13 @@ MSG_CREATING_LIBRARY = Creating library:
 
 
 # Define all object files.
-OBJx = $(SRC:../%.c=%.o) $(CPPSRC:../%.cpp=%.o) $(ASRC:../%.S=%o) 
-OBJ = $(OBJx:%.c=%.o)
+OBJx = $(SRC:../%.c=$(OBJDIR)/%.o) $(CPPSRC:../%.cpp=$(OBJDIR)/%.o) $(ASRC:../%.S=$(OBJDIR)/%o) 
+OBJ = $(OBJx:%.c=$(OBJDIR)/%.o)
 OBJDIRS = $(sort $(dir $(basename $(OBJ))))
 
 # Define all listing files.
-LSTx = $(SRC:../%.c=%.lst) $(CPPSRC:../%.cpp=%.lst) $(ASRC:../%.S=%.lst) 
-LST = $(LSTx:%.c=%.lst)
+LSTx = $(SRC:../%.c=$(OBJDIR)/%.lst) $(CPPSRC:../%.cpp=$(OBJDIR)/%.lst) $(ASRC:../$(OBJDIR)/%.S=%.lst) 
+LST = $(LSTx:%.c=$(OBJDIR)/%.lst)
 
 
 # Compiler flags to generate dependency files.
@@ -520,16 +520,16 @@ $(KBGEN_DIR)/kspec.rb : $(KBGEN_DIR)/kspec.tt
 	@cd $(KBGEN_DIR); tt kspec.tt
 
 # Generate header files
-$(GENERATED)/hid_usages.h: $(KBGEN_DIR)/kspec.rb $(KBGEN_DIR)/kb.kspec $(ERBSRC)
+$(OBJDIR)/$(GENERATED)/hid_usages.h: $(KBGEN_DIR)/kspec.rb $(KBGEN_DIR)/kb.kspec $(ERBSRC)
 	@echo Generating code
-	@$(KBGEN) $(KBGEN_DIR)/kb.kspec -I$(LAYOUTS) -O$(GENERATED)
+	@$(KBGEN) $(KBGEN_DIR)/kb.kspec -I$(LAYOUTS) 
 
 # Generate combined kspec file
 $(KBGEN_DIR)/kb.kspec : $(LAYOUTS)/*.kspec
 	@echo Preprocessing keyboard layouts
 	@$(CPP) -P $(LAYOUT_FILE) $(KBGEN_DIR)/kb.kspec
 
-generate: $(GENERATED)/hid_usages.h
+generate: $(OBJDIR)/$(GENERATED)/hid_usages.h
 
 # Change the build target to build a HEX file or a library.
 build: elf hex eep lss sym
@@ -730,8 +730,7 @@ extcoff: $(TARGET).elf
 
 
 # Compile: create object files from C source files.
-#$(OBJDIR)/%.o : %.c
-%.o : %.c 
+$(OBJDIR)/%.o : %.c
 	@echo
 	@echo $(MSG_COMPILING) $<
 	@if ! test -d $(dir $@); then \
@@ -742,8 +741,7 @@ extcoff: $(TARGET).elf
 
 
 # Compile: create object files from C++ source files.
-#$(OBJDIR)/%.o : %.cpp
-%.o : %.cpp
+$(OBJDIR)/%.o : %.cpp
 	@echo
 	@echo $(MSG_COMPILING_CPP) $<
 	@if ! test -d $(dir $@); then \
@@ -787,21 +785,13 @@ clean_binary:
 
 clean_list:
 	@echo $(MSG_CLEANING)
-	$(REMOVE) $(TARGET).eep
-	$(REMOVE) $(TARGET)eep.hex
-	$(REMOVE) $(TARGET).cof
-	$(REMOVE) $(TARGET).elf
-	$(REMOVE) $(TARGET).map
-	$(REMOVE) $(TARGET).sym
-	$(REMOVE) $(TARGET).lss
 	$(REMOVE) $(SRC:.c=.s)
 	$(REMOVE) $(SRC:.c=.d)
 	$(REMOVE) $(SRC:.c=.i)
 	$(REMOVE) InvalidEvents.tmp
 	$(REMOVE) $(KBGEN_DIR)/kspec.rb $(KBGEN_DIR)/kb.kspec
 	$(REMOVEDIR) .dep
-	$(REMOVEDIR) $(GENERATED)
-	$(call kill-dirs, $(OBJDIRS))
+	$(REMOVEDIR) $(OBJDIR)
 
 doxygen:
 	@echo Generating Project Documentation...
@@ -822,7 +812,7 @@ kill-dirs = $(REMOVEDIR) $(sort     \
 
 # Create object files directory
 $(shell mkdir -p $(OBJDIRS) 2>/dev/null)
-$(shell mkdir -p $(GENERATED) 2>/dev/null)
+$(shell mkdir -p $(OBJDIR)/$(GENERATED) 2>/dev/null)
 
 
 # Include the dependency files.

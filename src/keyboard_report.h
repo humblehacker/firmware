@@ -20,5 +20,7 @@ void    KeyboardReport__set_modifiers(KeyboardReport *this, uint8_t mod_mask);
 void    KeyboardReport__reset_modifiers(KeyboardReport *this, uint8_t mod_mask);
 uint8_t KeyboardReport__get_modifiers(KeyboardReport *this);
 
+bool    KeyboardReport__has_key(KeyboardReport *this, Usage usage);
+
 
 #endif // __KEYBOARDREPORT_H__

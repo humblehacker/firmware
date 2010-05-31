@@ -61,5 +61,15 @@ KeyboardReport__get_modifiers(KeyboardReport *this)
   return this->report.Modifier;
 }
 
+bool
+KeyboardReport__has_key(KeyboardReport *this, Usage usage)
+{
+  for (int i = 0; i < this->num_keys; ++i)
+  {
+    if (USAGE_ID(usage) == this->report.KeyCode[i])
+      return true;
+  }
+  return false;
+}
 
 

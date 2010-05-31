@@ -22,6 +22,12 @@ ActiveKeys__add_cell(ActiveKeys *this, Cell cell)
   return true;
 }
 
+uint8_t
+ActiveKeys__count(ActiveKeys *this)
+{
+  return this->num_keys;
+}
+
 BoundKey*
 ActiveKeys__first(ActiveKeys *this)
 {
