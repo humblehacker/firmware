@@ -23,7 +23,70 @@
 
 #include "binding.h"
 
-/* All Bindings */
+/*
+ *    KeyBinding
+ */
+
+void
+KeyBinding__copy(const KeyBinding *this, KeyBinding *dst)
+{
+  dst->kind    = this->kind;
+  dst->premods = this->premods;
+  dst->target  = this->target;
+}
+
+const ModeTarget*
+KeyBinding__get_mode_target(const KeyBinding *this)
+{
+  static ModeTarget target;
+  memcpy_P((void*)&target, (PGM_VOID_P)this->target, sizeof(ModeTarget));
+  return &target;
+}
+
+const MacroTarget*
+KeyBinding__get_macro_target(const KeyBinding *this)
+{
+  static MacroTarget target;
+  memcpy_P((void*)&target, (PGM_VOID_P)this->target, sizeof(MacroTarget));
+  return &target;
+}
+
+const MapTarget*
+KeyBinding__get_map_target(const KeyBinding *this)
+{
+  static MapTarget target;
+  memcpy_P((void*)&target, (PGM_VOID_P)this->target, sizeof(MapTarget));
+  return &target;
+}
+
+/*
+ *    KeyBindingArray
+ */
+
+const KeyBinding*
+KeyBindingArray__get_binding(const KeyBindingArray *this, uint8_t index)
+{
+  static KeyBinding binding;
+  memcpy_P((void*)&binding, (PGM_VOID_P)&this->data[index], sizeof(KeyBinding));
+  return &binding;
+}
+
+/*
+ *    MacroTarget
+ */
+
+const MapTarget*
+MacroTarget__get_map_target(const MacroTarget *this, uint8_t index)
+{
+  static MapTarget target;
+  memcpy_P((void*)&target, (PGM_VOID_P)&this->targets[index], sizeof(MapTarget));
+  return &target;
+}
+
+/*
+ *    All Bindings
+ */
+
 <% $keyboard.maps.each_value do |keymap|
      keymap.keys.each do |location, key|
        key.kbindings.each do |premods, kbinding|
@@ -49,7 +112,10 @@ const ModeTarget <%= ident %> PROGMEM = { <%=kbinding.type.upcase%>, kbd_map_<%=
    end
 %>
 
-/* Aggregated bindings per key */
+/*
+ *    Aggregated bindings per key
+ */
+
 <% $keyboard.maps.each_value do |keymap|
      keymap.keys.each do |location, key| %>
 const KeyBinding <%= "#{keymap.ids.last}_#{key.location}" %>[] PROGMEM =

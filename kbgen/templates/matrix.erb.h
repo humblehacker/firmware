@@ -24,6 +24,8 @@
 #ifndef __MATRIX_H__
 #define __MATRIX_H__
 
+#include <stdint.h>
+
 #define COL(byte) (((uint8_t)byte)>>3)
 #define ROW(byte) (((uint8_t)byte)&~(0xff<<3))
 #define MATRIX_CELL(row,col) ((((uint8_t)(col))<<3)|((uint8_t)(row)))

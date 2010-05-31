@@ -27,34 +27,40 @@
 #include "hid_usages.h"
 #include "matrix.h"
 
-typedef struct
+typedef struct ModeTarget ModeTarget;
+typedef struct MacroTarget MacroTarget;
+typedef struct MapTarget MapTarget;
+typedef struct KeyBinding KeyBinding;
+typedef struct KeyBindingArray KeyBindingArray;
+typedef const KeyBindingArray* KeyMap;
+
+/*
+ *    KeyBinding
+ */
+
+struct KeyBinding
 {
   enum {NOMAP, MAP, MODE, MACRO} kind;
   Modifiers premods;
   void *target;
-} KeyBinding;
+};
 
-static inline
-void
-KeyBinding__get(KeyBinding *binding, const KeyBinding *from)
-{
-  memcpy_P((void*)binding, (PGM_VOID_P)from, sizeof(KeyBinding));
-}
+void               KeyBinding__copy(const KeyBinding *this, KeyBinding *dst);
+const ModeTarget*  KeyBinding__get_mode_target(const KeyBinding *this);
+const MacroTarget* KeyBinding__get_macro_target(const KeyBinding *this);
+const MapTarget*   KeyBinding__get_map_target(const KeyBinding *this);
 
-static inline
-void
-KeyBinding__copy(KeyBinding *dst, const KeyBinding *src)
-{
-  dst->kind = src->kind;
-  dst->premods = src->premods;
-  dst->target = src->target;
-}
+/*
+ *    KeyBindingArray
+ */
 
-typedef struct
+struct KeyBindingArray
 {
   uint8_t length;
   const KeyBinding *data;
-} KeyBindingArray;
+} ;
+
+const KeyBinding* KeyBindingArray__get_binding(const KeyBindingArray *this, uint8_t index);
 
 static inline
 void
@@ -63,46 +69,41 @@ KeyBindingArray__get(KeyBindingArray *array, const KeyBindingArray *from)
   memcpy_P((void*)array, (PGM_VOID_P)from, sizeof(KeyBindingArray));
 }
 
-typedef const KeyBindingArray* KeyMap;
+/*
+ *    ModeTarget
+ */
 
-typedef struct
+struct ModeTarget
 {
   enum {MOMENTARY, TOGGLE} type;
   KeyMap mode_map;
-} ModeTarget;
+};
 
-static inline
-void
-ModeTarget__get(ModeTarget *target, const ModeTarget *from)
-{
-  memcpy_P((void*)target, (PGM_VOID_P)from, sizeof(ModeTarget));
-}
+/*
+ *    MapTarget
+ */
 
-typedef struct
+struct MapTarget
 {
   Modifiers modifiers;
   Usage usage;
-} MapTarget;
+};
 
-static inline
-void
-MapTarget__get(MapTarget *target, const MapTarget *from)
-{
-  memcpy_P((void*)target, (PGM_VOID_P)from, sizeof(MapTarget));
-}
+/*
+ *    MacroTarget
+ */
 
-typedef struct
+struct MacroTarget
 {
   uint8_t length;
   const MapTarget *targets;
-} MacroTarget;
+};
 
-static inline
-void
-MacroTarget__get(MacroTarget *target, const MacroTarget *from)
-{
-  memcpy_P((void*)target, (PGM_VOID_P)from, sizeof(MacroTarget));
-}
+const MapTarget* MacroTarget__get_map_target(const MacroTarget *this, uint8_t index);
+
+/*
+ *    Binding declarations
+ */
 
 <% $keyboard.maps.each_value do |keymap|
      keymap.keys.each do |location, key| %>

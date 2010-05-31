@@ -64,9 +64,9 @@ Keyboard__init()
   kb.selected_keymap = kb.default_keymap;
   kb.active_keymap   = NULL;
 
-  reset();
   BlockedKeys__init();
   ReportQueue__init();
+  reset();
 }
 
 uint8_t
@@ -168,7 +168,7 @@ init_active_keys()
 }
 
 void
-update_bindings(void)
+update_bindings()
 {
   KeyboardReport *report = ReportQueue__peek();
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
@@ -186,11 +186,10 @@ momentary_mode_engaged()
   {
     if (key->binding.kind == MODE)
     {
-      ModeTarget target;
-      ModeTarget__get(&target, key->binding.target);
-      if (target.type == MOMENTARY)
+      const ModeTarget *target = KeyBinding__get_mode_target(&key->binding);
+      if (target->type == MOMENTARY)
       {
-        kb.active_keymap = target.mode_map;
+        kb.active_keymap = target->mode_map;
         BoundKey__deactivate(key);
         return true;
       }
@@ -209,10 +208,9 @@ modifier_keys_engaged()
   {
     if (key->binding.kind == MAP)
     {
-      MapTarget target;
-      MapTarget__get(&target, key->binding.target);
+      const MapTarget *target = KeyBinding__get_map_target(&key->binding);
       Modifiers this_modifier = NONE;
-      if ((this_modifier = get_modifier(target.usage)) != NONE)
+      if ((this_modifier = get_modifier(target->usage)) != NONE)
       {
         active_modifiers |= this_modifier;
         KeyboardReport__reset_modifiers(report, key->binding.premods);
@@ -232,11 +230,10 @@ maybe_toggle_mode(void)
   {
     if (key->binding.kind == MODE)
     {
-      ModeTarget target;
-      ModeTarget__get(&target, key->binding.target);
-      if (target.type == TOGGLE)
+      const ModeTarget *target = KeyBinding__get_mode_target(&key->binding);
+      if (target->type == TOGGLE)
       {
-        toggle_map(target.mode_map);
+        toggle_map(target->mode_map);
         BoundKey__deactivate(key);
         BlockedKeys__block_key(key->cell);
         return;
@@ -256,33 +253,30 @@ process_keys()
     {
     case MAP:
       {
-        MapTarget target;
-        MapTarget__get(&target, key->binding.target);
-        KeyboardReport__add_key(report, target.usage);
-        KeyboardReport__reset_modifiers(report, key->binding.premods);
-        KeyboardReport__set_modifiers(report, target.modifiers);
+          const MapTarget *target = KeyBinding__get_map_target(&key->binding);
+          KeyboardReport__add_key(report, target->usage);
+          KeyboardReport__reset_modifiers(report, key->binding.premods);
+          KeyboardReport__set_modifiers(report, target->modifiers);
         break;
       }
     case MACRO:
       {
-        MacroTarget macro;
-        MacroTarget__get(&macro, key->binding.target);
+        const MacroTarget *macro = KeyBinding__get_macro_target(&key->binding);
         KeyboardReport *report = NULL;
-        for (int i = 0; i < macro.length; ++i)
+        for (int i = 0; i < macro->length; ++i)
         {
           report = ReportQueue__push();
           if (!report)  // TODO: ensure macro size < queue capacity
             break;
-          MapTarget target;
-          MapTarget__get(&target, &macro.targets[i]);
-          KeyboardReport__add_key(report, target.usage);
-          KeyboardReport__set_modifiers(report, target.modifiers);
+          const MapTarget *target = MacroTarget__get_map_target(macro, i);
+          KeyboardReport__add_key(report, target->usage);
+          KeyboardReport__set_modifiers(report, target->modifiers);
 
           // add a blank report to simulate key-up
           report = ReportQueue__push();
           if (!report)
             break;
-          KeyboardReport__set_modifiers(report, target.modifiers);
+          KeyboardReport__set_modifiers(report, target->modifiers);
         }
         break;
       }

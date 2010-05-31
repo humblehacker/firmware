@@ -34,11 +34,10 @@ BoundKey__update_binding(BoundKey *this, Modifiers mods, KeyMap keymap)
     // find the binding that matches the specified modifier state.
     for (int i = 0; i < bindings.length; ++i)
     {
-      static KeyBinding binding;
-      KeyBinding__get(&binding, &bindings.data[i]);
-      if (binding.premods == mods)
+      const KeyBinding *binding = KeyBindingArray__get_binding(&bindings, i);
+      if (binding->premods == mods)
       {
-        KeyBinding__copy(&this->binding, &binding);
+        KeyBinding__copy(binding, &this->binding);
         return;
       }
     }
@@ -52,9 +51,8 @@ BoundKey__update_binding(BoundKey *this, Modifiers mods, KeyMap keymap)
     // premods == NONE.
     if (bindings.data[0].premods == NONE)
     {
-      static KeyBinding binding;
-      KeyBinding__get(&binding, &bindings.data[0]);
-      KeyBinding__copy(&this->binding, &binding);
+      const KeyBinding *binding = KeyBindingArray__get_binding(&bindings, 0);
+      KeyBinding__copy(binding, &this->binding);
       return;
     }
   }
