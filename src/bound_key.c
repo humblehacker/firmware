@@ -42,7 +42,16 @@ BoundKey__update_binding(BoundKey *this, Modifiers mods, KeyMap keymap)
       }
     }
 
-    // TODO: fuzzier matching on modifer keys.
+    // if none match, find one that is close
+    for (int i = 0; i < bindings.length; ++i)
+    {
+      const KeyBinding *binding = KeyBindingArray__get_binding(&bindings, i);
+      if (binding->premods & mods)
+      {
+        KeyBinding__copy(binding, &this->binding);
+        return;
+      }
+    }
 
     // if no match was found, use the default binding
     // TODO: the code generator must ensure that the
