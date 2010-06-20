@@ -63,6 +63,60 @@ This will place the source code in a directory `keyboard` in your current direct
 [git_install]:http://help.github.com/git-installation-redirect
 [git]:http://git-scm.com/
 
+Building the firmware
+=====================
+
+Now that everything is in place, you can build and install the firmware.  Broadly speaking, we'll be performing the following steps:
+
+- create your keyboard/controller specific project directory
+- test build
+- modify sources and makefile for your keyboard/controller
+- test build and program
+- modify layout files as desired
+
+Instantiate project directory
+-----------------------------
+Navigate to `keyboard/firmware`.  In this directory, you'll find a directory `kb_reference`.  This is your starting point for building a firmware specific to your keyboard/controller combo.  You need to duplicate this directory, naming it whatever you desire.  It's a good idea to keep the `kb_` prefix. In this example, I'll use `kb_example`.
+
+Test build
+----------
+To ensure that your build environment is set up correctly, and all dependencies have been satisfied, it's a good idea to try to build the firmware prior to making any code modifications.  From the command-line, navigate to `keyboard/firmware/kb_example` and type `make`.  At this point you should have a successful build.  If not, review the above instructions to make sure you haven't missed anything.  If you're still having problems, contact me and we'll work them out.
+
+Modify sources
+--------------
+There are a few things you'll need to change before you can program your controller with this firmware.  All of the following files/paths are relative to the `kb_example` directory.
+
+- makefile
+- conf_keyboard.h
+- Board/LEDs.h
+- Board/Identifiers.h
+
+### makefile
+
+You need to know two things before modifying the makefile: which microcontroller your controller will be using, and what its clock speed is.
+
+With this information in hand, edit the makefile, and look for the line that reads: `MCU = at90usb1287` (roughly line 66).  Change `at90usb1287` to whatever MCU is used on your controller board.  If you're using an Atmel AT90USBKey, nothing needs to change.  If you're using a Teensy++, change it to read `MCU = at90usb1286`.
+
+Next, look for the line that reads:
+
+    F_CPU = 8000000
+    
+If your clock speed is 8Mhz, nothing needs to change (USBKey).  Otherwise, if your clock speed is 16Mhz, change it to read:
+
+    F_CPU = 16000000
+
+### conf_keyboard.h
+
+Coming soon.
+
+### Board/LEDs.h
+
+Coming soon.
+
+### Board/Identifiers.h
+
+Coming soon.
+
 Matrix Discovery Mode
 =====================
 
