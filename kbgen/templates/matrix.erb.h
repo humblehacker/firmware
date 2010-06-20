@@ -25,6 +25,7 @@
 #define __MATRIX_H__
 
 #include <stdint.h>
+#include <avr/io.h>
 
 #define COL(byte) (((uint8_t)byte)>>3)
 #define ROW(byte) (((uint8_t)byte)&~(0xff<<3))
@@ -41,6 +42,66 @@ rows = cols = 0
 #define NUM_COLS <%=cols%>
 
 typedef uint8_t Cell;
+
+static inline
+void
+activate_row(uint8_t row)
+{
+  // set all row pins as inputs
+<% $keyboard.rports.each_with_index do |port,i| %>
+  DDR<%= port[1,1] %> &= ~(1 << <%= port %>);
+<% end %>
+
+  // set current row pin as output
+  switch (row)
+  {
+<% $keyboard.rports.each_with_index do |port,i| %>
+    case <%= i %>: DDR<%= $keyboard.rports[i][1,1] %> |= (1 << <%= port %>); break;
+<% end %>
+  }
+
+  // drive all row pins high
+<% $keyboard.rports.each_with_index do |port,i| %>
+  PORT<%= port[1,1] %> |= (1 << <%= port %>);
+<% end %>
+
+  // drive current row pin low
+  switch (row)
+  {
+<% $keyboard.rports.each_with_index do |port,i| %>
+    case <%= i %>: PORT<%= port[1,1] %> &= ~(1 << <%= port %>); break;
+<% end %>
+  }
+}
+
+static inline
+uint32_t
+read_row_data(void)
+{
+  uint32_t cols = 0;
+
+<% $keyboard.cports.each_with_index do |port, i| %>
+  if ((~PIN<%= port[1,1] %>)&(1<<<%= port %>)) cols |= (1UL<< <%= i %>);
+<% end %>
+
+  return cols;
+}
+
+
+static inline
+void
+init_cols(void)
+{
+  /* Columns are inputs */
+<% $keyboard.cports.each do |port| %>
+  DDR<%= port[1,1] %> &= ~(1 << <%= port %>);
+<% end %>
+
+  /* Enable pull-up resistors on inputs */
+<% $keyboard.cports.each do |port| %>
+  PORT<%= port[1,1] %> |= (1 << <%= port %>);
+<% end %>
+}
 
 #endif /* __MATRIX_H__ */
 

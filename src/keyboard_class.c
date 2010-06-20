@@ -28,11 +28,11 @@
 #include "Keyboard.h"
 #include "keyboard_class.h"
 #include "keymaps.h"
-#include "conf_keyboard.h"
 #include "binding.c"
 #include "active_keys.h"
 #include "report_queue.h"
 #include "blocked_keys.h"
+#include "matrix.h"
 
 struct
 {
