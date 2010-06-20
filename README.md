@@ -39,15 +39,13 @@ Again, there are different packages for different platforms.
 - Windows: [RubyInstaller][rubyinst].  NOTE: When installing, choose the option to "Add ruby executables to your PATH" (The file association option is up to you).
 - Mac OSX: Ruby 1.8.7 is installed by default with Snow Leopard (10.6).  If you have an earlier version of OS X, you can install Ruby via [MacPorts][macports]
 
-Once Ruby is installed, there are some additional dependencies that need to be taken care of:
+Once Ruby is installed, there one additional dependency that needs to be taken care of.  Execute the following command to install [treetop].
 
-- treetop
-
-gem install treetop
+    gem install treetop
 
 [rubyinst]:http://rubyforge.org/frs/download.php/71067/rubyinstaller-1.8.7-p249.exe
 [macports]:http://www.macports.org/
-
+[treetop]:http://treetop.rubyforge.org/
 
 ### HumbleHacker source code
 
@@ -57,13 +55,13 @@ The source code can be found [here][hh_source].  To get it, from the command-lin
 
     git clone git://github.com/humblehacker/keyboard.git
         
-        This will place the source code in a directory `keyboard` in your current directory.
+This will place the source code in a directory `keyboard` in your current directory.
 
-        [hh_downloads]:http://github.com/humblehacker/keyboard/downloads
-        [hh_source]:http://github.com/humblehacker/keyboard
-        [github]:http://github.com
-        [git_install]:http://help.github.com/git-installation-redirect
-        [git]:http://git-scm.com/
+[hh_downloads]:http://github.com/humblehacker/keyboard/downloads
+[hh_source]:http://github.com/humblehacker/keyboard
+[github]:http://github.com
+[git_install]:http://help.github.com/git-installation-redirect
+[git]:http://git-scm.com/
 
 Matrix Discovery Mode
 =====================
