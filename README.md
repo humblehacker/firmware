@@ -87,7 +87,7 @@ Modify sources
 There are a few things you'll need to change before you can program your controller with this firmware.  All of the following files/paths are relative to the `kb_example` directory.
 
 - makefile
-- conf_keyboard.h
+- layouts/Matrix.kspec
 - Board/LEDs.h
 - Board/Identifiers.h
 
@@ -105,9 +105,13 @@ If your clock speed is 8Mhz, nothing needs to change (USBKey).  Otherwise, if yo
 
     F_CPU = 16000000
 
-### conf_keyboard.h
+### layouts/Matrix.kspec
 
-Coming soon.
+Here is where you define your keyboard matrix, and how that matrix is wired up to your controller board.  Each key on your keyboard needs a unique identifier.  A very simple method is to use numbers for rows and letters for columns.  For example, on a standard QWERTY keyboard with the ESC key in the upper left, that key would have the identifier `1A` (1st row, 1st col).  Similarly, the Q key would have the identifier `3B` (3rd row, 2nd col).  If you already know your matrix, all you have to do modify the Matrix table in layouts/Matrix.kspec.  For example, if the Q key (location `1A`) is at row 0, column 12 of the matrix, you would modify the first line of the matrix definition as follows:
+
+    Matrix:Reference
+    /*            0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17 */
+    /* 0 */ Row: --, --, --, --, --, --, --, --, --, --, --, 1A, --, --, --, --, --, --
 
 ### Board/LEDs.h
 
