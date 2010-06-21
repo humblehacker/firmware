@@ -28,8 +28,6 @@ require 'KbParser.rb'
 require 'optparse'
 require 'erb'
 
-require 'PP'
-
 class ModeKey
   attr_accessor :name, :location, :matrix_cell, :type, :selectingMapID
 
