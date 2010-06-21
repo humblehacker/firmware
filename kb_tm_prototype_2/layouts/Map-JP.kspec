@@ -21,7 +21,7 @@
 
 */
 
-KeyMap:JP base:US rev:57
+KeyMap:JP base:US
 
   /* Row 2 */
   Key:2A Map:`_and_~          tl:"半角" bl:"全角"

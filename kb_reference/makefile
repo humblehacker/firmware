@@ -522,7 +522,7 @@ $(KBGEN_DIR)/kspec.rb : $(KBGEN_DIR)/kspec.tt
 # Generate header files
 $(OBJDIR)/$(GENERATED)/hid_usages.h: $(KBGEN_DIR)/kspec.rb $(KBGEN_DIR)/kb.kspec $(ERBSRC)
 	@echo Generating code
-	@$(KBGEN) $(KBGEN_DIR)/kb.kspec -I$(LAYOUTS) 
+	@$(KBGEN) $(KBGEN_DIR)/kb.kspec -I$(KBGEN_DIR) -I$(LAYOUTS) 
 
 # Generate combined kspec file
 $(KBGEN_DIR)/kb.kspec : $(LAYOUTS)/*.kspec

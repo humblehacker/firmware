@@ -21,7 +21,7 @@
 
 */
 
-KeyMap:pDV base:US rev:57
+KeyMap:pDV base:US
 
   /* Row 2 */
   Key:2A         Map:4_and_$  <shift>            bl:"$"

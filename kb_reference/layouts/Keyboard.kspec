@@ -21,7 +21,7 @@
 
 */
 
-Keyboard:HumbleHackerReference rev:63
+Keyboard:HumbleHackerReference
 
 #include "Matrix.kspec"
 #include "Map-Common.kspec"

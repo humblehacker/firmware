@@ -54,34 +54,27 @@ class RowDef
 end
 
 class KeyMap
-  attr_accessor :keys, :ids, :revs, :types
+  attr_accessor :keys, :ids, :types
 
-  def initialize(id, rev, type='system')
+  def initialize(id, type='system')
     @ids   = [id]
-    @revs  = [rev]
     @types = [type]
     @keys  = {}
   end
 
   def initialize_copy(other)
     @ids   = @ids.dup
-    @revs  = @revs.dup
     @keys  = @keys.dup
     @types = @types.dup
   end
 
-  def add_map(id, rev, type='system')
+  def add_map(id, type='system')
     @ids.push   id
-    @revs.push  rev
     @types.push type
   end
 
   def id
     @ids.last
-  end
-
-  def rev
-    @revs.last
   end
 
   def type

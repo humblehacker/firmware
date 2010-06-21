@@ -21,7 +21,7 @@
 
 */
 
-KeyMap:DV base:US rev:57
+KeyMap:DV base:US
 
   /* Row 2 */
   Key:2M  Map:[_and_{            tl:"{"  bl:"["

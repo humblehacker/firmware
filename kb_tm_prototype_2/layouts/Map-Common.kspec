@@ -21,7 +21,7 @@
 
 */
 
-KeyMap:Common rev:203
+KeyMap:Common
 
         /* Row 1 */
         Key:1A Map:ESCAPE                                     tl:"esc"

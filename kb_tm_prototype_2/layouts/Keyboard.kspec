@@ -21,7 +21,7 @@
 
 */
 
-Keyboard:TypeMatrix2030USB rev:63
+Keyboard:TypeMatrix2030USB
 
 #include "Matrix.kspec"
 #include "Map-Common.kspec"

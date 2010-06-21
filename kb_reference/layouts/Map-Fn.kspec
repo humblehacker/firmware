@@ -21,7 +21,7 @@
 
 */
 
-KeyMap:Fn base:Nm rev:203
+KeyMap:Fn base:Nm
 
     /* Row 1 */
     Key:1A Mode:US             type:toggle                   tl:"US"

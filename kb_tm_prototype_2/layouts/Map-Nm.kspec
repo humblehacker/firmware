@@ -21,7 +21,7 @@
 
 */
 
-KeyMap:Nm rev:62
+KeyMap:Nm
 
   /* Row 1 */
   Key:1O Mode:Nm led:Num type:toggle    tl:"Num"
