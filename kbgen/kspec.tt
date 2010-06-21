@@ -22,7 +22,7 @@
 grammar KSpec
 
   rule keyboard
-    ws? 'Keyboard:' ident rev ws matrix keymaps:keymap+
+    ws? 'Keyboard:' ident ws matrix keymaps:keymap+
     {
       def content
         kb = Keyboard.new()
@@ -33,12 +33,8 @@ grammar KSpec
     }
   end
 
-  rule rev
-    sp 'rev:' ident
-  end
-
   rule matrix
-    'Matrix:' ident rev ws rows:matrix_row+ 'Cols:' colports:port+ ws? 'Rows:' rowports:port+ ws?
+    'Matrix:' ws rows:matrix_row+ 'Cols:' colports:port+ ws? 'Rows:' rowports:port+ ws?
     {
       def content(kb)
         rows.elements.each {|e| e.content(kb) }
@@ -74,17 +70,17 @@ grammar KSpec
   end
 
   rule keymap
-    'KeyMap:' ident base:(sp 'base:' ident)? default:(sp 'default')? rev ws keys:key+ ws?
+    'KeyMap:' ident base:(sp 'base:' ident)? default:(sp 'default')? ws keys:key+ ws?
     {
       def content(kb)
 
         kb.defaultMap = ident.text_value unless default.text_value.empty?
 
         if base.text_value.empty?
-          map = KeyMap.new(ident.text_value, rev.text_value)
+          map = KeyMap.new(ident.text_value)
         elsif kb.maps.has_key? base.ident.text_value
           map = kb.maps[base.ident.text_value].dup
-          map.add_map(ident.text_value, rev.text_value)
+          map.add_map(ident.text_value)
         else
           raise "Error: base map '#{base.ident.text_value}' has not been defined"
         end
