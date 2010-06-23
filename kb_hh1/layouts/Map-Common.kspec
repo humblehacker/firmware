@@ -1,0 +1,85 @@
+/*
+                    The HumbleHacker Keyboard Project
+                 Copyright © 2008-2010, David Whetstone
+               david DOT whetstone AT humblehacker DOT com
+
+  This file is a part of The HumbleHacker Keyboard Project.
+
+  The HumbleHacker Keyboard Project is free software: you can redistribute
+  it and/or modify it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  The HumbleHacker Keyboard Project is distributed in the hope that it will
+  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+  Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with The HumbleHacker Keyboard Project.  If not, see
+  <http://www.gnu.org/licenses/>.
+
+*/
+
+KeyMap:Common
+
+        /* Row 1 */
+        Key:1A Map:ESCAPE                                     tl:"esc"
+        Key:1B Map:F1                                         tl:"F1"
+        Key:1C Map:F2                                         tl:"F2"
+        Key:1D Map:F3                                         tl:"F3"
+        Key:1E Map:F4                                         tl:"F4"
+        Key:1F Map:F5                                         tl:"F5"
+        Key:1G Map:F6                                         tl:"F6"
+        Key:1H Map:F7                                         tl:"F7"
+        Key:1I Map:F8                                         tl:"F8"
+        Key:1J Map:F9                                         tl:"F9"
+        Key:1K Map:F10                                        tl:"F10"
+        Key:1L Map:F11                                        tl:"F11"
+        Key:1M Map:F12                                        tl:"F12"
+        Key:1N Map:PrintScreen                                tl:"F13"
+        Key:1O Map:Scroll_Lock                                tl:"F14"
+        Key:1P Map:Keyboard_Pause                             tl:"F15"
+
+        /* Row 2 */
+        Key:2G Map:Home                                       tl:"Home"
+        Key:2H Map:PageUp                                     tl:"Page Up"
+        Key:2I Map:End                                        tl:"End"
+
+        /* Row 3 */
+        Key:3A Mode:Fn1 type:momentary                        tl:"Fn1"
+        Key:3G Map:Tab                                        tl:"Home"
+        Key:3H Map:PageDown                                   tl:"Page Up"
+        Key:3I Map:Tab <shift>                                tl:"Back Tab"
+        Key:3O Mode:Fn2 type:momentary                        tl:"Fn2"
+
+        /* Row 4 */
+        Key:4A Map:Left_Control                               tl:"Ctrl"
+        Key:4G Map:Return_or_Enter                            tl:"Return"
+        Key:4H Map:Delete_Forward                             tl:"Delete"
+        Key:4I Map:Return_or_Enter                            tl:"Return"
+        Key:4O Map:Right_Control                              tl:"Ctrl"
+
+        /* Row 5 */
+        Key:5A Map:Left_Shift                                 tl:"Shift"
+        Key:5G Map:Return_or_Enter                            tl:"Return"
+        Key:5H Map:UpArrow                                    tl:"{up}"
+        Key:5I Map:Return_or_Enter                            tl:"Return"
+        Key:5O Map:Right_Shift                                tl:"Shift"
+
+        /* Row 6 */
+        Key:6A Mode:Fn3 type:momentary                        tl:"Fn3"
+        Key:6C Map:Left_Alt                                   tl:"Option"
+        Key:6E Map:Backspace                                  tl:"Backspace"
+        Key:6G Map:LeftArrow                                  tl:"{left}"
+        Key:6H Map:DownArrow                                  tl:"{down}"
+        Key:6I Map:RightArrow                                 tl:"{right}"
+        Key:6J Map:Spacebar                                   tl:"Space"
+        Key:6M Map:Right_Alt                                  tl:"Option"
+        Key:6O Mode:Fn4 type:momentary                        tl:"Fn4"
+
+        /* Row 7 */
+        Key:7G Map:Left_GUI                                   tl:"Command"
+        Key:7H Map:Left_GUI                                   tl:"Command"
+
+
