@@ -25,13 +25,14 @@
 #include <stdio.h>
 
 #include "matrix_discovery.h"
-#include "registers.h"
+#include "ioports.h"
 #include "hhstdio.h"
 
 struct MatrixDiscovery
 {
   enum State { LEARN, DISPLAY, AWAITING_INPUT, IDLE } state;
   bool send_empty_report;
+  bool welcome_sent;
 } self;
 
 extern const USB_KeyboardReport_Data_t ascii_table[] PROGMEM;
@@ -46,10 +47,7 @@ MatrixDiscovery__init()
 {
   stdio_init();
   self.send_empty_report = false;
-  _delay_ms(15000);
-  printf("The HumbleHacker Keyboard firmware\n");
-  printf("------ Matrix Discovery Mode -----\n\n");
-  printf("Press any key to find out which PORT/PIN it is connected to.\n");
+  self.welcome_sent = false;
 }
 
 void
@@ -84,22 +82,22 @@ reset_pins()
 void
 activate_row(int row)
 {
-  Registers *reg = &registers[row];
+  IOPort *port = &ioports[row];
 
-  DDR(reg)  |=  reg->bitmask;  // 1 = pin as output
-  PORT(reg) &= ~reg->bitmask;  // 0 = drive pin low
+  DDR(port)  |=  port->bitmask;  // 1 = pin as output
+  PORT(port) &= ~port->bitmask;  // 0 = drive pin low
   _delay_us(20);
 }
 
 bool
 check_column(int col)
 {
-  Registers *reg = &registers[col];
+  IOPort *port = &ioports[col];
 
-  DDR(reg)  &= ~reg->bitmask;  // 0 = pin as input
-  PORT(reg) |=  reg->bitmask;  // 1 = activate pull-up
+  DDR(port)  &= ~port->bitmask;  // 0 = pin as input
+  PORT(port) |=  port->bitmask;  // 1 = activate pull-up
 
-  return (~PIN(reg)) & reg->bitmask;
+  return (~PIN(port)) & port->bitmask;
 }
 
 void
@@ -116,9 +114,9 @@ MatrixDiscovery__scan_matrix()
   int vertex = 0;
 
   int col_start = 0;
-  for (int row = 0; row < registers_length; ++row)
+  for (int row = 0; row < ioports_length; ++row)
   {
-    for (int col = col_start++; col < registers_length; ++col)
+    for (int col = col_start++; col < ioports_length; ++col)
     {
       reset_pins();
       activate_row(row);
@@ -135,7 +133,7 @@ MatrixDiscovery__scan_matrix()
   if (vertex)
   {
     for (int x = 0; x < vertex; ++x)
-      printf("(%s, %s), ", registers[vertices[x].row].name, registers[vertices[x].col].name);
+      printf("(%s, %s), ", ioports[vertices[x].row].name, ioports[vertices[x].col].name);
     printf("\n");
   }
 }
@@ -143,6 +141,16 @@ MatrixDiscovery__scan_matrix()
 uint8_t
 MatrixDiscovery__get_report(USB_KeyboardReport_Data_t *report)
 {
+  if (!self.welcome_sent)
+  {
+    _delay_ms(10000);
+    printf("The HumbleHacker Keyboard firmware\n");
+    printf("------ Matrix Discovery Mode -----\n\n");
+    printf("Press any key to find out which PORT/PIN it is connected to.\n");
+    self.welcome_sent = true;
+    return;
+  }
+
   if (!stdout_is_empty())
     write_output_char(report);
 

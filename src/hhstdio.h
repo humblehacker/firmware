@@ -27,7 +27,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-void stdout_init(void);
+void stdio_init(void);
 bool stdout_is_empty(void);
 char stdout_popchar(void);
 
