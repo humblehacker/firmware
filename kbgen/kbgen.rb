@@ -74,6 +74,7 @@ def init(filename, options)
     puts " line  : #{$kbp.failure_line}"
     puts " column: #{$kbp.failure_column}"
     puts " reason: #{$kbp.failure_reason}¥"
+    raise "Parse failed"
   end
 
   $invertedMatrix = {}
