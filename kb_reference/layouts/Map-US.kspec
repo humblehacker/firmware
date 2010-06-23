@@ -23,7 +23,7 @@
 
 KeyMap:US base:Common default
 
-  /* Row 3 */
+  /* Row 2 */
   Key:2A Map:`_and_~           tl:"~"    bl:"`"
   Key:2B Map:1_and_!           tl:"!"    bl:"1"
   Key:2C Map:2_and_@           tl:"@"    bl:"2"
