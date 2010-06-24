@@ -27,7 +27,7 @@ require 'Utils.rb'
 class Keyboard
   attr_accessor :layout, :maps, :colors, :org, :keyhash, :max,
                 :copyright, :matrix, :matrixId, :reverseMatrix,
-                :cports, :rports, :defaultMap
+                :cports, :rports, :defaultMap, :block_ghost_keys
   Scale = 28.34627813368
   def initialize(org="none")
     @org = org
@@ -43,6 +43,7 @@ class Keyboard
     @max = Point.new(0,0)
     @cports = []
     @rports = []
+    @block_ghost_keys = false
   end
 
   def key_def_from_ID(id)

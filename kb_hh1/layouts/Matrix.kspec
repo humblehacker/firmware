@@ -24,12 +24,12 @@
 Matrix:
 /*            0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 */
 /* 0 */ Row: 1A, 1B, 1C, 1D, 1E, 1F, 1G, 1H, 1I, 1J, 1K, 1L, 1M, 1N, 1O, 1P
-/* 1 */ Row: 2A, 2B, 2C, 2D, 2E, 2F, 2G, 2H, 2I, 2J, 2K, 2L, 2M, 2N, 2O, --
-/* 2 */ Row: 3A, 3B, 3C, 3D, 3E, 3F, 3G, 3H, 3I, 3J, 3K, 3L, 3M, 3N, 3O, --
-/* 3 */ Row: 4A, 4B, 4C, 4D, 4E, 4F, 4G, 4H, 4I, 4J, 4K, 4L, 4M, 4N, 4O, --
-/* 4 */ Row: 5A, 5B, 5C, 5D, 5E, 5F, 5G, 5H, 5I, 5J, 5K, 5L, 5M, 5N, 5O, --
-/* 5 */ Row: 6A, 6B, 6C, 6D, 6E, 6F, 6G, 6H, 6I, 6J, 6K, 6L, 6M, 6N, 6O, --
-/* 6 */ Row: --, --, --, --, --, --, 7G, 7H, --, --, --, --, --, --, --, --
+/* 1 */ Row: --, 2A, 2B, 2C, 2D, 2E, 2F, 2G, 2H, 2I, 2J, 2K, 2L, 2M, 2N, 2O
+/* 2 */ Row: --, 3A, 3B, 3C, 3D, 3E, 3F, 3G, 3H, 3I, 3J, 3K, 3L, 3M, 3N, 3O
+/* 3 */ Row: --, 4A, 4B, 4C, 4D, 4E, 4F, 4G, 4H, 4I, 4J, 4K, 4L, 4M, 4N, 4O
+/* 4 */ Row: --, 5A, 5B, 5C, 5D, 5E, 5F, 5G, 5H, 5I, 5J, 5K, 5L, 5M, 5N, 5O
+/* 5 */ Row: --, 6A, 6B, 6C, 6D, 6E, 6F, 6G, 6H, 6I, 6J, 6K, 6L, 6M, 6N, 6O
+/* 6 */ Row: --, --, --, --, --, --, --, 7G, 7H, --, --, --, --, --, --, --
 
 /*      0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15 */
   Cols:PC0 PC1 PC2 PC3 PC4 PC5 PC6 PC7 PD7 PD6 PD5 PD4 PD3 PD2 PD1 PD0
@@ -37,3 +37,4 @@ Matrix:
 /*      0   1   2   3   4   5   6   7  */
   Rows:PA0 PA1 PA2 PA3 PA4 PA5 PA6 PA7
 
+  BlockGhostKeys:no

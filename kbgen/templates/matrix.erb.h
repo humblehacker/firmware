@@ -43,6 +43,10 @@ rows = cols = 0
 
 typedef uint8_t Cell;
 
+<% if $keyboard.block_ghost_keys %>
+#define BLOCK_GHOST_KEYS
+<% end %>
+
 static inline
 void
 activate_row(uint8_t row)

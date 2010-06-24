@@ -146,6 +146,7 @@ init_active_keys()
       }
     }
 
+#ifdef BLOCK_GHOST_KEYS
     // if 2 or more keys pressed in a row, check for ghost-key
     if (ncols > 1)
     {
@@ -164,6 +165,7 @@ init_active_keys()
         }
       }
     }
+#endif // BLOCK_GHOST_KEYS
   }
 }
 

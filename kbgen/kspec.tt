@@ -34,12 +34,22 @@ grammar KSpec
   end
 
   rule matrix
-    'Matrix:' ws rows:matrix_row+ 'Cols:' colports:port+ ws? 'Rows:' rowports:port+ ws?
+    'Matrix:' ws rows:matrix_row+ 'Cols:' colports:port+ ws? 'Rows:' rowports:port+ ws? ghost ws?
     {
       def content(kb)
         rows.elements.each {|e| e.content(kb) }
         colports.elements.each {|e| e.content(kb.cports) }
         rowports.elements.each {|e| e.content(kb.rports) }
+        kb.block_ghost_keys = ghost.content()
+      end
+    }
+  end
+
+  rule ghost
+    'BlockGhostKeys:' yesno:('yes' / 'no')
+    {
+      def content()
+        return yesno.text_value == 'yes'
       end
     }
   end
