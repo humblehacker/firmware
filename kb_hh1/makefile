@@ -59,7 +59,7 @@
 #----------------------------------------------------------------------------
 
 # Matrix discovery mode
-MATRIX_MODE = 1
+#MATRIX_MODE = 1
 
 
 # MCU name
