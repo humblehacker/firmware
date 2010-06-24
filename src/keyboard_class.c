@@ -374,7 +374,7 @@ fill_report(USB_KeyboardReport_Data_t *dest_report)
   else
   {
     dest_report->Modifier = KeyboardReport__get_modifiers(report);
-    for (uint8_t key = 1; key < 7; ++key)
+    for (uint8_t key = 0; key < 6; ++key)
       dest_report->KeyCode[key] = USAGE_ID(HID_USAGE_ERRORROLLOVER);
   }
   return sizeof(USB_KeyboardReport_Data_t);
