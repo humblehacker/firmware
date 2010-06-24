@@ -31,6 +31,7 @@ const KeyBindingArray kbd_map_<%=kbIdentifier%>_mx[] =
 
   /* col: <%=iCol%> */<%
      row = flippedMatrix[iCol]
+     iRow = 0
      row.each_index do |iRow|
        location = row[iRow] %>
   /* row:<%=iRow%> loc = <%=location%> */ <%
@@ -39,6 +40,9 @@ const KeyBindingArray kbd_map_<%=kbIdentifier%>_mx[] =
        elsif key.kbindings.empty? == nil %>{0, NULL} /* EMPTY DEFINITION! */<%
        else%>{<%=key.kbindings.length%>, &<%=kbIdentifier%>_<%=key.location%>[0]}<%
        end %><%= "," if iCol < lastcol %><%
+     end
+     ((iRow+1)..7).each do |i| %>
+  /* ---:<%=i%> loc = -- */ {0, NULL},<%
      end
    end
 %>
