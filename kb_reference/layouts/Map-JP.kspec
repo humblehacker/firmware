@@ -65,7 +65,7 @@ KeyMap:JP base:US
   Key:4J Map:k_and_K          tl:"K"                       br:"の"
   Key:4K Map:l_and_L          tl:"L"                       br:"り"
   Key:4L Map:;_and_\:         tl:"+"    bl:";"     tr:"』" br:"れ"
-  Key:4M Map:\'_and_\"        tl:"*"    bl:":"     tr:"ヶ" br:"け"
+  Key:4M Map:squote_and_dquote tl:"*"    bl:":"     tr:"ヶ" br:"け"
 
   /* Row 5 */
   Key:5B Map:z_and_Z          tl:"Z"               tr:"っ" br:"つ"

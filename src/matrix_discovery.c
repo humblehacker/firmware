@@ -195,7 +195,7 @@ const USB_KeyboardReport_Data_t ascii_table[] =
 
   /* 32    */ { NONE, 0, { USAGE_ID(HID_USAGE_SPACEBAR) }},
   /* 33  ! */ { L_SHF, 0, { USAGE_ID(HID_USAGE_1_AND__EXCLAMATION) }},
-  /* 34  " */ { L_SHF, 0, { USAGE_ID(HID_USAGE__APOSTROPHE_AND__QUOTE) }},
+  /* 34  " */ { L_SHF, 0, { USAGE_ID(HID_USAGE_SQUOTE_AND_DQUOTE) }},
   /* 35  # */ { L_SHF, 0, { USAGE_ID(HID_USAGE_3_AND__POUND)  }},
   /* 36  $ */ { L_SHF, 0, { USAGE_ID(HID_USAGE_4_AND__DOLLAR) }},
   /* 37  % */ { L_SHF, 0, { USAGE_ID(HID_USAGE_5_AND__PERCENT) }},

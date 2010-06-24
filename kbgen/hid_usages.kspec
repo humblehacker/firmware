@@ -74,7 +74,7 @@ UsagePage:Keyboard_and_Keypad id:0x07
     Usage:\_and_| id:0x31
     Usage:NonUS_#_and_~ id:0x32
     Usage:;_and_\: id:0x33
-    Usage:\'_and_\" id:0x34
+    Usage:squote_and_dquote id:0x34
     Usage:`_and_~ id:0x35
     Usage:,_and_\< id:0x36
     Usage:._and_\> id:0x37
