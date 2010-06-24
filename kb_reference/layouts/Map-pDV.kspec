@@ -79,7 +79,7 @@ KeyMap:pDV base:US
   Key:4M  Map:-_and_Underscore           tl:"__" bl:"-"
 
   /* Row 5 */
-  Key:5B  Map:\'_and_\"                  tl:"\"" bl:"\'"
+  Key:5B  Map:squote_and_dquote          tl:"\"" bl:"\'"
   Key:5C  Map:q_and_Q                    tl:"Q"
   Key:5D  Map:j_and_J                    tl:"J"
   Key:5E  Map:k_and_K                    tl:"K"

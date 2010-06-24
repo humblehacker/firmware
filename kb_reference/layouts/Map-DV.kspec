@@ -28,7 +28,7 @@ KeyMap:DV base:US
   Key:2N  Map:]_and_}            tl:"}"  bl:"]"
 
   /* Row 3 */
-  Key:3B  Map:\'_and_\"          tl:"\"" bl:"\'"
+  Key:3B  Map:squote_and_dquote  tl:"\"" bl:"\'"
   Key:3C  Map:,_and_\<           tl:"<"  bl:","
   Key:3D  Map:._and_\>           tl:">"  bl:"."
   Key:3E  Map:p_and_P            tl:"P"
