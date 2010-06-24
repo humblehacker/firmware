@@ -148,7 +148,7 @@ MatrixDiscovery__get_report(USB_KeyboardReport_Data_t *report)
     printf("------ Matrix Discovery Mode -----\n\n");
     printf("Press any key to find out which PORT/PIN it is connected to.\n");
     self.welcome_sent = true;
-    return;
+    return 0;
   }
 
   if (!stdout_is_empty())
