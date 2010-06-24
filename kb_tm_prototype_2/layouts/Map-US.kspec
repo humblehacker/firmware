@@ -63,7 +63,7 @@ KeyMap:US base:Common default
   Key:4J Map:k_and_K           tl:"K"
   Key:4K Map:l_and_L           tl:"L"
   Key:4L Map:;_and_\:          tl:":"    bl:";"
-  Key:4M Map:\'_and_\"         tl:"\""   bl:"'"
+  Key:4M Map:squote_and_dquote tl:"\""   bl:"'"
 
   /* Row 5 */
   Key:5B Map:z_and_Z           tl:"Z"
