@@ -21,7 +21,7 @@
 
 */
 
-KeyMap:US base:Common default
+KeyMap:US base:Common
 
   /* Row 2 */
   Key:2A Map:`_and_~           tl:"~"    bl:"`"

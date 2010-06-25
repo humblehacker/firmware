@@ -21,7 +21,7 @@
 
 */
 
-KeyMap:DV base:US
+KeyMap:DV base:US default
 
   /* Row 3 */
   Key:3B  Map:squote_and_dquote  tl:"\"" bl:"\'"
