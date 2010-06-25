@@ -72,6 +72,12 @@ Keyboard__init()
 uint8_t
 Keyboard__get_report(USB_KeyboardReport_Data_t *report)
 {
+#ifdef TEENSY_HACK
+  static uint32_t counter = 0;
+  if ((++counter % 0xFF) != 0)
+    return 0;
+#undef TEENSY_HACK
+
   reset();
   if (ReportQueue__is_empty())
   {
