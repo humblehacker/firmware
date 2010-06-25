@@ -242,7 +242,7 @@ CPPDEFS = -DF_CPU=$(F_CPU)UL
 ifdef MATRIX_MODE
 HH_DEFS = -DMATRIX_DISCOVERY_MODE
 endif
-HH_DEFS = TEENSY_HACK
+HH_DEFS = -DTEENSY_HACK
 
 #---------------- Compiler Options C ----------------
 #  -g*:          generate debugging information
