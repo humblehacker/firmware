@@ -18,7 +18,6 @@ ActiveKeys__add_cell(ActiveKeys *this, Cell cell)
     return false;
 
   BoundKey__set_cell(&this->keys[this->num_keys++], cell);
-
   return true;
 }
 

@@ -26,9 +26,13 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <LUFA/Drivers/USB/Class/HID.h>
 
 void stdio_init(void);
+void stdio_fill_report(char ch, USB_KeyboardReport_Data_t *report);
 bool stdout_is_empty(void);
 char stdout_popchar(void);
+
+extern const USB_KeyboardReport_Data_t ascii_table[] PROGMEM;
 
 #endif // __HHSTDIO_H__
