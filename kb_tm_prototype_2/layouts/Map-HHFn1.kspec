@@ -21,16 +21,11 @@
 
 */
 
-Keyboard:TypeMatrix2030USB
+KeyMap:HHFn1 base:HHDV
 
-#include "Matrix.kspec"
-#include "Map-Common.kspec"
-#include "Map-US.kspec"
-#include "Map-DV.kspec"
-#include "Map-pDV.kspec"
-#include "Map-HHDV.kspec"
-#include "Map-JP.kspec"
-#include "Map-Nm.kspec"
-#include "Map-Fn.kspec"
-#include "Map-HHFn1.kspec"
-#include "Map-HHFn2.kspec"
+  Key:3H  Map:Delete_Forward
+
+  Key:3J  Map:UpArrow
+  Key:4J  Map:DownArrow
+  Key:4I  Map:LeftArrow
+  Key:4K  Map:RightArrow

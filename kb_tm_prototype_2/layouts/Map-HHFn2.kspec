@@ -21,16 +21,33 @@
 
 */
 
-Keyboard:TypeMatrix2030USB
+KeyMap:HHFn2 base:HHDV
 
-#include "Matrix.kspec"
-#include "Map-Common.kspec"
-#include "Map-US.kspec"
-#include "Map-DV.kspec"
-#include "Map-pDV.kspec"
-#include "Map-HHDV.kspec"
-#include "Map-JP.kspec"
-#include "Map-Nm.kspec"
-#include "Map-Fn.kspec"
-#include "Map-HHFn1.kspec"
-#include "Map-HHFn2.kspec"
+  Key:3A   Map:Tab                 tr:"tab"
+
+  Key:3B   Map:=_and_+ <shift>     tr:"+"
+  Key:4B   Map:=_and_+             tr:"="
+
+  Key:3C   Map:9_and_( <shift>     tr:"("
+  Key:3E   Map:0_and_) <shift>     tr:")"
+
+  Key:4C   Map:[_and_{ <shift>     tr:"{"
+  Key:4E   Map:]_and_} <shift>     tr:"}"
+
+  Key:5C   Map:[_and_{             tr:"["
+  Key:5E   Map:]_and_}             tr:"]"
+
+  Key:4F   Macro:                  tr:"->"
+      Map:-_and_Underscore
+      Map:._and_\> <shift>
+
+  Key:3D   Map:\_and_| <shift>     tr:"|"
+    <shift>Macro:                  tr:"||"
+      Map:\_and_| <shift>
+      Map:\_and_| <shift>
+  Key:4D  Map:/_and_?              tr:"/"
+    <shift>Macro:                  tr:"//"
+      Map:/_and_?
+      Map:/_and_?
+  Key:5D  Map:\_and_|              tr:"\\"
+

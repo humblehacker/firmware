@@ -27,8 +27,9 @@ KeyMap:Fn base:Nm
     Key:1A Mode:US             type:toggle                   tl:"US"
     Key:1B Mode:DV  led:Dvorak type:toggle                   tl:"Dvorak"
     Key:1C Mode:pDV led:Dvorak type:toggle                   tl:"Japan"
-    Key:1D Mode:JP  led:Scroll type:toggle                   tl:"Japan"
-    Key:1E Macro:
+    Key:1E Mode:JP  led:Scroll type:toggle                   tl:"Japan"
+    Key:1D Mode:HHDV led:Dvorak type:toggle
+    Key:1N Macro:
         Map:h_and_H <shift>
         Map:u_and_U
         Map:m_and_M

@@ -21,16 +21,13 @@
 
 */
 
-Keyboard:TypeMatrix2030USB
+KeyMap:HHDV base:DV
 
-#include "Matrix.kspec"
-#include "Map-Common.kspec"
-#include "Map-US.kspec"
-#include "Map-DV.kspec"
-#include "Map-pDV.kspec"
-#include "Map-HHDV.kspec"
-#include "Map-JP.kspec"
-#include "Map-Nm.kspec"
-#include "Map-Fn.kspec"
-#include "Map-HHFn1.kspec"
-#include "Map-HHFn2.kspec"
+  Key:3A  Mode:HHFn1 led:Num type:momentary
+  Key:3M  Mode:HHFn2 led:Num type:momentary
+
+  Key:6D Map:Left_Control  tl:"Control"
+
+  Key:7B Map:Left_Alt      tl:"Alt"
+  Key:7C Map:Left_GUI      tl:"Start"
+
