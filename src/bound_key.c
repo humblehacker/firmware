@@ -58,9 +58,9 @@ BoundKey__update_binding(BoundKey *this, Modifiers mods, KeyMap keymap)
     // following assumption is correct, the first
     // binding will be the one and only binding with
     // premods == NONE.
-    if (bindings.data[0].premods == NONE)
+    const KeyBinding *binding = KeyBindingArray__get_binding(&bindings, 0);
+    if (binding->premods == NONE)
     {
-      const KeyBinding *binding = KeyBindingArray__get_binding(&bindings, 0);
       KeyBinding__copy(binding, &this->binding);
       return;
     }
