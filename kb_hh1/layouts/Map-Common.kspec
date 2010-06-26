@@ -70,16 +70,20 @@ KeyMap:Common
         /* Row 6 */
         Key:6A Mode:Fn3 type:momentary                        tl:"Fn3"
         Key:6C Map:Left_Alt                                   tl:"Option"
+        Key:6D Map:Left_Alt                                   tl:"Option"
         Key:6E Map:Backspace                                  tl:"Backspace"
+        Key:6F Map:Backspace                                  tl:"Backspace"
         Key:6G Map:LeftArrow                                  tl:"{left}"
         Key:6H Map:DownArrow                                  tl:"{down}"
         Key:6I Map:RightArrow                                 tl:"{right}"
         Key:6J Map:Spacebar                                   tl:"Space"
+        Key:6K Map:Spacebar                                   tl:"Space"
+        Key:6L Map:Right_Alt                                  tl:"Option"
         Key:6M Map:Right_Alt                                  tl:"Option"
         Key:6O Mode:Fn4 type:momentary                        tl:"Fn4"
 
         /* Row 7 */
         Key:7G Map:Left_GUI                                   tl:"Command"
-        Key:7H Map:Left_GUI                                   tl:"Command"
+        Key:7H Map:Right_GUI                                  tl:"Command"
 
 
