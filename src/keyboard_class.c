@@ -33,6 +33,7 @@
 #include "report_queue.h"
 #include "blocked_keys.h"
 #include "matrix.h"
+#include "hhstdio.h"
 
 struct
 {
@@ -54,10 +55,12 @@ static void    maybe_toggle_mode(void);
 static void    process_keys(void);
 static uint8_t fill_report(USB_KeyboardReport_Data_t *report);
 static void    toggle_map(KeyMap mode_map);
+static void    stdout_to_report_queue(void);
 
 void
 Keyboard__init()
 {
+  stdio_init();
   init_cols();
 
   kb.default_keymap  = (KeyMap) pgm_read_word(&kbd_map_mx_default);
@@ -67,6 +70,22 @@ Keyboard__init()
   BlockedKeys__init();
   ReportQueue__init();
   reset();
+}
+
+void
+stdout_to_report_queue()
+{
+  char ch;
+  KeyboardReport *report;
+
+  while((ReportQueue__freespace() >= 2) && (ch = stdout_popchar()))
+  {
+    report = ReportQueue__push();
+    stdio_fill_report(ch, &report->report);
+
+    report = ReportQueue__push();
+    stdio_fill_report('\0', &report->report);
+  }
 }
 
 uint8_t
@@ -79,6 +98,10 @@ Keyboard__get_report(USB_KeyboardReport_Data_t *report)
 #endif // TEENSY_HACK
 
   reset();
+
+  if (!stdout_is_empty())
+    stdout_to_report_queue();
+
   if (ReportQueue__is_empty())
   {
     scan_matrix();

@@ -47,9 +47,11 @@ RQ_elem_t* ReportQueue__prev(void);
            // return true if queue is empty.
 bool       ReportQueue__is_empty(void);
 
-           // return true if queue is full
+           // return true if queue is full.
 bool       ReportQueue__is_full(void);
 
+           // return the number of remaining free slots in queue.
+uint8_t    ReportQueue__freespace(void);
 
 
 #endif // __REPORT_QUEUE_H__

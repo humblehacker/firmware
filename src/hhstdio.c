@@ -22,12 +22,15 @@
 */
 
 #include "hhstdio.h"
+
+#ifdef USE_HHSTDIO
+
 #include "hid_usages.h"
 
 static int hid_putc(char, FILE*);
 static FILE buf_stdout = FDEV_SETUP_STREAM(hid_putc, NULL, _FDEV_SETUP_WRITE);
 
-#define OUTPUT_BUFSIZE 256
+#define OUTPUT_BUFSIZE 1024
 char output_buffer[OUTPUT_BUFSIZE];
 uint8_t current_pos;
 uint8_t end_pos;
@@ -232,3 +235,4 @@ const USB_KeyboardReport_Data_t ascii_table[] =
   /* 126 ~ */ { L_SHF, 0, { USAGE_ID(HID_USAGE__BACKTICK_AND__TILDE) }},
 };
 
+#endif // USE_HHSTDIO

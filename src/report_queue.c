@@ -47,7 +47,7 @@ RQ_elem_t *
 ReportQueue__push()
 {
   if (ReportQueue__is_full())
-    return false;
+    return NULL;
 
   self.count++;
   self.rear = (self.rear + 1) % self.data_size;
@@ -93,6 +93,12 @@ bool
 ReportQueue__is_empty()
 {
   return self.count <= 0;
+}
+
+uint8_t
+ReportQueue__freespace()
+{
+  return self.data_size - self.count;
 }
 
 bool
