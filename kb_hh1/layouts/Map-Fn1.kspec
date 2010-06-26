@@ -23,69 +23,14 @@
 
 KeyMap:Fn1
 
-    /* Row 1 */
-    Key:1A Mode:US             type:toggle                   tl:"US"
-    Key:1B Mode:DV  led:Dvorak type:toggle                   tl:"Dvorak"
-    Key:1C Mode:pDV led:Dvorak type:toggle                   tl:"pDvorak"
-    Key:1E Macro:
-        Map:h_and_H <shift>
-        Map:u_and_U
-        Map:m_and_M
-        Map:b_and_B
-        Map:l_and_L
-        Map:e_and_E
-        Map:h_and_H <shift>
-        Map:a_and_A
-        Map:c_and_C
-        Map:k_and_K
-        Map:e_and_E
-        Map:d_and_D
-        Map:Spacebar
-        Map:t_and_T <shift>
-        Map:y_and_Y
-        Map:p_and_P
-        Map:e_and_E
-        Map:m_and_M <shift>
-        Map:a_and_A
-        Map:t_and_T
-        Map:r_and_R
-        Map:i_and_I
-        Map:x_and_X
-        Map:Spacebar
-        Map:2_and_@
-        Map:0_and_)
-        Map:3_and_#
-        Map:0_and_)
-        Map:Spacebar
-        Map:p_and_P <shift>
-        Map:r_and_R
-        Map:o_and_O
-        Map:f_and_F
-        Map:e_and_E
-        Map:s_and_S
-        Map:s_and_S
-        Map:i_and_I
-        Map:o_and_O
-        Map:n_and_N
-        Map:a_and_A
-        Map:l_and_L
-        Map:Return_or_Enter
-    Key:1G Map:Insert                                       tl:"Insert"
-    Key:1I Map:System_Power_Down  page:Generic_Desktop      tl:"Power"
-    Key:1J Map:System_Sleep       page:Generic_Desktop      tl:"Sleep"
-    Key:1K Map:System_Wake_Up     page:Generic_Desktop      tl:"Wake"
-    Key:1L Map:PrintScreen                                  tl:"Prt Sc"
-    Key:1M Map:Scroll_Lock                                  tl:"Scroll"
-    Key:1N Map:Pause                                        tl:"Pause"
-    Key:1O Map:Keypad_Num_Lock_and_Clear                    tl:"N. Lock"
+  Key:3J  Map:Delete_Forward
+  Key:3K  Map:PageUp
+  Key:3L  Map:UpArrow
+  Key:3M  Map:PageDown
 
-    /* Row 5 */
-    Key:5B Map:NonUS_\_and_|                                tl:"<"
-    Key:5C Map:NonUS_\_and_| <shift>                        tl:">"
-    Key:5D Map:NonUS_\_and_| <right_alt>                    tl:"¦"
-    Key:5E Map:NonUS_\_and_| <right_alt|shift>              tl:"_"
+  Key:4K  Map:LeftArrow
+  Key:4L  Map:DownArrow
+  Key:4M  Map:RightArrow
 
-    /* Row 6 */
-    Key:6B Map:Keyboard_Cut                                 tl:"Cut"
-    Key:6C Map:Keyboard_Copy                                tl:"Copy"
-    Key:6D Map:Keyboard_Paste                               tl:"Paste"
+  Key:5K  Map:Home
+  Key:5M  Map:End
