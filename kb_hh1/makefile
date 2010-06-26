@@ -59,7 +59,7 @@
 #----------------------------------------------------------------------------
 
 # Matrix discovery mode
-#MATRIX_MODE = 1
+MATRIX_MODE = 1
 
 
 # MCU name
@@ -243,7 +243,7 @@ CPPDEFS = -DF_CPU=$(F_CPU)UL
 ifdef MATRIX_MODE
 HH_DEFS = -DMATRIX_DISCOVERY_MODE
 endif
-HH_DEFS = -DTEENSY_HACK
+HH_DEFS += -DTEENSY_HACK
 
 #---------------- Compiler Options C ----------------
 #  -g*:          generate debugging information
@@ -739,7 +739,7 @@ $(OBJDIR)/%.o : %.c
 	  @echo Creating dir: $(dir $@); \
 	  @mkdir -p $(dir $@); \
 	fi
-	@$(CC) -c $(ALL_CFLAGS) $< -o $@ 
+	$(CC) -c $(ALL_CFLAGS) $< -o $@ 
 
 
 # Compile: create object files from C++ source files.

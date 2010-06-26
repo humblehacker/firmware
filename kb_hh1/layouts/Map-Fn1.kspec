@@ -23,14 +23,16 @@
 
 KeyMap:Fn1
 
-  Key:3J  Map:Delete_Forward
   Key:3K  Map:PageUp
   Key:3L  Map:UpArrow
   Key:3M  Map:PageDown
 
+  Key:4J  Map:Delete_Forward
   Key:4K  Map:LeftArrow
   Key:4L  Map:DownArrow
   Key:4M  Map:RightArrow
 
+  Key:5J  Map:Backspace
   Key:5K  Map:Home
+  Key:5L  Map:Keypad_ENTER
   Key:5M  Map:End

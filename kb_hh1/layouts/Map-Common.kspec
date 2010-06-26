@@ -58,7 +58,7 @@ KeyMap:Common
         Key:4G Map:Return_or_Enter                            tl:"Return"
         Key:4H Map:Delete_Forward                             tl:"Delete"
         Key:4I Map:Return_or_Enter                            tl:"Return"
-        Key:4O Map:Right_Control                              tl:"Ctrl"
+        Key:4O Map:Return_or_Enter                            tl:"Return"
 
         /* Row 5 */
         Key:5A Map:Left_Shift                                 tl:"Shift"
@@ -71,8 +71,8 @@ KeyMap:Common
         Key:6A Mode:Fn3 type:momentary                        tl:"Fn3"
         Key:6C Map:Left_Alt                                   tl:"Option"
         Key:6D Map:Left_Alt                                   tl:"Option"
-        Key:6E Map:Backspace                                  tl:"Backspace"
-        Key:6F Map:Backspace                                  tl:"Backspace"
+        Key:6E Map:Left_GUI                                   tl:"Command"
+        Key:6F Map:Left_GUI                                   tl:"Command"
         Key:6G Map:LeftArrow                                  tl:"{left}"
         Key:6H Map:DownArrow                                  tl:"{down}"
         Key:6I Map:RightArrow                                 tl:"{right}"
@@ -83,7 +83,7 @@ KeyMap:Common
         Key:6O Mode:Fn4 type:momentary                        tl:"Fn4"
 
         /* Row 7 */
-        Key:7G Map:Left_GUI                                   tl:"Command"
+        Key:7G Map:Backspace                                  tl:"Backspace"
         Key:7H Map:Right_GUI                                  tl:"Command"
 
 
