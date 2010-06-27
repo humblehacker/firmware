@@ -26,6 +26,7 @@ KeyMap:Fn1
   Key:3K  Map:PageUp
   Key:3L  Map:UpArrow
   Key:3M  Map:PageDown
+  Key:3O  Map:Tab
 
   Key:4J  Map:Delete_Forward
   Key:4K  Map:LeftArrow
