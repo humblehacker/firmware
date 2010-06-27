@@ -309,7 +309,7 @@ process_keys()
   // multiple simultaneous keys when some have modifiers and some
   // don't.  This is a limitation of the HID keyboard protocol.
 
-  KeyboardReport *report      = ReportQueue__peek();
+  KeyboardReport *report = ReportQueue__peek();
 
   bool block_others = false;
 
@@ -369,18 +369,18 @@ process_keys()
           KeyboardReport *report = NULL;
           for (int i = 0; i < macro->length; ++i)
           {
+            if (ReportQueue__freespace() < 2)
+              break;  // TODO: ensure macro size < queue capacity
+
             report = ReportQueue__push();
-            if (!report)  // TODO: ensure macro size < queue capacity
-              break;
             const MapTarget *target = MacroTarget__get_map_target(macro, i);
             KeyboardReport__add_key(report, target->usage);
             KeyboardReport__set_modifiers(report, target->modifiers);
 
             // add a blank report to simulate key-up
             report = ReportQueue__push();
-            if (!report)
-              break;
             KeyboardReport__set_modifiers(report, target->modifiers);
+            BlockedKeys__block_key(key->cell);
           }
           break;
         }
