@@ -48,9 +48,9 @@ KeyMap:Common
 
         /* Row 3 */
         Key:3A Mode:Fn1 type:momentary                        tl:"Fn1"
-        Key:3G Map:Tab                                        tl:"Home"
+        Key:3G Map:Tab <shift>                                tl:"Home"
         Key:3H Map:PageDown                                   tl:"Page Up"
-        Key:3I Map:Tab <shift>                                tl:"Back Tab"
+        Key:3I Map:Tab                                        tl:"Back Tab"
         Key:3O Mode:Fn2 type:momentary                        tl:"Fn2"
 
         /* Row 4 */
