@@ -109,7 +109,7 @@ void SetupHardware()
 	wdt_disable();
 
 	/* Disable clock division */
-	clock_prescale_set(clock_div_1);
+	clock_prescale_set(clock_div_2);
 
 	/* Hardware Initialization */
 	LEDs_Init();

@@ -59,7 +59,7 @@
 #----------------------------------------------------------------------------
 
 # Matrix discovery mode
-MATRIX_MODE = 1
+#MATRIX_MODE = 1
 
 
 # MCU name
@@ -83,7 +83,7 @@ BOARD  = USER
 #     does not *change* the processor frequency - it should merely be updated to
 #     reflect the processor speed set externally so that the code can use accurate
 #     software delays.
-F_CPU = 16000000
+F_CPU = 8000000
 
 
 # Input clock frequency.
@@ -97,7 +97,7 @@ F_CPU = 16000000
 #
 #     If no clock division is performed on the input clock inside the AVR (via the
 #     CPU clock adjust registers or the clock division fuses), this will be equal to F_CPU.
-F_CLOCK = $(F_CPU)
+F_CLOCK = 16000000
 
 
 # Output format. (can be srec, ihex, binary)
@@ -240,10 +240,10 @@ CPPDEFS = -DF_CPU=$(F_CPU)UL
 #CPPDEFS += -D__STDC_LIMIT_MACROS
 #CPPDEFS += -D__STDC_CONSTANT_MACROS
 
+HH_DEFS = -DTEENSY_HACK
 ifdef MATRIX_MODE
-HH_DEFS = -DMATRIX_DISCOVERY_MODE
+HH_DEFS += -DMATRIX_DISCOVERY_MODE -DUSE_HHSTDIO
 endif
-HH_DEFS += -DTEENSY_HACK
 
 #---------------- Compiler Options C ----------------
 #  -g*:          generate debugging information
