@@ -113,7 +113,7 @@ Keyboard__get_report(USB_KeyboardReport_Data_t *report)
       ReportQueue__push();
       do
         update_bindings();
-      while (momentary_mode_engaged() || modifier_keys_engaged());
+      while (modifier_keys_engaged() || momentary_mode_engaged());
       maybe_toggle_mode();
       process_keys();
     }
