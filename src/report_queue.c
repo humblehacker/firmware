@@ -28,7 +28,6 @@
 static struct ReportQueue
 {
   uint8_t   front;
-  uint8_t   rear;
   uint8_t   count;
   RQ_elem_t data[100];
   uint8_t   data_size;
@@ -38,7 +37,6 @@ void
 ReportQueue__init()
 {
   self.front     = 0;
-  self.rear      = 0;
   self.count     = 0;
   self.data_size = sizeof(self.data)/sizeof(self.data[0]);
 }
@@ -49,10 +47,11 @@ ReportQueue__push()
   if (ReportQueue__is_full())
     return NULL;
 
+  uint8_t index = self.front + self.count % self.data_size;
   self.count++;
-  self.rear = (self.rear + 1) % self.data_size;
-  KeyboardReport__init(&self.data[self.rear]);
-  return &self.data[self.rear];
+
+  KeyboardReport__init(&self.data[index]);
+  return &self.data[index];
 }
 
 RQ_elem_t *
@@ -74,19 +73,6 @@ ReportQueue__peek()
     return NULL;
 
   return &self.data[self.front];
-}
-
-RQ_elem_t  *
-ReportQueue__prev()
-{
-  if (ReportQueue__is_empty())
-    return NULL;
-
-  uint8_t prev_front = (self.data_size + self.front - 1) % self.data_size;
-  if (prev_front == self.rear)
-    return NULL;
-
-  return &self.data[prev_front];
 }
 
 bool

@@ -30,6 +30,12 @@ KeyboardReport__init(KeyboardReport *this)
 }
 
 void
+KeyboardReport__init_copy(KeyboardReport *this, KeyboardReport *dst)
+{
+  memcpy(dst, this, sizeof(*dst));
+}
+
+void
 KeyboardReport__copy(KeyboardReport *this, USB_KeyboardReport_Data_t *dst)
 {
   memcpy(dst, &this->report, sizeof(*dst));

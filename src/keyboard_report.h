@@ -13,6 +13,7 @@ struct KeyboardReport
 typedef struct KeyboardReport KeyboardReport;
 
 void    KeyboardReport__init(KeyboardReport *this);
+void    KeyboardReport__init_copy(KeyboardReport *this, KeyboardReport *dst);
 void    KeyboardReport__copy(KeyboardReport *this, USB_KeyboardReport_Data_t *dst);
 
 void    KeyboardReport__add_key(KeyboardReport *this, Usage usage);

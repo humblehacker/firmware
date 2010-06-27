@@ -37,12 +37,13 @@
 
 struct
 {
-  uint32_t    row_data[NUM_ROWS];
-  ActiveKeys  active_keys;
-  bool        error_roll_over;
-  KeyMap      active_keymap;      // keymap used to determine current bindings
-  KeyMap      selected_keymap;    // the 'current default'. Reset to this every cycle.
-  KeyMap      default_keymap;     // used at startup and when a mode it toggled off
+  uint32_t       row_data[NUM_ROWS];
+  ActiveKeys     active_keys;
+  bool           error_roll_over;
+  KeyMap         active_keymap;      // keymap used to determine current bindings
+  KeyMap         selected_keymap;    // the 'current default'. Reset to this every cycle.
+  KeyMap         default_keymap;     // used at startup and when a mode it toggled off
+  KeyboardReport prev_report;
 } kb;
 
 static void    reset(void);
@@ -309,7 +310,6 @@ process_keys()
   // don't.  This is a limitation of the HID keyboard protocol.
 
   KeyboardReport *report      = ReportQueue__peek();
-  KeyboardReport *prev_report = ReportQueue__prev();
 
   bool block_others = false;
 
@@ -324,7 +324,7 @@ process_keys()
       if (ActiveKeys__count(&kb.active_keys) > 1 &&
           ((current_mods & ~key->binding.premods) | target->modifiers) != current_mods)
       {
-        if (KeyboardReport__has_key(prev_report, target->usage))
+        if (KeyboardReport__has_key(&kb.prev_report, target->usage))
         {
           // Key is leaving, block it
           BlockedKeys__block_key(key->cell);
@@ -401,12 +401,14 @@ fill_report(USB_KeyboardReport_Data_t *dest_report)
   if (!kb.error_roll_over)
   {
     KeyboardReport__copy(report, dest_report);
+    KeyboardReport__init_copy(report, &kb.prev_report);
   }
   else
   {
     dest_report->Modifier = KeyboardReport__get_modifiers(report);
-    for (uint8_t key = 0; key < 6; ++key)
-      dest_report->KeyCode[key] = USAGE_ID(HID_USAGE_ERRORROLLOVER);
+    memset(dest_report->KeyCode, USAGE_ID(HID_USAGE_ERRORROLLOVER), 6);
+    KeyboardReport__init_copy(report, &kb.prev_report);
+    memset(kb.prev_report.report.KeyCode, USAGE_ID(HID_USAGE_ERRORROLLOVER), 6);
   }
   return sizeof(USB_KeyboardReport_Data_t);
 }

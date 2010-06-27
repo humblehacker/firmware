@@ -36,13 +36,12 @@ void       ReportQueue__init(void);
 RQ_elem_t* ReportQueue__push(void);
 
            // returns the recently removed report, or NULL if queue is empty.
+           // NOTE: the returned report is only guaranteed to be valid until
+           //       the next push.
 RQ_elem_t* ReportQueue__pop(void);
 
            // returns most recent report, or NULL if queue is empty.
 RQ_elem_t* ReportQueue__peek(void);
-
-           // returns previous most recent report, or NULL if queue is empty.
-RQ_elem_t* ReportQueue__prev(void);
 
            // return true if queue is empty.
 bool       ReportQueue__is_empty(void);
