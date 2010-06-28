@@ -29,58 +29,65 @@
 
 static int hid_putc(char, FILE*);
 static FILE buf_stdout = FDEV_SETUP_STREAM(hid_putc, NULL, _FDEV_SETUP_WRITE);
+static const USB_KeyboardReport_Data_t ascii_table[];
 
-#define OUTPUT_BUFSIZE 256
-char output_buffer[OUTPUT_BUFSIZE];
-uint8_t current_pos;
-uint8_t end_pos;
+enum {OUTPUT_BUFSIZE = 256};
+static char output_buffer[OUTPUT_BUFSIZE];
+static uint8_t front;
+static uint8_t count;
 
 void
 stdio_init(void)
 {
-  stdout      = &buf_stdout;
-  current_pos = 0;
-  end_pos     = 0;
+  stdout = &buf_stdout;
+  front  = 0;
+  count  = 0;
 }
 
 void stdio_fill_report(char ch, USB_KeyboardReport_Data_t *report)
 {
   memcpy_P(report, &ascii_table[(uint8_t)ch], sizeof(USB_KeyboardReport_Data_t));
+  memset(&report->KeyCode[1], 0, 5);
 }
 
 
 int
 hid_putc(char c, FILE *stream)
 {
-  if (end_pos == OUTPUT_BUFSIZE - 1)
+  if (stdout_is_full())
     return -1;
 
-  output_buffer[end_pos] = c;
-  output_buffer[++end_pos] = '\0';
+  uint8_t index = front + count % OUTPUT_BUFSIZE;
+  count++;
+  output_buffer[index] = c;
   return 0;
 }
 
 bool
 stdout_is_empty(void)
 {
-  return end_pos == 0;
+  return count == 0;
+}
+
+bool
+stdout_is_full()
+{
+  return count == OUTPUT_BUFSIZE;
 }
 
 char
 stdout_popchar(void)
 {
-  if (current_pos == OUTPUT_BUFSIZE || !output_buffer[current_pos])
+  if (stdout_is_empty())
   {
-    output_buffer[0] = '\0';
-    current_pos = 0;
-    end_pos = 0;
     return '\0';
   }
 
-  char ch = output_buffer[current_pos];
+  char ch = output_buffer[front];
+  front = (front + 1) % OUTPUT_BUFSIZE;
   if (ch == '\\')
   {
-    switch ((ch = output_buffer[++current_pos]))
+    switch ((ch = output_buffer[front]))
     {
     case 'n':
       ch = (char)10; break;
@@ -91,13 +98,14 @@ stdout_popchar(void)
     case '\\':
       break;
     }
+    front = (front + 1) % OUTPUT_BUFSIZE;
   }
-  ++current_pos;
+  count--;
   return ch;
 }
 
 
-const USB_KeyboardReport_Data_t ascii_table[] =
+static const USB_KeyboardReport_Data_t ascii_table[] PROGMEM =
 {
   /* 0   .  */ { NONE, 0, { USAGE_ID(HID_USAGE_NONE) }},
   /* 1   .  */ { NONE, 0, { USAGE_ID(HID_USAGE_NONE) }},
