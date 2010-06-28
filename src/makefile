@@ -413,6 +413,9 @@ ALL_ASFLAGS = -mmcu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)
 # Default target.
 all: begin generate gccversion sizebefore build checkinvalidevents showliboptions showtarget sizeafter end
 
+test: 
+	cd $(SRCDIR) && make -f test.mak
+
 # Build kspec parser
 $(KBGEN_DIR)/kspec.rb : $(KBGEN_DIR)/kspec.tt
 	@echo Building kspec parser
@@ -677,7 +680,7 @@ $(OBJDIR)/%.o : %.cpp
 	
 
 # Target: clean project.
-clean: begin clean_list clean_binary end
+clean: begin clean_list clean_binary clean_test end
 
 clean_binary:
 	$(REMOVE) $(TARGET).hex
@@ -699,6 +702,10 @@ doxygen:
 
 clean_doxygen:
 	rm -rf Documentation
+
+clean_test:
+	cd $(SRCDIR) && make -f test.mak clean
+
 
 # $(call kill-dirs, dir-list)
 kill-dirs = $(REMOVEDIR) $(sort     \
@@ -723,5 +730,5 @@ $(shell mkdir -p $(OBJDIR)/$(GENERATED) 2>/dev/null)
 showtarget begin finish end sizebefore sizeafter  \
 gccversion build elf hex eep lss sym coff extcoff \
 program dfu flip flip-ee dfu-ee clean debug       \
-clean_list clean_binary gdb-config doxygen        \
-generate
+clean_list clean_binary clean_test gdb-config     \
+doxygen generate

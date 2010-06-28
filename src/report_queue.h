@@ -24,11 +24,21 @@
 #ifndef __REPORT_QUEUE_H__
 #define __REPORT_QUEUE_H__
 
+#include <stdbool.h>
+
+#if defined(TEST_REPORT_QUEUE)
+
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+typedef uint16_t RQ_elem_t;
+
+#else
+
 #include "keyboard_report.h"
-
 #include <LUFA/Drivers/USB/Class/HID.h>
-
 typedef KeyboardReport RQ_elem_t;
+
+#endif
 
 void       ReportQueue__init(void);
 
