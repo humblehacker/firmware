@@ -34,7 +34,7 @@ Matrix:
 /*      0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15 */
   Cols:PC0 PC1 PC2 PC3 PC4 PC5 PC6 PC7 PD7 PD6 PD5 PD4 PD3 PD2 PD1 PD0
 
-/*      0   1   2   3   4   5   6   7  */
-  Rows:PA0 PA1 PA2 PA3 PA4 PA5 PA6 PA7
+/*      0   1   2   3   4   5   6  */
+  Rows:PA0 PA1 PA2 PA3 PA4 PA5 PA6
 
   BlockGhostKeys:no
