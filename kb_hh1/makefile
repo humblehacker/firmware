@@ -161,7 +161,8 @@ DEBUG_PORT = 4242
 #     avarice is running on a different computer.
 DEBUG_HOST = localhost
 
-
-
 #============================================================================
 include ../src/makefile
+
+#CDEFS += -DUSE_HHSTDIO
+
