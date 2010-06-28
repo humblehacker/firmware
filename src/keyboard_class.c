@@ -49,11 +49,11 @@ struct
 static void    reset(void);
 static void    scan_matrix(void);
 static void    init_active_keys(void);
-static void    update_bindings(void);
+static void    update_bindings(KeyboardReport *report);
 static bool    momentary_mode_engaged(void);
-static bool    modifier_keys_engaged(void);
+static bool    modifier_keys_engaged(KeyboardReport *report);
 static void    maybe_toggle_mode(void);
-static void    process_keys(void);
+static void    process_keys(KeyboardReport *report);
 static uint8_t fill_report(USB_KeyboardReport_Data_t *report);
 static void    toggle_map(KeyMap mode_map);
 static void    stdout_to_report_queue(void);
@@ -85,7 +85,6 @@ stdout_to_report_queue()
     stdio_fill_report(ch, &report->report);
 
     report = ReportQueue__push();
-    stdio_fill_report('\0', &report->report);
   }
 }
 
@@ -110,12 +109,12 @@ Keyboard__get_report(USB_KeyboardReport_Data_t *report)
 
     if (!kb.error_roll_over)
     {
-      ReportQueue__push();
+      KeyboardReport *report = ReportQueue__push();
       do
-        update_bindings();
-      while (modifier_keys_engaged() || momentary_mode_engaged());
+        update_bindings(report);
+      while (modifier_keys_engaged(report) || momentary_mode_engaged());
       maybe_toggle_mode();
-      process_keys();
+      process_keys(report);
     }
   }
 
@@ -200,9 +199,8 @@ init_active_keys()
 }
 
 void
-update_bindings()
+update_bindings(KeyboardReport *report)
 {
-  KeyboardReport *report = ReportQueue__peek();
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
        key;      key = ActiveKeys__next(&kb.active_keys))
   {
@@ -231,9 +229,8 @@ momentary_mode_engaged()
 }
 
 bool
-modifier_keys_engaged()
+modifier_keys_engaged(KeyboardReport *report)
 {
-  KeyboardReport *report = ReportQueue__peek();
   Modifiers active_modifiers = NONE;
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
        key;      key = ActiveKeys__next(&kb.active_keys))
@@ -275,7 +272,7 @@ maybe_toggle_mode(void)
 }
 
 void
-process_keys()
+process_keys(KeyboardReport *report)
 {
   // Binding with modifier overlap problem
   // -------------------------------------
@@ -308,8 +305,6 @@ process_keys()
   // of writing a custom keyboard driver) of correctly handling
   // multiple simultaneous keys when some have modifiers and some
   // don't.  This is a limitation of the HID keyboard protocol.
-
-  KeyboardReport *report = ReportQueue__peek();
 
   bool block_others = false;
 
@@ -366,7 +361,9 @@ process_keys()
       case MACRO:
         {
           const MacroTarget *macro = KeyBinding__get_macro_target(&key->binding);
-          KeyboardReport *report = NULL;
+          BlockedKeys__block_key(key->cell);
+          ReportQueue__pop();  // current report no longer needed.
+
           for (int i = 0; i < macro->length; ++i)
           {
             if (ReportQueue__freespace() < 2)
@@ -377,10 +374,11 @@ process_keys()
             KeyboardReport__add_key(report, target->usage);
             KeyboardReport__set_modifiers(report, target->modifiers);
 
-            // add a blank report to simulate key-up
+            // add a blank report to simulate key-up.  We need to do this
+            // otherwise sequences of identical keys will be treated as
+            // one by the host.
             report = ReportQueue__push();
             KeyboardReport__set_modifiers(report, target->modifiers);
-            BlockedKeys__block_key(key->cell);
           }
           break;
         }
@@ -397,18 +395,18 @@ fill_report(USB_KeyboardReport_Data_t *dest_report)
   memset(dest_report, 0, sizeof(*dest_report));
 
   KeyboardReport *report = ReportQueue__pop();
-
-  if (!kb.error_roll_over)
+  if (report)
   {
-    KeyboardReport__copy(report, dest_report);
-    KeyboardReport__init_copy(report, &kb.prev_report);
-  }
-  else
-  {
-    dest_report->Modifier = KeyboardReport__get_modifiers(report);
-    memset(dest_report->KeyCode, USAGE_ID(HID_USAGE_ERRORROLLOVER), 6);
-    KeyboardReport__init_copy(report, &kb.prev_report);
-    memset(kb.prev_report.report.KeyCode, USAGE_ID(HID_USAGE_ERRORROLLOVER), 6);
+    if (!kb.error_roll_over)
+    {
+      KeyboardReport__copy(report, dest_report);
+      KeyboardReport__init_copy(report, &kb.prev_report);
+    }
+    else
+    {
+      KeyboardReport__init_error(report, dest_report);
+      KeyboardReport__init_error_copy(report, &kb.prev_report);
+    }
   }
   return sizeof(USB_KeyboardReport_Data_t);
 }

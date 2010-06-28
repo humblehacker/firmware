@@ -36,6 +36,19 @@ KeyboardReport__init_copy(KeyboardReport *this, KeyboardReport *dst)
 }
 
 void
+KeyboardReport__init_error(KeyboardReport *this, USB_KeyboardReport_Data_t *dst)
+{
+  dst->Modifier = this->report.Modifier;
+  memset(dst->KeyCode, USAGE_ID(HID_USAGE_ERRORROLLOVER), 6);
+}
+
+void
+KeyboardReport__init_error_copy(KeyboardReport *this, KeyboardReport *dst)
+{
+  KeyboardReport__init_error(this, &dst->report);
+}
+
+void
 KeyboardReport__copy(KeyboardReport *this, USB_KeyboardReport_Data_t *dst)
 {
   memcpy(dst, &this->report, sizeof(*dst));
