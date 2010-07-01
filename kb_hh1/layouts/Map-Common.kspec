@@ -45,12 +45,13 @@ KeyMap:Common
         Key:2G Map:Home                                       tl:"Home"
         Key:2H Map:PageUp                                     tl:"Page Up"
         Key:2I Map:End                                        tl:"End"
+        Key:2O Map:\_and_|                                    tl:"\\"
 
         /* Row 3 */
         Key:3A Mode:Fn1 type:momentary                        tl:"Fn1"
-        Key:3G Map:Tab <shift>                                tl:"Home"
-        Key:3H Map:PageDown                                   tl:"Page Up"
-        Key:3I Map:Tab                                        tl:"Back Tab"
+        Key:3G Map:Tab <shift>                                tl:"Back Tab"
+        Key:3H Map:PageDown                                   tl:"Page Down"
+        Key:3I Map:Tab                                        tl:"Tab"
         Key:3O Mode:Fn2 type:momentary                        tl:"Fn2"
 
         /* Row 4 */
@@ -58,7 +59,7 @@ KeyMap:Common
         Key:4G Map:Return_or_Enter                            tl:"Return"
         Key:4H Map:Delete_Forward                             tl:"Delete"
         Key:4I Map:Return_or_Enter                            tl:"Return"
-        Key:4O Map:Return_or_Enter                            tl:"Return"
+        Key:4O Map:Right_Control                              tl:"Ctrl"
 
         /* Row 5 */
         Key:5A Map:Left_Shift                                 tl:"Shift"
