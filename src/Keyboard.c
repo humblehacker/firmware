@@ -94,11 +94,20 @@ int main(void)
 	for (;;)
 	{
 		HID_Device_USBTask(&Keyboard_HID_Interface);
+    if (USB_DeviceState != DEVICE_STATE_Suspended)
+    {
 #ifdef MATRIX_DISCOVERY_MODE
-    MatrixDiscovery__scan_matrix();
+      MatrixDiscovery__scan_matrix();
 #endif
-		USB_USBTask();
-	}
+      HID_Device_USBTask(&Keyboard_HID_Interface);
+    }
+    else if (USB_RemoteWakeupEnabled && Keyboard__key_is_down())
+    {
+      USB_CLK_Unfreeze();
+      USB_Device_SendRemoteWakeup();
+    }
+    USB_USBTask();
+  }
 }
 
 /** Configures the board hardware and chip peripherals for the demo's functionality. */
@@ -114,6 +123,8 @@ void SetupHardware()
 	/* Hardware Initialization */
 	LEDs_Init();
 	USB_Init();
+  USB_PLL_On();
+  while (!USB_PLL_IsReady());
 
   /* Task init */
 #ifndef MATRIX_DISCOVERY_MODE

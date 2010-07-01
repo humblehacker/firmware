@@ -88,6 +88,18 @@ stdout_to_report_queue()
   }
 }
 
+bool
+Keyboard__key_is_down()
+{
+  scan_matrix();
+  for (uint8_t row = 0; row < NUM_ROWS; ++row)
+  {
+    if (kb.row_data[row] != 0)
+      return true;
+  }
+  return false;
+}
+
 uint8_t
 Keyboard__get_report(USB_KeyboardReport_Data_t *report)
 {

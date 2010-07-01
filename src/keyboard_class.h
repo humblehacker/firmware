@@ -28,6 +28,7 @@
 
 void      Keyboard__init(void);
 uint8_t   Keyboard__get_report(USB_KeyboardReport_Data_t *report);
+bool      Keyboard__key_is_down(void);
 
 
 #endif // __KEYBOARD_CLASS_H__
