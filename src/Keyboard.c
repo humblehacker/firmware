@@ -62,18 +62,18 @@ uint8_t PrevKeyboardHIDReportBuffer[sizeof(USB_KeyboardReport_Data_t)];
  *  within a device can be differentiated from one another.
  */
 USB_ClassInfo_HID_Device_t Keyboard_HID_Interface =
- 	{
-		.Config =
-			{
-				.InterfaceNumber              = 0,
+  {
+    .Config =
+      {
+        .InterfaceNumber              = 0,
 
-				.ReportINEndpointNumber       = KEYBOARD_EPNUM,
-				.ReportINEndpointSize         = KEYBOARD_EPSIZE,
-				.ReportINEndpointDoubleBank   = false,
+        .ReportINEndpointNumber       = KEYBOARD_EPNUM,
+        .ReportINEndpointSize         = KEYBOARD_EPSIZE,
+        .ReportINEndpointDoubleBank   = false,
 
-				.PrevReportINBuffer           = PrevKeyboardHIDReportBuffer,
-				.PrevReportINBufferSize       = sizeof(PrevKeyboardHIDReportBuffer),
-			},
+        .PrevReportINBuffer           = PrevKeyboardHIDReportBuffer,
+        .PrevReportINBufferSize       = sizeof(PrevKeyboardHIDReportBuffer),
+      },
     };
 
 uint8_t g_num_lock, g_caps_lock, g_scrl_lock;
@@ -86,14 +86,13 @@ uint8_t g_num_lock, g_caps_lock, g_scrl_lock;
  */
 int main(void)
 {
-	SetupHardware();
+  SetupHardware();
 
   LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
-	sei();
+  sei();
 
-	for (;;)
-	{
-		HID_Device_USBTask(&Keyboard_HID_Interface);
+  for (;;)
+  {
     if (USB_DeviceState != DEVICE_STATE_Suspended)
     {
 #ifdef MATRIX_DISCOVERY_MODE
@@ -113,16 +112,16 @@ int main(void)
 /** Configures the board hardware and chip peripherals for the demo's functionality. */
 void SetupHardware()
 {
-	/* Disable clock division */
-	clock_prescale_set(clock_div_2);
+  /* Disable clock division */
+  clock_prescale_set(clock_div_2);
 
-	/* Disable watchdog if enabled by bootloader/fuses */
-	MCUSR &= ~(1 << WDRF);
-	wdt_disable();
+  /* Disable watchdog if enabled by bootloader/fuses */
+  MCUSR &= ~(1 << WDRF);
+  wdt_disable();
 
-	/* Hardware Initialization */
-	LEDs_Init();
-	USB_Init();
+  /* Hardware Initialization */
+  LEDs_Init();
+  USB_Init();
   USB_PLL_On();
   while (!USB_PLL_IsReady());
 
@@ -165,22 +164,22 @@ void EVENT_USB_Device_ConfigurationChanged(void)
 {
   LEDs_SetAllLEDs(LEDMASK_USB_READY);
 
-	if (!(HID_Device_ConfigureEndpoints(&Keyboard_HID_Interface)))
-	  LEDs_SetAllLEDs(LEDMASK_USB_ERROR);
+  if (!(HID_Device_ConfigureEndpoints(&Keyboard_HID_Interface)))
+    LEDs_SetAllLEDs(LEDMASK_USB_ERROR);
 
-	USB_Device_EnableSOFEvents();
+  USB_Device_EnableSOFEvents();
 }
 
 /** Event handler for the library USB Unhandled Control Request event. */
 void EVENT_USB_Device_UnhandledControlRequest(void)
 {
-	HID_Device_ProcessControlRequest(&Keyboard_HID_Interface);
+  HID_Device_ProcessControlRequest(&Keyboard_HID_Interface);
 }
 
 /** Event handler for the USB device Start Of Frame event. */
 void EVENT_USB_Device_StartOfFrame(void)
 {
-	HID_Device_MillisecondElapsed(&Keyboard_HID_Interface);
+  HID_Device_MillisecondElapsed(&Keyboard_HID_Interface);
 }
 
 /** HID class driver callback function for the creation of HID reports to the host.
