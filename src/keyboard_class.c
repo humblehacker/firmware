@@ -103,12 +103,6 @@ Keyboard__key_is_down()
 uint8_t
 Keyboard__get_report(USB_KeyboardReport_Data_t *report)
 {
-#ifdef TEENSY_HACK
-  static uint32_t counter = 0;
-  if ((++counter % 0xFF) != 0)
-    return 0;
-#endif // TEENSY_HACK
-
   reset();
 
   if (!stdout_is_empty())
@@ -153,7 +147,7 @@ scan_matrix()
     _delay_us(20);
 
     // Place data on all column pins for active row
-    // into a single  32 bit value.
+    // into a single 32 bit value.
     kb.row_data[row] = read_row_data();
   }
 }
