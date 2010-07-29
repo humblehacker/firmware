@@ -27,6 +27,7 @@ KeyMap:Fn4 base:Common
     Key:1B Mode:US             type:toggle                  br:"US"
     Key:1C Mode:DV  led:Dvorak type:toggle                  br:"Dvorak"
     Key:1D Mode:pDV led:Dvorak type:toggle                  br:"pDvorak"
+    Key:1E Mode:Colemak        type:toggle                  br:"Colemak"
     Key:1P Macro:                                           br:"info"
         Map:h_and_H <shift>
         Map:u_and_U
@@ -51,6 +52,8 @@ KeyMap:Fn4 base:Common
     Key:1M Map:Scroll_Lock                                  br:"Scroll"
     Key:1N Map:Pause                                        br:"Pause"
     Key:1O Map:Keypad_Num_Lock_and_Clear                    br:"N. Lock"
+
+    Key:3A Map:Tab                                          br:"Tab"
 
     /* Row 5 */
 /*    Key:5B Map:NonUS_\_and_|                                bl:"<"  */

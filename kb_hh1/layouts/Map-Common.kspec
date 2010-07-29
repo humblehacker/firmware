@@ -49,9 +49,9 @@ KeyMap:Common
 
         /* Row 3 */
         Key:3A Mode:Fn1 type:momentary                        tl:"Fn1"
-        Key:3G Map:Tab <shift>                                tl:"Back Tab"
+        Key:3G Map:z_and_Z <gui>                              tl:"Undo"
         Key:3H Map:PageDown                                   tl:"Page Down"
-        Key:3I Map:Tab                                        tl:"Tab"
+        Key:3I Map:z_and_Z <gui|shift>                        tl:"Redo"
         Key:3O Mode:Fn2 type:momentary                        tl:"Fn2"
 
         /* Row 4 */
@@ -70,6 +70,7 @@ KeyMap:Common
 
         /* Row 6 */
         Key:6A Mode:Fn3 type:momentary                        tl:"Fn3"
+        Key:6B Map:Caps_Lock                                  tl:"Caps"
         Key:6C Map:Left_Alt                                   tl:"Option"
         Key:6D Map:Left_Alt                                   tl:"Option"
         Key:6E Map:Left_GUI                                   tl:"Command"
@@ -85,6 +86,6 @@ KeyMap:Common
 
         /* Row 7 */
         Key:7G Map:Backspace                                  tl:"Backspace"
-        Key:7H Map:Right_GUI                                  tl:"Command"
+        Key:7H Map:Return_or_Enter                            tl:"Return"
 
 

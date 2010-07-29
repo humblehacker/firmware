@@ -28,6 +28,7 @@ Keyboard:HumbleHackerReference
 #include "Map-US.kspec"
 #include "Map-DV.kspec"
 #include "Map-pDV.kspec"
+#include "Map-Colemak.kspec"
 #include "Map-Fn1.kspec"
 #include "Map-Fn2.kspec"
 #include "Map-Fn3.kspec"

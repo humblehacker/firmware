@@ -23,24 +23,37 @@
 
 KeyMap:Fn1 base:Common
 
-  Key:3B  Map:Tab                tl:"Tab"
-  Key:3D  Map:Tab <shift>        tl:"Back Tab"
-  Key:3J  Map:Keypad_ENTER       tl:"Enter"
-  Key:3K  Map:Home               tl:"Home"
-  Key:3L  Map:UpArrow            tl:"{up}"
-  Key:3M  Map:End                tl:"End"
-  Key:3N  Map:PageUp             tl:"Page Up"
-  Key:3O  Map:Tab                tl:"Tab"
+  Key:2C  Map:Tab <shift>         tl:"Back Tab"
+  Key:2D  Map:Tab                 tl:"Tab"
+  Key:3B  Map:z_and_Z <gui|shift> tl:"Redo"
+  Key:3C  Map:x_and_X <gui>       tl:"Cut"
+  Key:3D  Map:c_and_C <gui>       tl:"Copy"
+  Key:3E  Map:v_and_V <gui>       tl:"Paste"
+  Key:3F  Map:z_and_Z <gui>       tl:"Undo"
+  Key:3J  Map:Keypad_ENTER        tl:"Enter"
+  Key:3K  Map:Home                tl:"Home"
+  Key:3L  Map:UpArrow             tl:"{up}"
+  Key:3M  Map:End                 tl:"End"
+  Key:3N  Map:PageUp              tl:"Page Up"
+  Key:3O  Map:Tab                 tl:"Tab"
 
-  Key:4J  Map:Delete_Forward     tl:"Delete"
-  Key:4K  Map:LeftArrow          tl:"{left}"
-  Key:4L  Map:DownArrow          tl:"{down}"
-  Key:4M  Map:RightArrow         tl:"{right}"
-  Key:4N  Map:PageDown           tl:"Page Down"
+  Key:4D  Macro:                  tl:"Transpose"
+          Map:RightArrow <shift>
+          Map:x_and_X <gui>
+          Map:LeftArrow
+          Map:v_and_V <gui>
+  Key:4E  Macro:                  tl:"Delete word right"
+          Map:RightArrow <shift|control>
+          Map:Delete_Forward
+  Key:4J  Map:Delete_Forward      tl:"Delete"
+  Key:4K  Map:LeftArrow           tl:"{left}"
+  Key:4L  Map:DownArrow           tl:"{down}"
+  Key:4M  Map:RightArrow          tl:"{right}"
+  Key:4N  Map:PageDown            tl:"Page Down"
 
-  Key:5J  Map:Backspace          tl:"Backspace"
-  Key:5K  Map:x_and_X <gui>      tl:"Cut"
-  Key:5L  Map:c_and_C <gui>      tl:"Copy"
-  Key:5M  Map:v_and_V <gui>      tl:"Paste"
-  Key:5N  Map:z_and_Z <gui>      tl:"Undo"
+  Key:5J  Map:Backspace           tl:"Backspace"
+  Key:5K  Map:x_and_X <gui>       tl:"Cut"
+  Key:5L  Map:c_and_C <gui>       tl:"Copy"
+  Key:5M  Map:v_and_V <gui>       tl:"Paste"
+  Key:5N  Map:z_and_Z <gui>       tl:"Undo"
 
