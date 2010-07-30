@@ -251,12 +251,14 @@ class Macro
   end
 end
 
-Modifiers =     { :L_CTRL => (1<<0), :L_SHFT => (1<<1), :L_ALT => (1<<2), :L_GUI => (1<<3),
-                  :R_CTRL => (1<<4), :R_SHFT => (1<<5), :R_ALT => (1<<6), :R_GUI => (1<<7) }
-ModifierCodes = { :L_CTRL => 'LC',   :L_SHFT => 'LS',   :L_ALT => 'LA',   :L_GUI => 'LG',
-                  :R_CTRL => 'RC',   :R_SHFT => 'RS',   :R_ALT => 'RA',   :R_GUI => 'RG' }
+Modifiers =     { :L_CTRL => (1<<0), :L_SHFT => (1<<1),  :L_ALT => (1<<2),  :L_GUI => (1<<3),
+                  :R_CTRL => (1<<4), :R_SHFT => (1<<5),  :R_ALT => (1<<6),  :R_GUI => (1<<7),
+                  :A_CTRL => (1<<8), :A_SHFT => (1<<9),  :A_ALT => (1<<10), :A_GUI => (1<<11) }
+ModifierCodes = { :L_CTRL => 'LC',   :L_SHFT => 'LS',    :L_ALT => 'LA',    :L_GUI => 'LG',
+                  :R_CTRL => 'RC',   :R_SHFT => 'RS',    :R_ALT => 'RA',    :R_GUI => 'RG',
+                  :A_CTRL => 'AC',   :A_SHFT => 'AS',    :A_ALT => 'AA',    :A_GUI => 'AG' }
 
-def process_modifier(mod_text)
+def process_modifier(mod_text, convertanymods)
   case mod_text
   when "left_alt"
     return Modifiers[:L_ALT]
@@ -274,6 +276,30 @@ def process_modifier(mod_text)
     return Modifiers[:R_SHFT]
   when "right_gui"
     return Modifiers[:R_GUI]
+  when "alt", "control", "shift", "gui"
+    if convertanymods
+      case mod_text
+        when "alt"
+          return Modifiers[:L_ALT]
+        when "control"
+          return Modifiers[:L_CTRL]
+        when "shift"
+          return Modifiers[:L_SHFT]
+        when "gui"
+          return Modifiers[:L_GUI]
+      end
+    else
+      case mod_text
+        when "alt"
+          return Modifiers[:A_ALT]
+        when "control"
+          return Modifiers[:A_CTRL]
+        when "shift"
+          return Modifiers[:A_SHFT]
+        when "gui"
+          return Modifiers[:A_GUI]
+      end
+    end
   when ""
     return 0
   else

@@ -64,6 +64,10 @@ typedef enum
   R_SHF = (1<<5),
   R_ALT = (1<<6),
   R_GUI = (1<<7),
+  A_CTL = (1<<8),
+  A_SHF = (1<<9),
+  A_ALT = (1<<10),
+  A_GUI = (1<<11),
 } Modifiers;
 
 static inline

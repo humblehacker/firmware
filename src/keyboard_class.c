@@ -336,6 +336,9 @@ process_keys(KeyboardReport *report)
           // Key is arriving, assume others are leaving and block them
           block_others = true;
           KeyboardReport__add_key(report, target->usage);
+          uint8_t anymods = ((key->binding.premods & 0x0F00) >> 4)
+                          | ((key->binding.premods & 0x0F00) >> 8);
+          KeyboardReport__reset_modifiers(report, anymods);
           KeyboardReport__reset_modifiers(report, key->binding.premods);
           KeyboardReport__set_modifiers(report, target->modifiers);
           BoundKey__deactivate(key);
@@ -360,6 +363,9 @@ process_keys(KeyboardReport *report)
         {
           const MapTarget *target = KeyBinding__get_map_target(&key->binding);
           KeyboardReport__add_key(report, target->usage);
+          uint8_t anymods = ((key->binding.premods & 0x0F00) >> 4)
+                          | ((key->binding.premods & 0x0F00) >> 8);
+          KeyboardReport__reset_modifiers(report, anymods);
           KeyboardReport__reset_modifiers(report, key->binding.premods);
           KeyboardReport__set_modifiers(report, target->modifiers);
           break;

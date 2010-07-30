@@ -131,14 +131,14 @@ grammar KSpec
     premods:modifiers? sp? 'Map:' usage mods:(sp? modifiers)? up:(sp 'page:' usage_page )? labels? ws
     {
       def the_premods
-        premods.text_value.empty? ? [0] : premods.content
+        premods.text_value.empty? ? 0 : premods.content
       end
       def fill_key(key)
-        the_content = content
-        the_premods.each {|premod| key.kbindings[premod] = the_content }
+#       the_content = content
+        key.kbindings[the_premods] = content
       end
       def content
-        the_mods   = mods.text_value.empty? ? [0] : mods.modifiers.content
+        the_mods = mods.text_value.empty? ? 0 : mods.modifiers.content(true)
         if !$hid.usagesByName.has_key? usage.text_value
           raise "Cannot find usage '#{usage.text_value}'"
         end
@@ -146,7 +146,7 @@ grammar KSpec
         if !up.text_value.empty? && the_usage.page.name != up.usage_page.text_value
           raise "Usage page mismatch for usage '#{the_usage.name}'. Expected '#{the_usage.page.name}', received '#{up.usage_page.text_value}'"
         end
-        Map.new(the_usage, the_mods[0])
+        Map.new(the_usage, the_mods)
       end
     }
   end
@@ -155,10 +155,10 @@ grammar KSpec
     premods:modifiers? sp? 'Mode:' mode:ident led:(sp 'led:' ident)? sp 'type:' type:ident labels? ws
     {
       def fill_key(key)
-        the_premods = premods.text_value.empty? ? [0] : premods.content
+        the_premods = premods.text_value.empty? ? 0 : premods.content
         the_mode = Mode.new(mode.text_value, type.text_value)
         the_mode.led = led.ident.text_value unless led.text_value.empty?
-        the_premods.each {|premod| key.kbindings[premod] = the_mode}
+        key.kbindings[the_premods] = the_mode
       end
     }
   end
@@ -167,10 +167,10 @@ grammar KSpec
     premods:modifiers? sp? 'Macro:' labels? ws maps:map+
     {
       def fill_key(key)
-        the_premods = premods.text_value.empty? ? [0] : premods.content
+        the_premods = premods.text_value.empty? ? 0 : premods.content
         macro = Macro.new
         maps.elements.each {|map| macro.kbindings << map.content}
-        the_premods.each {|premod| key.kbindings[premod] = macro}
+        key.kbindings[the_premods] = macro
       end
     }
   end
@@ -186,27 +186,12 @@ grammar KSpec
   rule modifiers
     '<' modifier_list '>'
     {
-      def content
-        # if there are any unmarked modifiers (e.g. 'shift'), we duplicate the string
-        # prepending to all unmarked modifiers in the first with 'left_', and prepend-
-        # ing to all in the second with 'right_'.
-        allmods = [modifier_list.text_value]
-        if modifier_list.text_value =~ /(^|[^_])(shift|alt|control|gui)/
-          allmods[0] = modifier_list.text_value.gsub(/(^|[^_])(shift|alt|control|gui)/, '\1left_\2')
-          allmods[1] = modifier_list.text_value.gsub(/(^|[^_])(shift|alt|control|gui)/, '\1right_\2')
+      def content(convertanymods = false)
+        modmask = 0
+        modifier_list.content.each do |mod|
+          modmask |= process_modifier(mod, convertanymods)
         end
-        modmasks = []
-
-        # next, we process each of the one or more modifier strings, and return
-        # an array of modifier masks.
-        allmods.each do |mods|
-          modmask = 0
-          mods.split('|').each do |mod|
-            modmask |= process_modifier(mod)
-          end
-          modmasks << modmask
-        end
-        modmasks
+        modmask
       end
     }
   end
@@ -216,7 +201,21 @@ grammar KSpec
   end
 
   rule modifier_list
-    (modifier '|')* modifier
+    mods:(modifier '|')* mod:modifier
+    {
+      def content
+        modifiers = []
+        mods.elements.each do |m|
+          if m
+            modifiers << m.text_value.sub('|', '')
+          end
+        end
+        if mod
+          modifiers << mod.text_value
+        end
+        modifiers
+      end
+    }
   end
 
   rule modifier

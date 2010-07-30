@@ -22,6 +22,34 @@ BoundKey__deactivate(BoundKey *this)
   this->cell = DEACTIVATED;
 }
 
+static const uint16_t hi_mask  = 0x0F00;
+static const uint16_t mid_mask = 0x00F0;
+static const uint16_t lo_mask  = 0x000F;
+
+bool exact(uint16_t b, uint16_t p)
+{
+  uint8_t a =  (b & hi_mask)  >> 8;
+  uint8_t br = (b & mid_mask) >> 4;
+  uint8_t pr = (p & mid_mask) >> 4;
+  uint8_t bl = b & lo_mask;
+  uint8_t pl = p & lo_mask;
+  b &= ~hi_mask;
+  p &= ~hi_mask;
+  return ((!b || ((p&b)==b)) && ((((pl&~bl)|(pr&~br)))==a));
+}
+
+bool near(uint16_t b, uint16_t p)
+{
+  uint8_t a =  (b & hi_mask)  >> 8;
+  uint8_t br = (b & mid_mask) >> 4;
+  uint8_t pr = (p & mid_mask) >> 4;
+  uint8_t bl = b & lo_mask;
+  uint8_t pl = p & lo_mask;
+  b &= ~hi_mask;
+  p &= ~hi_mask;
+  return ((!b || ((p&b)==b)) && ((((pl&~bl)|(pr&~br))&a)==a));
+}
+
 void
 BoundKey__update_binding(BoundKey *this, Modifiers mods, KeyMap keymap)
 {
@@ -35,7 +63,7 @@ BoundKey__update_binding(BoundKey *this, Modifiers mods, KeyMap keymap)
     for (int i = 0; i < bindings.length; ++i)
     {
       const KeyBinding *binding = KeyBindingArray__get_binding(&bindings, i);
-      if (binding->premods == mods)
+      if (exact(binding->premods, mods))
       {
         KeyBinding__copy(binding, &this->binding);
         return;
@@ -46,7 +74,7 @@ BoundKey__update_binding(BoundKey *this, Modifiers mods, KeyMap keymap)
     for (int i = 0; i < bindings.length; ++i)
     {
       const KeyBinding *binding = KeyBindingArray__get_binding(&bindings, i);
-      if (binding->premods & mods)
+      if (near(binding->premods, mods))
       {
         KeyBinding__copy(binding, &this->binding);
         return;
