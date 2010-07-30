@@ -32,7 +32,22 @@ typedef struct MacroTarget MacroTarget;
 typedef struct MapTarget MapTarget;
 typedef struct KeyBinding KeyBinding;
 typedef struct KeyBindingArray KeyBindingArray;
+typedef struct PreMods PreMods;
 typedef const KeyBindingArray* KeyMap;
+
+/*
+ *    PreMods
+ */
+
+struct PreMods
+{
+  uint8_t std;
+  uint8_t any;
+};
+
+bool PreMods__exact_match(const PreMods *this, uint8_t mods);
+bool PreMods__near_match(const PreMods *this, uint8_t mods);
+bool PreMods__is_empty(const PreMods *this);
 
 /*
  *    KeyBinding
@@ -41,7 +56,7 @@ typedef const KeyBindingArray* KeyMap;
 struct KeyBinding
 {
   enum {NOMAP, MAP, MODE, MACRO} kind;
-  Modifiers premods;
+  PreMods premods;
   void *target;
 };
 
@@ -85,7 +100,7 @@ struct ModeTarget
 
 struct MapTarget
 {
-  Modifiers modifiers;
+  uint8_t modifiers;
   Usage usage;
 };
 

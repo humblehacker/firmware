@@ -24,6 +24,41 @@
 #include "binding.h"
 
 /*
+ *   PreMods
+ */
+
+static const uint8_t hi_mask = 0x00F0;
+static const uint8_t lo_mask = 0x000F;
+
+bool
+PreMods__exact_match(const PreMods *this, uint8_t mods)
+{
+  uint8_t br = (this->std & hi_mask) >> 4;
+  uint8_t pr = (mods & hi_mask) >> 4;
+  uint8_t bl = this->std & lo_mask;
+  uint8_t pl = mods & lo_mask;
+  uint8_t al = this->any & lo_mask;
+  return ((!this->std || ((mods&this->std)==this->std)) && ((((pl&~bl)|(pr&~br)))==al));
+}
+
+bool
+PreMods__near_match(const PreMods *this, uint8_t mods)
+{
+  uint8_t br = (this->std & hi_mask) >> 4;
+  uint8_t pr = (mods & hi_mask) >> 4;
+  uint8_t bl = this->std & lo_mask;
+  uint8_t pl = mods & lo_mask;
+  uint8_t al = this->any & lo_mask;
+  return ((!this->std || ((mods&this->std)==this->std)) && ((((pl&~bl)|(pr&~br))&al)==al));
+}
+
+bool
+PreMods__is_empty(const PreMods *this)
+{
+  return this->std == NONE && this->any == NONE;
+}
+
+/*
  *    KeyBinding
  */
 
@@ -92,12 +127,12 @@ MacroTarget__get_map_target(const MacroTarget *this, uint8_t index)
        key.kbindings.each do |premods, kbinding|
          ident = kbinding_identifier(keymap, key.location, premods, kbinding.class)
          if kbinding.instance_of? Map %>
-const MapTarget <%=ident%> PROGMEM = { <%=kbinding.modifiers%>, HID_USAGE_<%=normalize_identifier(kbinding.usage.name)%> };<%
+const MapTarget <%=ident%> PROGMEM = { 0x<%= get_mods(kbinding.modifiers).to_s(16) %>, HID_USAGE_<%=normalize_identifier(kbinding.usage.name)%> };<%
          elsif kbinding.instance_of? Macro %>
 const MapTarget <%=ident%>Targets[] PROGMEM =
 {
 <%         kbinding.kbindings.each do |macro_kbinding| %>
-  { <%=macro_kbinding.modifiers%>, HID_USAGE_<%=normalize_identifier(macro_kbinding.usage.name)%> },
+  { 0x<%= get_mods(macro_kbinding.modifiers).to_s(16) %>, HID_USAGE_<%=normalize_identifier(macro_kbinding.usage.name)%> },
 <%         end %>
 };
 
@@ -129,7 +164,8 @@ const KeyBinding <%= "#{keymap.ids.last}_#{key.location}" %>[] PROGMEM =
          else
     %><%="/* What? */"%>, <%
          end
-%><%= premods %>, (void*)&<%= kbinding_identifier(keymap, key.location, premods, kbinding.class) %> }, <%
+         stdmods, anymods = get_premods(premods)
+%>{ 0x<%=stdmods.to_s(16)%>, 0x<%=anymods.to_s(16)%> }, (void*)&<%= kbinding_identifier(keymap, key.location, premods, kbinding.class) %> }, <%
        end %>
 };
 <%

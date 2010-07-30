@@ -258,6 +258,23 @@ ModifierCodes = { :L_CTRL => 'LC',   :L_SHFT => 'LS',    :L_ALT => 'LA',    :L_G
                   :R_CTRL => 'RC',   :R_SHFT => 'RS',    :R_ALT => 'RA',    :R_GUI => 'RG',
                   :A_CTRL => 'AC',   :A_SHFT => 'AS',    :A_ALT => 'AA',    :A_GUI => 'AG' }
 
+# returns the low byte of the argument 'modifiers' as 'stdmods',
+# and the high nibble of 'modifiers' duplicated as the high and low
+# nibbles of 'anymods'
+def get_premods(modifiers)
+  stdmods = modifiers & 0x00FF
+  anymods = (modifiers & 0x0F00) >> 4;
+  anymods |= anymods >> 4;
+  return stdmods, anymods
+end
+
+# returns the low byte of 'modifiers', with the 'anymods' portion
+# shifted down to the position of the right modifiers.  For example,
+# A_ALT would become R_ALT.
+def get_mods(modifiers)
+  return modifiers & 0x00FF | ((modifiers & 0x0F00) >> 4);
+end
+
 def process_modifier(mod_text, convertanymods)
   case mod_text
   when "left_alt"
