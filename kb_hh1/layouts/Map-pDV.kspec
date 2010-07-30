@@ -26,28 +26,40 @@ KeyMap:pDV base:DV
   /* Row 2 */
   Key:2A         Map:4_and_$  <shift>            bl:"$"
          <shift> Map:`_and_~  <shift>    tl:"~"
+
   Key:2B         Map:7_and_&  <shift>            bl:"&"
          <shift> Map:5_and_%  <shift>    tl:"%"
+
   Key:2C         Map:[_and_{                     bl:"["
          <shift> Map:7_and_&             tl:"7"
+
   Key:2D         Map:[_and_{  <shift>            bl:"{"
          <shift> Map:5_and_%             tl:"5"
+
   Key:2E         Map:]_and_}  <shift>            bl:"}"
          <shift> Map:3_and_#             tl:"3"
+
   Key:2F         Map:9_and_(  <shift>            bl:"("
          <shift> Map:1_and_!             tl:"1"
+
   Key:2H         Map:=_and_+                     bl:"="
          <shift> Map:9_and_(             tl:"9"
+
   Key:2I         Map:8_and_*  <shift>            bl:"*"
          <shift> Map:0_and_)             tl:"0"
+
   Key:2J         Map:0_and_)  <shift>            bl:")"
          <shift> Map:2_and_@             tl:"2"
+
   Key:2K         Map:=_and_+  <shift>            bl:"+"
          <shift> Map:4_and_$             tl:"4"
+
   Key:2L         Map:]_and_}                     bl:"]"
          <shift> Map:6_and_^             tl:"6"
+
   Key:2M         Map:1_and_!  <shift>            bl:"!"
          <shift> Map:8_and_*             tl:"8"
+
   Key:2N         Map:3_and_#  <shift>            bl:"#"
          <shift> Map:`_and_~             tl:"'"
 
