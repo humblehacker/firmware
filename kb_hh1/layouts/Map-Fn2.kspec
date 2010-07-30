@@ -45,12 +45,12 @@ KeyMap:Fn2 base:Common
   Key:5F   Map:-_and_Underscore <shift>   tr:"-"
 
   Key:3D   Map:\_and_| <shift>            tr:"|"
-    <shift>Macro:                         tr:"||"
-             Map:\_and_| <shift>
-             Map:\_and_| <shift>
+    | <shift>Macro:                       tr:"||"
+               Map:\_and_| <shift>
+               Map:\_and_| <shift>
   Key:4D   Map:/_and_?                    tr:"/"
-    <shift>Macro:                         tr:"//"
-             Map:/_and_?
-             Map:/_and_?
+    | <shift>Macro:                       tr:"//"
+               Map:/_and_?
+               Map:/_and_?
   Key:5D  Map:\_and_|                     tr:"\\"
 

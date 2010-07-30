@@ -109,14 +109,19 @@ grammar KSpec
   end
 
   rule key
-    'Key:' location ws kbinding:( map / macro / mode )+
+    'Key:' location ws the_bindings:(kbinding '|' ws)* the_binding:kbinding
     {
       def content
         key = Key.new(location.text_value)
-        kbinding.elements.each {|e| e.fill_key(key)}
+        the_bindings.elements.each {|e| e.elements[0].fill_key(key)}
+        the_binding.fill_key(key)
         key
       end
     }
+  end
+
+  rule kbinding
+    ( map / macro / mode )
   end
 
   rule location
