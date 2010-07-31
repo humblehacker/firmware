@@ -107,7 +107,11 @@ KeyBindingArray__get_binding(const KeyBindingArray *this, uint8_t index)
   static const KeyBindingArray *last_array = NULL;
   static const uint8_t last_index = 0;
   if (this != last_array || index != last_index)
+  {
     memcpy_P((void*)&binding, (PGM_VOID_P)&this->data[index], sizeof(KeyBinding));
+    last_array = this;
+    last_index = index;
+  }
   return &binding;
 }
 
