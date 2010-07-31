@@ -27,29 +27,33 @@
  *   PreMods
  */
 
-static const uint8_t hi_mask = 0x00F0;
-static const uint8_t lo_mask = 0x000F;
+                          /* 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F */
+static uint8_t bitcount[] = {0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4};
 
-bool
-PreMods__exact_match(const PreMods *this, uint8_t mods)
+static inline
+uint8_t hi_nibble(uint8_t val)
 {
-  uint8_t br = (this->std & hi_mask) >> 4;
-  uint8_t pr = (mods & hi_mask) >> 4;
-  uint8_t bl = this->std & lo_mask;
-  uint8_t pl = mods & lo_mask;
-  uint8_t al = this->any & lo_mask;
-  return ((!this->std || ((mods&this->std)==this->std)) && ((((pl&~bl)|(pr&~br)))==al));
+  return (val & 0xF0) >> 4;
 }
 
-bool
-PreMods__near_match(const PreMods *this, uint8_t mods)
+static inline
+uint8_t lo_nibble(uint8_t val)
 {
-  uint8_t br = (this->std & hi_mask) >> 4;
-  uint8_t pr = (mods & hi_mask) >> 4;
-  uint8_t bl = this->std & lo_mask;
-  uint8_t pl = mods & lo_mask;
-  uint8_t al = this->any & lo_mask;
-  return ((!this->std || ((mods&this->std)==this->std)) && ((((pl&~bl)|(pr&~br))&al)==al));
+  return val & 0x0F;
+}
+
+uint8_t
+PreMods__compare(const PreMods *this, uint8_t mods)
+{
+  uint8_t count = 0;
+  uint8_t lo_mods = lo_nibble(mods);
+  uint8_t hi_mods = hi_nibble(mods);
+  uint8_t lo_std  = lo_nibble(this->std);
+  uint8_t hi_std  = hi_nibble(this->std);
+  count += bitcount[lo_mods&lo_std];
+  count += bitcount[hi_mods&hi_std];
+  count += bitcount[((lo_mods&~lo_std)|(hi_mods&~hi_std))&lo_nibble(this->any)];
+  return count;
 }
 
 bool
@@ -65,9 +69,7 @@ PreMods__is_empty(const PreMods *this)
 void
 KeyBinding__copy(const KeyBinding *this, KeyBinding *dst)
 {
-  dst->kind    = this->kind;
-  dst->premods = this->premods;
-  dst->target  = this->target;
+  memcpy(dst, this, sizeof(KeyBinding));
 }
 
 const ModeTarget*
@@ -102,7 +104,10 @@ const KeyBinding*
 KeyBindingArray__get_binding(const KeyBindingArray *this, uint8_t index)
 {
   static KeyBinding binding;
-  memcpy_P((void*)&binding, (PGM_VOID_P)&this->data[index], sizeof(KeyBinding));
+  static const KeyBindingArray *last_array = NULL;
+  static const uint8_t last_index = 0;
+  if (this != last_array || index != last_index)
+    memcpy_P((void*)&binding, (PGM_VOID_P)&this->data[index], sizeof(KeyBinding));
   return &binding;
 }
 

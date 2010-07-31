@@ -38,11 +38,11 @@ char stdout_popchar(void);
 
 #else
 
-inline void stdio_init(void) {}
-inline void stdio_fill_report(char ch, USB_KeyboardReport_Data_t *report) {}
-inline bool stdout_is_empty(void) { return true; }
-inline bool stdout_is_full(void) { return false; }
-inline char stdout_popchar(void) { return '\0'; }
+static inline void stdio_init(void) {}
+static inline void stdio_fill_report(char ch, USB_KeyboardReport_Data_t *report) {}
+static inline bool stdout_is_empty(void) { return true; }
+static inline bool stdout_is_full(void) { return false; }
+static inline char stdout_popchar(void) { return '\0'; }
 
 #endif
 

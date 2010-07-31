@@ -45,8 +45,7 @@ struct PreMods
   uint8_t any;
 };
 
-bool PreMods__exact_match(const PreMods *this, uint8_t mods);
-bool PreMods__near_match(const PreMods *this, uint8_t mods);
+uint8_t PreMods__compare(const PreMods *this, uint8_t mods);
 bool PreMods__is_empty(const PreMods *this);
 
 /*
