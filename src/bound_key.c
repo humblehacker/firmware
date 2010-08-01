@@ -23,7 +23,7 @@ BoundKey__deactivate(BoundKey *this)
 }
 
 void
-BoundKey__update_binding(BoundKey *this, Modifiers mods, KeyMap keymap)
+BoundKey__update_binding(BoundKey *this, Modifier mods, KeyMap keymap)
 {
   this->binding.kind = NOMAP;
 

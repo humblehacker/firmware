@@ -319,14 +319,14 @@ class KBRender
           usageID = ''
           key.macro.each do |macro|
             if key.macro.last.modifiers != 0
-              usageID += "#{ModifierCodes[:L_ALT]} "  if (key.macro.last.modifiers & Modifiers[:L_ALT] ) != 0
-              usageID += "#{ModifierCodes[:L_CTRL]} " if (key.macro.last.modifiers & Modifiers[:L_CTRL]) != 0
-              usageID += "#{ModifierCodes[:L_SHFT]} " if (key.macro.last.modifiers & Modifiers[:L_SHFT]) != 0
-              usageID += "#{ModifierCodes[:L_GUI]} "  if (key.macro.last.modifiers & Modifiers[:L_GUI]) != 0
-              usageID += "#{ModifierCodes[:R_ALT]} "  if (key.macro.last.modifiers & Modifiers[:R_ALT] ) != 0
-              usageID += "#{ModifierCodes[:R_CTRL]} " if (key.macro.last.modifiers & Modifiers[:R_CTRL]) != 0
-              usageID += "#{ModifierCodes[:R_SHFT]} " if (key.macro.last.modifiers & Modifiers[:R_SHFT]) != 0
-              usageID += "#{ModifierCodes[:R_GUI]} "  if (key.macro.last.modifiers & Modifiers[:R_GUI]) != 0
+              usageID += "#{ModifierCodes[:L_ALT]} " if (key.macro.last.modifiers & Modifier[:L_ALT]) != 0
+              usageID += "#{ModifierCodes[:L_CTL]} " if (key.macro.last.modifiers & Modifier[:L_CTL]) != 0
+              usageID += "#{ModifierCodes[:L_SHF]} " if (key.macro.last.modifiers & Modifier[:L_SHF]) != 0
+              usageID += "#{ModifierCodes[:L_GUI]} " if (key.macro.last.modifiers & Modifier[:L_GUI]) != 0
+              usageID += "#{ModifierCodes[:R_ALT]} " if (key.macro.last.modifiers & Modifier[:R_ALT]) != 0
+              usageID += "#{ModifierCodes[:R_CTL]} " if (key.macro.last.modifiers & Modifier[:R_CTL]) != 0
+              usageID += "#{ModifierCodes[:R_SHF]} " if (key.macro.last.modifiers & Modifier[:R_SHF]) != 0
+              usageID += "#{ModifierCodes[:R_GUI]} " if (key.macro.last.modifiers & Modifier[:R_GUI]) != 0
             end
             usageID += ('%x'%key.macro.last.usage.id).to_s.rjust(2, "0")
             usageID += " "

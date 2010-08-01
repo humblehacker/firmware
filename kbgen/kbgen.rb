@@ -40,8 +40,8 @@ class ModeKey
   end
 end
 
-def kbinding_identifier(keymap, location, mods, kbinding_type)
-  "#{keymap.ids.last}_#{location}_#{mods}_#{kbinding_type}"
+def kbinding_identifier(keymap, location, mods)
+  "#{keymap.ids.last}_#{location}_#{mods}"
 end
 
 def include_guard( filename, which )

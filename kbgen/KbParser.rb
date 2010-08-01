@@ -104,21 +104,21 @@ class KeyboardCH
   def process_modifier(mod_text)
     case mod_text
     when "left_alt"
-      return Modifiers[:L_ALT]
+      return Modifier[:L_ALT]
     when "left_ctrl"
-      return Modifiers[:L_CTRL]
+      return Modifier[:L_CTL]
     when "left_shift"
-      return Modifiers[:L_SHFT]
+      return Modifier[:L_SHF]
     when "left_gui"
-      return Modifiers[:L_GUI]
+      return Modifier[:L_GUI]
     when "right_alt"
-      return Modifiers[:R_ALT]
+      return Modifier[:R_ALT]
     when "right_ctrl"
-      return Modifiers[:R_CTRL]
+      return Modifier[:R_CTL]
     when "right_shift"
-      return Modifiers[:R_SHFT]
+      return Modifier[:R_SHF]
     when "right_gui"
-      return Modifiers[:R_GUI]
+      return Modifier[:R_GUI]
     else
       raise UnknownModifierError.new(mod_text, @filenames)
     end

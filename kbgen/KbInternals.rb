@@ -187,16 +187,6 @@ class Key
   attr_accessor :location, :kbindings
   def initialize(location, color='black')
     @location = location
-#   @label = KeyLabel.new
-#   @usage = nil
-#   @macro = []
-#   @prevKey = nil
-#   @color = color
-#   @mode = ''
-#   @modeMapID = ''
-#   @modeType = nil
-#   @modeLED = nil
-#   @modifiers = 0
     @kbindings = {}
   end
 
@@ -251,12 +241,12 @@ class Macro
   end
 end
 
-Modifiers =     { :L_CTRL => (1<<0), :L_SHFT => (1<<1),  :L_ALT => (1<<2),  :L_GUI => (1<<3),
-                  :R_CTRL => (1<<4), :R_SHFT => (1<<5),  :R_ALT => (1<<6),  :R_GUI => (1<<7),
-                  :A_CTRL => (1<<8), :A_SHFT => (1<<9),  :A_ALT => (1<<10), :A_GUI => (1<<11) }
-ModifierCodes = { :L_CTRL => 'LC',   :L_SHFT => 'LS',    :L_ALT => 'LA',    :L_GUI => 'LG',
-                  :R_CTRL => 'RC',   :R_SHFT => 'RS',    :R_ALT => 'RA',    :R_GUI => 'RG',
-                  :A_CTRL => 'AC',   :A_SHFT => 'AS',    :A_ALT => 'AA',    :A_GUI => 'AG' }
+Modifier =      { :L_CTL => (1<<0), :L_SHF => (1<<1),  :L_ALT => (1<<2),  :L_GUI => (1<<3),
+                  :R_CTL => (1<<4), :R_SHF => (1<<5),  :R_ALT => (1<<6),  :R_GUI => (1<<7),
+                  :A_CTL => (1<<8), :A_SHF => (1<<9),  :A_ALT => (1<<10), :A_GUI => (1<<11) }
+ModifierCodes = { :L_CTL => 'LC',   :L_SHF => 'LS',    :L_ALT => 'LA',    :L_GUI => 'LG',
+                  :R_CTL => 'RC',   :R_SHF => 'RS',    :R_ALT => 'RA',    :R_GUI => 'RG',
+                  :A_CTL => 'AC',   :A_SHF => 'AS',    :A_ALT => 'AA',    :A_GUI => 'AG' }
 
 # returns the low byte of the argument 'modifiers' as 'stdmods',
 # and the high nibble of 'modifiers' duplicated as the high and low
@@ -275,46 +265,47 @@ def get_mods(modifiers)
   return modifiers & 0x00FF | ((modifiers & 0x0F00) >> 4);
 end
 
-def process_modifier(mod_text, convertanymods)
-  case mod_text
+def modifier_symbol_from_name(mod_name, convertanymods=false)
+  puts "mod_name: #{mod_name}"
+  case mod_name.downcase
   when "left_alt"
-    return Modifiers[:L_ALT]
+    return :L_ALT
   when "left_control"
-    return Modifiers[:L_CTRL]
+    return :L_CTL
   when "left_shift"
-    return Modifiers[:L_SHFT]
+    return :L_SHF
   when "left_gui"
-    return Modifiers[:L_GUI]
+    return :L_GUI
   when "right_alt"
-    return Modifiers[:R_ALT]
+    return :R_ALT
   when "right_control"
-    return Modifiers[:R_CTRL]
+    return :R_CTL
   when "right_shift"
-    return Modifiers[:R_SHFT]
+    return :R_SHF
   when "right_gui"
-    return Modifiers[:R_GUI]
+    return :R_GUI
   when "alt", "control", "shift", "gui"
     if convertanymods
-      case mod_text
+      case mod_name.downcase
         when "alt"
-          return Modifiers[:L_ALT]
+          return :L_ALT
         when "control"
-          return Modifiers[:L_CTRL]
+          return :L_CTL
         when "shift"
-          return Modifiers[:L_SHFT]
+          return :L_SHF
         when "gui"
-          return Modifiers[:L_GUI]
+          return :L_GUI
       end
     else
-      case mod_text
+      case mod_name.downcase
         when "alt"
-          return Modifiers[:A_ALT]
+          return :A_ALT
         when "control"
-          return Modifiers[:A_CTRL]
+          return :A_CTL
         when "shift"
-          return Modifiers[:A_SHFT]
+          return :A_SHF
         when "gui"
-          return Modifiers[:A_GUI]
+          return :A_GUI
       end
     end
   when ""
@@ -322,6 +313,10 @@ def process_modifier(mod_text, convertanymods)
   else
     raise "Unknown modifier #{mod_text}"
   end
+end
+
+def process_modifier(mod_name, convertanymods=false)
+  return Modifier[modifier_symbol_from_name(mod_name, convertanymods)]
 end
 
 class MacroKey

@@ -96,6 +96,14 @@ KeyBinding__get_map_target(const KeyBinding *this)
   return &target;
 }
 
+const ModifierTarget*
+KeyBinding__get_modifier_target(const KeyBinding *this)
+{
+  static ModifierTarget target;
+  memcpy_P((void*)&target, (PGM_VOID_P)this->target, sizeof(ModifierTarget));
+  return &target;
+}
+
 /*
  *    KeyBindingArray
  */
@@ -132,9 +140,13 @@ MacroTarget__get_map_target(const MacroTarget *this, uint8_t index)
 <% $keyboard.maps.each_value do |keymap|
      keymap.keys.each do |location, key|
        key.kbindings.each do |premods, kbinding|
-         ident = kbinding_identifier(keymap, key.location, premods, kbinding.class)
-         if kbinding.instance_of? Map %>
+         ident = kbinding_identifier(keymap, key.location, premods)
+         if kbinding.instance_of? Map
+           if kbinding.usage.modifier? %>
+const ModifierTarget <%=ident%> PROGMEM = { <%= modifier_symbol_from_name(kbinding.usage.name).to_s %> };<%
+           else %>
 const MapTarget <%=ident%> PROGMEM = { 0x<%= get_mods(kbinding.modifiers).to_s(16) %>, HID_USAGE_<%=normalize_identifier(kbinding.usage.name)%> };<%
+           end
          elsif kbinding.instance_of? Macro %>
 const MapTarget <%=ident%>Targets[] PROGMEM =
 {
@@ -163,7 +175,11 @@ const ModeTarget <%= ident %> PROGMEM = { <%=kbinding.type.upcase%>, kbd_map_<%=
 const KeyBinding <%= "#{keymap.ids.last}_#{key.location}" %>[] PROGMEM =
 {<%    key.kbindings.each do |premods, kbinding| %>
   { <%   if kbinding.instance_of? Map
+           if kbinding.usage.modifier?
+    %>MODIFIER, <%
+           else
     %>MAP, <%
+           end
          elsif kbinding.instance_of? Macro
     %>MACRO, <%
          elsif kbinding.instance_of? Mode
@@ -172,7 +188,7 @@ const KeyBinding <%= "#{keymap.ids.last}_#{key.location}" %>[] PROGMEM =
     %><%="/* What? */"%>, <%
          end
          stdmods, anymods = get_premods(premods)
-%>{ 0x<%=stdmods.to_s(16)%>, 0x<%=anymods.to_s(16)%> }, (void*)&<%= kbinding_identifier(keymap, key.location, premods, kbinding.class) %> }, <%
+%>{ 0x<%=stdmods.to_s(16)%>, 0x<%=anymods.to_s(16)%> }, (void*)&<%= kbinding_identifier(keymap, key.location, premods) %> }, <%
        end %>
 };
 <%

@@ -68,10 +68,10 @@ typedef enum
   A_SHF = (1<<9),
   A_ALT = (1<<10),
   A_GUI = (1<<11),
-} Modifiers;
+} Modifier;
 
 static inline
-Modifiers
+Modifier
 get_modifier(Usage usage)
 {
   switch(usage)

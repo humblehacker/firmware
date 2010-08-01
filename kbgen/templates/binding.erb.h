@@ -30,6 +30,7 @@
 typedef struct ModeTarget ModeTarget;
 typedef struct MacroTarget MacroTarget;
 typedef struct MapTarget MapTarget;
+typedef struct ModifierTarget ModifierTarget;
 typedef struct KeyBinding KeyBinding;
 typedef struct KeyBindingArray KeyBindingArray;
 typedef struct PreMods PreMods;
@@ -54,15 +55,16 @@ bool PreMods__is_empty(const PreMods *this);
 
 struct KeyBinding
 {
-  enum {NOMAP, MAP, MODE, MACRO} kind;
+  enum {NOMAP, MAP, MODE, MACRO, MODIFIER} kind;
   PreMods premods;
   void *target;
 };
 
-void               KeyBinding__copy(const KeyBinding *this, KeyBinding *dst);
-const ModeTarget*  KeyBinding__get_mode_target(const KeyBinding *this);
-const MacroTarget* KeyBinding__get_macro_target(const KeyBinding *this);
-const MapTarget*   KeyBinding__get_map_target(const KeyBinding *this);
+void                  KeyBinding__copy(const KeyBinding *this, KeyBinding *dst);
+const ModeTarget*     KeyBinding__get_mode_target(const KeyBinding *this);
+const MacroTarget*    KeyBinding__get_macro_target(const KeyBinding *this);
+const MapTarget*      KeyBinding__get_map_target(const KeyBinding *this);
+const ModifierTarget* KeyBinding__get_modifier_target(const KeyBinding *this);
 
 /*
  *    KeyBindingArray
@@ -101,6 +103,15 @@ struct MapTarget
 {
   uint8_t modifiers;
   Usage usage;
+};
+
+/*
+ *    ModifierTarget
+ */
+
+struct ModifierTarget
+{
+  Modifier modifier;
 };
 
 /*

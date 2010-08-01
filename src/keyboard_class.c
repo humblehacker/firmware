@@ -245,14 +245,10 @@ momentary_mode_engaged()
     for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
         key;       key = ActiveKeys__next(&kb.active_keys))
     {
-      if (key->binding.kind == MAP)
+      if (key->binding.kind != MODIFIER)
       {
-        const MapTarget *target = KeyBinding__get_map_target(&key->binding);
-        if (get_modifier(target->usage) == NONE)
-        {
-          BlockedKeys__block_key(key->cell);
-          BoundKey__deactivate(key);
-        }
+        BlockedKeys__block_key(key->cell);
+        BoundKey__deactivate(key);
       }
     }
   }
@@ -263,21 +259,17 @@ momentary_mode_engaged()
 bool
 modifier_keys_engaged(KeyboardReport *report)
 {
-  Modifiers active_modifiers = NONE;
+  Modifier active_modifiers = NONE;
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
        key;      key = ActiveKeys__next(&kb.active_keys))
   {
-    if (key->binding.kind == MAP)
+    if (key->binding.kind == MODIFIER)
     {
-      const MapTarget *target = KeyBinding__get_map_target(&key->binding);
-      Modifiers this_modifier = NONE;
-      if ((this_modifier = get_modifier(target->usage)) != NONE)
-      {
-        active_modifiers |= this_modifier;
-        KeyboardReport__reset_modifiers(report, key->binding.premods.std);
-        KeyboardReport__reset_modifiers(report, key->binding.premods.any);
-        BoundKey__deactivate(key);
-      }
+      const ModifierTarget *target = KeyBinding__get_modifier_target(&key->binding);
+      active_modifiers |= target->modifier;
+      KeyboardReport__reset_modifiers(report, key->binding.premods.std);
+      KeyboardReport__reset_modifiers(report, key->binding.premods.any);
+      BoundKey__deactivate(key);
     }
   }
   KeyboardReport__set_modifiers(report, active_modifiers);

@@ -42,6 +42,15 @@ class Usage
     @id   = id
     @name = name
   end
+  def modifier?
+    return false if @page.name != "Keyboard_and_Keypad"
+    case @name
+    when "Left_Control",  "Left_Shift",  "Left_Alt",  "Left_GUI",
+         "Right_Control", "Right_Shift", "Right_Alt", "Right_GUI"
+      return true
+    end
+    return false
+  end
 end
 
 class HIDUsageTable
