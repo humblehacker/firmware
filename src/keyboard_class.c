@@ -43,6 +43,7 @@ struct
   KeyMap         active_keymap;      // keymap used to determine current bindings
   KeyMap         selected_keymap;    // the 'current default'. Reset to this every cycle.
   KeyMap         default_keymap;     // used at startup and when a mode it toggled off
+  KeyMap         prev_keymap;
   KeyboardReport prev_report;
 } kb;
 
@@ -54,6 +55,7 @@ static bool    momentary_mode_engaged(void);
 static bool    modifier_keys_engaged(KeyboardReport *report);
 static void    maybe_toggle_mode(void);
 static void    process_keys(KeyboardReport *report);
+static bool    modifiers_would_change(const PreMods *premods, uint8_t current_mods, uint8_t target_mods);
 static uint8_t fill_report(USB_KeyboardReport_Data_t *report);
 static void    toggle_map(KeyMap mode_map);
 static void    stdout_to_report_queue(void);
@@ -67,6 +69,7 @@ Keyboard__init()
   kb.default_keymap  = (KeyMap) pgm_read_word(&kbd_map_mx_default);
   kb.selected_keymap = kb.default_keymap;
   kb.active_keymap   = NULL;
+  kb.prev_keymap     = kb.default_keymap;
 
   BlockedKeys__init();
   ReportQueue__init();
@@ -217,6 +220,7 @@ update_bindings(KeyboardReport *report)
 bool
 momentary_mode_engaged()
 {
+  bool result = false;
   for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
        key;      key = ActiveKeys__next(&kb.active_keys))
   {
@@ -227,11 +231,33 @@ momentary_mode_engaged()
       {
         kb.active_keymap = target->mode_map;
         BoundKey__deactivate(key);
-        return true;
+        result = true;
+        break;
       }
     }
   }
-  return false;
+
+  // If the active mode is changing, all active (non-modifier)
+  // keys must be deactivated and blocked.  Solves issue #20.
+  if (kb.active_keymap != kb.prev_keymap)
+  {
+    kb.prev_keymap = kb.active_keymap;
+    for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
+        key;       key = ActiveKeys__next(&kb.active_keys))
+    {
+      if (key->binding.kind == MAP)
+      {
+        const MapTarget *target = KeyBinding__get_map_target(&key->binding);
+        if (get_modifier(target->usage) == NONE)
+        {
+          BlockedKeys__block_key(key->cell);
+          BoundKey__deactivate(key);
+        }
+      }
+    }
+  }
+
+  return result;
 }
 
 bool
@@ -276,6 +302,12 @@ maybe_toggle_mode(void)
       }
     }
   }
+}
+
+bool
+modifiers_would_change(const PreMods *premods, uint8_t current_mods, uint8_t target_mods)
+{
+  return (((current_mods & ~premods->std) & ~premods->any) | target_mods) != current_mods;
 }
 
 void
@@ -324,7 +356,7 @@ process_keys(KeyboardReport *report)
       uint8_t current_mods = KeyboardReport__get_modifiers(report);
       const MapTarget *target = KeyBinding__get_map_target(&key->binding);
       if (ActiveKeys__count(&kb.active_keys) > 1
-          && (((current_mods & ~key->binding.premods.std) & ~key->binding.premods.any) | target->modifiers) != current_mods)
+          && modifiers_would_change(&key->binding.premods, current_mods, target->modifiers))
       {
         if (KeyboardReport__has_key(&kb.prev_report, target->usage))
         {
