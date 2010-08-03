@@ -395,7 +395,7 @@ ALL_ASFLAGS = -mmcu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)
 
 
 # Default target.
-all: begin .generate gccversion sizebefore build checkinvalidevents showliboptions showtarget sizeafter end
+all: begin $(OBJDIR)/.generate gccversion sizebefore build checkinvalidevents showliboptions showtarget sizeafter end
 
 test: 
 	cd $(SRCDIR) && make -f test.mak
@@ -415,9 +415,9 @@ $(OBJDIR)/$(GENERATED)/binding.c : $(TEMPLATE_FILES)
 
 #$(TEMPLATE_FILES) : generate
 
-.generate: hh1.kspec $(TEMPLATE_FILES) 
+$(OBJDIR)/.generate: hh1.kspec $(TEMPLATE_FILES) 
 	kspec hh1.kspec -g -o $(OBJDIR)/$(GENERATED) -t $(TEMPLATE_DIR)
-	touch .generate
+	touch $@
 
 # Change the build target to build a HEX file or a library.
 build: elf hex eep lss sym
@@ -675,6 +675,7 @@ clean_list:
 	@echo $(MSG_CLEANING)
 	$(REMOVE) $(SRC:.c=.s)
 	$(REMOVE) $(SRC:.c=.d)
+	$(REMOVE) $(SRC:.c=.i)
 	$(REMOVE) $(SRC:.c=.i)
 	$(REMOVE) InvalidEvents.tmp
 	$(REMOVEDIR) .dep
