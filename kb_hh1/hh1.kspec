@@ -326,6 +326,10 @@ KeyMap:Fn4 base:Common
     Key:1O Map:Keypad_Num_Lock_and_Clear                    br:"N. Lock"
 
     Key:3A Map:Tab                                          br:"Tab"
+    Key:3D Macro:                                           br:"../"
+      Map:._and_\>
+      Map:._and_\>
+      Map:/_and_?
 
     /* Row 5 */
 /*    Key:5B Map:NonUS_\_and_|                                bl:"<"  */
