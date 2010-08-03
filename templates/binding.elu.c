@@ -137,27 +137,25 @@ MacroTarget__get_map_target(const MacroTarget *this, uint8_t index)
  *    All Bindings
  */
 
-<% $keyboard.maps.each_value do |keymap|
-     keymap.keys.each do |location, key|
-       key.kbindings.each do |premods, kbinding|
-         ident = kbinding_identifier(keymap, key.location, premods)
-         if kbinding.instance_of? Map
-           if kbinding.usage.modifier? %>
-const ModifierTarget <%=ident%> PROGMEM = { <%= modifier_symbol_from_name(kbinding.usage.name).to_s %> };<%
-           else %>
-const MapTarget <%=ident%> PROGMEM = { 0x<%= get_mods(kbinding.modifiers).to_s(16) %>, HID_USAGE_<%=normalize_identifier(kbinding.usage.name)%> };<%
-           end
-         elsif kbinding.instance_of? Macro %>
-const MapTarget <%=ident%>Targets[] PROGMEM =
+<% for mapname,keymap in pairs(kb.keymaps) do
+     for location,key in pairs(keymap.keys) do
+       for i,binding in ipairs(key.bindings) do
+         ident = binding_identifier(keymap, key.location, binding.premods, binding.class)
+         if binding.class == 'Map' then
+         mods = string.format("%03x", convert_anymods_to_stdmods(binding.modifiers)) %>
+const MapTarget   <%=ident%> PROGMEM = { 0x<%= mods %>, HID_USAGE_<%= normalize_identifier(binding.usage.name) %> };<%
+         elseif binding.class == 'Macro' then %>
+const MapTarget   <%=ident%>Targets[] PROGMEM =
 {
-<%         kbinding.kbindings.each do |macro_kbinding| %>
-  { 0x<%= get_mods(macro_kbinding.modifiers).to_s(16) %>, HID_USAGE_<%=normalize_identifier(macro_kbinding.usage.name)%> },
+<%         for i,map in ipairs(binding.maps) do
+             mods = string.format("%02x", convert_anymods_to_stdmods(map.modifiers))
+%>  { 0x<%= mods %>, HID_USAGE_<%= normalize_identifier(map.usage.name) %> },
 <%         end %>
 };
 
-const MacroTarget <%= ident %> PROGMEM = { <%=kbinding.kbindings.length%>, &<%=ident%>Targets[0] }; <%
-         elsif kbinding.instance_of? Mode %>
-const ModeTarget <%= ident %> PROGMEM = { <%=kbinding.type.upcase%>, kbd_map_<%=kbinding.mode%>_mx }; <%
+const MacroTarget <%= ident %> PROGMEM = { <%= #binding.maps %>, &<%= ident %>Targets[0] }; <%
+         elseif binding.class == 'Mode' then %>
+const ModeTarget  <%= ident %> PROGMEM = { <%= string.upper(binding.type) %>, keymap_<%= binding.name %> }; <%
          else
            %><%="/* What? */"%><%
          end
@@ -170,25 +168,22 @@ const ModeTarget <%= ident %> PROGMEM = { <%=kbinding.type.upcase%>, kbd_map_<%=
  *    Aggregated bindings per key
  */
 
-<% $keyboard.maps.each_value do |keymap|
-     keymap.keys.each do |location, key| %>
-const KeyBinding <%= "#{keymap.ids.last}_#{key.location}" %>[] PROGMEM =
-{<%    key.kbindings.each do |premods, kbinding| %>
-  { <%   if kbinding.instance_of? Map
-           if kbinding.usage.modifier?
-    %>MODIFIER, <%
-           else
+<% for mapname,keymap in pairs(kb.keymaps) do
+     for location,key in pairs(keymap.keys) do %>
+const KeyBinding <%= keymap.name %>_<%= key.location %>[] PROGMEM =
+{<%    for i,binding in ipairs(key.bindings) do %>
+  { <%   if binding.class == 'Map' then
     %>MAP, <%
-           end
-         elsif kbinding.instance_of? Macro
+         elseif binding.class == 'Macro' then
     %>MACRO, <%
-         elsif kbinding.instance_of? Mode
+         elseif binding.class == 'Mode' then
     %>MODE, <%
          else
-    %><%="/* What? */"%>, <%
+    %>/* What's a <%= binding.class %>? */ NULL, <%
          end
-         stdmods, anymods = get_premods(premods)
-%>{ 0x<%=stdmods.to_s(16)%>, 0x<%=anymods.to_s(16)%> }, (void*)&<%= kbinding_identifier(keymap, key.location, premods) %> }, <%
+         stdmods = string.format("%02x", binding.premods.stdmods)
+         anymods = string.format("%02x", binding.premods.anymods)
+%>{0x<%=stdmods%>, 0x<%=anymods%>}, (void*)&<%= binding_identifier(keymap, key.location, binding.premods, binding.class) %> }, <%
        end %>
 };
 <%

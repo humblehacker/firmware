@@ -150,16 +150,6 @@ CPPSRC =
 #     care about how the name is spelled on its command-line.
 ASRC =
 
-# ERB template files for kbgen code generator
-ERBSRC = $(KBGEN_DIR)/templates/binding.erb.c    \
-	 $(KBGEN_DIR)/templates/binding.erb.h    \
-	 $(KBGEN_DIR)/templates/hid_usages.erb.h \
-	 $(KBGEN_DIR)/templates/KeyMap.erb.c     \
-	 $(KBGEN_DIR)/templates/KeyMap.erb.h     \
-	 $(KBGEN_DIR)/templates/keymaps.erb.c    \
-	 $(KBGEN_DIR)/templates/keymaps.erb.h    \
-	 $(KBGEN_DIR)/templates/matrix.erb.h     
-
 # Debugging format.
 #     Native formats for AVR-GCC's -g are dwarf-2 [default] or stabs.
 #     AVR Studio 4.10 requires dwarf-2.
@@ -355,12 +345,7 @@ REMOVE = rm -f
 REMOVEDIR = rm -rf
 COPY = cp
 WINSHELL = cmd
-KBGEN_DIR = ../kbgen
-KBGEN_OPTS = -O$(OBJDIR)/$(GENERATED)
-ifdef MATRIX_MODE
-KBGEN_OPTS += --hid-only
-endif
-KBGEN = ruby -I$(KBGEN_DIR) $(KBGEN_DIR)/kbgen.rb $(KBGEN_OPTS)
+TEMPLATE_DIR = ../templates
 
 # Define Messages
 # English
@@ -410,27 +395,29 @@ ALL_ASFLAGS = -mmcu=$(MCU) -I. -x assembler-with-cpp $(ASFLAGS)
 
 
 # Default target.
-all: begin generate gccversion sizebefore build checkinvalidevents showliboptions showtarget sizeafter end
+all: begin .generate gccversion sizebefore build checkinvalidevents showliboptions showtarget sizeafter end
 
 test: 
 	cd $(SRCDIR) && make -f test.mak
 
-# Build kspec parser
-$(KBGEN_DIR)/kspec.rb : $(KBGEN_DIR)/kspec.tt
-	@echo Building kspec parser
-	@cd $(KBGEN_DIR); tt kspec.tt
+TEMPLATE_FILES = \
+	$(TEMPLATE_DIR)/matrix.elu.h   \
+	$(TEMPLATE_DIR)/keymaps.elu.h  \
+	$(TEMPLATE_DIR)/keymaps.elu.c  \
+	$(TEMPLATE_DIR)/binding.elu.h  \
+	$(TEMPLATE_DIR)/binding.elu.c 
 
-# Generate header files
-$(OBJDIR)/$(GENERATED)/hid_usages.h: $(KBGEN_DIR)/kspec.rb $(KBGEN_DIR)/kb.kspec $(ERBSRC)
-	@echo Generating code
-	@$(KBGEN) $(KBGEN_DIR)/kb.kspec -I$(KBGEN_DIR) -I$(LAYOUTS) 
+$(OBJDIR)/$(GENERATED)/matrix.h : $(TEMPLATE_FILES)
+$(OBJDIR)/$(GENERATED)/keymaps.h : $(TEMPLATE_FILES)
+$(OBJDIR)/$(GENERATED)/keymaps.c : $(TEMPLATE_FILES)
+$(OBJDIR)/$(GENERATED)/binding.h : $(TEMPLATE_FILES)
+$(OBJDIR)/$(GENERATED)/binding.c : $(TEMPLATE_FILES)
 
-# Generate combined kspec file
-$(KBGEN_DIR)/kb.kspec : $(LAYOUTS)/*.kspec
-	@echo Preprocessing keyboard layouts
-	@$(CPP) -P $(LAYOUT_FILE) $(KBGEN_DIR)/kb.kspec
+#$(TEMPLATE_FILES) : generate
 
-generate: $(OBJDIR)/$(GENERATED)/hid_usages.h
+.generate: hh1.kspec $(TEMPLATE_FILES) 
+	kspec hh1.kspec -g -o $(OBJDIR)/$(GENERATED) -t $(TEMPLATE_DIR)
+	touch .generate
 
 # Change the build target to build a HEX file or a library.
 build: elf hex eep lss sym
@@ -690,7 +677,6 @@ clean_list:
 	$(REMOVE) $(SRC:.c=.d)
 	$(REMOVE) $(SRC:.c=.i)
 	$(REMOVE) InvalidEvents.tmp
-	$(REMOVE) $(KBGEN_DIR)/kspec.rb $(KBGEN_DIR)/kb.kspec
 	$(REMOVEDIR) .dep
 	$(REMOVEDIR) $(OBJDIR)
 

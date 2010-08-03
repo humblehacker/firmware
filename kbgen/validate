@@ -1,4 +1,0 @@
-#!/bin/bash
-
-xmllint --xinclude --noout --schema http://schema.humblehacker.com/Keyboard.xsd $1
-

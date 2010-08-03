@@ -66,7 +66,7 @@ Keyboard__init()
   stdio_init();
   init_cols();
 
-  kb.default_keymap  = (KeyMap) pgm_read_word(&kbd_map_mx_default);
+  kb.default_keymap  = (KeyMap) pgm_read_word(&default_keymap);
   kb.selected_keymap = kb.default_keymap;
   kb.active_keymap   = NULL;
   kb.prev_keymap     = kb.default_keymap;

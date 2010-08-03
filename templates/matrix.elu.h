@@ -30,20 +30,13 @@
 #define COL(byte) (((uint8_t)byte)>>3)
 #define ROW(byte) (((uint8_t)byte)&~(0xff<<3))
 #define MATRIX_CELL(row,col) ((((uint8_t)(col))<<3)|((uint8_t)(row)))
-<%
-rows = cols = 0
-  matrix = $keyboard.matrix
-  if !matrix.empty? && !matrix[0].empty?
-    rows = matrix.size
-    cols = matrix[0].size
-  end
-%>
-#define NUM_ROWS <%=rows%>
-#define NUM_COLS <%=cols%>
+
+#define NUM_ROWS <%= kb.matrix.row_count %>
+#define NUM_COLS <%= kb.matrix.col_count %>
 
 typedef uint8_t Cell;
 
-<% if $keyboard.block_ghost_keys %>
+<% if kb.block_ghost_keys then %>
 #define BLOCK_GHOST_KEYS
 <% end %>
 
@@ -52,28 +45,28 @@ void
 activate_row(uint8_t row)
 {
   // set all row pins as inputs
-<% $keyboard.rports.each_with_index do |port,i| %>
-  DDR<%= port[1,1] %> &= ~(1 << <%= port %>);
+<% for i,pin in ipairs(kb.row_pins) do %>
+  DDR<%= string.sub(pin,2,2) %> &= ~(1 << <%= pin %>);
 <% end %>
 
   // set current row pin as output
   switch (row)
   {
-<% $keyboard.rports.each_with_index do |port,i| %>
-    case <%= i %>: DDR<%= $keyboard.rports[i][1,1] %> |= (1 << <%= port %>); break;
+<% for i,pin in ipairs(kb.row_pins) do %>
+    case <%= i-1 %>: DDR<%= string.sub(pin,2,2) %> |= (1 << <%= pin %>); break;
 <% end %>
   }
 
   // drive all row pins high
-<% $keyboard.rports.each_with_index do |port,i| %>
-  PORT<%= port[1,1] %> |= (1 << <%= port %>);
+<% for i,pin in ipairs(kb.row_pins) do %>
+  PORT<%= string.sub(pin,2,2) %> |= (1 << <%= pin %>);
 <% end %>
 
   // drive current row pin low
   switch (row)
   {
-<% $keyboard.rports.each_with_index do |port,i| %>
-    case <%= i %>: PORT<%= port[1,1] %> &= ~(1 << <%= port %>); break;
+<% for i,pin in ipairs(kb.row_pins) do %>
+    case <%= i-1 %>: PORT<%= string.sub(pin,2,2) %> &= ~(1 << <%= pin %>); break;
 <% end %>
   }
 }
@@ -84,8 +77,8 @@ read_row_data(void)
 {
   uint32_t cols = 0;
 
-<% $keyboard.cports.each_with_index do |port, i| %>
-  if ((~PIN<%= port[1,1] %>)&(1<<<%= port %>)) cols |= (1UL<< <%= i %>);
+<% for i,pin in ipairs(kb.col_pins) do %>
+  if ((~PIN<%= string.sub(pin,2,2) %>)&(1<<<%= pin %>)) cols |= (1UL<< <%= i-1 %>);
 <% end %>
 
   return cols;
@@ -97,13 +90,13 @@ void
 init_cols(void)
 {
   /* Columns are inputs */
-<% $keyboard.cports.each do |port| %>
-  DDR<%= port[1,1] %> &= ~(1 << <%= port %>);
+<% for i,pin in ipairs(kb.col_pins) do %>
+  DDR<%= string.sub(pin,2,2) %> &= ~(1 << <%= pin %>);
 <% end %>
 
   /* Enable pull-up resistors on inputs */
-<% $keyboard.cports.each do |port| %>
-  PORT<%= port[1,1] %> |= (1 << <%= port %>);
+<% for i,pin in ipairs(kb.col_pins) do %>
+  PORT<%= string.sub(pin,2,2) %> |= (1 << <%= pin %>);
 <% end %>
 }
 

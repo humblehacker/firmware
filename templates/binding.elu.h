@@ -24,6 +24,10 @@
 #ifndef __BINDING_H__
 #define __BINDING_H__
 
+#include <avr/io.h>
+#include <avr/pgmspace.h>
+#include <stdbool.h>
+#include <stdint.h>
 #include "hid_usages.h"
 #include "matrix.h"
 
@@ -130,12 +134,12 @@ const MapTarget* MacroTarget__get_map_target(const MacroTarget *this, uint8_t in
  *    Binding declarations
  */
 
-<% $keyboard.maps.each_value do |keymap|
-     keymap.keys.each do |location, key| %>
-extern const KeyBinding <%= "#{keymap.ids.last}_#{key.location}" %>[] PROGMEM;<%
-     end
+<% for mapname,keymap in pairs(kb.keymaps) do
+     for location,key in pairs(keymap.keys) do %>
+extern const KeyBinding <%= keymap.name %>_<%= key.location %>[] PROGMEM;
+<%   end
    end
 %>
 
 
-#endif // __MAPPING_H__
+#endif // __BINDING_H__
