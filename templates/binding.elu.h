@@ -133,13 +133,11 @@ const MapTarget* MacroTarget__get_map_target(const MacroTarget *this, uint8_t in
 /*
  *    Binding declarations
  */
-
 <% for mapname,keymap in pairs(kb.keymaps) do
      for location,key in pairs(keymap.keys) do %>
-extern const KeyBinding <%= keymap.name %>_<%= key.location %>[] PROGMEM;
-<%   end
+extern const KeyBinding <%= keymap.name %>_<%= key.location %>[] PROGMEM;<%
+     end
    end
 %>
-
 
 #endif // __BINDING_H__

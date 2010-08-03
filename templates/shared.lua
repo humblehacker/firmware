@@ -63,3 +63,34 @@ end
 function convert_anymods_to_stdmods(mods)
   return bit.bor(bit.band(mods, 0x00FF), bit.rshift(bit.band(mods,0x0F00), 4));
 end
+
+function modifier_symbol_from_name(mod_name, convertanymods)
+  convertanymods = convertanymods or false
+  mod_name = string.lower(mod_name)
+  if mod_name == "" then               return 0 end
+  if mod_name == "left_alt" then       return "L_ALT" end
+  if mod_name == "left_control" then   return "L_CTL" end
+  if mod_name == "left_shift" then     return "L_SHF" end
+  if mod_name == "left_gui" then       return "L_GUI" end
+  if mod_name == "right_alt" then      return "R_ALT" end
+  if mod_name == "right_control" then  return "R_CTL" end
+  if mod_name == "right_shift" then    return "R_SHF" end
+  if mod_name == "right_gui" then      return "R_GUI" end
+  if mod_name == "alt" or 
+     mod_name == "control" or 
+     mod_name == "shift" or 
+     mod_name == "gui" then
+    if convertanymods then
+      if mod_name == "alt" then        return "L_ALT" end
+      if mod_name == "control" then    return "L_CTL" end
+      if mod_name == "shift" then      return "L_SHF" end
+      if mod_name == "gui" then        return "L_GUI" end
+    else
+      if mod_name == "alt" then        return "A_ALT" end
+      if mod_name == "control" then    return "A_CTL" end
+      if mod_name == "shift" then      return "A_SHF" end
+      if mod_name == "gui" then        return "A_GUI" end
+    end
+  end
+  error("Unknown modifier " ..mod_name)
+end
