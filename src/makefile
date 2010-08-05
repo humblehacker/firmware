@@ -92,10 +92,6 @@ LUFA_OPTS += -D USE_STATIC_OPTIONS="(USB_DEVICE_OPT_FULLSPEED | USB_OPT_REG_ENAB
 
 # Generated files directory
 GENERATED = generated
-LAYOUTS = ./layouts
-
-# TODO: hardware dependent
-LAYOUT_FILE = $(LAYOUTS)/Keyboard.kspec
 
 LUFA_SRC = $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/DevChapter9.c       \
 	   $(LUFA_PATH)/LUFA/Drivers/USB/LowLevel/Endpoint.c          \
@@ -415,8 +411,8 @@ $(OBJDIR)/$(GENERATED)/binding.c : $(TEMPLATE_FILES)
 
 #$(TEMPLATE_FILES) : generate
 
-$(OBJDIR)/.generate: hh1.kspec $(TEMPLATE_FILES) 
-	kspec hh1.kspec -g -o $(OBJDIR)/$(GENERATED) -t $(TEMPLATE_DIR)
+$(OBJDIR)/.generate: config.kspec $(TEMPLATE_FILES) 
+	kspec config.kspec -g -o $(OBJDIR)/$(GENERATED) -t $(TEMPLATE_DIR)
 	touch $@
 
 # Change the build target to build a HEX file or a library.

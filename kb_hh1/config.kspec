@@ -33,7 +33,7 @@ Matrix:
 /* 5 */ Row: -- 6A 6B 6C 6D 6E 6F 6G 6H 6I 6J 6K 6L 6M 6N 6O
 /* 6 */ Row: -- -- -- -- -- -- -- 7G 7H -- -- -- -- -- -- --
 
-/*         0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15 */
+/*         0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15 */
   ColPins:PC0 PC1 PC2 PC3 PC4 PC5 PC6 PC7 PD7 PD6 PD5 PD4 PD3 PD2 PD1 PD0
 
 /*         0   1   2   3   4   5   6  */
@@ -41,123 +41,72 @@ Matrix:
 
   BlockGhostKeys:no
 
-KeyMap:Colemak base:Common
-
-  /* Row 2 */
-  Key:2A Map:`_and_~           tl:"~"    bl:"`"
-  Key:2B Map:1_and_!           tl:"!"    bl:"1"
-  Key:2C Map:2_and_@           tl:"@"    bl:"2"
-  Key:2D Map:3_and_#           tl:"#"    bl:"3"
-  Key:2E Map:4_and_$           tl:"$"    bl:"4"
-  Key:2F Map:5_and_%           tl:"%"    bl:"5"
-  Key:2J Map:6_and_^           tl:"^"    bl:"6"
-  Key:2K Map:7_and_&           tl:"&"    bl:"7"
-  Key:2L Map:8_and_*           tl:"*"    bl:"8"
-  Key:2M Map:9_and_(           tl:"("    bl:"9"
-  Key:2N Map:0_and_)           tl:")"    bl:"0"
-
-  /* Row 3 */
-  Key:3B Map:q_and_Q           tl:"Q"
-  Key:3C Map:w_and_W           tl:"W"
-  Key:3D Map:f_and_F           tl:"F"
-  Key:3E Map:p_and_P           tl:"P"
-  Key:3F Map:g_and_G           tl:"G"
-  Key:3J Map:j_and_J           tl:"J"
-  Key:3K Map:l_and_L           tl:"L"
-  Key:3L Map:u_and_U           tl:"U"
-  Key:3M Map:y_and_Y           tl:"Y"
-  Key:3N Map:;_and_\:          tl:";"
-
-  /* Row 4 */
-  Key:4B Map:a_and_A           tl:"A"
-  Key:4C Map:r_and_R           tl:"R"
-  Key:4D Map:s_and_S           tl:"S"
-  Key:4E Map:t_and_T           tl:"T"
-  Key:4F Map:d_and_D           tl:"D"
-  Key:4J Map:h_and_H           tl:"H"
-  Key:4K Map:n_and_N           tl:"N"
-  Key:4L Map:e_and_E           tl:"E"
-  Key:4M Map:i_and_I           tl:"I"
-  Key:4M Map:o_and_O           tl:"O"
-
-  /* Row 5 */
-  Key:5B Map:z_and_Z           tl:"Z"
-  Key:5C Map:x_and_X           tl:"X"
-  Key:5D Map:c_and_C           tl:"C"
-  Key:5E Map:v_and_V           tl:"V"
-  Key:5F Map:b_and_B           tl:"B"
-  Key:5J Map:k_and_K           tl:"K"
-  Key:5K Map:m_and_M           tl:"M"
-  Key:5L Map:,_and_\<          tl:"<"    bl:","
-  Key:5M Map:._and_\>          tl:">"    bl:"."
-  Key:5N Map:/_and_?           tl:"?"    bl:"/"
-
 KeyMap:Common
 
-        /* Row 1 */
-        Key:1A Map:ESCAPE                                     tl:"esc"
-        Key:1B Map:F1                                         tl:"F1"
-        Key:1C Map:F2                                         tl:"F2"
-        Key:1D Map:F3                                         tl:"F3"
-        Key:1E Map:F4                                         tl:"F4"
-        Key:1F Map:F5                                         tl:"F5"
-        Key:1G Map:F6                                         tl:"F6"
-        Key:1H Map:F7                                         tl:"F7"
-        Key:1I Map:F8                                         tl:"F8"
-        Key:1J Map:F9                                         tl:"F9"
-        Key:1K Map:F10                                        tl:"F10"
-        Key:1L Map:F11                                        tl:"F11"
-        Key:1M Map:F12                                        tl:"F12"
-        Key:1N Map:PrintScreen                                tl:"F13"
-        Key:1O Map:Scroll_Lock                                tl:"F14"
-        Key:1P Map:Keyboard_Pause                             tl:"F15"
+  /* Row 1 */
+  Key:1A Map:ESCAPE                                     tl:"esc"
+  Key:1B Map:F1                                         tl:"F1"
+  Key:1C Map:F2                                         tl:"F2"
+  Key:1D Map:F3                                         tl:"F3"
+  Key:1E Map:F4                                         tl:"F4"
+  Key:1F Map:F5                                         tl:"F5"
+  Key:1G Map:F6                                         tl:"F6"
+  Key:1H Map:F7                                         tl:"F7"
+  Key:1I Map:F8                                         tl:"F8"
+  Key:1J Map:F9                                         tl:"F9"
+  Key:1K Map:F10                                        tl:"F10"
+  Key:1L Map:F11                                        tl:"F11"
+  Key:1M Map:F12                                        tl:"F12"
+  Key:1N Map:PrintScreen                                tl:"F13"
+  Key:1O Map:Scroll_Lock                                tl:"F14"
+  Key:1P Map:Keyboard_Pause                             tl:"F15"
 
-        /* Row 2 */
-        Key:2G Map:Home                                       tl:"Home"
-        Key:2H Map:PageUp                                     tl:"Page Up"
-        Key:2I Map:End                                        tl:"End"
-        Key:2O Map:\\_and_\|                                    tl:"\\"
+  /* Row 2 */
+  Key:2G Map:Home                                       tl:"Home"
+  Key:2H Map:PageUp                                     tl:"Page Up"
+  Key:2I Map:End                                        tl:"End"
+  Key:2O Map:\\_and_\|                                    tl:"\\"
 
-        /* Row 3 */
-        Key:3A Mode:Fn1 type:momentary                        tl:"Fn1"
-        Key:3G Map:z_and_Z <gui>                              tl:"Undo"
-        Key:3H Map:PageDown                                   tl:"Page Down"
-        Key:3I Map:z_and_Z <gui|shift>                        tl:"Redo"
-        Key:3O Mode:Fn2 type:momentary                        tl:"Fn2"
+  /* Row 3 */
+  Key:3A Mode:Fn1 type:momentary                        tl:"Fn1"
+  Key:3G Map:z_and_Z <gui>                              tl:"Undo"
+  Key:3H Map:PageDown                                   tl:"Page Down"
+  Key:3I Map:z_and_Z <gui|shift>                        tl:"Redo"
+  Key:3O Mode:Fn2 type:momentary                        tl:"Fn2"
 
-        /* Row 4 */
-        Key:4A Map:Left_Control                               tl:"Ctrl"
-        Key:4G Map:Return_or_Enter                            tl:"Return"
-        Key:4H Map:Delete_Forward                             tl:"Delete"
-        Key:4I Map:Return_or_Enter                            tl:"Return"
-        Key:4O Map:Right_Control                              tl:"Ctrl"
+  /* Row 4 */
+  Key:4A Map:Left_Control                               tl:"Ctrl"
+  Key:4G Map:Backspace                                  tl:"Backspace"
+  Key:4H Map:Delete_Forward                             tl:"Delete"
+  Key:4I Map:Return_or_Enter                            tl:"Return"
+  Key:4O Map:Right_Control                              tl:"Ctrl"
 
-        /* Row 5 */
-        Key:5A Map:Left_Shift                                 tl:"Shift"
-        Key:5G Map:Return_or_Enter                            tl:"Return"
-        Key:5H Map:UpArrow                                    tl:"{up}"
-        Key:5I Map:Return_or_Enter                            tl:"Return"
-        Key:5O Map:Right_Shift                                tl:"Shift"
+  /* Row 5 */
+  Key:5A Map:Left_Shift                                 tl:"Shift"
+  Key:5G Map:Backspace                                  tl:"Backspace"
+  Key:5H Map:UpArrow                                    tl:"{up}"
+  Key:5I Map:Return_or_Enter                            tl:"Return"
+  Key:5O Map:Right_Shift                                tl:"Shift"
 
-        /* Row 6 */
-        Key:6A Mode:Fn3 type:momentary                        tl:"Fn3"
-        Key:6B Map:Caps_Lock                                  tl:"Caps"
-        Key:6C Map:Left_Alt                                   tl:"Option"
-        Key:6D Map:Left_Alt                                   tl:"Option"
-        Key:6E Map:Left_GUI                                   tl:"Command"
-        Key:6F Map:Left_GUI                                   tl:"Command"
-        Key:6G Map:LeftArrow                                  tl:"{left}"
-        Key:6H Map:DownArrow                                  tl:"{down}"
-        Key:6I Map:RightArrow                                 tl:"{right}"
-        Key:6J Map:Spacebar                                   tl:"Space"
-        Key:6K Map:Spacebar                                   tl:"Space"
-        Key:6L Map:Right_Alt                                  tl:"Option"
-        Key:6M Map:Right_Alt                                  tl:"Option"
-        Key:6O Mode:Fn4 type:momentary                        tl:"Fn4"
+  /* Row 6 */
+  Key:6A Mode:Fn3 type:momentary                        tl:"Fn3"
+  Key:6B Map:Caps_Lock                                  tl:"Caps"
+  Key:6C Map:Left_Alt                                   tl:"Option"
+  Key:6D Map:Left_Alt                                   tl:"Option"
+  Key:6E Map:Left_GUI                                   tl:"Command"
+  Key:6F Map:Left_GUI                                   tl:"Command"
+  Key:6G Map:LeftArrow                                  tl:"{left}"
+  Key:6H Map:DownArrow                                  tl:"{down}"
+  Key:6I Map:RightArrow                                 tl:"{right}"
+  Key:6J Map:Spacebar                                   tl:"Space"
+  Key:6K Map:Spacebar                                   tl:"Space"
+  Key:6L Map:Right_Alt                                  tl:"Option"
+  Key:6M Map:Right_Alt                                  tl:"Option"
+  Key:6O Mode:Fn4 type:momentary                        tl:"Fn4"
 
-        /* Row 7 */
-        Key:7G Map:Backspace                                  tl:"Backspace"
-        Key:7H Map:Return_or_Enter                            tl:"Return"
+  /* Row 7 */
+  Key:7G Map:Backspace                                  tl:"Backspace"
+  Key:7H Map:Return_or_Enter                            tl:"Return"
 
 
 KeyMap:DV base:US default
@@ -268,78 +217,78 @@ KeyMap:Fn2 base:Common
 
 KeyMap:Fn3 base:Common
 
-    Key:2L Map:Keypad_/                                     bl:"/"
-    Key:2M Map:Keypad_*                                     bl:"*"
-    Key:2N Map:Keypad_-                                     bl:"-"
-    Key:2O Map:Keypad_Num_Lock_and_Clear                    bl:"N. Lock"
+  Key:2L Map:Keypad_/                                     bl:"/"
+  Key:2M Map:Keypad_*                                     bl:"*"
+  Key:2N Map:Keypad_-                                     bl:"-"
+  Key:2O Map:Keypad_Num_Lock_and_Clear                    bl:"N. Lock"
 
-    Key:3K Map:Keypad_7_and_Home                            bl:"7"
-    Key:3L Map:Keypad_8_and_Up_Arrow                        bl:"8"
-    Key:3M Map:Keypad_9_and_PageUp                          bl:"9"
-    Key:3N Map:Keypad_+                                     bl:"+"
+  Key:3K Map:Keypad_7_and_Home                            bl:"7"
+  Key:3L Map:Keypad_8_and_Up_Arrow                        bl:"8"
+  Key:3M Map:Keypad_9_and_PageUp                          bl:"9"
+  Key:3N Map:Keypad_+                                     bl:"+"
 
-    Key:4K Map:Keypad_4_and_Left_Arrow                      bl:"4"
-    Key:4L Map:Keypad_5                                     bl:"5"
-    Key:4M Map:Keypad_6_and_Right_Arrow                     bl:"6"
-    Key:4N Map:Keypad_+                                     bl:"+"
+  Key:4K Map:Keypad_4_and_Left_Arrow                      bl:"4"
+  Key:4L Map:Keypad_5                                     bl:"5"
+  Key:4M Map:Keypad_6_and_Right_Arrow                     bl:"6"
+  Key:4N Map:Keypad_+                                     bl:"+"
 
-    Key:5K Map:Keypad_1_and_End                             bl:"1"
-    Key:5L Map:Keypad_2_and_Down_Arrow                      bl:"2"
-    Key:5M Map:Keypad_3_and_PageDn                          bl:"3"
-    Key:5N Map:Keypad_ENTER                                 bl:"Enter"
+  Key:5K Map:Keypad_1_and_End                             bl:"1"
+  Key:5L Map:Keypad_2_and_Down_Arrow                      bl:"2"
+  Key:5M Map:Keypad_3_and_PageDn                          bl:"3"
+  Key:5N Map:Keypad_ENTER                                 bl:"Enter"
 
-    Key:6K Map:Keypad_0_and_Insert                          bl:"0"
-    Key:6L Map:Keypad_._and_Delete                          bl:"."
-    Key:6M Map:Keypad_._and_Delete                          bl:"."
-    Key:6N Map:Keypad_ENTER                                 bl:"Enter"
+  Key:6K Map:Keypad_0_and_Insert                          bl:"0"
+  Key:6L Map:Keypad_._and_Delete                          bl:"."
+  Key:6M Map:Keypad_._and_Delete                          bl:"."
+  Key:6N Map:Keypad_ENTER                                 bl:"Enter"
 
 KeyMap:Fn4 base:Common
 
-    /* Row 1 */
-    Key:1B Mode:US             type:toggle                  br:"US"
-    Key:1C Mode:DV  led:Dvorak type:toggle                  br:"Dvorak"
-    Key:1D Mode:pDV led:Dvorak type:toggle                  br:"pDvorak"
-    Key:1E Mode:Colemak        type:toggle                  br:"Colemak"
-    Key:1P Macro:                                           br:"info"
-        Map:h_and_H <shift>
-        Map:u_and_U
-        Map:m_and_M
-        Map:b_and_B
-        Map:l_and_L
-        Map:e_and_E
-        Map:h_and_H <shift>
-        Map:a_and_A
-        Map:c_and_C
-        Map:k_and_K
-        Map:e_and_E
-        Map:r_and_R
-        Map:Spacebar
-        Map:i_and_I <shift>
-        Map:Return_or_Enter
-    Key:1G Map:Insert                                       br:"Insert"
-    Key:1I Map:System_Power_Down  page:Generic_Desktop      br:"Power"
-    Key:1J Map:System_Sleep       page:Generic_Desktop      br:"Sleep"
-    Key:1K Map:System_Wake_Up     page:Generic_Desktop      br:"Wake"
-    Key:1L Map:PrintScreen                                  br:"Prt Sc"
-    Key:1M Map:Scroll_Lock                                  br:"Scroll"
-    Key:1N Map:Keyboard_Pause                               br:"Pause"
-    Key:1O Map:Keypad_Num_Lock_and_Clear                    br:"N. Lock"
+  /* Row 1 */
+  Key:1B Mode:US             type:toggle                  br:"US"
+  Key:1C Mode:DV  led:Dvorak type:toggle                  br:"Dvorak"
+  Key:1D Mode:pDV led:Dvorak type:toggle                  br:"pDvorak"
+  Key:1E Mode:Colemak        type:toggle                  br:"Colemak"
+  Key:1P Macro:                                           br:"info"
+      Map:h_and_H <shift>
+      Map:u_and_U
+      Map:m_and_M
+      Map:b_and_B
+      Map:l_and_L
+      Map:e_and_E
+      Map:h_and_H <shift>
+      Map:a_and_A
+      Map:c_and_C
+      Map:k_and_K
+      Map:e_and_E
+      Map:r_and_R
+      Map:Spacebar
+      Map:i_and_I <shift>
+      Map:Return_or_Enter
+  Key:1G Map:Insert                                       br:"Insert"
+  Key:1I Map:System_Power_Down  page:Generic_Desktop      br:"Power"
+  Key:1J Map:System_Sleep       page:Generic_Desktop      br:"Sleep"
+  Key:1K Map:System_Wake_Up     page:Generic_Desktop      br:"Wake"
+  Key:1L Map:PrintScreen                                  br:"Prt Sc"
+  Key:1M Map:Scroll_Lock                                  br:"Scroll"
+  Key:1N Map:Keyboard_Pause                               br:"Pause"
+  Key:1O Map:Keypad_Num_Lock_and_Clear                    br:"N. Lock"
 
-    Key:3A Map:Tab                                          br:"Tab"
-    Key:3D Macro:                                           br:"../"
-      Map:._and_\>
-      Map:._and_\>
-      Map:/_and_?
+  Key:3A Map:Tab                                          br:"Tab"
+  Key:3D Macro:                                           br:"../"
+    Map:._and_\>
+    Map:._and_\>
+    Map:/_and_?
 
-    /* Row 5 */
+  /* Row 5 */
 /*    Key:5B Map:NonUS_\_and_|                                bl:"<"  */
 /*    Key:5C Map:NonUS_\_and_| <shift>                        bl:">"  */
 /*    Key:5D Map:NonUS_\_and_| <right_alt>                    bl:"¦"  */
 /*    Key:5E Map:NonUS_\_and_| <right_alt|shift>              bl:"_"  */
 
-    Key:4F   Macro:                                         br:"->"
-      Map:-_and_Underscore
-      Map:._and_\> <shift>
+  Key:4F   Macro:                                         br:"->"
+    Map:-_and_Underscore
+    Map:._and_\> <shift>
 
 KeyMap:US base:Common
 
@@ -432,4 +381,56 @@ KeyMap:pDV base:DV
 
   Key:2N         Map:3_and_#  <shift>            bl:"#"
     |    <shift> Map:`_and_~             tl:"'"
+
+KeyMap:Colemak base:Common
+
+  /* Row 2 */
+  Key:2A Map:`_and_~           tl:"~"    bl:"`"
+  Key:2B Map:1_and_!           tl:"!"    bl:"1"
+  Key:2C Map:2_and_@           tl:"@"    bl:"2"
+  Key:2D Map:3_and_#           tl:"#"    bl:"3"
+  Key:2E Map:4_and_$           tl:"$"    bl:"4"
+  Key:2F Map:5_and_%           tl:"%"    bl:"5"
+  Key:2J Map:6_and_^           tl:"^"    bl:"6"
+  Key:2K Map:7_and_&           tl:"&"    bl:"7"
+  Key:2L Map:8_and_*           tl:"*"    bl:"8"
+  Key:2M Map:9_and_(           tl:"("    bl:"9"
+  Key:2N Map:0_and_)           tl:")"    bl:"0"
+
+  /* Row 3 */
+  Key:3B Map:q_and_Q           tl:"Q"
+  Key:3C Map:w_and_W           tl:"W"
+  Key:3D Map:f_and_F           tl:"F"
+  Key:3E Map:p_and_P           tl:"P"
+  Key:3F Map:g_and_G           tl:"G"
+  Key:3J Map:j_and_J           tl:"J"
+  Key:3K Map:l_and_L           tl:"L"
+  Key:3L Map:u_and_U           tl:"U"
+  Key:3M Map:y_and_Y           tl:"Y"
+  Key:3N Map:;_and_\:          tl:";"
+
+  /* Row 4 */
+  Key:4B Map:a_and_A           tl:"A"
+  Key:4C Map:r_and_R           tl:"R"
+  Key:4D Map:s_and_S           tl:"S"
+  Key:4E Map:t_and_T           tl:"T"
+  Key:4F Map:d_and_D           tl:"D"
+  Key:4J Map:h_and_H           tl:"H"
+  Key:4K Map:n_and_N           tl:"N"
+  Key:4L Map:e_and_E           tl:"E"
+  Key:4M Map:i_and_I           tl:"I"
+  Key:4M Map:o_and_O           tl:"O"
+
+  /* Row 5 */
+  Key:5B Map:z_and_Z           tl:"Z"
+  Key:5C Map:x_and_X           tl:"X"
+  Key:5D Map:c_and_C           tl:"C"
+  Key:5E Map:v_and_V           tl:"V"
+  Key:5F Map:b_and_B           tl:"B"
+  Key:5J Map:k_and_K           tl:"K"
+  Key:5K Map:m_and_M           tl:"M"
+  Key:5L Map:,_and_\<          tl:"<"    bl:","
+  Key:5M Map:._and_\>          tl:">"    bl:"."
+  Key:5N Map:/_and_?           tl:"?"    bl:"/"
+
 
