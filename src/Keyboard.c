@@ -218,9 +218,6 @@ void CALLBACK_HID_Device_ProcessHIDReport(USB_ClassInfo_HID_Device_t* const HIDI
 {
   uint8_t* LEDReport = (uint8_t*)ReportData;
 
-  g_num_lock  = (*LEDReport & LED_NUM);
-  g_caps_lock = (*LEDReport & LED_CAPS);
-  g_scrl_lock = (*LEDReport & LED_SCRL);
-
-  LEDs_ChangeLEDs(LED_CAPS|LED_SCRL|LED_NUM, *LEDReport);
+  LEDs_ChangeLEDs(LED_CAPS_LOCK|LED_SCROLL_LOCK|LED_NUM_LOCK|
+                  LED_COMPOSE|LED_KANA, *LEDReport);
 }

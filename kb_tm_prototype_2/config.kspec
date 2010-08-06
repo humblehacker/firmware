@@ -1,0 +1,510 @@
+/*
+                    The HumbleHacker Keyboard Project
+                 Copyright � 2008-2010, David Whetstone
+               david DOT whetstone AT humblehacker DOT com
+
+  This file is a part of The HumbleHacker Keyboard Project.
+
+  The HumbleHacker Keyboard Project is free software: you can redistribute
+  it and/or modify it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  The HumbleHacker Keyboard Project is distributed in the hope that it will
+  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+  Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with The HumbleHacker Keyboard Project.  If not, see
+  <http://www.gnu.org/licenses/>.
+
+*/
+
+Keyboard:TypeMatrix2030USB
+
+Matrix:
+/*            0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 */
+/* 0 */ Row: -- -- 7J 7M -- -- -- -- 7K 1N 5L 6C -- 5H 5F -- -- --
+/* 1 */ Row: 1O -- -- -- -- 6N -- -- -- 4G -- 5K 5J 5I 5E 5D 5C 5B
+/* 2 */ Row: 6E -- 7C -- -- -- -- -- 6L 1M 4M -- 1H 4H 4F 1E -- 1A
+/* 3 */ Row: 1G -- -- 3O -- 6A -- 6O 6K 1K 2M 1J 2N 2H 2F 1C 1B 2A
+/* 4 */ Row: -- -- -- -- 6J -- 4N -- 5O 5M 4L 4K 4J 4I 4E 4D 4C 4B
+/* 5 */ Row: -- -- -- -- 7A 1F -- 7O 6M 1L 2L 2K 2J 2I 2E 2D 2C 2B
+/* 6 */ Row: -- 7B -- -- 6D -- 4A -- 2O 2G 3M 1I 3N 3H 3F 1D 4O 3A
+/* 7 */ Row: -- -- -- -- -- -- -- -- 6B -- 3L 3K 3J 3I 3E 3D 3C 3B
+
+
+  /*       0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17 */
+  ColPins:PE0 PE1 PC0 PC1 PC2 PC3 PC4 PC7 PC6 PC5 PD2 PD1 PD0 PD3 PD4 PD5 PD6 PD7
+
+  /*       0   1   2   3   4   5   6   7  */
+  RowPins:PA0 PA1 PA2 PA3 PA4 PA5 PA6 PA7
+
+  LED:num_lock    pin:PF0 flow:sink
+  LED:caps_lock   pin:PF1 flow:sink
+  LED:scroll_lock pin:PF2 flow:sink
+  LED:dv          pin:PF3 flow:sink
+
+  BlockGhostKeys:yes
+
+KeyMap:Common
+
+  /* Row 1 */
+  Key:1A Map:ESCAPE                                     tl:"esc"
+  Key:1B Map:F1                                         tl:"F1"
+  Key:1C Map:F2                                         tl:"F2"
+  Key:1D Map:F3                                         tl:"F3"
+  Key:1E Map:F4                                         tl:"F4"
+  Key:1F Map:F5                                         tl:"F5"
+  Key:1G Map:Delete_Forward                             tl:"Delete"
+  Key:1H Map:F6                                         tl:"F6"
+  Key:1I Map:F7                                         tl:"F7"
+  Key:1J Map:F8                                         tl:"F8"
+  Key:1K Map:F9                                         tl:"F9"
+  Key:1L Map:F10                                        tl:"F10"
+  Key:1M Map:F11                                        tl:"F11"
+  Key:1N Map:F12                                        tl:"F12"
+  Key:1O Mode:Nm led:Num type:toggle                    tl:"Num"
+
+  /* Row 2 */
+  Key:2G Map:Backspace                                  tl:"Back space"
+  Key:2O Map:AL_Calculator page:Consumer_Control        tl:"{calc}"
+
+  /* Row 3 */
+  Key:3A Map:Tab                                        tl:"Tab"
+  Key:3O Map:AL_Email_Reader page:Consumer_Control      tl:"{mail}"
+
+  /* Row 4 */
+  Key:4A Map:Left_Shift                                 tl:"Shift"
+  Key:4G Map:Return_or_Enter                            tl:"Enter"
+  Key:4N Map:Right_Shift                                tl:"Shift"
+  Key:4O Map:Caps_Lock                                  tl:"Caps"
+
+  /* Row 5 */
+  Key:5O Map:AC_Home page:Consumer_Control              tl:"{web}"
+
+  /* Row 6 */
+  Key:6A Map:Left_Control                               tl:"Ctrl"
+  Key:6B Map:Play/Pause page:Consumer_Control           tl:"Play"
+  Key:6C Map:Application                                tl:"App"
+  Key:6D Map:Tab<left_alt>                              tl:"Shuffle"
+    | <shift>Map:Left_Control
+  Key:6E Map:Spacebar
+  Key:6J Map:d_and_D<left_gui>                          tl:"Desktop"
+  Key:6K Map:Home                                       tl:"Home"
+  Key:6L Map:UpArrow                                    tl:"{up}"
+  Key:6M Map:End                                        tl:"End"
+  Key:6N Map:Right_Control                              tl:"Ctrl"
+  Key:6O Map:PageUp                                     tl:"Pg Up"
+
+  /* Row 7 */
+  Key:7A Mode:Fn led:Num type:momentary                 tl:"Fn"
+  Key:7B Map:Left_GUI                                   tl:"Start"
+  Key:7C Map:Left_Alt                                   tl:"Alt"
+  Key:7J Map:Right_Alt                                  tl:"Alt"
+  Key:7K Map:LeftArrow                                  tl:"{left}"
+  Key:7L Map:DownArrow                                  tl:"{down}"
+  Key:7M Map:RightArrow                                 tl:"{right}"
+  Key:7O Map:PageDown                                   tl:"Pg Dn"
+
+KeyMap:Nm base:Common
+
+  /* Row 1 */
+  Key:1O Mode:Nm led:Num type:toggle    tl:"Num"
+  Key:3K Map:Tab                        tl:"Tab"
+  Key:3L Map:Keypad_/                   tl:""
+  Key:3M Map:Keypad_*                   tl:"*"
+  Key:3N Map:Keypad_-                   tl:"-"
+  Key:3O Map:Tab<shift>                 tl:"b.tab"
+
+  /* Row 4 */
+  Key:4H Map:Home                       tl:"Home"
+  Key:4I Map:UpArrow                    tl:"{up}"
+  Key:4J Map:End                        tl:"End"
+  Key:4K Map:Keypad_7_and_Home          tl:"7"
+  Key:4L Map:Keypad_8_and_Up_Arrow      tl:"8"
+  Key:4M Map:Keypad_9_and_PageUp        tl:"9"
+  Key:4N Map:Keypad_+                   tl:"+"
+
+  /* Row 5 */
+  Key:5H Map:LeftArrow                  tl:"{left}"
+  Key:5I Map:DownArrow                  tl:"{down}"
+  Key:5J Map:RightArrow                 tl:"{right}"
+  Key:5K Map:Keypad_4_and_Left_Arrow    tl:"4"
+  Key:5L Map:Keypad_5                   tl:"5"
+  Key:5M Map:Keypad_6_and_Right_Arrow   tl:"6"
+  Key:5O Map:Keypad_Clear_Entry         tl:"clear"
+
+  /* Row 6 */
+  Key:6K Map:Keypad_1_and_End           tl:"1"
+  Key:6L Map:Keypad_2_and_Down_Arrow    tl:"2"
+  Key:6M Map:Keypad_3_and_PageDn        tl:"3"
+  Key:6N Map:Keypad_ENTER               tl:"enter"
+  Key:6O Map:Backspace                  tl:"b.space"
+
+  /* Row 7 */
+  Key:7K Map:Keypad_0_and_Insert        tl:"0"
+  Key:7L Macro:                         tl:"00"
+    Map:Keypad_0_and_Insert
+    Map:Keypad_0_and_Insert
+  Key:7M Map:Keypad_._and_Delete        tl:"."
+
+KeyMap:US base:Common default
+
+  /* Row 3 */
+  Key:2A Map:`_and_~           tl:"~"    bl:"`"
+  Key:2B Map:1_and_!           tl:"!"    bl:"1"
+  Key:2C Map:2_and_@           tl:"@"    bl:"2"
+  Key:2D Map:3_and_#           tl:"#"    bl:"3"
+  Key:2E Map:4_and_$           tl:"$"    bl:"4"
+  Key:2F Map:5_and_%           tl:"%"    bl:"5"
+  Key:2H Map:6_and_^           tl:"^"    bl:"6"
+  Key:2I Map:7_and_&           tl:"&"    bl:"7"
+  Key:2J Map:8_and_*           tl:"*"    bl:"8"
+  Key:2K Map:9_and_(           tl:"("    bl:"9"
+  Key:2L Map:0_and_)           tl:")"    bl:"0"
+  Key:2M Map:-_and_Underscore  tl:"__"   bl:"-"
+  Key:2N Map:=_and_+           tl:"+"    bl:":"
+
+  /* Row 3 */
+  Key:3B Map:q_and_Q           tl:"Q"
+  Key:3C Map:w_and_W           tl:"W"
+  Key:3D Map:e_and_E           tl:"E"
+  Key:3E Map:r_and_R           tl:"R"
+  Key:3F Map:t_and_T           tl:"T"
+  Key:3H Map:y_and_Y           tl:"Y"
+  Key:3I Map:u_and_U           tl:"U"
+  Key:3J Map:i_and_I           tl:"I"
+  Key:3K Map:o_and_O           tl:"O"
+  Key:3L Map:p_and_P           tl:"P"
+  Key:3M Map:[_and_{           tl:"{"    bl:"["
+  Key:3N Map:]_and_}           tl:"}"    bl:"]"
+
+  /* Row 4 */
+  Key:4B Map:a_and_A           tl:"A"
+  Key:4C Map:s_and_S           tl:"S"
+  Key:4D Map:d_and_D           tl:"D"
+  Key:4E Map:f_and_F           tl:"F"
+  Key:4F Map:g_and_G           tl:"G"
+  Key:4H Map:h_and_H           tl:"H"
+  Key:4I Map:j_and_J           tl:"J"
+  Key:4J Map:k_and_K           tl:"K"
+  Key:4K Map:l_and_L           tl:"L"
+  Key:4L Map:;_and_\:          tl:":"    bl:";"
+  Key:4M Map:squote_and_dquote tl:"\""   bl:"'"
+
+  /* Row 5 */
+  Key:5B Map:z_and_Z           tl:"Z"
+  Key:5C Map:x_and_X           tl:"X"
+  Key:5D Map:c_and_C           tl:"C"
+  Key:5E Map:v_and_V           tl:"V"
+  Key:5F Map:b_and_B           tl:"B"
+  Key:5H Map:n_and_N           tl:"N"
+  Key:5I Map:m_and_M           tl:"M"
+  Key:5J Map:,_and_\<          tl:"<"    bl:","
+  Key:5K Map:._and_\>          tl:">"    bl:"."
+  Key:5L Map:/_and_?           tl:"?"    bl:"/"
+  Key:5M Map:\\_and_\|           tl:"|"    bl:"\\"
+
+
+KeyMap:DV base:US
+
+  /* Row 2 */
+  Key:2M  Map:[_and_{            tl:"{"  bl:"["
+  Key:2N  Map:]_and_}            tl:"}"  bl:"]"
+
+  /* Row 3 */
+  Key:3B  Map:squote_and_dquote  tl:"\"" bl:"\'"
+  Key:3C  Map:,_and_\<           tl:"<"  bl:","
+  Key:3D  Map:._and_\>           tl:">"  bl:"."
+  Key:3E  Map:p_and_P            tl:"P"
+  Key:3F  Map:y_and_Y            tl:"Y"
+  Key:3H  Map:f_and_F            tl:"F"
+  Key:3I  Map:g_and_G            tl:"G"
+  Key:3J  Map:c_and_C            tl:"C"
+  Key:3K  Map:r_and_R            tl:"R"
+  Key:3L  Map:l_and_L            tl:"L"
+  Key:3M  Map:/_and_?            tl:"?"  bl:"/"
+  Key:3N  Map:=_and_+            tl:"+"  bl:"="
+
+  /* Row 4 */
+  Key:4C  Map:o_and_O            tl:"O"
+  Key:4D  Map:e_and_E            tl:"E"
+  Key:4E  Map:u_and_U            tl:"U"
+  Key:4F  Map:i_and_I            tl:"I"
+  Key:4H  Map:d_and_D            tl:"D"
+  Key:4I  Map:h_and_H            tl:"H"
+  Key:4J  Map:t_and_T            tl:"T"
+  Key:4K  Map:n_and_N            tl:"N"
+  Key:4L  Map:s_and_S            tl:"S"
+  Key:4M  Map:-_and_Underscore   tl:"__"  bl:"-"
+
+  /* Row 5 */
+  Key:5B  Map:;_and_\:           tl:":"   bl:";"
+  Key:5C  Map:q_and_Q            tl:"Q"
+  Key:5D  Map:j_and_J            tl:"J"
+  Key:5E  Map:k_and_K            tl:"K"
+  Key:5F  Map:x_and_X            tl:"X"
+  Key:5H  Map:b_and_B            tl:"B"
+  Key:5J  Map:w_and_W            tl:"W"
+  Key:5K  Map:v_and_V            tl:"V"
+  Key:5L  Map:z_and_Z            tl:"Z"
+
+KeyMap:Fn base:Nm
+
+  /* Row 1 */
+  Key:1A Mode:US             type:toggle                   tl:"US"
+  Key:1B Mode:DV  led:Dvorak type:toggle                   tl:"Dvorak"
+  Key:1C Mode:pDV led:Dvorak type:toggle                   tl:"Japan"
+  Key:1E Mode:JP  led:Scroll type:toggle                   tl:"Japan"
+  Key:1D Mode:HHDV led:Dvorak type:toggle
+  Key:1N Macro:
+      Map:h_and_H <shift>
+      Map:u_and_U
+      Map:m_and_M
+      Map:b_and_B
+      Map:l_and_L
+      Map:e_and_E
+      Map:h_and_H <shift>
+      Map:a_and_A
+      Map:c_and_C
+      Map:k_and_K
+      Map:e_and_E
+      Map:d_and_D
+      Map:Spacebar
+      Map:t_and_T <shift>
+      Map:y_and_Y
+      Map:p_and_P
+      Map:e_and_E
+      Map:m_and_M <shift>
+      Map:a_and_A
+      Map:t_and_T
+      Map:r_and_R
+      Map:i_and_I
+      Map:x_and_X
+      Map:Spacebar
+      Map:2_and_@
+      Map:0_and_)
+      Map:3_and_#
+      Map:0_and_)
+      Map:Spacebar
+      Map:p_and_P <shift>
+      Map:r_and_R
+      Map:o_and_O
+      Map:f_and_F
+      Map:e_and_E
+      Map:s_and_S
+      Map:s_and_S
+      Map:i_and_I
+      Map:o_and_O
+      Map:n_and_N
+      Map:a_and_A
+      Map:l_and_L
+      Map:Return_or_Enter
+  Key:1G Map:Insert                                       tl:"Insert"
+  Key:1I Map:System_Power_Down  page:Generic_Desktop      tl:"Power"
+  Key:1J Map:System_Sleep       page:Generic_Desktop      tl:"Sleep"
+  Key:1K Map:System_Wake_Up     page:Generic_Desktop      tl:"Wake"
+  Key:1L Map:PrintScreen                                  tl:"Prt Sc"
+  Key:1M Map:Scroll_Lock                                  tl:"Scroll"
+  Key:1N Map:Keyboard_Pause                               tl:"Pause"
+  Key:1O Map:Keypad_Num_Lock_and_Clear                    tl:"N. Lock"
+
+  /* Row 5 */
+  Key:5B Map:NonUS_\\_and_\|                                tl:"<"
+  Key:5C Map:NonUS_\\_and_\| <shift>                        tl:">"
+  Key:5D Map:NonUS_\\_and_\| <right_alt>                    tl:"¦"
+  Key:5E Map:NonUS_\\_and_\| <right_alt|shift>              tl:"_"
+
+  /* Row 6 */
+  Key:6B Map:Keyboard_Cut                                 tl:"Cut"
+  Key:6C Map:Keyboard_Copy                                tl:"Copy"
+  Key:6D Map:Keyboard_Paste                               tl:"Paste"
+
+KeyMap:HHDV base:DV
+
+  Key:3A  Mode:HHFn1 led:Num type:momentary
+  Key:3M  Mode:HHFn2 led:Num type:momentary
+
+  Key:6D Map:Left_Control  tl:"Control"
+
+  Key:7B Map:Left_Alt      tl:"Alt"
+  Key:7C Map:Left_GUI      tl:"Start"
+
+
+KeyMap:HHFn1 base:HHDV
+
+  Key:3H  Map:Delete_Forward
+
+  Key:3J  Map:UpArrow
+  Key:4J  Map:DownArrow
+  Key:4I  Map:LeftArrow
+  Key:4K  Map:RightArrow
+
+KeyMap:HHFn2 base:HHDV
+
+  Key:3A   Map:Tab                 tr:"tab"
+
+  Key:3B   Map:=_and_+ <shift>     tr:"+"
+  Key:4B   Map:=_and_+             tr:"="
+
+  Key:3C   Map:9_and_( <shift>     tr:"("
+  Key:3E   Map:0_and_) <shift>     tr:")"
+
+  Key:4C   Map:[_and_{ <shift>     tr:"{"
+  Key:4E   Map:]_and_} <shift>     tr:"}"
+
+  Key:5C   Map:[_and_{             tr:"["
+  Key:5E   Map:]_and_}             tr:"]"
+
+  Key:4F   Macro:                  tr:"->"
+      Map:-_and_Underscore
+      Map:._and_\> <shift>
+
+  Key:3D   Map:\\_and_\| <shift>     tr:"|"
+   | <shift>Macro:                  tr:"||"
+      Map:\\_and_\| <shift>
+      Map:\\_and_\| <shift>
+  Key:4D  Map:/_and_?              tr:"/"
+   | <shift>Macro:                  tr:"//"
+      Map:/_and_?
+      Map:/_and_?
+  Key:5D  Map:\\_and_\|              tr:"\\"
+
+
+KeyMap:JP base:US
+
+  /* Row 2 */
+  Key:2A Map:`_and_~          tl:"半角" bl:"全角"
+  Key:2B Map:1_and_!          tl:"!"    bl:"1"             br:"ぬ"
+  Key:2C Map:2_and_@          tl:"@"    bl:"2"             br:"ふ"
+  Key:2D Map:3_and_#          tl:"#"    bl:"3"     tr:"ぁ" br:"あ"
+  Key:2E Map:4_and_$          tl:"$"    bl:"4"     tr:"ぅ" br:"ぅ"
+  Key:2F Map:5_and_%          tl:"%"    bl:"5"     tr:"ぇ" br:"え"
+  Key:2H Map:6_and_^          tl:"^"    bl:"6"     tr:"ぉ" br:"お"
+  Key:2I Map:7_and_&          tl:"&"    bl:"7"     tr:"ゃ" br:"や"
+  Key:2J Map:8_and_*          tl:"*"    bl:"8"     tr:"ゅ" br:"ゆ"
+  Key:2K Map:9_and_(          tl:"("    bl:"9"     tr:"ょ" br:"よ"
+  Key:2L Map:0_and_)          tl:")"    bl:"0"     tr:"を" br:"わ"
+  Key:2M Map:-_and_Underscore tl:"="    bl:"-"     tr:"£"  br:"ほ"
+  Key:2N Map:=_and_+          tl:"__"   bl:"^"     tr:"々" br:"ㇸ"
+  Key:2O Map:International3   tl:"¦"    bl:"¥"     tr:"￢" br:"–"
+
+  /* Row 3 */
+  Key:3B Map:q_and_Q          tl:"Q"               tr:"だ" br:"た"
+  Key:3C Map:w_and_W          tl:"W"               tr:"で" br:"て"
+  Key:3D Map:e_and_E          tl:"E"               tr:"ぃ" br:"い"
+  Key:3E Map:r_and_R          tl:"R"               tr:"ず" br:"す"
+  Key:3F Map:t_and_T          tl:"T"               tr:"が" br:"か"
+  Key:3H Map:y_and_Y          tl:"Y"                       br:"ん"
+  Key:3I Map:u_and_U          tl:"U"                       br:"な"
+  Key:3J Map:i_and_I          tl:"I"                       br:"に"
+  Key:3K Map:o_and_O          tl:"O"                       br:"ら"
+  Key:3L Map:p_and_P          tl:"P"               tr:"『" br:"せ"
+  Key:3M Map:[_and_{          tl:"`"    bl:"@"             br:"゛"
+  Key:3N Map:]_and_}          tl:"{"    bl:"["     tr:"「" br:"゜"
+  Key:3O Map:\\_and_\|          tl:"}"    bl:"]"     tr:"」" br:"む"
+
+  /* Row 4 */
+  Key:4B Map:a_and_A          tl:"A"                       br:"ち"
+  Key:4C Map:s_and_S          tl:"S"                       br:"と"
+  Key:4D Map:d_and_D          tl:"D"                       br:"し"
+  Key:4E Map:f_and_F          tl:"F"                       br:"は"
+  Key:4F Map:g_and_G          tl:"G"                       br:"き"
+  Key:4H Map:h_and_H          tl:"H"                       br:"く"
+  Key:4I Map:j_and_J          tl:"J"                       br:"ま"
+  Key:4J Map:k_and_K          tl:"K"                       br:"の"
+  Key:4K Map:l_and_L          tl:"L"                       br:"り"
+  Key:4L Map:;_and_\:         tl:"+"    bl:";"     tr:"』" br:"れ"
+  Key:4M Map:squote_and_dquote tl:"*"   bl:":"     tr:"ヶ" br:"け"
+
+  /* Row 5 */
+  Key:5B Map:z_and_Z          tl:"Z"               tr:"っ" br:"つ"
+  Key:5C Map:x_and_X          tl:"X"                       br:"さ"
+  Key:5D Map:c_and_C          tl:"C"                       br:"そ"
+  Key:5E Map:v_and_V          tl:"V"                       br:"ひ"
+  Key:5F Map:b_and_B          tl:"B"                       br:"こ"
+  Key:5H Map:n_and_N          tl:"N"                       br:"み"
+  Key:5I Map:m_and_M          tl:"M"                       br:"も"
+  Key:5J Map:,_and_\<         tl:"&lt;" bl:","     tr:"、" br:"ね"
+  Key:5K Map:._and_\>         tl:"&gt;" bl:"."     tr:"。" br:"る"
+  Key:5L Map:/_and_?          tl:"?"    bl:""      tr:"・" br:"め"
+  Key:5M Map:International1   tl:"_"    bl:"\\"    tr:"|"  br:"ろ"
+
+  /* Row 6 */
+  Key:6J Map:International2   tl:"カタカナ ひらがな ローマ字"
+
+  /* Row 7 */
+  /* Key:7A Map:Caps_Lock     tl:"Caps/Topl" bl:"英数 漢字番号" */
+  Key:7C Map:International5   tl:"無変換"
+  Key:7J Map:International4   tl:"前侯補 変換 (次侯補) 侯補"
+
+KeyMap:pDV base:US
+
+  /* Row 2 */
+  Key:2A         Map:4_and_$  <shift>            bl:"$"
+    |    <shift> Map:`_and_~  <shift>    tl:"~"
+  Key:2B         Map:7_and_&  <shift>            bl:"&"
+    |    <shift> Map:5_and_%  <shift>    tl:"%"
+  Key:2C         Map:[_and_{                     bl:"["
+    |    <shift> Map:7_and_&             tl:"7"
+  Key:2D         Map:[_and_{  <shift>            bl:"{"
+    |    <shift> Map:5_and_%             tl:"5"
+  Key:2E         Map:]_and_}  <shift>            bl:"}"
+    |    <shift> Map:3_and_#             tl:"3"
+  Key:2F         Map:9_and_(  <shift>            bl:"("
+    |    <shift> Map:1_and_!             tl:"1"
+  Key:2H         Map:=_and_+                     bl:"="
+    |    <shift> Map:9_and_(             tl:"9"
+  Key:2I         Map:8_and_*  <shift>            bl:"*"
+    |    <shift> Map:0_and_)             tl:"0"
+  Key:2J         Map:0_and_)  <shift>            bl:")"
+    |    <shift> Map:2_and_@             tl:"2"
+  Key:2K         Map:=_and_+  <shift>            bl:"+"
+    |    <shift> Map:4_and_$             tl:"4"
+  Key:2L         Map:]_and_}                     bl:"]"
+    |    <shift> Map:6_and_^             tl:"6"
+  Key:2M         Map:1_and_!  <shift>            bl:"!"
+    |    <shift> Map:8_and_*             tl:"8"
+  Key:2N         Map:3_and_#  <shift>            bl:"#"
+    |    <shift> Map:`_and_~             tl:"'"
+
+  /* Row 3 */
+  Key:3B          Map:;_and_\:           tl:":"  bl:";"
+  Key:3C          Map:,_and_\<           tl:"<"  bl:","
+  Key:3D          Map:._and_\>           tl:">"  bl:"."
+  Key:3E          Map:p_and_P            tl:"P"
+  Key:3F          Map:y_and_Y            tl:"Y"
+  Key:3H          Map:f_and_F            tl:"F"
+  Key:3I          Map:g_and_G            tl:"G"
+  Key:3J          Map:c_and_C            tl:"C"
+  Key:3K          Map:r_and_R            tl:"R"
+  Key:3L          Map:l_and_L            tl:"L"
+  Key:3M          Map:/_and_?            tl:"?"  bl:"/"
+  Key:3N          Map:2_and_@ <shift>    tl:"@"
+    |     <shift> Map:6_and_^ <shift>    bl:"^"
+
+  /* Row 4 */
+  Key:4C  Map:o_and_O                    tl:"O"
+  Key:4D  Map:e_and_E                    tl:"E"
+  Key:4E  Map:u_and_U                    tl:"U"
+  Key:4F  Map:i_and_I                    tl:"I"
+  Key:4H  Map:d_and_D                    tl:"D"
+  Key:4I  Map:h_and_H                    tl:"H"
+  Key:4J  Map:t_and_T                    tl:"T"
+  Key:4K  Map:n_and_N                    tl:"N"
+  Key:4L  Map:s_and_S                    tl:"S"
+  Key:4M  Map:-_and_Underscore           tl:"__" bl:"-"
+
+  /* Row 5 */
+  Key:5B  Map:squote_and_dquote          tl:"\"" bl:"\'"
+  Key:5C  Map:q_and_Q                    tl:"Q"
+  Key:5D  Map:j_and_J                    tl:"J"
+  Key:5E  Map:k_and_K                    tl:"K"
+  Key:5F  Map:x_and_X                    tl:"X"
+  Key:5H  Map:b_and_B                    tl:"B"
+  Key:5J  Map:w_and_W                    tl:"W"
+  Key:5K  Map:v_and_V                    tl:"V"
+  Key:5L  Map:z_and_Z                    tl:"Z"
+
