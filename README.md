@@ -6,8 +6,8 @@ Things you'll need
 ------------------
 * an Atmel AT90USB based controller board
 * avr-gcc 4
-* kspec code generator
 * HumbleHacker firmware source code
+* kspec code generator
 
 
 ### Controller board
@@ -31,13 +31,6 @@ There are avr-gcc packages for the big three platforms.  Installation instructio
 [winavr]:http://winavr.sourceforge.net/
 [crosspack]:http://www.obdev.at/products/crosspack/index.html
 
-### kspec code generator
-
-There are pre-built versions for each of the major platforms.  Go to the [downloads] page on github and grab the latest version for your platform.  Once you've downloaded it, extract the archive and place the resulting binary in a directory in your path.  `/usr/local/bin` is a good choice.
-
-[downloads]:http://github.com/humblehacker/keyboard/downloads
-
-
 ### HumbleHacker source code
 
 Although there are [tarballs and zipfiles][hh_downloads] available, it's best to just install and use [git].  That way you can easily update the source when bugs are fixed and features added.  [GitHub] has good [git installation instructions][git_install] for each platform.
@@ -53,6 +46,20 @@ This will place the source code in a directory called `keyboard` in your current
 [github]:http://github.com
 [git_install]:http://help.github.com/git-installation-redirect
 [git]:http://git-scm.com/
+
+### kspec code generator
+
+There are pre-built versions for each of the major platforms.  Go to the [downloads] page on github and grab the latest version for your platform.  Once you've downloaded it, extract the archive and place the resulting binary in the `firmware` subdirectory of the `keyboard` repository directory.  For example, if you checked out the source code into:
+
+    ~/src/keyboard
+
+then you would copy the kspec binary into:
+
+    ~/src/keyboard/firmware
+
+
+[downloads]:http://github.com/humblehacker/keyboard/downloads
+
 
 Building the firmware
 =====================
@@ -146,6 +153,21 @@ Once you've determined the _pin identifier_ for each matrix row and column, just
     /*       0   1   2   3   4   5   6  */
     RowPins:PA0 PA1 PA2 PA3 PA4 PA5 PA6
 
+##### LEDs
+
+Now we need to define how the LEDs are connected to the controller board.  An example LED definition looks like this:
+
+    LED:num_lock    pin:PF0 flow:sink
+    LED:caps_lock   pin:PF1 flow:sink
+    LED:scroll_lock pin:PF2 flow:sink
+    LED:dv          pin:PF3 flow:sink
+
+You will have one `LED:` definition for each LED connected to your MCU.  Immediately following `LED:` you must enter a name for the LED.  This can be whatever you like, with a few exceptions.  If you want your LED to act as a standard keyboard LED, you must use one of the five standard names: `num_lock`, `caps_lock`, `scroll_lock`, `compose`, or `kana`.
+
+Each LED must have one end connected to a pin on the MCU, and the other end connected to either Vcc or ground.  You specify the pin by following the key `pin:` with the pin identifier.  If the other end of the diode is connected to ground, you would specify this by adding `flow:source` to your LED definition.  Otherwise, if it is connected to Vcc, you would add `flow:sink`.  ('source' means that the MCU is providing the voltage _source_ to drive the LED, while 'sink' means that the MCU is providing the LED's ground).
+
+##### Ghost key blocking
+
 The final item in the matrix section is a simple on/off switch.
 
     BlockGhostKeys: yes or no
@@ -162,10 +184,6 @@ Otherwise, if your keyboard has mechanical keyswitches, most likely you want thi
 
 
 <span style="color:red">**NOTE: the following process has changed and will soon be updated**</span>
-
-### Board/LEDs.h
-
-Coming soon.
 
 ### Board/Identifiers.h
 
