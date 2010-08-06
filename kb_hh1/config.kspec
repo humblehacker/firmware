@@ -192,6 +192,9 @@ KeyMap:Fn2 base:Common
              Map:1_and_! <shift>
              Map:=_and_+
 
+  Key:2C   Map:,_and_\< <shift>           tr:"<"
+  Key:2E   Map:._and_\> <shift>           tr:">"
+
   Key:3C   Map:9_and_( <shift>            tr:"("
   Key:3E   Map:0_and_) <shift>            tr:")"
 
