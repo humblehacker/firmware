@@ -342,6 +342,7 @@ REMOVEDIR = rm -rf
 COPY = cp
 WINSHELL = cmd
 TEMPLATE_DIR = ../templates
+KSPEC = ../kspec
 
 # Define Messages
 # English
@@ -411,8 +412,14 @@ $(OBJDIR)/$(GENERATED)/binding.c : $(TEMPLATE_FILES)
 
 #$(TEMPLATE_FILES) : generate
 
-$(OBJDIR)/.generate: config.kspec $(TEMPLATE_FILES) 
-	kspec config.kspec -g -o $(OBJDIR)/$(GENERATED) -t $(TEMPLATE_DIR)
+$(KSPEC) :
+	@echo \'kspec\' binary not found.  Get one from http://github.com/humblehacker/kspec/downloads.
+	@echo See the readme at http://github.com/humblehacker/keyboard/tree/master/firmware/ 
+	@echo for more information.
+	@exit 1
+
+$(OBJDIR)/.generate: config.kspec $(TEMPLATE_FILES) $(KSPEC)
+	$(KSPEC) config.kspec -g -o $(OBJDIR)/$(GENERATED) -t $(TEMPLATE_DIR)
 	touch $@
 
 # Change the build target to build a HEX file or a library.
