@@ -74,8 +74,7 @@
 <% end %>
         };
 
-<% print(#kb.leds)
-for i=1,4 do
+<% for i=1,4 do
      if kb.leds[i] ~= nil then %>
         #define LEDS_LED<%=i%> LED_<%=string.upper(kb.leds[i].name)%>
 <%   end
@@ -126,7 +125,6 @@ for i=1,4 do
 			static inline void LEDs_TurnOffLEDs(const uint8_t LEDMask)
 			{
 <% for i,led in ipairs(kb.leds) do
-      print(led.flow)
       port = "PORT" .. string.upper(string.sub(led.pin,2,2))
       pin  = string.sub(led.pin,3,3)
       name = 'LED_' .. string.upper(led.name) %>
