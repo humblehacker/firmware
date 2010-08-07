@@ -21,7 +21,9 @@
 
 */
 
+#include <string.h>
 #include "binding.h"
+#include "keymaps.h"
 
 /*
  *   PreMods

@@ -120,6 +120,7 @@ SRC =   $(SRCDIR)/Keyboard.c         \
 	$(SRCDIR)/blocked_keys.c     \
 	$(SRCDIR)/hhstdio.c          \
 	$(GENERATED)/keymaps.c       \
+	$(GENERATED)/binding.c       \
 	$(LUFA_SRC)
 else
 SRC =   $(SRCDIR)/Keyboard.c         \

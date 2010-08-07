@@ -28,7 +28,7 @@
 #include "Keyboard.h"
 #include "keyboard_class.h"
 #include "keymaps.h"
-#include "binding.c"
+#include "binding.h"
 #include "active_keys.h"
 #include "report_queue.h"
 #include "blocked_keys.h"
