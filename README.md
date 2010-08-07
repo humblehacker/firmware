@@ -37,28 +37,21 @@ Although there are [tarballs and zipfiles][hh_downloads] available, it's best to
 
 The source code can be found [here][hh_source].  To get it, from the command-line, execute:
 
-    git clone git://github.com/humblehacker/keyboard.git
+    git clone git://github.com/humblehacker/firmware.git
         
-This will place the source code in a directory called `keyboard` in your current directory.
+This will place the source code in a directory called `firmware` in your current directory.
 
-[hh_downloads]:http://github.com/humblehacker/keyboard/downloads
-[hh_source]:http://github.com/humblehacker/keyboard
+[hh_downloads]:http://github.com/humblehacker/firmware/downloads
+[hh_source]:http://github.com/humblehacker/firmware
 [github]:http://github.com
 [git_install]:http://help.github.com/git-installation-redirect
 [git]:http://git-scm.com/
 
 ### kspec code generator
 
-There are pre-built versions for each of the major platforms.  Go to the [downloads] page on github and grab the latest version for your platform.  Once you've downloaded it, extract the archive and place the resulting binary in the `firmware` subdirectory of the `keyboard` repository directory.  For example, if you checked out the source code into:
+There are pre-built versions for each of the major platforms.  Go to the [downloads] page on github and grab the latest version for your platform.  Once you've downloaded it, extract the archive and place the resulting binary in the `firmware` repository directory.  
 
-    ~/src/keyboard
-
-then you would copy the kspec binary into:
-
-    ~/src/keyboard/firmware
-
-
-[downloads]:http://github.com/humblehacker/keyboard/downloads
+[downloads]:http://github.com/humblehacker/firmware/downloads
 
 
 Building the firmware
@@ -74,11 +67,11 @@ Now that everything is in place, you can build and install the firmware.  Broadl
 
 Instantiate project directory
 -----------------------------
-Navigate to `keyboard/firmware`.  In this directory, you'll find a directory `kb_reference`.  This is your starting point for building a firmware specific to your keyboard/controller combo.  You need to duplicate this directory, naming it whatever you desire.  It's a good idea to keep the `kb_` prefix. In this example, I'll use `kb_example`.
+In this `firmware` directory, you'll find a sub-directory called `kb_reference`.  This is your starting point for building a firmware specific to your keyboard/controller combo.  You need to duplicate this directory, naming it whatever you desire.  It's a good idea to keep the `kb_` prefix. In this example, I'll use `kb_example`.
 
 Test build
 ----------
-To ensure that your build environment is set up correctly, and all dependencies have been satisfied, it's a good idea to try to build the firmware prior to making any code modifications.  From the command-line, navigate to `keyboard/firmware/kb_example` and type `make`.  At this point you should have a successful build.  If not, review the above instructions to make sure you haven't missed anything.  If you're still having problems, contact me and we'll work them out.
+To ensure that your build environment is set up correctly, and all dependencies have been satisfied, it's a good idea to try to build the firmware prior to making any code modifications.  From the command-line, navigate to `firmware/kb_example` and type `make`.  At this point you should have a successful build.  If not, review the above instructions to make sure you haven't missed anything.  If you're still having problems, contact me and we'll work them out.
 
 Modify sources
 --------------
@@ -181,13 +174,6 @@ Otherwise, if your keyboard has mechanical keyswitches, most likely you want thi
     BlockGhostKeys:no
 
 [Keyboard Matrix Help]:http://www.dribin.org/dave/keyboard/one_html/
-
-
-<span style="color:red">**NOTE: the following process has changed and will soon be updated**</span>
-
-### Board/Identifiers.h
-
-Coming soon.
 
 Matrix Discovery Mode
 =====================
