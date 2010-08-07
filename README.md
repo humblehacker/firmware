@@ -6,7 +6,7 @@ Things you'll need
 ------------------
 * an Atmel AT90USB based controller board
 * avr-gcc 4
-* HumbleHacker firmware source code
+* humble hacker firmware source code
 * kspec code generator
 
 
@@ -31,7 +31,7 @@ There are avr-gcc packages for the big three platforms.  Installation instructio
 [winavr]:http://winavr.sourceforge.net/
 [crosspack]:http://www.obdev.at/products/crosspack/index.html
 
-### HumbleHacker source code
+### humble hacker source code
 
 Although there are [tarballs and zipfiles][hh_downloads] available, it's best to just install and use [git].  That way you can easily update the source when bugs are fixed and features added.  [GitHub] has good [git installation instructions][git_install] for each platform.
 
@@ -59,22 +59,35 @@ Building the firmware
 
 Now that everything is in place, you can build and install the firmware.  Broadly speaking, we'll be performing the following steps:
 
-- create your keyboard/controller specific project directory
-- test build
-- modify sources and makefile for your keyboard/controller
-- test build and program
-- modify layout files as desired
+1. create your keyboard/controller specific project directory
+2. test build
+3. modify sources and makefile for your keyboard/controller
+4. test build and program
+5. modify layout files as desired
 
-Instantiate project directory
------------------------------
+1. Instantiate project directory
+--------------------------------
 In this `firmware` directory, you'll find a sub-directory called `kb_reference`.  This is your starting point for building a firmware specific to your keyboard/controller combo.  You need to duplicate this directory, naming it whatever you desire.  It's a good idea to keep the `kb_` prefix. In this example, I'll use `kb_example`.
 
-Test build
-----------
-To ensure that your build environment is set up correctly, and all dependencies have been satisfied, it's a good idea to try to build the firmware prior to making any code modifications.  From the command-line, navigate to `firmware/kb_example` and type `make`.  At this point you should have a successful build.  If not, review the above instructions to make sure you haven't missed anything.  If you're still having problems, contact me and we'll work them out.
+2. Test build
+-------------
+To ensure that your build environment is set up correctly, and all dependencies have been satisfied, it's a good idea to try to build the firmware prior to making any code modifications.  From the command-line, navigate to `firmware/kb_example` and type `make`.  At this point you should have a successful build.  The end of a succesful build will look something like the following:
 
-Modify sources
---------------
+    Size before:
+    AVR Memory Usage
+    ----------------
+    Device: at90usb1287
+    
+    Program:    9794 bytes (7.5% Full)
+    (.text + .data + .bootloader)
+    
+    Data:       1261 bytes (15.4% Full)
+    (.data + .bss + .noinit)
+
+If you don't see this, review the above instructions to make sure you haven't missed anything.  If you're still having problems, contact me and we'll work them out.
+
+3. Modify sources
+-----------------
 There are a few things you'll need to change before you can program your controller with this firmware.  All of the following files/paths are relative to the `kb_example` directory.
 
 - makefile
@@ -175,12 +188,28 @@ Otherwise, if your keyboard has mechanical keyswitches, most likely you want thi
 
 [Keyboard Matrix Help]:http://www.dribin.org/dave/keyboard/one_html/
 
+4. test build and program
+-------------------------
+
+Now that you've made all of the necessary modifications to your makefile and config.kspec, you're ready to build the first firmware customized for your keyboard.  Once again, from the `firmware/kb_example` directory, type `make`.  Hopefully you'll have a successful build.  If not, review the above instructions, and contact me if you can't get it to work.
+
+If you've got a successful build, great!  Now we should try to load the firmware onto your controller board.  There are quite a few different ways to accomplish this, and it's beyond the scope of these instructions to detail all of them, so I'll mention just a few.
+
+### Teensy Loader
+
+### AT90USBKey DFU
+
+5. modify layout files as desired
+---------------------------------
+
+Coming soon.  Really.  If you get here before I do, contact me.
+
 Matrix Discovery Mode
 =====================
 
 This is a special firmware mode that can help you to determine the 
 keyboard matrix for a keyboard that is not yet supported by the 
-HumbleHacker firmware.  Basically, you wire all the leads on your 
+humble hacker firmware.  Basically, you wire all the leads on your 
 keyboards connector to pins on your controller board, then build and 
 install the specially modified firmware.  Once the firmware is loaded,
 the keyboard will interactively walk you through discovering the matrix.
