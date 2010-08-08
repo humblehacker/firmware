@@ -1,6 +1,13 @@
 Getting Started
 ===============
 
+If you get stuck, find anything wrong with these instructions, or have suggestions for improvement, please don't hesitate to contact me:
+
+david AT humblehacker DOT com
+
+Or, you can open a ticket at [lighthouse].
+
+[lighthouse](http://humblehacker.lighthouseapp.com/projects/57658-firmware/tickets)
 
 Things you'll need
 ------------------
@@ -8,7 +15,6 @@ Things you'll need
 * avr-gcc 4
 * humble hacker firmware source code
 * kspec code generator
-
 
 ### Controller board
 
