@@ -7,7 +7,7 @@ david AT humblehacker DOT com
 
 Or, you can open a ticket at [lighthouse].
 
-[lighthouse](http://humblehacker.lighthouseapp.com/projects/57658-firmware/tickets)
+[lighthouse]:http://humblehacker.lighthouseapp.com/projects/57658-firmware/tickets
 
 Things you'll need
 ------------------
