@@ -53,10 +53,9 @@ static void    init_active_keys(void);
 static void    update_bindings(KeyboardReport *report);
 static bool    momentary_mode_engaged(void);
 static bool    modifier_keys_engaged(KeyboardReport *report);
-static void    maybe_toggle_mode(void);
 static void    process_keys(KeyboardReport *report);
 static bool    modifiers_would_change(const PreMods *premods, uint8_t current_mods, uint8_t target_mods);
-static uint8_t fill_report(USB_KeyboardReport_Data_t *report);
+static uint8_t fill_report(KeyboardReport *report, USB_KeyboardReport_Data_t *report_data);
 static void    toggle_map(KeyMap mode_map);
 static void    stdout_to_report_queue(void);
 
@@ -104,30 +103,31 @@ Keyboard__key_is_down()
 }
 
 uint8_t
-Keyboard__get_report(USB_KeyboardReport_Data_t *report)
+Keyboard__get_report(USB_KeyboardReport_Data_t *report_data)
 {
   reset();
 
   if (!stdout_is_empty())
     stdout_to_report_queue();
 
+  KeyboardReport *report = NULL;
+
   if (ReportQueue__is_empty())
   {
     scan_matrix();
     init_active_keys();
 
-    if (!kb.error_roll_over)
+    if (!kb.error_roll_over && (report = ReportQueue__push()))
     {
-      KeyboardReport *report = ReportQueue__push();
       do
         update_bindings(report);
       while (momentary_mode_engaged() || modifier_keys_engaged(report));
-      maybe_toggle_mode();
       process_keys(report);
     }
   }
 
-  return fill_report(report);
+  report = ReportQueue__pop();
+  return fill_report(report, report_data);
 }
 
 void
@@ -276,26 +276,6 @@ modifier_keys_engaged(KeyboardReport *report)
   return active_modifiers != NONE;
 }
 
-void
-maybe_toggle_mode(void)
-{
-  for (BoundKey* key = ActiveKeys__first(&kb.active_keys);
-       key;      key = ActiveKeys__next(&kb.active_keys))
-  {
-    if (key->binding.kind == MODE)
-    {
-      const ModeTarget *target = KeyBinding__get_mode_target(&key->binding);
-      if (target->type == TOGGLE)
-      {
-        toggle_map(target->mode_map);
-        BoundKey__deactivate(key);
-        BlockedKeys__block_key(key->cell);
-        return;
-      }
-    }
-  }
-}
-
 bool
 modifiers_would_change(const PreMods *premods, uint8_t current_mods, uint8_t target_mods)
 {
@@ -395,7 +375,6 @@ process_keys(KeyboardReport *report)
         {
           const MacroTarget *macro = KeyBinding__get_macro_target(&key->binding);
           BlockedKeys__block_key(key->cell);
-          ReportQueue__pop();  // current report no longer needed.
 
           for (int i = 0; i < macro->length; ++i)
           {
@@ -415,6 +394,17 @@ process_keys(KeyboardReport *report)
           }
           break;
         }
+      case MODE:
+        {
+          const ModeTarget *target = KeyBinding__get_mode_target(&key->binding);
+          if (target->type == TOGGLE)
+          {
+            toggle_map(target->mode_map);
+            BoundKey__deactivate(key);
+            BlockedKeys__block_key(key->cell);
+          }
+        }
+        break;
       default:
         break;
       }
@@ -423,11 +413,10 @@ process_keys(KeyboardReport *report)
 }
 
 uint8_t
-fill_report(USB_KeyboardReport_Data_t *dest_report)
+fill_report(KeyboardReport *report, USB_KeyboardReport_Data_t *dest_report)
 {
   memset(dest_report, 0, sizeof(*dest_report));
 
-  KeyboardReport *report = ReportQueue__pop();
   if (report)
   {
     if (!kb.error_roll_over)
