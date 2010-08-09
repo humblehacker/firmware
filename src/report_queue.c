@@ -25,12 +25,13 @@
 #include <stdlib.h>
 #include "report_queue.h"
 
+#define QUEUE_SIZE 100
+
 static struct ReportQueue
 {
   uint8_t   front;
   uint8_t   count;
-  RQ_elem_t data[100];
-  uint8_t   data_size;
+  RQ_elem_t data[QUEUE_SIZE];
 } self;
 
 void
@@ -38,7 +39,6 @@ ReportQueue__init()
 {
   self.front     = 0;
   self.count     = 0;
-  self.data_size = sizeof(self.data)/sizeof(self.data[0]);
 }
 
 RQ_elem_t *
@@ -47,7 +47,7 @@ ReportQueue__push()
   if (ReportQueue__is_full())
     return NULL;
 
-  uint8_t index = self.front + self.count % self.data_size;
+  uint8_t index = (self.front + self.count) % QUEUE_SIZE;
   self.count++;
 
   KeyboardReport__init(&self.data[index]);
@@ -61,12 +61,12 @@ ReportQueue__pop()
     return NULL;
 
   RQ_elem_t *result = &self.data[self.front];
-  self.front = (self.front + 1) % self.data_size;
+  self.front = (self.front + 1) % QUEUE_SIZE;
   self.count--;
   return result;
 }
 
-RQ_elem_t  *
+RQ_elem_t *
 ReportQueue__peek()
 {
   if (ReportQueue__is_empty())
@@ -78,18 +78,18 @@ ReportQueue__peek()
 bool
 ReportQueue__is_empty()
 {
-  return self.count <= 0;
+  return self.count == 0;
 }
 
 uint8_t
 ReportQueue__freespace()
 {
-  return self.data_size - self.count;
+  return QUEUE_SIZE - self.count;
 }
 
 bool
 ReportQueue__is_full()
 {
-  return self.count >= self.data_size;
+  return self.count == QUEUE_SIZE;
 }
 
