@@ -1,0 +1,56 @@
+[TOP](../README.md) [PREV](start.md) [NEXT](building_firmware/start.md)
+
+Things you'll need
+==================
+
+* an Atmel AT90USB based controller board
+* avr-gcc 4
+* humble hacker firmware source code
+* kspec code generator
+
+Controller board
+----------------
+
+You can use Atmel's [AT90USBKey][usbkey] demo board, but a better choice may be PJRC's [Teensy++][teensy].
+
+[usbkey]:http://www.atmel.com/dyn/products/tools_card.asp?tool_id=3879
+[teensy]:http://www.pjrc.com/teensy/
+
+Alternately, you can design and build your own AT90USB-based controller board.  Any of AT901286/7 or AT90646/7 MCUs will work.
+
+
+AVR-GCC
+-------
+
+There are avr-gcc packages for the big three platforms.  Installation instructions can be found on each site.
+
+- Windows: [WinAVR][winavr]
+- Mac OSX: [AVR CrossPack][crosspack]
+- Linux:   depends on the distribution.  For example, on Ubuntu execute: `sudo apt-get install gcc-avr avr-libc`
+
+[winavr]:http://winavr.sourceforge.net/
+[crosspack]:http://www.obdev.at/products/crosspack/index.html
+
+humble hacker source code
+-------------------------
+
+Although there are [tarballs and zipfiles][hh_downloads] available, it's best to just install and use [git].  That way you can easily update the source when bugs are fixed and features added.  [GitHub] has good [git installation instructions][git_install] for each platform.
+
+The source code can be found [here][hh_source].  To get it, from the command-line, execute:
+
+    git clone git://github.com/humblehacker/firmware.git
+        
+This will place the source code in a directory called `firmware` in your current directory.
+
+[hh_downloads]:http://github.com/humblehacker/firmware/downloads
+[hh_source]:http://github.com/humblehacker/firmware
+[github]:http://github.com
+[git_install]:http://help.github.com/git-installation-redirect
+[git]:http://git-scm.com/
+
+kspec code generator
+--------------------
+
+There are pre-built versions for each of the major platforms.  Go to the [downloads] page on github and grab the latest version for your platform.  Once you've downloaded it, extract the archive and place the resulting binary in the `firmware` repository directory.  
+
+[downloads]:http://github.com/humblehacker/firmware/downloads
