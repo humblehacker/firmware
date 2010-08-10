@@ -1,0 +1,42 @@
+/*
+                    The HumbleHacker Keyboard Project
+                 Copyright © 2008-2010, David Whetstone
+               david DOT whetstone AT humblehacker DOT com
+
+  This file is a part of The HumbleHacker Keyboard Project.
+
+  The HumbleHacker Keyboard Project is free software: you can redistribute
+  it and/or modify it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  The HumbleHacker Keyboard Project is distributed in the hope that it will
+  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+  Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with The HumbleHacker Keyboard Project.  If not, see
+  <http://www.gnu.org/licenses/>.
+
+*/
+
+Matrix:
+/*            0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17 */
+/* 0 */ Row: --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --
+/* 1 */ Row: --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --
+/* 2 */ Row: --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --
+/* 3 */ Row: --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --
+/* 4 */ Row: --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --
+/* 5 */ Row: --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --
+/* 6 */ Row: --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --
+/* 7 */ Row: --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --, --
+
+/*      0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17 */
+  Cols:PE0 PE1 PC0 PC1 PC2 PC3 PC4 PC5 PC6 PC7 PD0 PD1 PD2 PD3 PD4 PD5 PD6 PD7
+
+/*      0   1   2   3   4   5   6   7  */
+  Rows:PA0 PA1 PA2 PA3 PA4 PA5 PA6 PA7
+
+  BlockGhostKeys:yes
+

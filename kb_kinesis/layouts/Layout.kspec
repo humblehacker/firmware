@@ -1,0 +1,145 @@
+/*
+                    The HumbleHacker Keyboard Project
+                 Copyright © 2008-2010, David Whetstone
+               david DOT whetstone AT humblehacker DOT com
+
+  This file is a part of The HumbleHacker Keyboard Project.
+
+  The HumbleHacker Keyboard Project is free software: you can redistribute
+  it and/or modify it under the terms of the GNU General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  The HumbleHacker Keyboard Project is distributed in the hope that it will
+  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+  Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with The HumbleHacker Keyboard Project.  If not, see
+  <http://www.gnu.org/licenses/>.
+
+*/
+
+Layout:USB-2030-B rev:$Rev: 175 $ spacing:.1
+
+   // Row 1
+   Row:0.0
+           KeyDef:t11 height:1.25 width:2.0 background:Grey
+           KeyDef:t12 height:1.25 width:1.8 background:Grey
+           KeyDef:t13 height:1.25 width:1.8 background:Grey
+           KeyDef:t14 height:1.25 width:1.8 background:Grey
+           KeyDef:t15 height:1.25 width:1.8 background:Grey
+           KeyDef:t16 height:1.25 width:1.8 background:Grey
+           KeyDef:t17 height:1.8  width:2.0 background:Red
+           KeyDef:t18 height:1.25 width:1.8 background:Grey
+           KeyDef:t19 height:1.25 width:1.8 background:Grey
+           KeyDef:t1a height:1.25 width:1.8 background:Grey
+           KeyDef:t1b height:1.25 width:1.8 background:Grey
+           KeyDef:t1c height:1.25 width:1.8 background:Grey
+           KeyDef:t1d height:1.25 width:1.8 background:Grey
+           KeyDef:t1e height:1.25 width:2.0 background:Grey
+           KeyDef:t1f height:1.25 width:1.8 background:Grey
+
+   // Row 2
+        Row:1.25
+           KeyDef:t21 height:1.8  width:2.0
+           KeyDef:t22 height:1.8  width:1.8
+           KeyDef:t23 height:1.8  width:1.8
+           KeyDef:t24 height:1.8  width:1.8
+           KeyDef:t25 height:1.8  width:1.8
+           KeyDef:t26 height:1.8  width:1.8
+           KeyDef:t27 height:3.15 width:2.0 offsetY:0.55  background:Grey
+           KeyDef:t28 height:1.8  width:1.8
+           KeyDef:t29 height:1.8  width:1.8
+           KeyDef:t2a height:1.8  width:1.8
+           KeyDef:t2b height:1.8  width:1.8
+           KeyDef:t2c height:1.8  width:1.8
+           KeyDef:t2d height:1.8  width:1.8
+           KeyDef:t2e height:1.8  width:2.0
+           KeyDef:t2f height:1.8  width:1.8
+
+   // Row 3
+        Row:1.8
+           KeyDef:t31 height:1.8  width:2.0
+           KeyDef:t32 height:1.8  width:1.8
+           KeyDef:t33 height:1.8  width:1.8
+           KeyDef:t34 height:1.8  width:1.8
+           KeyDef:t35 height:1.8  width:1.8
+           KeyDef:t36 height:1.8  width:1.8
+           NilKey:t37 height:1.8  width:2.0
+           KeyDef:t38 height:1.8  width:1.8
+           KeyDef:t39 height:1.8  width:1.8
+           KeyDef:t3a height:1.8  width:1.8
+           KeyDef:t3b height:1.8  width:1.8  //  background:Grey
+           KeyDef:t3c height:1.8  width:1.8  //  background:Grey
+           KeyDef:t3d height:1.8  width:1.8  //  background:Grey
+           KeyDef:t3e height:1.8  width:2.0  //  background:Grey
+           KeyDef:t3f height:1.8  width:1.8
+
+   // Row 4
+        Row:1.8
+           KeyDef:t41 height:3.7  width:2.0
+           KeyDef:t42 height:1.8  width:1.8
+           KeyDef:t43 height:1.8  width:1.8
+           KeyDef:t44 height:1.8  width:1.8
+           KeyDef:t45 height:1.8  width:1.8  bump
+           KeyDef:t46 height:1.8  width:1.8
+           KeyDef:t47 height:3.7  width:2.0  background:Grey
+           KeyDef:t48 height:1.8  width:1.8
+           KeyDef:t49 height:1.8  width:1.8  bump
+           KeyDef:t4a height:1.8  width:1.8
+           KeyDef:t4b height:1.8  width:1.8  //  background:Grey
+           KeyDef:t4c height:1.8  width:1.8  //  background:Grey
+           KeyDef:t4d height:1.8  width:1.8  //  background:Grey
+           KeyDef:t4e height:3.7  width:2.0  //  background:Grey
+           KeyDef:t4f height:1.8  width:1.8
+
+   // Row 5
+        Row:1.8
+           NilKey:t51 height:1.8  width:2.0
+           KeyDef:t52 height:1.8  width:1.8
+           KeyDef:t53 height:1.8  width:1.8
+           KeyDef:t54 height:1.8  width:1.8
+           KeyDef:t55 height:1.8  width:1.8
+           KeyDef:t56 height:1.8  width:1.8
+           NilKey:t57 height:1.8  width:2.0
+           KeyDef:t58 height:1.8  width:1.8
+           KeyDef:t59 height:1.8  width:1.8
+           KeyDef:t5a height:1.8  width:1.8
+           KeyDef:t5b height:1.8  width:1.8       //  background:Grey
+           KeyDef:t5c height:1.8  width:1.8  bump //  background:Grey
+           KeyDef:t5d height:1.8  width:1.8       //  background:Grey
+           NilKey:t5e height:1.8  width:2.0
+           KeyDef:t5f height:1.8  width:1.8  bump
+
+   // Row 6
+        Row:1.8
+        KeyDef:t61 height:1.8  width:2.0  bump
+        KeyDef:t62 height:1.8  width:1.8
+        KeyDef:t63 height:1.8  width:1.8
+        KeyDef:t64 height:1.8  width:1.8  bump
+        KeyDef:t65 height:2.5  width:9.6
+        KeyDef:t6a height:1.8  width:1.8
+        KeyDef:t6b height:1.8  width:1.8  //  background:Grey
+        KeyDef:t6c height:1.8  width:1.8  background:Grey
+        KeyDef:t6d height:1.8  width:1.8  //  background:Grey
+        KeyDef:t6e height:3.7  width:2.0  //  background:Grey
+        KeyDef:t6f height:1.8  width:1.8
+
+   // Row 7
+        Row:1.8
+           KeyDef:t71 height:1.8  width:2.0
+           KeyDef:t72 height:1.8  width:2.75
+           KeyDef:t73 height:1.8  width:2.75
+           NilKey:t74 height:1.8  width:9.6
+           KeyDef:t7a height:1.8  width:1.8
+           KeyDef:t7b height:1.8  width:1.8  background:Grey
+           KeyDef:t7c height:1.8  width:1.8  background:Grey  bump
+           KeyDef:t7d height:1.8  width:1.8  background:Grey
+           NilKey:t7e height:1.8  width:2.0
+           KeyDef:t7f height:1.8  width:1.8
+
+
+
+
