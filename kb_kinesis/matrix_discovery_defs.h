@@ -6,23 +6,23 @@
 #endif
 
 // PORT A
-  #define USE_PINA0 1
-  #define USE_PINA1 1
-  #define USE_PINA2 1
-  #define USE_PINA3 1
-  #define USE_PINA4 1
-  #define USE_PINA5 1
-  #define USE_PINA6 1
-  #define USE_PINA7 1
+//#define USE_PINA0 1
+//#define USE_PINA1 1
+//#define USE_PINA2 1
+//#define USE_PINA3 1
+//#define USE_PINA4 1
+//#define USE_PINA5 1
+//#define USE_PINA6 1
+//#define USE_PINA7 1
 
 // PORT B
-//#define USE_PINB0 1
-//#define USE_PINB1 1
-//#define USE_PINB2 1
-//#define USE_PINB3 1
-//#define USE_PINB4 1
-//#define USE_PINB5 1
-//#define USE_PINB6 1
+  #define USE_PINB0 1
+  #define USE_PINB1 1
+  #define USE_PINB2 1
+  #define USE_PINB3 1
+  #define USE_PINB4 1
+  #define USE_PINB5 1
+  #define USE_PINB6 1
 //#define USE_PINB7 1
 
 // PORT C
@@ -33,7 +33,7 @@
   #define USE_PINC4 1
   #define USE_PINC5 1
   #define USE_PINC6 1
-  #define USE_PINC7 1
+//#define USE_PINC7 1
 
 // PORT D
   #define USE_PIND0 1
@@ -46,8 +46,8 @@
   #define USE_PIND7 1
 
 // PORT E
-  #define USE_PINE0 1
-  #define USE_PINE1 1
+//#define USE_PINE0 1
+//#define USE_PINE1 1
 //#define USE_PINE2 1
 //#define USE_PINE3 1
 //#define USE_PINE4 1
