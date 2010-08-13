@@ -57,7 +57,7 @@ hid_putc(char c, FILE *stream)
   if (stdout_is_full())
     return -1;
 
-  uint8_t index = front + count % OUTPUT_BUFSIZE;
+  uint8_t index = (front + count) % OUTPUT_BUFSIZE;
   count++;
   output_buffer[index] = c;
   return 0;

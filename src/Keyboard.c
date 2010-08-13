@@ -90,14 +90,20 @@ int main(void)
 
   LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
   sei();
+  LEDs_TurnOffLEDs(LEDS_ALL_LEDS);
 
+#ifdef MATRIX_DISCOVERY_MODE
+  for (;;)
+  {
+    HID_Device_USBTask(&Keyboard_HID_Interface);
+    MatrixDiscovery__scan_matrix();
+    USB_USBTask();
+  }
+#else
   for (;;)
   {
     if (USB_DeviceState != DEVICE_STATE_Suspended)
     {
-#ifdef MATRIX_DISCOVERY_MODE
-      MatrixDiscovery__scan_matrix();
-#endif
       HID_Device_USBTask(&Keyboard_HID_Interface);
     }
     else if (USB_RemoteWakeupEnabled && Keyboard__key_is_down())
@@ -107,6 +113,7 @@ int main(void)
     }
     USB_USBTask();
   }
+#endif
 }
 
 /** Configures the board hardware and chip peripherals for the demo's functionality. */
