@@ -39,10 +39,10 @@ Matrix:
   /*       0   1   2   3   4   5   6   7  */
   RowPins:PB0 PB1 PB2 PB3 PB4 PB5 PB6 PB7
 
-  LED:num_lock    pin:PF0 flow:sink
-  LED:caps_lock   pin:PF1 flow:sink
-  LED:scroll_lock pin:PF2 flow:sink
-  LED:dv          pin:PF3 flow:sink
+  LED:keypad      pin:PF0 flow:sink
+  LED:scroll_lock pin:PF1 flow:sink
+  LED:num_lock    pin:PF2 flow:sink
+  LED:caps_lock   pin:PF3 flow:sink
 
   BlockGhostKeys:no
 
