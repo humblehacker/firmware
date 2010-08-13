@@ -69,6 +69,7 @@ KeyMap:Common
   Key:PRT Map:PrintScreen                                tl:"Print Screen"
   Key:SLK Map:Scroll_Lock                                tl:"Scroll Lock"
   Key:PAU Map:Keyboard_Pause                             tl:"Pause"
+  Key:PRG Mode:Fn type:toggle
 
   /* Left Thumb */
   Key:SL6 Map:Left_Control                               tl:"Ctrl"
@@ -155,71 +156,59 @@ KeyMap:US  base:Common default
   Key:SLA Map:/_and_?                                    tl:"?"    bl:"/"
   Key:BSL Map:\\_and_\|                                  tl:"|"    bl:"\\"
 
-//KeyMap:DV  base:US
-//
-//  Key:2L   Map:[_and_{                                   tl:"{"  bl:"["
-//  Key:2M   Map:]_and_}                                   tl:"}"  bl:"]"
-//
-//  Key:3B   Map:squote_and_dquote                         tl:"\"" bl:"\'"
-//  Key:3C   Map:,_and_\<                                  tl:"<"  bl:","
-//  Key:3D   Map:._and_\>                                  tl:">"  bl:"."
-//  Key:3E   Map:p_and_P                                   tl:"P"
-//  Key:3F   Map:y_and_Y                                   tl:"Y"
-//  Key:3G   Map:f_and_F                                   tl:"F"
-//  Key:3H   Map:g_and_G                                   tl:"G"
-//  Key:3I   Map:c_and_C                                   tl:"C"
-//  Key:3J   Map:r_and_R                                   tl:"R"
-//  Key:3K   Map:l_and_L                                   tl:"L"
-//  Key:3L   Map:/_and_?                                   tl:"?"  bl:"/"
-//  Key:3M   Map:=_and_+                                   tl:"+"  bl:"="
-//
-//  Key:4C   Map:o_and_O                                   tl:"O"
-//  Key:4D   Map:e_and_E                                   tl:"E"
-//  Key:4E   Map:u_and_U                                   tl:"U"
-//  Key:4F   Map:i_and_I                                   tl:"I"
-//  Key:4G   Map:d_and_D                                   tl:"D"
-//  Key:4H   Map:h_and_H                                   tl:"H"
-//  Key:4I   Map:t_and_T                                   tl:"T"
-//  Key:4J   Map:n_and_N                                   tl:"N"
-//  Key:4K   Map:s_and_S                                   tl:"S"
-//  Key:4L   Map:-_and_Underscore                          tl:"__"  bl:"-"
-//
-//  Key:5B   Map:;_and_\:                                  tl:":"   bl:";"
-//  Key:5C   Map:q_and_Q                                   tl:"Q"
-//  Key:5D   Map:j_and_J                                   tl:"J"
-//  Key:5E   Map:k_and_K                                   tl:"K"
-//  Key:5F   Map:x_and_X                                   tl:"X"
-//  Key:5G   Map:b_and_B                                   tl:"B"
-//  Key:5H   Map:w_and_W                                   tl:"W"
-//  Key:5J   Map:v_and_V                                   tl:"V"
-//  Key:5K   Map:z_and_Z                                   tl:"Z"
-//
-//KeyMap:Fn base:Nm
-//
-//  Key:1A Macro:
-//      Map:h_and_H <shift>
-//      Map:u_and_U
-//      Map:m_and_M
-//      Map:b_and_B
-//      Map:l_and_L
-//      Map:e_and_E
-//      Map:h_and_H <shift>
-//      Map:a_and_A
-//      Map:c_and_C
-//      Map:k_and_K
-//      Map:e_and_E
-//      Map:d_and_D
-//      Map:1_and_! <shift>
-//      Map:Return_or_Enter
-//  Key:1B Mode:US             type:toggle              tl:"US"
-//  Key:1C Mode:DV  led:Dvorak type:toggle              tl:"Dvorak"
-//  Key:1D Mode:pDV led:Dvorak type:toggle              tl:"P. Dvorak"
-//
-//  Key:5B Map:NonUS_\\_and_\|                          tl:"<"
-//  Key:5C Map:NonUS_\\_and_\| <shift>                  tl:">"
-//  Key:5D Map:NonUS_\\_and_\| <right_alt>              tl:"¦"
-//  Key:5E Map:NonUS_\\_and_\| <right_alt|shift>        tl:"_"
-//
+  KeyMap:DV  base:US
+
+    Key:Q    Map:squote_and_dquote                         tl:"\"" bl:"\'"
+    Key:W    Map:,_and_\<                                  tl:"<"  bl:","
+    Key:E    Map:._and_\>                                  tl:">"  bl:"."
+    Key:R    Map:p_and_P                                   tl:"P"
+    Key:T    Map:y_and_Y                                   tl:"Y"
+    Key:Y    Map:f_and_F                                   tl:"F"
+    Key:U    Map:g_and_G                                   tl:"G"
+    Key:I    Map:c_and_C                                   tl:"C"
+    Key:O    Map:r_and_R                                   tl:"R"
+    Key:P    Map:l_and_L                                   tl:"L"
+
+    Key:S    Map:o_and_O                                   tl:"O"
+    Key:D    Map:e_and_E                                   tl:"E"
+    Key:F    Map:u_and_U                                   tl:"U"
+    Key:G    Map:i_and_I                                   tl:"I"
+    Key:H    Map:d_and_D                                   tl:"D"
+    Key:J    Map:h_and_H                                   tl:"H"
+    Key:K    Map:t_and_T                                   tl:"T"
+    Key:L    Map:n_and_N                                   tl:"N"
+    Key:SEM  Map:s_and_S                                   tl:"S"
+
+    Key:Z    Map:;_and_\:                                  tl:":"   bl:";"
+    Key:X    Map:q_and_Q                                   tl:"Q"
+    Key:C    Map:j_and_J                                   tl:"J"
+    Key:V    Map:k_and_K                                   tl:"K"
+    Key:B    Map:x_and_X                                   tl:"X"
+    Key:N    Map:b_and_B                                   tl:"B"
+    Key:COM  Map:w_and_W                                   tl:"W"
+    Key:PER  Map:v_and_V                                   tl:"V"
+    Key:SLA  Map:z_and_Z                                   tl:"Z"
+
+  KeyMap:Fn
+
+    Key:KEY Macro:
+        Map:h_and_H <shift>
+        Map:u_and_U
+        Map:m_and_M
+        Map:b_and_B
+        Map:l_and_L
+        Map:e_and_E
+        Map:h_and_H <shift>
+        Map:a_and_A
+        Map:c_and_C
+        Map:k_and_K
+        Map:e_and_E
+        Map:d_and_D
+        Map:1_and_! <shift>
+        Map:Return_or_Enter
+    Key:F1 Mode:US             type:toggle              tl:"US"
+    Key:F2 Mode:DV  led:Dvorak type:toggle              tl:"Dvorak"
+
 //KeyMap:Nm
 //
 //  Key:1O Mode:Nm led:Num type:toggle                    tl:"Num"
