@@ -24,20 +24,25 @@
 Keyboard:KinesisContoured
 
 Matrix:
-  /*    0   1   2   3   4   5   6   7   8   9  10  11  12  13  14       */
-  Row: EQL  1   2   3   4   5   6   7   8   9   0 MIN ESC  F1  F2  /* 0 */
-  Row: TAB  Q   W   E   R   T   Y   U   I   O   P  --  F3  F4  F5  /* 1 */
-  Row: CAP  A   S   D   F   G   H   J   K   L SEM APO  F6  F7  F8  /* 2 */
-  Row: LSH  Z   X   C   V   B   N   M COM PER SLA RSH  F9  F10 F11 /* 3 */
-  Row: X2  BQ INS LFT  --  RT  UP  -- DWN LBR RBR  X1  F12 PRT SLK /* 4 */
-  Row: --  -- SL1 SL2  -- SL5 SR4 SR3 SR6  --  --  --  PAU PRG KEY /* 5 */
-  Row: --  --  -- SL4 SL3 SL6 SR1  -- SR2 SR5  --  --  --  --  --  /* 6 */
 
-  /*       0   1   2   3   4   5   6   7   8   9   10  11  12  13  14 */
-  ColPins:PD0 PD1 PD2 PD3 PD4 PD5 PD6 PD7 PC0 PC1 PC2 PC3 PC4 PC5 PC6
+  Row: EQL TAB CAP LSH X2  --  --
+  Row: 1   Q   A   Z   BQ  --  --
+  Row: 2   W   S   X   INS SL1 --
+  Row: 3   E   D   C   LFT SL2 SL4
+  Row: 4   R   F   V   --  --  SL3
+  Row: 5   T   G   B   RT  SL5 SL6
+  Row: 6   Y   H   N   UP  SR4 SR1
+  Row: 7   U   J   M   --  SR3 --
+  Row: 8   I   K   COM DWN SR6 SR2
+  Row: 9   O   L   PER LBR --  SR5
+  Row: 0   P   SEM SLA RBR --  --
+  Row: MIN BSL APO RSH X1  --  --
+  Row: ESC F3  F6  F9  F12 PAU --
+  Row: F1  F4  F7  F10 PRT PRG --
+  Row: F2  F5  F8  F11 SLK KEY --
 
-  /*       0   1   2   3   4   5   6   7  */
-  RowPins:PB0 PB1 PB2 PB3 PB4 PB5 PB6 PB7
+  ColPins:PB0 PB1 PB2 PB3 PB4 PB5 PB6 PB7
+  RowPins:PD0 PD1 PD2 PD3 PD4 PD5 PD6 PD7 PC0 PC1 PC2 PC3 PC4 PC5 PC6
 
   LED:keypad      pin:PF0 flow:sink
   LED:scroll_lock pin:PF1 flow:sink
@@ -65,34 +70,38 @@ KeyMap:Common
   Key:SLK Map:Scroll_Lock                                tl:"Scroll Lock"
   Key:PAU Map:Keyboard_Pause                             tl:"Pause"
 
-  Key:SR4 Map:Backspace                                  tl:"Backspace"
-  Key:INS Map:Insert                                     tl:"Insert"
-  Key:SR2 Map:Home                                       tl:"Home"
-  Key:SL2 Map:PageUp                                     tl:"Pg Up"
-
-  Key:TAB Map:Tab                                        tl:"Tab"
-  Key:SR3 Map:Delete_Forward                             tl:"Delete"
-  Key:SR1 Map:End                                        tl:"End"
-  Key:SL1 Map:PageDown                                   tl:"Pg Dn"
-
-  Key:CAP Map:Caps_Lock                                  tl:"CapsLock"
-  Key:SL3 Map:Return_or_Enter                            tl:"Enter"
-
-  Key:LSH Map:Left_Shift                                 tl:"Shift"
-  Key:RSH Map:Right_Shift                                tl:"Shift"
-  Key:UP  Map:UpArrow                                    tl:"{up}"
-
+  /* Left Thumb */
   Key:SL6 Map:Left_Control                               tl:"Ctrl"
   Key:SL5 Map:Left_Alt                                   tl:"Alt"
-  Key:6C  Map:Left_GUI                                   tl:"{win}"
-  Key:SL4 Map:Spacebar
+  Key:SL4 Map:Backspace                                  tl:"Backspace"
+  Key:SL3 Map:Delete_Forward                             tl:"Delete"
+  Key:SL2 Map:Home                                       tl:"Home"
+  Key:SL1 Map:End                                        tl:"End"
+
+  /* Right Thumb */
   Key:SR5 Map:Right_Alt                                  tl:"Alt"
+  Key:SR6 Map:Right_Control                              tl:"Ctrl"
+  Key:SR2 Map:PageUp                                     tl:"Pg Up"
+  Key:SR1 Map:PageDown                                   tl:"Pg Dn"
+  Key:SR3 Map:Return_or_Enter                            tl:"Enter"
+  Key:SR4 Map:Spacebar
+
+  /* Left Hand */
+  Key:TAB Map:Tab                                        tl:"Tab"
+  Key:CAP Map:Caps_Lock                                  tl:"CapsLock"
+  Key:LSH Map:Left_Shift                                 tl:"Shift"
+  Key:INS Map:Insert                                     tl:"Insert"
+  Key:LFT Map:LeftArrow                                  tl:"{left}"
+  Key:RT  Map:RightArrow                                 tl:"{right}"
+
+  /* Right Hand */
+  Key:RSH Map:Right_Shift                                tl:"Shift"
+  Key:UP  Map:UpArrow                                    tl:"{up}"
+  Key:DWN Map:DownArrow                                  tl:"{down}"
+
+  Key:6C  Map:Left_GUI                                   tl:"{win}"
   Key:6K  Map:Right_GUI                                  tl:"{win}"
   Key:6L  Map:Application                                tl:"{menu}"
-  Key:SR6 Map:Right_Control                              tl:"Ctrl"
-  Key:LFT Map:LeftArrow                                  tl:"{left}"
-  Key:DWN Map:DownArrow                                  tl:"{down}"
-  Key:RT  Map:RightArrow                                 tl:"{right}"
 
 KeyMap:US  base:Common default
 
