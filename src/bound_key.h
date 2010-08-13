@@ -28,8 +28,6 @@
 #include <limits.h>
 #include "binding.h"
 
-enum {DEACTIVATED=UCHAR_MAX};
-
 struct BoundKey
 {
   Cell        cell;
@@ -38,7 +36,7 @@ struct BoundKey
 
 typedef struct BoundKey BoundKey;
 
-void BoundKey__set_cell(BoundKey *this, Cell cell);
+void BoundKey__init(BoundKey *this, Cell cell);
 void BoundKey__update_binding(BoundKey *this, Modifier mods, KeyMap keymap);
 void BoundKey__deactivate(BoundKey *this);
 bool BoundKey__is_active(BoundKey *this);

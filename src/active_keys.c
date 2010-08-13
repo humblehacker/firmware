@@ -17,7 +17,7 @@ ActiveKeys__add_cell(ActiveKeys *this, Cell cell)
   if (this->num_keys > MAX_ACTIVE_CELLS)
     return false;
 
-  BoundKey__set_cell(&this->keys[this->num_keys++], cell);
+  BoundKey__init(&this->keys[this->num_keys++], cell);
   return true;
 }
 

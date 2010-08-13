@@ -26,8 +26,8 @@
 
 static struct BlockedKeys
 {
-  enum { BUFSIZE = 8 * NUM_COLS };
-  bool    keys[BUFSIZE];
+  enum { BUFSIZE = NUM_ROWS * NUM_COLS };
+  bool keys[BUFSIZE];
 } self;
 
 
@@ -38,20 +38,20 @@ BlockedKeys__init()
 }
 
 void
-BlockedKeys__block_key(uint8_t cell)
+BlockedKeys__block_key(Cell cell)
 {
-  self.keys[cell] = true;
+  self.keys[cell_to_index(cell)] = true;
 }
 
 void
-BlockedKeys__unblock_key(uint8_t cell)
+BlockedKeys__unblock_key(Cell cell)
 {
-  self.keys[cell] = false;
+  self.keys[cell_to_index(cell)] = false;
 }
 
 bool
-BlockedKeys__is_blocked(uint8_t cell)
+BlockedKeys__is_blocked(Cell cell)
 {
-  return self.keys[cell];
+  return self.keys[cell_to_index(cell)];
 }
 

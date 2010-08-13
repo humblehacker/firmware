@@ -33,8 +33,8 @@
  */
 
 void BlockedKeys__init(void);
-void BlockedKeys__block_key(uint8_t cell);
-void BlockedKeys__unblock_key(uint8_t cell);
-bool BlockedKeys__is_blocked(uint8_t cell);
+void BlockedKeys__block_key(Cell cell);
+void BlockedKeys__unblock_key(Cell cell);
+bool BlockedKeys__is_blocked(Cell cell);
 
 #endif // __BLOCKED_KEYS_H__

@@ -50,9 +50,6 @@ const KeyBindingArray keymap_<%=keymap.name%>[] =
          elseif #key.bindings == 0 then %>{0, NULL} /* EMPTY DEFINITION! */<%
          else %>{<%=#key.bindings%>, &<%=relevant_keymap.name%>_<%=key.location%>[0]}<%
          end %>,<%
-       end
-       for i=(last_row+1),8 do %>
-  /* ---:<%=i-1%> loc:-- */ {0, NULL},<%
        end %>
 <%   end %>
 };

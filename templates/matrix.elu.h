@@ -27,14 +27,23 @@
 #include <stdint.h>
 #include <avr/io.h>
 
-#define COL(byte) (((uint8_t)byte)>>3)
-#define ROW(byte) (((uint8_t)byte)&~(0xff<<3))
-#define MATRIX_CELL(row,col) ((((uint8_t)(col))<<3)|((uint8_t)(row)))
-
 #define NUM_ROWS <%= kb.matrix.row_count %>
 #define NUM_COLS <%= kb.matrix.col_count %>
 
-typedef uint8_t Cell;
+struct Cell
+{
+  uint8_t row;
+  uint8_t col;
+};
+
+typedef struct Cell Cell;
+
+static inline
+uint8_t
+cell_to_index(Cell cell)
+{
+  return cell.col * NUM_ROWS + cell.row;
+}
 
 <% if kb.block_ghost_keys then %>
 #define BLOCK_GHOST_KEYS

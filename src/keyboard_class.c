@@ -158,15 +158,15 @@ scan_matrix()
 void
 init_active_keys()
 {
-  uint8_t ncols, cell;
+  uint8_t ncols;
+  Cell cell;
   // process row/column data to find the active keys
-  for (uint8_t row = 0; row < NUM_ROWS; ++row)
+  for (cell.row = 0; cell.row < NUM_ROWS; ++cell.row)
   {
     ncols = 0;
-    for (uint8_t col = 0; col < NUM_COLS; ++col)
+    for (cell.col = 0; cell.col < NUM_COLS; ++cell.col)
     {
-      cell = MATRIX_CELL(row, col);
-      if (kb.row_data[row] & (1UL << col))
+      if (kb.row_data[cell.row] & (1UL << cell.col))
       {
         if (!BlockedKeys__is_blocked(cell))
         {
