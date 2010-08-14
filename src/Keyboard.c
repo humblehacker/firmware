@@ -87,10 +87,7 @@ uint8_t g_num_lock, g_caps_lock, g_scrl_lock;
 int main(void)
 {
   SetupHardware();
-
-  LEDs_SetAllLEDs(LEDMASK_USB_NOTREADY);
   sei();
-  LEDs_TurnOffLEDs(LEDS_ALL_LEDS);
 
 #ifdef MATRIX_DISCOVERY_MODE
   for (;;)
