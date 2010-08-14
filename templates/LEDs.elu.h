@@ -70,24 +70,28 @@
           LED_COMPOSE = (1<<3),
           LED_KANA = (1<<4),
 <% for i,led in ipairs(otherleds) do %>
-			 LED_<%=string.upper(led.name)%> = (1<<<%=i+4%>),
+          LED_<%=string.upper(led.name)%> = (1<<<%=i+4%>),
 <% end %>
         };
 
 <% for i=1,4 do
      if kb.leds[i] ~= nil then %>
-        #define LEDS_LED<%=i%> LED_<%=string.upper(kb.leds[i].name)%>
-<%   end
-   end%>
+        #define LEDS_LED<%=i%> LED_<%=string.upper(kb.leds[i].name)%><%
+     end
+   end
+%>
 
-			/** LED mask for all the LEDs on the board. */
-			#define LEDS_ALL_LEDS    (0<%
+        /** LED mask for all standard keyboard LEDs */
+        #define LED_ALL_STD    (LED_NUM_LOCK | LED_CAPS_LOCK | LED_SCROLL_LOCK | LED_COMPOSE | LED_KANA)
+
+			  /** LED mask for all the LEDs on the board. */
+			  #define LEDS_ALL_LEDS  (0<%
    for i,led in ipairs(kb.leds) do
      %> | LED_<%=string.upper(led.name)%><%
    end%>)
 
-			/** LED mask for the none of the board LEDs */
-			#define LEDS_NO_LEDS     0
+			  /** LED mask for the none of the board LEDs */
+			  #define LEDS_NO_LEDS    0
 
 		/* Inline Functions: */
 		#if !defined(__DOXYGEN__)
