@@ -22,9 +22,6 @@
 */
 
 #include "hhstdio.h"
-
-#ifdef USE_HHSTDIO
-
 #include "hid_usages.h"
 
 static int hid_putc(char, FILE*);
@@ -44,12 +41,12 @@ stdio_init(void)
   count  = 0;
 }
 
-void stdio_fill_report(char ch, USB_KeyboardReport_Data_t *report)
+void
+stdio_fill_report(char ch, USB_KeyboardReport_Data_t *report)
 {
   memcpy_P(report, &ascii_table[(uint8_t)ch], sizeof(USB_KeyboardReport_Data_t));
   memset(&report->KeyCode[1], 0, 5);
 }
-
 
 int
 hid_putc(char c, FILE *stream)
@@ -242,5 +239,3 @@ static const USB_KeyboardReport_Data_t ascii_table[] PROGMEM =
   /* 125 } */ { L_SHF, 0, { USAGE_ID(HID_USAGE__RSQUAREBRACKET_AND__RCURLYBRACE) }},
   /* 126 ~ */ { L_SHF, 0, { USAGE_ID(HID_USAGE__BACKTICK_AND__TILDE) }},
 };
-
-#endif // USE_HHSTDIO

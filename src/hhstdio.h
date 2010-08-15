@@ -28,22 +28,10 @@
 #include <stdbool.h>
 #include <LUFA/Drivers/USB/Class/HID.h>
 
-#ifdef USE_HHSTDIO
-
 void stdio_init(void);
 void stdio_fill_report(char ch, USB_KeyboardReport_Data_t *report);
 bool stdout_is_empty(void);
 bool stdout_is_full(void);
 char stdout_popchar(void);
-
-#else
-
-static inline void stdio_init(void) {}
-static inline void stdio_fill_report(char ch, USB_KeyboardReport_Data_t *report) {}
-static inline bool stdout_is_empty(void) { return true; }
-static inline bool stdout_is_full(void) { return false; }
-static inline char stdout_popchar(void) { return '\0'; }
-
-#endif
 
 #endif // __HHSTDIO_H__

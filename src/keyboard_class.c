@@ -57,7 +57,9 @@ static void    process_keys(KeyboardReport *report);
 static bool    modifiers_would_change(const PreMods *premods, uint8_t current_mods, uint8_t target_mods);
 static uint8_t fill_report(KeyboardReport *report, USB_KeyboardReport_Data_t *report_data);
 static void    toggle_map(KeyMap mode_map);
+#ifdef STDOUT_TO_KBREPORT
 static void    stdout_to_report_queue(void);
+#endif
 
 void
 Keyboard__init()
@@ -75,6 +77,7 @@ Keyboard__init()
   reset();
 }
 
+#ifdef STDOUT_TO_KBREPORT
 void
 stdout_to_report_queue()
 {
@@ -89,6 +92,7 @@ stdout_to_report_queue()
     report = ReportQueue__push();
   }
 }
+#endif
 
 bool
 Keyboard__key_is_down()
@@ -107,8 +111,10 @@ Keyboard__get_report(USB_KeyboardReport_Data_t *report_data)
 {
   reset();
 
+#ifdef STDOUT_TO_KBREPORT
   if (!stdout_is_empty())
     stdout_to_report_queue();
+#endif
 
   KeyboardReport *report = NULL;
 

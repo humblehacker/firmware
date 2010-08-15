@@ -52,6 +52,7 @@
 #else
 #include "matrix_discovery.h"
 #endif
+#include "dbg.h"
 
 
 /** Buffer to hold the previously generated Keyboard HID report, for comparison purposes inside the HID class driver. */
@@ -73,6 +74,23 @@ USB_ClassInfo_HID_Device_t Keyboard_HID_Interface =
 
         .PrevReportINBuffer           = PrevKeyboardHIDReportBuffer,
         .PrevReportINBufferSize       = sizeof(PrevKeyboardHIDReportBuffer),
+      },
+    };
+
+uint8_t PrevDBGHIDReportBuffer[sizeof(USB_DBGReport_Data_t)];
+
+USB_ClassInfo_HID_Device_t DBG_HID_Interface =
+  {
+    .Config =
+      {
+        .InterfaceNumber              = 1,
+
+        .ReportINEndpointNumber       = DBG_EPNUM,
+        .ReportINEndpointSize         = DBG_EPSIZE,
+        .ReportINEndpointDoubleBank   = false,
+
+        .PrevReportINBuffer           = PrevDBGHIDReportBuffer,
+        .PrevReportINBufferSize       = sizeof(PrevDBGHIDReportBuffer),
       },
     };
 
@@ -102,6 +120,7 @@ int main(void)
     if (USB_DeviceState != DEVICE_STATE_Suspended)
     {
       HID_Device_USBTask(&Keyboard_HID_Interface);
+      HID_Device_USBTask(&DBG_HID_Interface);
     }
     else if (USB_RemoteWakeupEnabled && Keyboard__key_is_down())
     {
@@ -171,6 +190,9 @@ void EVENT_USB_Device_ConfigurationChanged(void)
   if (!(HID_Device_ConfigureEndpoints(&Keyboard_HID_Interface)))
     LEDs_SetAllLEDs(LEDMASK_USB_ERROR);
 
+  if (!(HID_Device_ConfigureEndpoints(&DBG_HID_Interface)))
+    LEDs_SetAllLEDs(LEDMASK_USB_ERROR);
+
   USB_Device_EnableSOFEvents();
 }
 
@@ -178,12 +200,14 @@ void EVENT_USB_Device_ConfigurationChanged(void)
 void EVENT_USB_Device_UnhandledControlRequest(void)
 {
   HID_Device_ProcessControlRequest(&Keyboard_HID_Interface);
+  HID_Device_ProcessControlRequest(&DBG_HID_Interface);
 }
 
 /** Event handler for the USB device Start Of Frame event. */
 void EVENT_USB_Device_StartOfFrame(void)
 {
   HID_Device_MillisecondElapsed(&Keyboard_HID_Interface);
+  HID_Device_MillisecondElapsed(&DBG_HID_Interface);
 }
 
 /** HID class driver callback function for the creation of HID reports to the host.
@@ -199,12 +223,20 @@ void EVENT_USB_Device_StartOfFrame(void)
 bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDInterfaceInfo, uint8_t* const ReportID,
                                          const uint8_t ReportType, void* ReportData, uint16_t* ReportSize)
 {
-  USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
-#ifndef MATRIX_DISCOVERY_MODE
-  *ReportSize = Keyboard__get_report(KeyboardReport);
-#else
-  *ReportSize = MatrixDiscovery__get_report(KeyboardReport);
-#endif
+  if (HIDInterfaceInfo == &Keyboard_HID_Interface)
+  {
+    USB_KeyboardReport_Data_t* KeyboardReport = (USB_KeyboardReport_Data_t*)ReportData;
+  #ifndef MATRIX_DISCOVERY_MODE
+    *ReportSize = Keyboard__get_report(KeyboardReport);
+  #else
+    *ReportSize = MatrixDiscovery__get_report(KeyboardReport);
+  #endif
+  }
+  else if (HIDInterfaceInfo == &DBG_HID_Interface)
+  {
+    USB_DBGReport_Data_t* DBGReport = (USB_DBGReport_Data_t*)ReportData;
+    *ReportSize = DBG__get_report(DBGReport);
+  }
 
   return false;
 }
