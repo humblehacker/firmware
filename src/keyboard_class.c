@@ -196,13 +196,13 @@ init_active_keys()
     {
       for (uint8_t irow = 0; irow < NUM_ROWS; ++irow)
       {
-        if (irow == row)
+        if (irow == cell.row)
           continue;
 
         // if any other row has a key pressed in the same column as any
         // of the two or more keys pressed in the current row, we have a
         // ghost-key condition.
-        if (kb.row_data[row] & kb.row_data[irow])
+        if (kb.row_data[cell.row] & kb.row_data[irow])
         {
           kb.error_roll_over = true;
           return;
