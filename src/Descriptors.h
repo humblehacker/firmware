@@ -68,21 +68,30 @@
       USB_Descriptor_Interface_t            HIDDBG_Interface;
       USB_HID_Descriptor_t                  HIDDBG_HID;
           USB_Descriptor_Endpoint_t             HIDDBG_ReportINEndpoint;
+      USB_Descriptor_Interface_t            Programming_Interface;
+         USB_Descriptor_Endpoint_t             Programming_ReportINEndpoint;
 		} USB_Descriptor_Configuration_t;
 
 	/* Macros: */
-		/** Endpoint number of the Keyboard HID reporting IN endpoint. */
+		/** Endpoint number of the Keyboard HID report IN endpoint. */
 		#define KEYBOARD_EPNUM               1
 
-		/** Size in bytes of the Keyboard HID reporting IN and OUT endpoints. */
+		/** Size in bytes of the Keyboard HID report IN and OUT endpoints. */
 		#define KEYBOARD_EPSIZE              8
 
-    /** Endpoint number of the DBG HID reporting IN endpoint. */
+    /** Endpoint number of the DBG HID report IN endpoint. */
 		#define DBG_EPNUM                    2
 
-    /** Size in bytes of the DBG HID reporting IN and OUT
+    /** Size in bytes of the DBG HID report IN and OUT
      *  endpoints. */
 		#define DBG_EPSIZE                   32
+
+    /** Endpoint number of the DBG HID report IN endpoint. */
+		#define PRG_EPNUM                    3
+
+    /** Size in bytes of the Programming report IN and
+     *  OUT endpoints. */
+		#define PRG_EPSIZE                   64
 
 	/* Function Prototypes: */
 		uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex, void** const DescriptorAddress)

@@ -149,8 +149,6 @@ USB_Descriptor_HIDReport_Datatype_t DBGReport[] PROGMEM =
   0xC0                 // end collection
 };
 
-
-
 /** Device descriptor structure. This descriptor, located in FLASH memory, describes the overall
  *  device characteristics, including the supported USB version, control endpoint size and the
  *  number of device configurations. The descriptor is read out by the USB host when the enumeration
@@ -190,7 +188,7 @@ USB_Descriptor_Configuration_t PROGMEM ConfigurationDescriptor =
 			.Header                 = {.Size = sizeof(USB_Descriptor_Configuration_Header_t), .Type = DTYPE_Configuration},
 
 			.TotalConfigurationSize = sizeof(USB_Descriptor_Configuration_t),
-			.TotalInterfaces        = 2,
+			.TotalInterfaces        = 3,
 
 			.ConfigurationNumber    = 1,
 			.ConfigurationStrIndex  = NO_DESCRIPTOR,
@@ -236,42 +234,67 @@ USB_Descriptor_Configuration_t PROGMEM ConfigurationDescriptor =
 			.EndpointSize           = KEYBOARD_EPSIZE,
 			.PollingIntervalMS      = 0x0A
 		},
-  .HIDDBG_Interface =
-    {
-      .Header                 = {.Size = sizeof(USB_Descriptor_Interface_t), .Type = DTYPE_Interface},
+    .HIDDBG_Interface =
+      {
+        .Header                 = {.Size = sizeof(USB_Descriptor_Interface_t), .Type = DTYPE_Interface},
 
-      .InterfaceNumber        = 0x01,
-      .AlternateSetting       = 0x00,
+        .InterfaceNumber        = 0x01,
+        .AlternateSetting       = 0x00,
 
-      .TotalEndpoints         = 1,
+        .TotalEndpoints         = 1,
 
-      .Class                  = 0x03,
-      .SubClass               = 0x00,
-      .Protocol               = 0x00,
+        .Class                  = 0x03,
+        .SubClass               = 0x00,
+        .Protocol               = 0x00,
 
-      .InterfaceStrIndex      = NO_DESCRIPTOR
-    },
+        .InterfaceStrIndex      = NO_DESCRIPTOR
+      },
 
-  .HIDDBG_HID =
-    {
-      .Header                 = {.Size = sizeof(USB_HID_Descriptor_t), .Type = DTYPE_HID},
+    .HIDDBG_HID =
+      {
+        .Header                 = {.Size = sizeof(USB_HID_Descriptor_t), .Type = DTYPE_HID},
 
-      .HIDSpec                = VERSION_BCD(01.11),
-      .CountryCode            = 0x00,
-      .TotalReportDescriptors = 1,
-      .HIDReportType          = DTYPE_Report,
-      .HIDReportLength        = sizeof(DBGReport)
-    },
+        .HIDSpec                = VERSION_BCD(01.11),
+        .CountryCode            = 0x00,
+        .TotalReportDescriptors = 1,
+        .HIDReportType          = DTYPE_Report,
+        .HIDReportLength        = sizeof(DBGReport)
+      },
 
-  .HIDDBG_ReportINEndpoint =
-    {
-      .Header                 = {.Size = sizeof(USB_Descriptor_Endpoint_t), .Type = DTYPE_Endpoint},
+    .HIDDBG_ReportINEndpoint =
+      {
+        .Header                 = {.Size = sizeof(USB_Descriptor_Endpoint_t), .Type = DTYPE_Endpoint},
 
-      .EndpointAddress        = (ENDPOINT_DESCRIPTOR_DIR_IN | DBG_EPNUM),
-      .Attributes             = (EP_TYPE_INTERRUPT | ENDPOINT_ATTR_NO_SYNC | ENDPOINT_USAGE_DATA),
-      .EndpointSize           = DBG_EPSIZE,
-      .PollingIntervalMS      = 0x0A
-    },
+        .EndpointAddress        = (ENDPOINT_DESCRIPTOR_DIR_IN | DBG_EPNUM),
+        .Attributes             = (EP_TYPE_INTERRUPT | ENDPOINT_ATTR_NO_SYNC | ENDPOINT_USAGE_DATA),
+        .EndpointSize           = DBG_EPSIZE,
+        .PollingIntervalMS      = 0x0A
+      },
+    .Programming_Interface =
+      {
+        .Header                 = {.Size = sizeof(USB_Descriptor_Interface_t), .Type = DTYPE_Interface},
+
+        .InterfaceNumber        = 0x02,
+        .AlternateSetting       = 0x00,
+
+        .TotalEndpoints         = 1,
+
+        .Class                  = 0xFF, /* Vendor specific */
+        .SubClass               = 0x00,
+        .Protocol               = 0x00,
+
+        .InterfaceStrIndex      = NO_DESCRIPTOR
+      },
+
+    .Programming_ReportINEndpoint =
+      {
+        .Header                 = {.Size = sizeof(USB_Descriptor_Endpoint_t), .Type = DTYPE_Endpoint},
+
+        .EndpointAddress        = (ENDPOINT_DESCRIPTOR_DIR_IN | PRG_EPNUM),
+        .Attributes             = (EP_TYPE_BULK | ENDPOINT_ATTR_NO_SYNC | ENDPOINT_USAGE_DATA),
+        .EndpointSize           = PRG_EPSIZE,
+        .PollingIntervalMS      = 0x00 /* ignored for full-speed bulk transfers */
+      },
 };
 
 /** Language descriptor structure. This descriptor, located in FLASH memory, is returned when the host requests
@@ -350,27 +373,29 @@ uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint8_t wIndex,
 
 			break;
     case DTYPE_HID:
-      if (wIndex == 0)
+      switch (wIndex)
       {
-        Address = (void*)&ConfigurationDescriptor.HID_KeyboardHID;
-        Size    = sizeof(USB_HID_Descriptor_t);
-      }
-      else
-      {
-        Address = (void*)&ConfigurationDescriptor.HIDDBG_HID;
-        Size    = sizeof(USB_HID_Descriptor_t);
+        case 0:
+          Address = (void*)&ConfigurationDescriptor.HID_KeyboardHID;
+          Size    = sizeof(USB_HID_Descriptor_t);
+          break;
+        case 1:
+          Address = (void*)&ConfigurationDescriptor.HIDDBG_HID;
+          Size    = sizeof(USB_HID_Descriptor_t);
+          break;
       }
 			break;
-		case DTYPE_Report:
-      if (wIndex == 0)
+    case DTYPE_Report:
+      switch (wIndex)
       {
-        Address = (void*)&KeyboardReport;
-        Size    = sizeof(KeyboardReport);
-      }
-      else
-      {
-        Address = (void*)&DBGReport;
-        Size    = sizeof(DBGReport);
+        case 0:
+          Address = (void*)&KeyboardReport;
+          Size    = sizeof(KeyboardReport);
+          break;
+        case 1:
+          Address = (void*)&DBGReport;
+          Size    = sizeof(DBGReport);
+          break;
       }
 			break;
 	}
