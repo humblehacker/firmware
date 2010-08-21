@@ -76,9 +76,9 @@ KeyMap:Common
 
   /* Row 4 */
   Key:4A Map:Left_Control                               tl:"Ctrl"
-  Key:4G Map:Backspace                                  tl:"Backspace"
+  Key:4G Map:Tab                                        tl:"Tab"
   Key:4H Map:Delete_Forward                             tl:"Delete"
-  Key:4I Map:Return_or_Enter                            tl:"Return"
+  Key:4I Map:Tab <shift>                                tl:"Back Tab"
   Key:4O Map:Right_Control                              tl:"Ctrl"
 
   /* Row 5 */
