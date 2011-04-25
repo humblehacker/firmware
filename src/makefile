@@ -125,6 +125,7 @@ SRC =   $(SRCDIR)/Keyboard.c         \
 	$(LUFA_SRC)
 else
 SRC =   $(SRCDIR)/Keyboard.c         \
+	$(SRCDIR)/dbg.c              \
 	$(SRCDIR)/Descriptors.c      \
 	$(SRCDIR)/matrix_discovery.c \
 	$(SRCDIR)/ioports.c          \
