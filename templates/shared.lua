@@ -15,9 +15,9 @@ character_replacements["%^"]  =  '_CARET'
 character_replacements["&"]   =  '_AMPERSAND'
 character_replacements["%*"]  =  '_ASTERISK'
 character_replacements["%."]  =  '_PERIOD'
-character_replacements["\,"]  =  '_COMMA'
+character_replacements[","]  =  '_COMMA'
 character_replacements[";"]   =  '_SEMICOLON'
-character_replacements["\:"] =  '_COLON'
+character_replacements[":"] =  '_COLON'
 character_replacements["="]   =  '_EQUALS'
 character_replacements["%+"]  =  '_PLUS'
 character_replacements["%-"]  =  '_MINUS'
@@ -27,11 +27,11 @@ character_replacements["%["]  =  '_LSQUAREBRACKET'
 character_replacements["%]"]  =  '_RSQUAREBRACKET'
 character_replacements["%{"]  =  '_LCURLYBRACE'
 character_replacements["%}"]  =  '_RCURLYBRACE'
-character_replacements["\>"] =  '_GREATERTHAN'
-character_replacements["\<"] =  '_LESSTHAN'
+character_replacements[">"] =  '_GREATERTHAN'
+character_replacements["<"] =  '_LESSTHAN'
 character_replacements["/"]  =  '_SLASH'
-character_replacements["\~"]  =  '_TILDE'
-character_replacements["\|"]  =  '_PIPE'
+character_replacements["~"]  =  '_TILDE'
+character_replacements["|"]  =  '_PIPE'
 character_replacements["`"]   =  '_BACKTICK'
 character_replacements["\\'"] =  '_APOSTROPHE'
 character_replacements['\\"'] =  '_QUOTE'
@@ -61,7 +61,7 @@ function lookup_key(keymap, location)
 end
 
 function convert_anymods_to_stdmods(mods)
-  return bit.bor(bit.band(mods, 0x00FF), bit.rshift(bit.band(mods,0x0F00), 4));
+  return bit32.bor(bit32.band(mods, 0x00FF), bit32.rshift(bit32.band(mods,0x0F00), 4));
 end
 
 function modifier_symbol_from_name(mod_name, convertanymods)
