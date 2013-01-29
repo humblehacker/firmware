@@ -1,6 +1,6 @@
 /*
                     The HumbleHacker Keyboard Project
-                 Copyright © 2008-2010, David Whetstone
+                 Copyright ï¿½ 2008-2010, David Whetstone
                david DOT whetstone AT humblehacker DOT com
 
   This file is a part of The HumbleHacker Keyboard Project.
@@ -122,7 +122,7 @@ KeyMap:US  base:Common default
   Key:7   Map:7_and_&                                    tl:"&"    bl:"7"
   Key:8   Map:8_and_*                                    tl:"*"    bl:"8"
   Key:9   Map:9_and_(                                    tl:"("    bl:"9"
-  Key:9   Map:0_and_)                                    tl:")"    bl:"0"
+  Key:0   Map:0_and_)                                    tl:")"    bl:"0"
   Key:MIN Map:-_and_Underscore                           tl:"__"   bl:"-"
   Key:EQL Map:=_and_+                                    tl:"+"    bl:":"
 
@@ -150,7 +150,8 @@ KeyMap:US  base:Common default
   Key:APO Map:squote_and_dquote                          tl:"\""   bl:"\'"
 
   Key:Z   Map:z_and_Z                                    tl:"Z"
-  Key:X   Map:c_and_C                                    tl:"C"
+  Key:C   Map:c_and_C                                    tl:"C"
+  Key:X   Map:x_and_X                                    tl:"X"
   Key:V   Map:v_and_V                                    tl:"V"
   Key:B   Map:b_and_B                                    tl:"B"
   Key:N   Map:n_and_N                                    tl:"N"
