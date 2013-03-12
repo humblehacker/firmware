@@ -119,6 +119,7 @@ SRC =   $(SRCDIR)/Keyboard.c         \
 	$(SRCDIR)/active_keys.c      \
 	$(SRCDIR)/bound_key.c        \
 	$(SRCDIR)/blocked_keys.c     \
+	$(SRCDIR)/debounce_keys.c    \
 	$(SRCDIR)/hhstdio.c          \
 	$(GENERATED)/keymaps.c       \
 	$(GENERATED)/binding.c       \
