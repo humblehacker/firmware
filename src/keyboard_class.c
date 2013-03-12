@@ -32,6 +32,7 @@
 #include "active_keys.h"
 #include "report_queue.h"
 #include "blocked_keys.h"
+#include "debounce_keys.h"
 #include "matrix.h"
 #include "hhstdio.h"
 
@@ -176,10 +177,13 @@ init_active_keys()
       {
         if (!BlockedKeys__is_blocked(cell))
         {
-          if (!ActiveKeys__add_cell(&kb.active_keys, cell))
+          if (DebounceKeys__pressed(cell))
           {
-            kb.error_roll_over = true;
-            return;
+            if (!ActiveKeys__add_cell(&kb.active_keys, cell))
+            {
+              kb.error_roll_over = true;
+              return;
+            }
           }
         }
         ++ncols;
@@ -187,6 +191,7 @@ init_active_keys()
       else
       {
         BlockedKeys__unblock_key(cell);
+        DebounceKeys__reset(cell);
       }
     }
 
